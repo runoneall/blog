@@ -19,3 +19,11 @@ jobs:
 
       - name: Install Hexo CLI
         run: npm install hexo
+
+      - name: Install dependencies and generate
+        run: |
+          cd blog
+          npm install
+          npx hexo clean
+          npx hexo generate
+          ls public
