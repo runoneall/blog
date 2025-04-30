@@ -1,8 +1,21 @@
 name: Build And Deploy to Public Branch
 
 on:
-    workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
-    build-and-deploy:
-        runs-on: ubuntu-latest
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js LTS
+        uses: actions/setup-node@main
+        with:
+          node-version: latest
+
+      - name: Install Hexo CLI
+        run: npm install hexo
