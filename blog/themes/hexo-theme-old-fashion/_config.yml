@@ -32,8 +32,6 @@ random_intro:
 links:
 - { avatar: "https://dev.oneall.eu.org/favicon.webp", title: "r1a dev", url: "https://dev.oneall.eu.org", description: "r1a的开发记录/博客", rss: "https://dev.oneall.eu.org/feed" }
 
-per_page: 10 # 一页显示文章总数
-
 extra_css: "" # 额外CSS
 
 extra_js: |- # 额外javascript (footer)
