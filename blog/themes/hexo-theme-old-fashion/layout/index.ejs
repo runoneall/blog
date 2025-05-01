@@ -1,2 +1,18 @@
-<h1>Blog Index</h1>
-<% console.log(site.posts) %>
+<%
+var posts = [];
+site.posts.each(p => {
+  if (p.published) {
+    posts.push({
+      title: p.title,
+      slug: p.slug,
+      date: p.date(),
+      excerpt: excerpt_clean(p.content, theme.excerpt_length),
+      path: p.path,
+      tags: p.tags.data,
+      categories: p.categories.data,
+    });
+  }
+});
+posts.sort((a, b) => b.date - a.date);
+console.log(posts);
+%>

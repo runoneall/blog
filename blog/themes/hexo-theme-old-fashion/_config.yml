@@ -8,7 +8,7 @@ sidebar_extra_html: |- # 侧边栏额外html
   <a href="/rss2.xml">RSS</a><br>
   <a href="mailto:email@example.com">Email</a><br>
 
-abstract_length: 100 # 简介文章最大字数
+excerpt_length: 150 # 简介文章最大字数
 
 # CORS跨域代理, 留空则禁用友链RSS获取, 请求URL将会拼接到此代理地址之后
 # 默认地址可能会失效, 详见 https://dev.oneall.eu.org/archives/52
