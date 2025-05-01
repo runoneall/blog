@@ -36,11 +36,11 @@ searchFrom.addEventListener('submit', (event) => {
 })
 
 function SearchArticle() {
-  searchInput.value = decodeURIComponent(location.hash.slice(3));
+  const searchValue = decodeURIComponent(location.hash.slice(3));
   var is_not_found = true;
   const articleList = mainFrame.querySelectorAll('article');
   articleList.forEach(article => {
-    if (!article.textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
+    if (!article.textContent.toLowerCase().includes(searchValue.toLowerCase())) {
       article.style.display = 'none';
     } else {
       is_not_found = false;
