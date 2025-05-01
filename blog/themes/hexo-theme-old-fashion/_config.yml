@@ -1,0 +1,53 @@
+# 在这里填入一个图片 URL 地址, 以在网站标题前加上一个 LOGO
+site_logo_url: ''
+
+# 主题色
+# auto: 自动选择主题色, 亮色或暗色
+# light: 亮色
+# dark: 暗色
+color_schema: "auto"
+
+sidebar_extra_html: |- # 侧边栏额外html
+  <a href="/rss.xml">RSS</a><br>
+  <a href="mailto:email@example.com">Email</a><br>
+
+abstract_length: 100 # 简介文章最大字数
+
+# CORS跨域代理, 留空则禁用友链RSS获取, 请求URL将会拼接到此代理地址之后
+# 默认地址可能会失效, 详见 https://dev.oneall.eu.org/archives/52
+cors_proxy: 'https://vercel.oneall.eu.org/api/vap?'
+
+# 随机站点介绍, 每行一个
+random_intro:
+- IMPOSSIBLE IS NOTHING
+- 路漫漫其修远兮，吾将上下而求索
+- 天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为
+- 惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。
+
+# 链接页面, 格式如下:
+# - { 
+#   avatar: "图标地址", 
+#   title: "名称", 
+#   url: "链接地址", 
+#   description: "描述", 
+#   rss: "RSS地址(可选)" 
+# }
+links:
+- { avatar: "https://dev.oneall.eu.org/favicon.webp", title: "r1a dev", url: "https://dev.oneall.eu.org", description: "r1a的开发记录/博客", rss: "https://dev.oneall.eu.org/feed" }
+
+per_page: 10 # 一页显示文章总数
+
+extra_css: "" # 额外CSS
+
+extra_js: |- # 额外javascript (footer)
+  console.log(String.raw`
+              ___              __
+        _____<  /____ _   ____/ /___  _   __
+       / ___// // __ `+ "`" + String.raw`/  / __  // _ \| | / /
+      / /   / // /_/ /  / /_/ //  __/| |/ /
+     /_/   /_/ \__,_/   \__,_/ \___/ |___/
+
+  LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
+  `)
+
+extra_html: "" # 额外html (body末尾)
