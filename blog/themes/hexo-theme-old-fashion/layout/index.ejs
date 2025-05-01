@@ -1,19 +1,28 @@
-<%
-var posts = [];
-site.posts.each(p => {
-  if (p.published) {
-    posts.push({
-      title: p.title,
-      slug: p.slug,
-      date: p.date.format('YYYY-MM-DD'),
-      excerpt: excerpt_clean(p.content, theme.excerpt_length),
-      content: p.content,
-      path: p.path,
-      tags: p.tags.data,
-      categories: p.categories.data,
-    });
-  }
-});
-posts.sort((a, b) => b.date - a.date);
-console.log(posts);
-%>
+<div id="main" role="main">
+  <% page.posts.each(post => { %>
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <h2 class="post-title" itemprop="name headline">
+      <a itemprop="url" href="/<%- post.path %>"><%- post.title %></a>
+    </h2>
+    <ul class="post-meta">
+      <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+        作者: <a itemprop="name" href="#" rel="author"><%- config.author %></a>
+      </li>
+      <li>时间: <time itemprop="datePublished"><%- post.date.format('YYYY-MM-DD')
+          %></time></li>
+      <li>分类:
+        <% if (post.categories.length === 0) { %>
+        无分类
+        <% } else { %>
+        <% post.categories.data.forEach(category => { %>
+        <a href="/<%- category.path %>"><%- category.name %></a>
+        <% }) %>
+        <% } %>
+      </li>
+    </ul>
+    <div class="post-content index-post-content" itemprop="articleBody">
+      <%- excerpt_clean(post.content, theme.excerpt_length) %>
+    </div>
+  </article>
+  <% }) %>
+</div>
