@@ -24,8 +24,8 @@ searchFrom.addEventListener('submit', (event) => {
   if (!searchValue) {
     return;
   }
-  if (location.pathname !== '/index.html') {
-    location.href = '/index.html#s=' + encodeURIComponent(searchValue);
+  if (location.pathname !== '/') {
+    location.href = '/#s=' + encodeURIComponent(searchValue);
   } else {
     location.hash = '#s=' + encodeURIComponent(searchValue);
   }
