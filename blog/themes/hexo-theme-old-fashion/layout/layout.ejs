@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="<%- config.language %>">
+
   <head>
     <%- partial('header') %>
   </head>
@@ -16,16 +17,16 @@
                 <%- config.description %>
               </p>
               <script>
-                var description_random_intro = document.getElementById(
-                  "description_random_intro"
-                );
-                var descriptions = JSON.parse(
-                  `<%- JSON.stringify(theme.random_intro) %>`
-                );
-                var random_intro =
-                  descriptions[Math.floor(Math.random() * descriptions.length)];
-                description_random_intro.innerHTML = random_intro;
-              </script>
+              var description_random_intro = document.getElementById(
+                "description_random_intro"
+              );
+              var descriptions = JSON.parse(
+                `<%- JSON.stringify(theme.random_intro) %>`
+              );
+              var random_intro =
+                descriptions[Math.floor(Math.random() * descriptions.length)];
+              description_random_intro.innerHTML = random_intro;
+            </script>
             </div>
           </div>
         </div>
@@ -43,21 +44,19 @@
         <!-- left links -->
         <div id="left-links">
           <!-- page links -->
-          <a class="<%- path == 'index.html'? 'current' : '' %>" href="/"
-            >首页</a
-          >
-          <% site.pages.each(p => { %>
+          <a class="<%- path == 'index.html'? 'current' : '' %>" href="/">首页</a>
+          <% site.pages.each(p=> { %>
           <br />
-          <a class="<%- path == p.path? 'current' : '' %>" href="/<%- p.path %>"
-            ><%- p.title %></a
-          >
+          <a class="<%- path == p.path? 'current' : '' %>"
+            href="/<%- p.path %>"><%- p.title %></a>
           <% }); %>
           <!-- end page links -->
 
           <!-- sidebar extra html -->
           <% if (theme.sidebar_extra_html) { %>
           <br />
-          <%- theme.sidebar_extra_html %> <% } %>
+          <%- theme.sidebar_extra_html %>
+          <% } %>
           <!-- end sidebar extra html -->
 
           <button id="dark-btn" onclick="changeDarkMode()">更换主题</button>
@@ -115,9 +114,8 @@
       <div id="footer" role="contentinfo">
         &copy; <%- new Date().getFullYear() %>
         <a href="/"><%- config.title %></a>.
-        <a href="https://github.com/runoneall/hexo-theme-old-fashion"
-          >Old Fasion</a
-        >
+        <a href="https://github.com/runoneall/hexo-theme-old-fashion">Old
+          Fasion</a>
         Theme. Powered by <a href="https://hexo.io">Hexo</a>.
       </div>
       <!-- end footer -->
@@ -126,4 +124,5 @@
 
     <%- partial('script') %>
   </body>
+
 </html>
