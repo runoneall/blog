@@ -1,4 +1,69 @@
-<meta charset="UTF-8">
-<meta name="renderer" content="webkit">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<!-- base -->
+<meta charset="UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="template" content="Old-Fasion-Theme" />
+
+<!-- sitemap -->
+<link
+  rel="sitemap"
+  type="application/xml"
+  title="sitemap"
+  href="/sitemap.xml"
+/>
+
+<!-- title -->
+<title>
+  <%= page.title ? [page.title, config.title].join(theme.title_separator) :
+  config.title %>
+</title>
+
+<!-- css dependencies -->
+<link rel="stylesheet" href="/css/normalize.css" />
+<link rel="stylesheet" href="/css/grid.css" />
+<link rel="stylesheet" href="/css/highlight.css" />
+<link rel="stylesheet" href="/css/global.css" />
+<link rel="stylesheet" href="/css/search.css" />
+<link rel="stylesheet" href="/css/sidebar.css" />
+<link rel="stylesheet" href="/css/post.css" />
+<link rel="stylesheet" href="/css/comment.css" />
+<link rel="stylesheet" href="/css/misc.css" />
+<link rel="stylesheet" href="/css/page.css" />
+<link rel="stylesheet" href="/css/footer.css" />
+<link id="dark-style" rel="stylesheet" href="/css/dark.css" disabled />
+
+<!-- favicon -->
+<link rel="apple-touch-icon" sizes="76x76" href="<%= theme.favicon %>" />
+<link rel="icon" href="<%= theme.favicon %>" />
+
+<!-- extra css -->
+<% if (theme.extra_css) { %>
+<style>
+  <%= theme.extra_css %>
+</style>
+<% } %>
+
+<!-- keywords -->
+<% var keywords = page.keywords || config.keywords; if (keywords instanceof
+Array) { keywords = keywords.join(',') } %>
+<meta name="keywords" content="<%= keywords %>" />
+
+<!-- description -->
+<% var description = page.description || page.excerpt || (is_post() &&
+page.content) || config.description; if (description) { description =
+strip_html(description).substring(0, 200).trim().replace(/\n/g, ' ') } %>
+<meta name="description" content="<%= description %>" />
+
+<!-- rss -->
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title="r1a dev » RSS 2.0"
+  href="https://dev.oneall.eu.org/rss2.xml"
+/>
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  title="r1a dev » ATOM 1.0"
+  href="https://dev.oneall.eu.org/atom.xml"
+/>
