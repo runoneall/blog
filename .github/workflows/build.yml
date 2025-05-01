@@ -11,7 +11,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          persist-credentials: true
 
       - name: Set up Node.js LTS
         uses: actions/setup-node@main
@@ -28,11 +27,16 @@ jobs:
           npx hexo clean
           npx hexo generate
 
+      - name: Check Files
+        run: |
+          ls
+          pwd
+
       - name: Deploy to public branch
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.REPO_TOKEN }}
-          publish_dir: ./blog/public
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
           destination_dir: ./
           publish_branch: public
           keep_files: false
