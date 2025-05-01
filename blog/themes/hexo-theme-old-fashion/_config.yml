@@ -1,12 +1,6 @@
 # 在这里填入一个图片 URL 地址, 以在网站标题前加上一个 LOGO
 site_logo_url: ''
 
-# 主题色
-# auto: 自动选择主题色, 亮色或暗色
-# light: 亮色
-# dark: 暗色
-color_schema: "auto"
-
 # 浏览器标签页中的标题分隔符
 title_separator: " | "
 
