@@ -1,22 +1,51 @@
 <!DOCTYPE html>
-<html lang="<%= config.language %>">
+<html lang="<%- config.language %>">
   <head>
     <%- partial('header') %>
   </head>
 
   <body>
     <div id="outbox">
+      <!-- header -->
+      <div id="header" class="clearfix">
+        <div class="container">
+          <div class="row">
+            <div class="site-name">
+              <a id="logo" href="<%- config.url %>"><%- config.title %></a>
+              <p id="description_random_intro" class="description">
+                <%- config.description %>
+              </p>
+              <script>
+                var description_random_intro = document.getElementById(
+                  "description_random_intro"
+                );
+                var descriptions = JSON.parse(
+                  `<%- JSON.stringify(theme.random_intro) %>`
+                );
+                var random_intro =
+                  descriptions[Math.floor(Math.random() * descriptions.length)];
+                description_random_intro.innerHTML = random_intro;
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end header -->
+
       <%- body %>
 
+      <!-- footer -->
       <div id="footer" role="contentinfo">
-        &copy; <%= new Date().getFullYear() %>
-        <a href="<%= config.url %>"><%= config.title %></a>.
+        &copy; <%- new Date().getFullYear() %>
+        <a href="<%- config.url %>"><%- config.title %></a>.
         <a href="https://github.com/runoneall/hexo-theme-old-fashion"
           >Old Fasion</a
         >
         Theme. Powered by <a href="https://hexo.io">Hexo</a>.
       </div>
+      <!-- end footer -->
     </div>
+    <!-- end outbox -->
 
     <%- partial('script') %>
   </body>
