@@ -28,3 +28,9 @@ feed:
   - atom.xml
   - rss2.xml
 ```
+
+- Strip HTML Tags
+
+```shell
+npm install string-strip-html --save
+```
