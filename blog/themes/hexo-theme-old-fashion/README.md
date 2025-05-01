@@ -2,6 +2,8 @@
 
 old fashion theme for hexo
 
+- Sitemap
+
 ```shell
 npm install hexo-generator-sitemap --save
 
@@ -10,6 +12,8 @@ sitemap:
   path:
   - sitemap.xml
 ```
+
+- Feed
 
 ```shell
 npm install hexo-generator-feed --save
