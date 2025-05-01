@@ -12,7 +12,11 @@ function SearchInit() {
     article.style.display = 'block';
   })
   articleSearchNotFound.style.display = 'none';
-  location.hash = '';
+
+  const targetSearch = location.hash.slice(3)
+  if (targetSearch !== '') {
+    SearchArticle();
+  }
 }
 
 SearchInit();
@@ -24,8 +28,8 @@ searchFrom.addEventListener('submit', (event) => {
   if (!searchValue) {
     return;
   }
-  if (location.pathname !== '/') {
-    location.href = '/#s=' + encodeURIComponent(searchValue);
+  if (location.pathname !== '/index.html') {
+    location.href = '/index.html#s=' + encodeURIComponent(searchValue);
   } else {
     location.hash = '#s=' + encodeURIComponent(searchValue);
   }
