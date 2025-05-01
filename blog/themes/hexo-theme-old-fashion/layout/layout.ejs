@@ -3,8 +3,21 @@
   <head>
     <%- partial('header') %>
   </head>
+
   <body>
-    <div id="outbox"><%- body %></div>
+    <div id="outbox">
+      <%- body %>
+
+      <div id="footer" role="contentinfo">
+        &copy; <%= new Date().getFullYear() %>
+        <a href="<%= config.url %>"><%= config.title %></a>.
+        <a href="https://github.com/runoneall/hexo-theme-old-fashion"
+          >Old Fasion</a
+        >
+        Theme. Powered by <a href="https://hexo.io">Hexo</a>.
+      </div>
+    </div>
+
     <%- partial('script') %>
   </body>
 </html>
