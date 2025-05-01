@@ -5,8 +5,9 @@ site.posts.each(p => {
     posts.push({
       title: p.title,
       slug: p.slug,
-      date: p.date(),
+      date: p.date.format('YYYY-MM-DD'),
       excerpt: excerpt_clean(p.content, theme.excerpt_length),
+      content: p.content,
       path: p.path,
       tags: p.tags.data,
       categories: p.categories.data,
