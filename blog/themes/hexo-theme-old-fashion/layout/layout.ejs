@@ -44,10 +44,11 @@
         <!-- left links -->
         <div id="left-links">
           <!-- page links -->
-          <a class="<%- path == 'index.html'? 'current' : '' %>" href="/">首页</a>
+          <a class="<%- path.startsWith('index.html')? 'current' : '' %>"
+            href="/">首页</a>
           <% site.pages.each(p=> { %>
           <br />
-          <a class="<%- path == p.path? 'current' : '' %>"
+          <a class="<%- path.startsWith(p.path)? 'current' : '' %>"
             href="/<%- p.path %>"><%- p.title %></a>
           <% }); %>
           <!-- end page links -->
@@ -60,55 +61,29 @@
           <!-- end sidebar extra html -->
 
           <button id="dark-btn" onclick="changeDarkMode()">更换主题</button>
-        </div>
+        </div><hr>
         <!-- end left links -->
 
-        <!-- <?php if ($this->options->showCategory): ?>
-                    <hr />
-                    <h4 class="widget-title"><?php $this->options->showCategory(); ?></h3>
-                        <?php \Widget\Metas\Category\Rows::alloc()->listCategories('wrapClass=widget-list'); ?>
-                    <?php endif; ?>
+        <!-- search -->
+        <form id="search" method="get" action="/index.html" role="search">
+          <input type="text" id="s" name="s" class="text"
+            placeholder="输入关键字搜索" />
+          <button type="submit" class="submit">
+            <img src="/img/icon-search.png" alt="icon-search">
+          </button>
+        </form>
+        <!-- end search -->
 
-                    <?php if ($this->options->showArchive): ?>
-                        <hr />
-                        <h4 class="widget-title"><?php $this->options->showArchive(); ?></h3>
-                            <ul class="widget-list">
-                                <?php \Widget\Contents\Post\Date::alloc('type=month&format=F Y')
-                                    ->parse('<li><a href="{permalink}">{date}</a></li>'); ?>
-                            </ul>
-                        <?php endif; ?>
-
-                        <?php if ($this->options->showOther): ?>
-                            <hr />
-                            <h3 class="widget-title"><?php $this->options->showOther(); ?></h3>
-                            <ul class="widget-list">
-                                <?php if ($this->user->hasLogin()): ?>
-                                    <li class="last"><a href="<?php $this->options->adminUrl(); ?>"><?php _e('进入后台'); ?>
-                                            (<?php $this->user->screenName(); ?>)</a></li>
-                                    <li><a href="<?php $this->options->logoutUrl(); ?>"><?php _e('退出'); ?></a></li>
-                                <?php else: ?>
-                                    <li class="last"><a
-                                            href="<?php $this->options->adminUrl('login.php'); ?>"><?php _e('登录'); ?></a>
-                                    </li>
-                                <?php endif; ?>
-                                <li><a href="<?php $this->options->feedUrl(); ?>"><?php _e('文章 RSS'); ?></a></li>
-                                <li><a href="<?php $this->options->commentsFeedUrl(); ?>"><?php _e('评论 RSS'); ?></a>
-                                </li>
-                                <li><a href="http://www.typecho.org">Typecho</a></li>
-                            </ul>
-                        <?php endif; ?>
-                        <hr>
-                        <form id="search" method="post" action="<?php $this->options->siteUrl(); ?>" role="search">
-                            <input type="text" id="s" name="s" class="text" placeholder="<?php _e('输入关键字搜索'); ?>" />
-                            <button type="submit" class="submit">
-                                <img src="<?php $this->options->themeUrl('img/icon-search.png'); ?>"
-                                    alt="icon-search">
-                            </button>
-                        </form> -->
       </div>
       <!-- end left area -->
 
-      <%- body %>
+      <!-- right area -->
+      <div id="right">
+        <div class="row">
+          <%- body %>
+        </div>
+      </div>
+      <!-- end right area -->
 
       <!-- footer -->
       <div id="footer" role="contentinfo">
