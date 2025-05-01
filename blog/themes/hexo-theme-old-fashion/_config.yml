@@ -7,6 +7,9 @@ site_logo_url: ''
 # dark: 暗色
 color_schema: "auto"
 
+# 浏览器标签页中的标题分隔符
+title_separator: " | "
+
 sidebar_extra_html: |- # 侧边栏额外html
   <a href="/rss.xml">RSS</a><br>
   <a href="mailto:email@example.com">Email</a><br>
