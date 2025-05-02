@@ -29,7 +29,6 @@
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/sidebar.css">
 <link rel="stylesheet" href="/css/post.css">
-<link rel="stylesheet" href="/css/comment.css">
 <link rel="stylesheet" href="/css/misc.css">
 <link rel="stylesheet" href="/css/page.css">
 <link rel="stylesheet" href="/css/footer.css">
@@ -48,7 +47,7 @@
 
 <!-- description -->
 
-<meta name="description" content="使用 vercel edge function 1234567891011121314151617181920212223242526272829303132333435export const runtime = &#x27;edge&#x27;;async function handleRequest(req: Request) &#123;    const url = new URL(re" />
+<meta name="description" content="使用 vercel edge function export const runtime = &#39;edge&#39;;  async function handleRequest(req: Request) &#123;     const url = new URL(req.url);     const targetUrl = decodeURIComponent(url.search)" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -71,7 +70,7 @@
                             </p>
                             <script>
 var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["IMPOSSIBLE IS NOTHING","路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
+var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
 var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
 description_random_intro.innerHTML = random_intro;
                             </script>
@@ -136,7 +135,86 @@ description_random_intro.innerHTML = random_intro;
             <!-- right area -->
             <div id="right">
                 <div class="row">
-                    <h1>Blog Post</h1>
+                    <div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2025/03/23/vercel%E6%90%AD%E5%BB%BA%E8%B7%A8%E5%9F%9FAPI/">vercel搭建跨域API</a>
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2025-03-23T07:34:00.000Z">2025-03-23</time>
+            </li>
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
+                    默认分类
+                </a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <p>使用 <code>vercel edge function</code></p>
+<pre><code class="language-typescript">export const runtime = &#39;edge&#39;;
+
+async function handleRequest(req: Request) &#123;
+    const url = new URL(req.url);
+    const targetUrl = decodeURIComponent(url.search).slice(1);
+
+    const reqInit: RequestInit &amp; &#123; duplex?: string &#125; = &#123;
+        headers: req.headers,
+        method: req.method,
+        body: req.body,
+        redirect: &#39;follow&#39;,
+        duplex: &#39;half&#39;
+    &#125;;
+    const modifiedRequest = new Request(targetUrl, reqInit);
+    const resp = await fetch(modifiedRequest);
+
+    return new Response(resp.body, &#123;
+        status: resp.status,
+        statusText: resp.statusText,
+        headers: new Headers(&#123;
+            ...resp.headers,
+            &#39;Cache-Control&#39;: &#39;no-store&#39;,
+            &#39;Access-Control-Allow-Methods&#39;: &#39;GET, POST, PUT, DELETE, PATCH, OPTIONS&#39;,
+            &#39;Access-Control-Allow-Headers&#39;: &#39;*&#39;,
+            &#39;Access-Control-Allow-Origin&#39;: &#39;*&#39;,
+        &#125;),
+    &#125;);
+&#125;
+
+export const GET = handleRequest;
+export const POST = handleRequest;
+export const PUT = handleRequest;
+export const DELETE = handleRequest;
+export const PATCH = handleRequest;
+export const OPTIONS = handleRequest;
+</code></pre>
+<p>保存为 <code>vap.ts</code> (名称随意)<br>API地址: <code>&lt;域名&gt;/api/&lt;保存名称&gt;?&lt;目标URL&gt;</code></p>
+
+        </div>
+        <!-- end post content -->
+
+    </article>
+    <!-- end article body -->
+
+</div>
                 </div>
             </div>
             <!-- end right area -->
@@ -179,6 +257,11 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script src="/js/sidebar.js"></script>
 <script src="/js/search.js"></script>
 
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
     </body>
 
 </html>

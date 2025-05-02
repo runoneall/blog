@@ -29,7 +29,6 @@
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/sidebar.css">
 <link rel="stylesheet" href="/css/post.css">
-<link rel="stylesheet" href="/css/comment.css">
 <link rel="stylesheet" href="/css/misc.css">
 <link rel="stylesheet" href="/css/page.css">
 <link rel="stylesheet" href="/css/footer.css">
@@ -71,7 +70,7 @@
                             </p>
                             <script>
 var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["IMPOSSIBLE IS NOTHING","路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
+var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
 var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
 description_random_intro.innerHTML = random_intro;
                             </script>
@@ -268,7 +267,7 @@ description_random_intro.innerHTML = random_intro;
 
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
-            记一次从 claw cloud run 迁移到 fnl mini 的经历，之前已经重装成 alpine 系统了，所以是 alpine 部署 alist 教程 基本版本可从 app launchpad 找到 12345678910apk add screenmkdir alistrun...
+            记一次从 claw cloud run 迁移到 fnl mini 的经历，之前已经重装成 alpine 系统了，所以是 alpine 部署 alist 教程 基本版本可从 app launchpad 找到 apk add screen mkdir alistrun &amp;&amp; cd...
         </div>
         <!-- end post content -->
 
@@ -336,7 +335,7 @@ description_random_intro.innerHTML = random_intro;
 
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
-            是从某个一键脚本抽离出来的 12345678910111213new_swap=1024 # 单位MBswap_partitions=$(grep -E &#x27;^/dev/&#x27; /proc/swaps | awk &#x27;&#123;print $1&#125;&#x27;)for...
+            是从某个一键脚本抽离出来的 new_swap=1024 # 单位MB swap_partitions=$(grep -E &#39;^/dev/&#39; /proc/swaps | awk &#39;&#123;print $1&#125;&#39;) for partition in...
         </div>
         <!-- end post content -->
 
@@ -404,7 +403,7 @@ description_random_intro.innerHTML = random_intro;
 
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
-            浏览网页一点问题没有，配置低的vps也可以看 第一步刷轻量系统，这里用alpine 3.20 1wget -O vps.sh https://raw.githubusercontent.com/everett7623/vps_scripts/main/vps.sh &amp;&amp; chmod...
+            浏览网页一点问题没有，配置低的vps也可以看 第一步刷轻量系统，这里用alpine 3.20 wget -O vps.sh https://raw.githubusercontent.com/everett7623/vps_scripts/main/vps.sh &amp;&amp; chmod...
         </div>
         <!-- end post content -->
 
@@ -576,6 +575,11 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script src="/js/sidebar.js"></script>
 <script src="/js/search.js"></script>
 
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
     </body>
 
 </html>

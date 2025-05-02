@@ -29,7 +29,6 @@
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/sidebar.css">
 <link rel="stylesheet" href="/css/post.css">
-<link rel="stylesheet" href="/css/comment.css">
 <link rel="stylesheet" href="/css/misc.css">
 <link rel="stylesheet" href="/css/page.css">
 <link rel="stylesheet" href="/css/footer.css">
@@ -71,7 +70,7 @@
                             </p>
                             <script>
 var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["IMPOSSIBLE IS NOTHING","路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
+var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
 var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
 description_random_intro.innerHTML = random_intro;
                             </script>
@@ -166,7 +165,7 @@ description_random_intro.innerHTML = random_intro;
 
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
-            云湖机器人（需下载云湖APP） 效果图： 直接体验：https://yhfx.jwznb.com/share?key=YZInMjHRY6c2&amp;ts=1745027189 部署（需python3.12） 依赖包：...
+            云湖机器人（需下载云湖APP） 效果图： 直接体验：https://yhfx.jwznb.com/share?key=YZInMjHRY6c2&amp;ts=1745027189 部署（需python3.12） 依赖包： blinker==1.9.0 certifi==2025.1.31...
         </div>
         <!-- end post content -->
 
@@ -200,7 +199,7 @@ description_random_intro.innerHTML = random_intro;
 
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
-            AliceAPI.py...
+            AliceAPI.py import requests class EphemeraAPI: def __init__(self, api_token): self.EVO_API_BASE = &quot;https://app.alice.ws/cli/v1/Evo/&quot;...
         </div>
         <!-- end post content -->
 
@@ -234,7 +233,7 @@ description_random_intro.innerHTML = random_intro;
 
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
-            翻到台mac mini，运行macOS 10.15，已经不支持安装docker GUI了 首先安装brew 1/bin/bash -c &quot;$(curl -fsSL...
+            翻到台mac mini，运行macOS 10.15，已经不支持安装docker GUI了 首先安装brew /bin/bash -c &quot;$(curl -fsSL...
         </div>
         <!-- end post content -->
 
@@ -268,7 +267,7 @@ description_random_intro.innerHTML = random_intro;
 
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
-            安装模型（stt用的vosk-model-cn-0.22，tts用的kokoro-v1.1-zh） 123456789101112# vosk-model-cn-0.22wget...
+            安装模型（stt用的vosk-model-cn-0.22，tts用的kokoro-v1.1-zh） # vosk-model-cn-0.22 wget https://alphacephei.com/vosk/models/vosk-model-cn-0.22.zip unzip...
         </div>
         <!-- end post content -->
 
@@ -302,7 +301,7 @@ description_random_intro.innerHTML = random_intro;
 
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
-            使用 vercel edge function 1234567891011121314151617181920212223242526272829303132333435export const runtime = &#x27;edge&#x27;;async function...
+            使用 vercel edge function export const runtime = &#39;edge&#39;; async function handleRequest(req: Request) &#123; const url = new URL(req.url); const...
         </div>
         <!-- end post content -->
 
@@ -370,7 +369,7 @@ description_random_intro.innerHTML = random_intro;
 
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
-            这是对 https://dev.oneall.eu.org/archives/32/ 的补充在原有友链基础上增加可选的rss选项支持自动分析rss和atom...
+            这是对 https://dev.oneall.eu.org/archives/32/ 的补充在原有友链基础上增加可选的rss选项支持自动分析rss和atom // 本人js不好大体是这么个意思 // 使用 https://dev.oneall.eu.org/archives/49/ 跨域请求...
         </div>
         <!-- end post content -->
 
@@ -404,7 +403,7 @@ description_random_intro.innerHTML = random_intro;
 
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
-            12345678910111213141516171819202122&lt;?php$targetUrl = $_SERVER[&#x27;REQUEST_URI&#x27;];$targetUrl = substr($targetUrl, strpos($targetUrl,...
+            &lt;?php $targetUrl = $_SERVER[&#39;REQUEST_URI&#39;]; $targetUrl = substr($targetUrl, strpos($targetUrl, &#39;netdrive.php/&#39;) + 13); if...
         </div>
         <!-- end post content -->
 
@@ -582,6 +581,11 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script src="/js/sidebar.js"></script>
 <script src="/js/search.js"></script>
 
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
     </body>
 
 </html>

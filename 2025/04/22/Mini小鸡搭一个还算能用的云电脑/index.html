@@ -29,7 +29,6 @@
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/sidebar.css">
 <link rel="stylesheet" href="/css/post.css">
-<link rel="stylesheet" href="/css/comment.css">
 <link rel="stylesheet" href="/css/misc.css">
 <link rel="stylesheet" href="/css/page.css">
 <link rel="stylesheet" href="/css/footer.css">
@@ -48,7 +47,7 @@
 
 <!-- description -->
 
-<meta name="description" content="浏览网页一点问题没有，配置低的vps也可以看 第一步刷轻量系统，这里用alpine 3.20 1wget -O vps.sh https://raw.githubusercontent.com/everett7623/vps_scripts/main/vps.sh &amp;&amp; chmod +x vps.sh &amp;&amp; clear &amp;&amp; ./vps.sh   安" />
+<meta name="description" content="浏览网页一点问题没有，配置低的vps也可以看 第一步刷轻量系统，这里用alpine 3.20 wget -O vps.sh https://raw.githubusercontent.com/everett7623/vps_scripts/main/vps.sh &amp;&amp; chmod +x vps.sh &amp;&amp; clear &amp;&amp; ./vps.sh   安装" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -71,7 +70,7 @@
                             </p>
                             <script>
 var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["IMPOSSIBLE IS NOTHING","路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
+var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
 var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
 description_random_intro.innerHTML = random_intro;
                             </script>
@@ -136,7 +135,83 @@ description_random_intro.innerHTML = random_intro;
             <!-- right area -->
             <div id="right">
                 <div class="row">
-                    <h1>Blog Post</h1>
+                    <div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2025/04/22/Mini%E5%B0%8F%E9%B8%A1%E6%90%AD%E4%B8%80%E4%B8%AA%E8%BF%98%E7%AE%97%E8%83%BD%E7%94%A8%E7%9A%84%E4%BA%91%E7%94%B5%E8%84%91/">Mini小鸡搭一个还算能用的云电脑</a>
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2025-04-22T10:40:00.000Z">2025-04-22</time>
+            </li>
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
+                    默认分类
+                </a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <p>浏览网页一点问题没有，配置低的vps也可以看<br><img src="https://s.rmimg.com/2025-04-22/1745310185-392883-2025-04-22-161856.png" alt="Image description"></p>
+<p>第一步刷轻量系统，这里用alpine 3.20</p>
+<pre><code class="language-sh">wget -O vps.sh https://raw.githubusercontent.com/everett7623/vps_scripts/main/vps.sh &amp;&amp; chmod +x vps.sh &amp;&amp; clear &amp;&amp; ./vps.sh
+</code></pre>
+<ol>
+<li>安装桌面（这里用lxqt加lxdm）</li>
+</ol>
+<pre><code class="language-sh">setup-xorg-base
+setup-user  # 桌面不能root登录
+apk add lxqt-desktop lxqt-core lxqt-panel lxqt-admin lxqt-config lxqt-notificationd lxqt-powermanagement lxqt-themes openbox setxkbmap
+addgroup &lt;user&gt; input  # 将新创建的普通用户加入input和video组
+addgroup &lt;user&gt; video
+apk add dbus dbus-x11 lxdm
+rc-update add dbus
+rc-update add lxdm
+reboot
+</code></pre>
+<ol start="2">
+<li>字体和图标</li>
+</ol>
+<pre><code class="language-sh">apk add breeze-icons font-noto-cjk
+</code></pre>
+<ol start="3">
+<li>浏览器（火狐算是比较流畅的了）</li>
+</ol>
+<pre><code class="language-sh">apk add firefox
+</code></pre>
+<ol start="4">
+<li><p>开启VNC<br><img src="https://s.rmimg.com/2025-04-22/1745311117-804227-2025-04-22-163755.png" alt="Image description"></p>
+</li>
+<li><p>重启系统</p>
+</li>
+</ol>
+<pre><code class="language-sh">reboot
+</code></pre>
+
+        </div>
+        <!-- end post content -->
+
+    </article>
+    <!-- end article body -->
+
+</div>
                 </div>
             </div>
             <!-- end right area -->
@@ -179,6 +254,11 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script src="/js/sidebar.js"></script>
 <script src="/js/search.js"></script>
 
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
     </body>
 
 </html>

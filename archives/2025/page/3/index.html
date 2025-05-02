@@ -29,7 +29,6 @@
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/sidebar.css">
 <link rel="stylesheet" href="/css/post.css">
-<link rel="stylesheet" href="/css/comment.css">
 <link rel="stylesheet" href="/css/misc.css">
 <link rel="stylesheet" href="/css/page.css">
 <link rel="stylesheet" href="/css/footer.css">
@@ -71,7 +70,7 @@
                             </p>
                             <script>
 var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["IMPOSSIBLE IS NOTHING","路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
+var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
 var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
 description_random_intro.innerHTML = random_intro;
                             </script>
@@ -200,7 +199,7 @@ description_random_intro.innerHTML = random_intro;
 
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
-            好处：不会显式刷新，语法简单，使用原生JS router.js 12345678910111213141516171819202122232425262728293031323334353637383940class HashRouter &#123; constructor(container)...
+            好处：不会显式刷新，语法简单，使用原生JS router.js class HashRouter &#123; constructor(container) &#123; this.container = container; this.routes = &#123;&#125;;...
         </div>
         <!-- end post content -->
 
@@ -234,7 +233,7 @@ description_random_intro.innerHTML = random_intro;
 
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
-            一个用php写的简易订阅整合支持：合并订阅，零散节点，去重，以普通或base64格式返回...
+            一个用php写的简易订阅整合支持：合并订阅，零散节点，去重，以普通或base64格式返回 &lt;?php function response($code, $message, $header = &quot;&quot;) &#123; http_response_code($code); if...
         </div>
         <!-- end post content -->
 
@@ -404,7 +403,7 @@ description_random_intro.innerHTML = random_intro;
 
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
-            1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162import base64import socketimport...
+            import base64 import socket import random from urllib import request as urllib_request from urllib import parse as urllib_parse from flask import...
         </div>
         <!-- end post content -->
 
@@ -582,6 +581,11 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script src="/js/sidebar.js"></script>
 <script src="/js/search.js"></script>
 
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
     </body>
 
 </html>

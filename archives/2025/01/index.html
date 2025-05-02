@@ -29,7 +29,6 @@
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/sidebar.css">
 <link rel="stylesheet" href="/css/post.css">
-<link rel="stylesheet" href="/css/comment.css">
 <link rel="stylesheet" href="/css/misc.css">
 <link rel="stylesheet" href="/css/page.css">
 <link rel="stylesheet" href="/css/footer.css">
@@ -71,7 +70,7 @@
                             </p>
                             <script>
 var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["IMPOSSIBLE IS NOTHING","路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
+var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
 var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
 description_random_intro.innerHTML = random_intro;
                             </script>
@@ -302,7 +301,7 @@ description_random_intro.innerHTML = random_intro;
 
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
-            1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162import base64import socketimport...
+            import base64 import socket import random from urllib import request as urllib_request from urllib import parse as urllib_parse from flask import...
         </div>
         <!-- end post content -->
 
@@ -404,7 +403,7 @@ description_random_intro.innerHTML = random_intro;
 
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
-            都使用不限量免费模型进行测试星火lite有无限量选项，智谱的flash是免费的，这两个一个图文并茂（文生图，文生视频）一个博古通今（支持网络搜索） 我是用python的openai库来管理，并写成独立的python文件进行调用，ai.py...
+            都使用不限量免费模型进行测试星火lite有无限量选项，智谱的flash是免费的，这两个一个图文并茂（文生图，文生视频）一个博古通今（支持网络搜索） 我是用python的openai库来管理，并写成独立的python文件进行调用，ai.py from openai import OpenAI...
         </div>
         <!-- end post content -->
 
@@ -568,6 +567,11 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script src="/js/sidebar.js"></script>
 <script src="/js/search.js"></script>
 
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
     </body>
 
 </html>

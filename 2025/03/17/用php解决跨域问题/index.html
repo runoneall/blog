@@ -29,7 +29,6 @@
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/sidebar.css">
 <link rel="stylesheet" href="/css/post.css">
-<link rel="stylesheet" href="/css/comment.css">
 <link rel="stylesheet" href="/css/misc.css">
 <link rel="stylesheet" href="/css/page.css">
 <link rel="stylesheet" href="/css/footer.css">
@@ -48,7 +47,7 @@
 
 <!-- description -->
 
-<meta name="description" content="12345678910111213141516171819202122&lt;?php$targetUrl = $_SERVER[&#x27;REQUEST_URI&#x27;];$targetUrl = substr($targetUrl, strpos($targetUrl, &#x27;netdrive.php/&#x27;) + 13);if ($targetUrl == &#x27;&#" />
+<meta name="description" content="&lt;?php  $targetUrl = $_SERVER[&#39;REQUEST_URI&#39;]; $targetUrl = substr($targetUrl, strpos($targetUrl, &#39;netdrive.php/&#39;) + 13); if ($targetUrl == &#39;&#39;) &#123;     exit; &#125;  $ch =" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -71,7 +70,7 @@
                             </p>
                             <script>
 var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["IMPOSSIBLE IS NOTHING","路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
+var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
 var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
 description_random_intro.innerHTML = random_intro;
                             </script>
@@ -136,7 +135,72 @@ description_random_intro.innerHTML = random_intro;
             <!-- right area -->
             <div id="right">
                 <div class="row">
-                    <h1>Blog Post</h1>
+                    <div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2025/03/17/%E7%94%A8php%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/">用php解决跨域问题</a>
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2025-03-17T12:24:56.000Z">2025-03-17</time>
+            </li>
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
+                    默认分类
+                </a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <pre><code class="language-php">&lt;?php
+
+$targetUrl = $_SERVER[&#39;REQUEST_URI&#39;];
+$targetUrl = substr($targetUrl, strpos($targetUrl, &#39;netdrive.php/&#39;) + 13);
+if ($targetUrl == &#39;&#39;) &#123;
+    exit;
+&#125;
+
+$ch = curl_init($targetUrl);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+curl_setopt($ch, CURLOPT_HEADER, false);
+curl_setopt($ch, CURLOPT_USERAGENT, &#39;PHP cURL&#39;);
+
+header(&#39;Access-Control-Allow-Origin: *&#39;);
+header(&#39;Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS&#39;);
+header(&#39;Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization&#39;);
+
+curl_exec($ch);
+curl_close($ch);
+
+?&gt;
+</code></pre>
+<p>保存为 <code>netdrive.php</code><br>只要在该php文件url后加上目标url便可，跟cf反代一样的</p>
+
+        </div>
+        <!-- end post content -->
+
+    </article>
+    <!-- end article body -->
+
+</div>
                 </div>
             </div>
             <!-- end right area -->
@@ -179,6 +243,11 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script src="/js/sidebar.js"></script>
 <script src="/js/search.js"></script>
 
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
     </body>
 
 </html>

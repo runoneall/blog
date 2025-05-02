@@ -29,7 +29,6 @@
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/sidebar.css">
 <link rel="stylesheet" href="/css/post.css">
-<link rel="stylesheet" href="/css/comment.css">
 <link rel="stylesheet" href="/css/misc.css">
 <link rel="stylesheet" href="/css/page.css">
 <link rel="stylesheet" href="/css/footer.css">
@@ -71,7 +70,7 @@
                             </p>
                             <script>
 var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["IMPOSSIBLE IS NOTHING","路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
+var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
 var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
 description_random_intro.innerHTML = random_intro;
                             </script>
@@ -136,7 +135,197 @@ description_random_intro.innerHTML = random_intro;
             <!-- right area -->
             <div id="right">
                 <div class="row">
-                    <h1>Blog Post</h1>
+                    <div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2024/12/09/%E4%BD%BF%E7%94%A8%E4%BA%91%E6%B9%96%E5%BC%80%E6%94%BEAPI%E9%83%A8%E7%BD%B2%E4%BA%91%E6%B9%96%E9%82%AE%E5%B1%80/">使用云湖开放API部署云湖邮局</a>
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2024-12-09T10:51:00.000Z">2024-12-09</time>
+            </li>
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
+                    默认分类
+                </a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <p>先上效果图</p>
+<p><img src="https://s.rmimg.com/2024-11-21/1732152952-218009-2024-11-21-92212.png" alt="Image description"><br><img src="https://s.rmimg.com/2024-11-21/1732152956-884414-2024-11-21-92314.png" alt="Image description"></p>
+<p>不局限在云湖，任何有收发消息API的即时通讯软件都可以部署</p>
+<h1 id="收消息"><a href="#收消息" class="headerlink" title="收消息"></a>收消息</h1><ul>
+<li>使用Cloudflare Worker部署</li>
+<li>到电子邮件那里新建worker，再新建地址，选择转发到worker，选中刚刚创建的worker</li>
+<li>因Cloudflare限制，必须使用wrangler开发（网页编辑器无法导入包）</li>
+<li>使用wrangler创建项目，名字与刚创建的电子邮件worker相同</li>
+<li>进入项目并安装postal-mime包</li>
+<li>到云湖控制台中新建机器人</li>
+</ul>
+<p>在 <code>wrangler.toml</code> 里写入如下变量</p>
+<pre><code class="language-toml">[vars]
+YH_BOT_TOKEN = &quot;换成你的云湖机器人Token&quot;
+YH_USER_ID = &quot;换成你的ID&quot;
+</code></pre>
+<p>然后编写代码：</p>
+<pre><code class="language-javascript">import PostalMime from &#39;postal-mime&#39;;
+
+async function toYunhu(msg, env) &#123;
+    const token = env.YH_BOT_TOKEN
+    const apiUrl = &#39;https://chat-go.jwzhd.com/open-apis/v1/bot/send?token=&#39; + token
+    const response = await fetch(apiUrl, &#123;
+        method: &quot;POST&quot;,
+        headers: &#123; &quot;Content-Type&quot;: &quot;application/json; charset=utf-8&quot; &#125;,
+        body: JSON.stringify(&#123;
+            recvId: env.YH_USER_ID, recvType: &#39;user&#39;,
+            contentType: &#39;html&#39;, content: &#123; text: msg &#125;
+        &#125;)
+    &#125;)
+    return response.json()
+&#125;
+
+export default &#123;
+    async email(message, env, ctx) &#123;
+        let email_string = ``;
+        const email_from = message.from;
+        const email_to = message.to;
+        email_string += `&lt;div style=&quot;background-color: white; color: black;&quot;&gt;
+  &lt;ul&gt;
+    &lt;li&gt;From: $&#123;email_from&#125;&lt;/li&gt;
+    &lt;li&gt;To: $&#123;email_to&#125;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;hr&gt;`;
+        const email_content = await PostalMime.parse(message.raw);
+        const email_subject = email_content.subject;
+        let email_text = email_content.html;
+        if (email_text == null) &#123;
+            email_text = email_content.text;
+        &#125;
+        email_string += `  &lt;details&gt;
+    &lt;summary&gt;
+      &lt;strong style=&quot;font-size: 20px;&quot;&gt;$&#123;email_subject&#125;&lt;/strong&gt;
+    &lt;/summary&gt;
+    $&#123;email_text&#125;
+  &lt;/details&gt;
+&lt;/div&gt;`;
+        await toYunhu(email_string, env);
+    &#125;,
+&#125;;
+</code></pre>
+<p>最后使用wrangler部署</p>
+<h1 id="发消息（这一章节较为复杂！）"><a href="#发消息（这一章节较为复杂！）" class="headerlink" title="发消息（这一章节较为复杂！）"></a>发消息（这一章节较为复杂！）</h1><ul>
+<li>新建一个普通worker用于发送邮件</li>
+<li>无需wrangler</li>
+<li>准备 Github REST API Token（用于调用markdown转html接口）</li>
+<li>准备 Resend Email Token（用于发送邮件）</li>
+<li>将域名解析到Resend（可选）（如果想用域名邮箱则必须）</li>
+</ul>
+<p>打开云湖控制台并新建自定义输入指令<br><img src="https://s.rmimg.com/2024-11-21/1732153422-509814-2024-11-21-94259.png" alt="Image description"><br>把每个表单ID对应的输入框名记下来！</p>
+<p>打开cloudflare网页编辑器并编写代码</p>
+<pre><code class="language-javascript">async function sendEmail(email_to, email_title, email_content, env) &#123;
+    const token = env.RESEND_EMAIL_TOKEN
+    const response = await fetch(&quot;https://api.resend.com/emails&quot;, &#123;
+        method: &quot;POST&quot;,
+        headers: &#123;
+            &quot;content-type&quot;: &quot;application/json&quot;,
+            &quot;Authorization&quot;: `Bearer $&#123;token&#125;`
+        &#125;,
+        body: JSON.stringify(&#123;
+            from: &quot;这里填入你的resend邮箱名，如果将域名解析到resend则可以填域名邮箱&quot;,
+            to: email_to,
+            subject: email_title,
+            html: email_content
+        &#125;)
+    &#125;);
+    return response.body;
+&#125;
+
+async function toYunhu(msg, env) &#123;
+    const token = env.YH_BOT_TOKEN
+    const apiUrl = &#39;https://chat-go.jwzhd.com/open-apis/v1/bot/send?token=&#39;+token
+    const response = await fetch(apiUrl, &#123;method: &quot;POST&quot;,
+        headers: &#123;&quot;Content-Type&quot;: &quot;application/json; charset=utf-8&quot;&#125;,
+        body: JSON.stringify(&#123;
+            recvId: env.YH_USER_ID,recvType: &#39;user&#39;,
+            contentType: &#39;html&#39;,content: &#123;text: msg&#125;&#125;)&#125;)
+    return response.json()
+&#125;
+
+async function toHTML(markdown, env) &#123;
+    const token = env.GH_REST_TOKEN
+    const response = await fetch(&quot;https://api.github.com/markdown&quot;, &#123;
+        method: &quot;POST&quot;,
+        headers: &#123;
+            &#39;Accept&#39;: &quot;application/vnd.github+json&quot;,
+            &#39;User-Agent&#39;: &quot;Markdown-To-Html-App&quot;,
+            &#39;Authorization&#39;: `Bearer $&#123;token&#125;`,
+            &#39;X-GitHub-Api-Version&#39;: &quot;2022-11-28&quot;
+        &#125;,
+        body: JSON.stringify(&#123;text: markdown&#125;),
+    &#125;)
+    return response.text();
+&#125;
+
+async function getEmailInfo(yhJson) &#123;
+    let email_info = &#123;&#125;
+    let formJson = yhJson[&#39;event&#39;][&#39;message&#39;][&#39;content&#39;][&#39;formJson&#39;]
+    if (formJson == null) &#123;
+        formJson = yhJson[&#39;event&#39;][&#39;message&#39;][&#39;content&#39;][&#39;formjson&#39;]
+    &#125;
+    email_info[&#39;address&#39;] = formJson[&#39;这里是 目标 输入框的表单ID&#39;][&#39;value&#39;]
+    email_info[&#39;title&#39;] = formJson[&#39;这里是 标题 输入框的表单ID&#39;][&#39;value&#39;]
+    email_info[&#39;content&#39;] = formJson[&#39;这里是 正文 输入框的表单ID&#39;][&#39;value&#39;]
+    return email_info
+&#125;
+
+export default &#123;
+    async fetch(request, env, ctx) &#123;
+        if (request.method == &quot;POST&quot;) &#123;
+            const email_info = await getEmailInfo((await request.json()))
+            const address = email_info[&#39;address&#39;]
+            const title = email_info[&#39;title&#39;]
+            const content = await toHTML(email_info[&#39;content&#39;], env)
+            const email_response = await sendEmail(address, title, content, env)
+            await toYunhu(&quot;已发送&quot;, env)
+            return new Response(email_response);
+        &#125;
+    &#125;,
+&#125;;
+</code></pre>
+<p>在 worker设置 -&gt; 变量和机密 那里新建变量</p>
+<ul>
+<li>GH_REST_TOKEN：你的Github REST API Token</li>
+<li>RESEND_EMAIL_TOKEN：你的Resend Email Token</li>
+<li>YH_BOT_TOKEN：你的云湖机器人Token</li>
+<li>YH_USER_ID：你的云湖ID</li>
+</ul>
+<p>部署完成</p>
+
+        </div>
+        <!-- end post content -->
+
+    </article>
+    <!-- end article body -->
+
+</div>
                 </div>
             </div>
             <!-- end right area -->
@@ -179,6 +368,11 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script src="/js/sidebar.js"></script>
 <script src="/js/search.js"></script>
 
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
     </body>
 
 </html>

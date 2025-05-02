@@ -29,7 +29,6 @@
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/sidebar.css">
 <link rel="stylesheet" href="/css/post.css">
-<link rel="stylesheet" href="/css/comment.css">
 <link rel="stylesheet" href="/css/misc.css">
 <link rel="stylesheet" href="/css/page.css">
 <link rel="stylesheet" href="/css/footer.css">
@@ -48,7 +47,7 @@
 
 <!-- description -->
 
-<meta name="description" content="这是对 https://dev.oneall.eu.org/archives/32/ 的补充在原有友链基础上增加可选的rss选项支持自动分析rss和atom 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465" />
+<meta name="description" content="这是对 https://dev.oneall.eu.org/archives/32/ 的补充在原有友链基础上增加可选的rss选项支持自动分析rss和atom // 本人js不好大体是这么个意思 // 使用 https://dev.oneall.eu.org/archives/49/ 跨域请求 function xhrGet(url) &#123;     return new Promise((r" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -71,7 +70,7 @@
                             </p>
                             <script>
 var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["IMPOSSIBLE IS NOTHING","路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
+var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
 var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
 description_random_intro.innerHTML = random_intro;
                             </script>
@@ -136,7 +135,164 @@ description_random_intro.innerHTML = random_intro;
             <!-- right area -->
             <div id="right">
                 <div class="row">
-                    <h1>Blog Post</h1>
+                    <div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2025/03/18/%E6%9F%A5%E7%9C%8B%E5%8D%9A%E5%AE%A2%E5%8F%8B%E9%93%BE%E6%9C%80%E6%96%B0%E6%9B%B4%E6%96%B0%E4%BA%86%E4%BB%80%E4%B9%88-/">查看博客友链最新更新了什么?</a>
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2025-03-18T02:53:00.000Z">2025-03-18</time>
+            </li>
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
+                    默认分类
+                </a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <p>这是对 <a target="_blank" rel="noopener" href="https://dev.oneall.eu.org/archives/32/">https://dev.oneall.eu.org/archives/32/</a> 的补充<br>在原有友链基础上增加可选的rss选项<br><img src="https://s.rmimg.com/2025-03-18/1742262324-200112-2025-03-18-094451.png" alt="Image description"><br>支持自动分析rss和atom</p>
+<pre><code class="language-javascript">// 本人js不好大体是这么个意思
+// 使用 https://dev.oneall.eu.org/archives/49/ 跨域请求
+function xhrGet(url) &#123;
+    return new Promise((resolve, reject) =&gt; &#123;
+        const xhr = new XMLHttpRequest();
+        xhr.open(&#39;GET&#39;, &quot;https://dev.oneall.eu.org/netdrive.php/&quot; + url, true);
+        xhr.onload = function () &#123;
+            if (xhr.status &gt;= 200 &amp;&amp; xhr.status &lt; 300) &#123;
+                resolve(xhr.responseText);
+            &#125; else &#123;
+                reject(new Error(`HTTP Error: $&#123;xhr.status&#125;`));
+            &#125;
+        &#125;;
+        xhr.onerror = function () &#123;
+            reject(new Error(&#39;Network Error&#39;));
+        &#125;;
+        xhr.send();
+    &#125;);
+&#125;
+
+async function putRss(linkItemsArea, rssLinkItems) &#123;
+    if (rssLinkItems.length === 0) &#123;
+        return;
+    &#125;
+    linkItemsArea.innerHTML += `&lt;div id=&quot;links-rss&quot;&gt;&lt;h2&gt;近期更新&lt;/h2&gt;&lt;ul&gt;&lt;/ul&gt;&lt;/div&gt;`;
+    const rssItemsArea = linkItemsArea.querySelector(&#39;#links-rss ul&#39;);
+    for (const rssLinkItem of rssLinkItems) &#123;
+        xhrGet(rssLinkItem)
+            .then(xmlString =&gt; &#123;
+                const xmlStringParser = new DOMParser();
+                const xmlDoc = xmlStringParser.parseFromString(xmlString, &#39;text/xml&#39;);
+                atomFeed = xmlDoc.getElementsByTagName(&#39;feed&#39;);
+                rssFeed = xmlDoc.getElementsByTagName(&#39;rss&#39;);
+                if (atomFeed.length &gt; 0) &#123;
+                    const blogName = atomFeed[0].getElementsByTagName(&#39;title&#39;)[0].textContent;
+                    rssItemsArea.innerHTML += `&lt;h3&gt;$&#123;blogName&#125;:&lt;/h3&gt;`;
+                    const first10Items = [...atomFeed[0].getElementsByTagName(&#39;entry&#39;)].slice(0, 10);
+                    first10Items.forEach(item =&gt; &#123;
+                        const blog_title = item.getElementsByTagName(&#39;title&#39;)[0].textContent;
+                        const blog_link = item.getElementsByTagName(&#39;link&#39;)[0].getAttribute(&#39;href&#39;);
+                        rssItemsArea.innerHTML += `&lt;li&gt;&lt;a href=&quot;$&#123;blog_link&#125;&quot; target=&quot;_blank&quot;&gt;$&#123;blog_title&#125;&lt;/a&gt;&lt;/li&gt;`
+                    &#125;);
+                &#125; else if (rssFeed.length &gt; 0) &#123;
+                    const blogName = rssFeed[0].getElementsByTagName(&#39;title&#39;)[0].textContent;
+                    rssItemsArea.innerHTML += `&lt;h3&gt;$&#123;blogName&#125;:&lt;/h3&gt;`;
+                    const first10Items = [...rssFeed[0].getElementsByTagName(&#39;item&#39;)].slice(0, 10);
+                    first10Items.forEach(item =&gt; &#123;
+                        const blog_title = item.getElementsByTagName(&#39;title&#39;)[0].textContent;
+                        const blog_link = item.getElementsByTagName(&#39;link&#39;)[0].textContent;
+                        rssItemsArea.innerHTML += `&lt;li&gt;&lt;a href=&quot;$&#123;blog_link&#125;&quot; target=&quot;_blank&quot;&gt;$&#123;blog_title&#125;&lt;/a&gt;&lt;/li&gt;`
+                    &#125;);
+                &#125; else &#123;
+                    console.log(&#39;Unknown feed type &#39; + rssLinkItem);
+                &#125;
+            &#125;)
+            .catch(() =&gt; &#123; &#125;);
+    &#125;
+&#125;
+
+function putLinks(link_json) &#123;
+    const linkJson = JSON.parse(link_json);
+    const linkItemsArea = document.getElementById(&#39;linkItemsArea&#39;);
+    let linkItemsHTML = &quot;&quot;;
+    let rssLinkItems = [];
+    for (const linkItem of linkJson) &#123;
+        linkItemsHTML += `&lt;div class=&quot;link-item&quot;&gt;&lt;img class=&quot;link-item-avatar&quot; src=&quot;$&#123;linkItem.avatar&#125;&quot;&gt;&lt;div class=&quot;link-item-content&quot;&gt;&lt;a href=&quot;$&#123;linkItem.url&#125;&quot; target=&quot;_blank&quot;&gt;&lt;h2&gt;$&#123;linkItem.title&#125;&lt;/h2&gt;&lt;/a&gt;&lt;p&gt;$&#123;linkItem.description&#125;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;`;
+        if (linkItem.rss) &#123;
+            rssLinkItems.push(linkItem.rss);
+        &#125;
+    &#125;
+    linkItemsArea.innerHTML = linkItemsHTML;
+    setTimeout(() =&gt; putRss(linkItemsArea, rssLinkItems), 0);
+&#125;
+</code></pre>
+<pre><code class="language-css">#linkItemsArea &#123;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+&#125;
+
+@media screen and (max-width: 700px) &#123;
+    #linkItemsArea &#123;
+        grid-template-columns: repeat(1, 1fr);
+    &#125;
+&#125;
+
+.link-item &#123;
+    height: 100px;
+    overflow: hidden;
+    border: 1px solid gray;
+&#125;
+
+.link-item a &#123;
+    color: inherit !important;
+&#125;
+
+.link-item-avatar &#123;
+    float: left;
+    width: auto;
+    height: auto;
+    max-height: 100%;
+    margin-right: 10px;
+    border-right: 1px solid gray;
+&#125;
+
+.link-item-content &#123;
+    height: 100%;
+&#125;
+
+#linkItemsArea #links-rss &#123;
+    grid-column: 1 / -1;
+&#125;
+</code></pre>
+<p>效果：异步加载最新10篇文章<br><img src="https://s.rmimg.com/2025-03-18/1742262484-796693-2025-03-18-094759.png" alt="Image description"><br>具体可看：<a target="_blank" rel="noopener" href="https://dev.oneall.eu.org/links.html%EF%BC%88%E8%8B%A5%E5%8F%91%E7%8E%B0%E9%94%99%E4%BD%8D%E5%B0%B1%E6%98%AF%E7%BC%93%E5%AD%98%E6%9C%AA%E5%A4%B1%E6%95%88%EF%BC%89">https://dev.oneall.eu.org/links.html（若发现错位就是缓存未失效）</a></p>
+
+        </div>
+        <!-- end post content -->
+
+    </article>
+    <!-- end article body -->
+
+</div>
                 </div>
             </div>
             <!-- end right area -->
@@ -179,6 +335,11 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script src="/js/sidebar.js"></script>
 <script src="/js/search.js"></script>
 
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
     </body>
 
 </html>

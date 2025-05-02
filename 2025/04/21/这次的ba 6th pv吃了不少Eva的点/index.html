@@ -29,7 +29,6 @@
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/sidebar.css">
 <link rel="stylesheet" href="/css/post.css">
-<link rel="stylesheet" href="/css/comment.css">
 <link rel="stylesheet" href="/css/misc.css">
 <link rel="stylesheet" href="/css/page.css">
 <link rel="stylesheet" href="/css/footer.css">
@@ -71,7 +70,7 @@
                             </p>
                             <script>
 var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["IMPOSSIBLE IS NOTHING","路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
+var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
 var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
 description_random_intro.innerHTML = random_intro;
                             </script>
@@ -136,7 +135,71 @@ description_random_intro.innerHTML = random_intro;
             <!-- right area -->
             <div id="right">
                 <div class="row">
-                    <h1>Blog Post</h1>
+                    <div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2025/04/21/%E8%BF%99%E6%AC%A1%E7%9A%84ba%206th%20pv%E5%90%83%E4%BA%86%E4%B8%8D%E5%B0%91Eva%E7%9A%84%E7%82%B9/">这次的ba 6th pv吃了不少Eva的点</a>
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2025-04-21T10:35:50.000Z">2025-04-21</time>
+            </li>
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
+                    默认分类
+                </a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <p>以下仅表个人观点，欢迎勘误</p>
+<ol>
+<li><p>绫波丽泡LCL<br><img src="https://s.rmimg.com/2025-04-21/1745221853-895725-2025-04-21-153511.png" alt="Image description"></p>
+</li>
+<li><p>WILLE在巴黎修复反L结界<br><img src="https://s.rmimg.com/2025-04-21/1745223009-343942-2025-04-21-153637.png" alt="Image description"></p>
+</li>
+<li><p>NERV的一艘战舰（推测为Erbsünde）<br><img src="https://s.rmimg.com/2025-04-21/1745223105-626384-2025-04-21-153832.png" alt="Image description"></p>
+</li>
+<li><p>暴走的初号机<br><img src="https://s.rmimg.com/2025-04-21/1745223167-554678-2025-04-21-153951.png" alt="Image description"></p>
+</li>
+<li><p>量产机<br><img src="https://s.rmimg.com/2025-04-21/1745223179-105679-2025-04-21-154025.png" alt="Image description"></p>
+</li>
+<li><p>屋岛作战前（虽然人数不对）<br><img src="https://s.rmimg.com/2025-04-21/1745223201-309792-2025-04-21-154039.png" alt="Image description"></p>
+</li>
+<li><p>大决战前明日香和真希波<br><img src="https://s.rmimg.com/2025-04-21/1745223324-691409-2025-04-21-154126.png" alt="Image description"></p>
+</li>
+<li><p>初号机和13号机（碇源堂和碇真嗣）<br><img src="https://s.rmimg.com/2025-04-21/1745223444-926117-2025-04-21-154201.png" alt="Image description"></p>
+</li>
+<li><p>装备阳电子炮4444C开火<br><img src="https://s.rmimg.com/2025-04-21/1745223582-250486-2025-04-21-154330.png" alt="Image description"></p>
+</li>
+<li><p>初号机光翼<br><img src="https://s.rmimg.com/2025-04-21/1745223659-685648-2025-04-21-154428.png" alt="Image description"><br><img src="https://s.rmimg.com/2025-04-21/1745223661-64023-2025-04-21-154444.png" alt="Image description"></p>
+</li>
+</ol>
+
+        </div>
+        <!-- end post content -->
+
+    </article>
+    <!-- end article body -->
+
+</div>
                 </div>
             </div>
             <!-- end right area -->
@@ -179,6 +242,11 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script src="/js/sidebar.js"></script>
 <script src="/js/search.js"></script>
 
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
     </body>
 
 </html>

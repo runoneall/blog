@@ -29,7 +29,6 @@
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/sidebar.css">
 <link rel="stylesheet" href="/css/post.css">
-<link rel="stylesheet" href="/css/comment.css">
 <link rel="stylesheet" href="/css/misc.css">
 <link rel="stylesheet" href="/css/page.css">
 <link rel="stylesheet" href="/css/footer.css">
@@ -48,7 +47,7 @@
 
 <!-- description -->
 
-<meta name="description" content="都使用不限量免费模型进行测试星火lite有无限量选项，智谱的flash是免费的，这两个一个图文并茂（文生图，文生视频）一个博古通今（支持网络搜索） 我是用python的openai库来管理，并写成独立的python文件进行调用，ai.py 12345678910111213141516171819202122232425262728293031323334353637383940414243444" />
+<meta name="description" content="都使用不限量免费模型进行测试星火lite有无限量选项，智谱的flash是免费的，这两个一个图文并茂（文生图，文生视频）一个博古通今（支持网络搜索） 我是用python的openai库来管理，并写成独立的python文件进行调用，ai.py from openai import OpenAI  zhipu_api_key = &quot;&quot; xinghuo_api_password = &" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -71,7 +70,7 @@
                             </p>
                             <script>
 var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["IMPOSSIBLE IS NOTHING","路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
+var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
 var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
 description_random_intro.innerHTML = random_intro;
                             </script>
@@ -136,7 +135,200 @@ description_random_intro.innerHTML = random_intro;
             <!-- right area -->
             <div id="right">
                 <div class="row">
-                    <h1>Blog Post</h1>
+                    <div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2025/01/11/%E8%AE%AF%E9%A3%9E%E6%98%9F%E7%81%AB%E5%92%8C%E6%99%BA%E8%B0%B1%E6%B8%85%E8%A8%80%E7%9A%84%E7%BB%84%E5%90%88%E6%8A%80/">讯飞星火和智谱清言的组合技</a>
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2025-01-11T12:30:14.000Z">2025-01-11</time>
+            </li>
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
+                    默认分类
+                </a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <p>都使用不限量免费模型进行测试<br>星火lite有无限量选项，智谱的flash是免费的，这两个一个图文并茂（文生图，文生视频）一个博古通今（支持网络搜索）</p>
+<p>我是用python的openai库来管理，并写成独立的python文件进行调用，<code>ai.py</code></p>
+<pre><code class="language-python">from openai import OpenAI
+
+zhipu_api_key = &quot;&quot;
+xinghuo_api_password = &quot;&quot;
+
+
+class ChatClient:
+    def __init__(self):
+        self.zhipu = OpenAI(
+            api_key=zhipu_api_key,
+            base_url=&quot;https://open.bigmodel.cn/api/paas/v4/&quot;,
+        )
+        self.xinghuo = OpenAI(
+            api_key=xinghuo_api_password,
+            base_url=&quot;https://spark-api-open.xf-yun.com/v1&quot;,
+        )
+
+    def zhipu_chat(self, query: str, history: list[dict[str, str]] = [], **kwargs):
+        history.append(&#123;&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: query&#125;)
+        response = self.zhipu.chat.completions.create(
+            model=&quot;glm-4-flash&quot;, messages=history, stream=True, **kwargs
+        )
+        for chunk in response:
+            yield chunk
+
+    def xinghuo_chat(self, query: str, history: list[dict[str, str]] = [], **kwargs):
+        history.append(&#123;&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: query&#125;)
+        response = self.xinghuo.chat.completions.create(
+            model=&quot;lite&quot;, messages=history, stream=True, **kwargs
+        )
+        for chunk in response:
+            yield chunk
+
+    def web_search(self, query: str):
+        query = &quot;搜索并总结：&quot; + query
+        response = self.xinghuo_chat(query, max_tokens=4096, top_p=1.0, temperature=1.0)
+        for chunk in response:
+            yield chunk.choices[0].delta.content
+
+    def image_vision(self, query: str, image_url: str):
+        response = self.zhipu.chat.completions.create(
+            model=&quot;glm-4v-flash&quot;,
+            messages=[
+                &#123;
+                    &quot;role&quot;: &quot;user&quot;,
+                    &quot;content&quot;: [
+                        &#123;&quot;type&quot;: &quot;image_url&quot;, &quot;image_url&quot;: &#123;&quot;url&quot;: image_url&#125;&#125;,
+                        &#123;&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: query&#125;,
+                    ],
+                &#125;
+            ],
+            stream=True,
+            max_tokens=1024,
+            top_p=1.0,
+            temperature=1.0,
+        )
+        for chunk in response:
+            yield chunk.choices[0].delta.content
+    
+    def image_generation(self, query: str, width: int, height: int):
+        response = self.zhipu.images.generate(
+            model=&quot;cogview-3-flash&quot;,
+            prompt=query,
+            size=f&quot;&#123;width&#125;x&#123;height&#125;&quot;,
+        )
+        return response.data[0].url
+</code></pre>
+<p>调用示例</p>
+<pre><code class="language-python">import ai
+
+ai.zhipu_api_key = &quot;智谱api key&quot;
+ai.xinghuo_api_password = &quot;星火 api password&quot;
+ChatClient = ai.ChatClient()
+
+history = [      # 上下文
+    &#123;
+        &quot;role&quot;: &quot;user&quot;,
+        &quot;content&quot;: &quot;在下面的对话中，你要记住我的名字是r1a！&quot;
+    &#125;,
+    &#123;
+        &quot;role&quot;: &quot;assistant&quot;,
+        &quot;content&quot;: &quot;好的，r1a。&quot;
+    &#125;
+]
+
+print(&quot;\n 智谱清言文字生成 (带上下文)&quot;)
+print(&quot;问: 你的开发者是谁？我是谁？&quot;)
+for chunk in ChatClient.zhipu_chat(&quot;你的开发者是谁？我是谁？&quot;, history, max_tokens=4095, top_p=1.0, temperature=1.0):
+    token = chunk.choices[0].delta.content
+    if token:
+        print(token, end=&#39;&#39;, flush=True)
+
+print(&quot;\n 讯飞星火文字生成 (带上下文)&quot;)
+print(&quot;问: 我是谁？&quot;)
+for chunk in ChatClient.xinghuo_chat(&quot;我是谁？&quot;, history, max_tokens=4095, top_p=1.0, temperature=1.0):
+    token = chunk.choices[0].delta.content
+    if token:
+        print(token, end=&#39;&#39;, flush=True)
+
+print(&quot;\n 讯飞星火网络搜索&quot;)
+print(&quot;搜索词: 云湖社交APP&quot;)
+for token in ChatClient.web_search(&quot;云湖社交APP&quot;):
+    if token:
+        print(token, end=&#39;&#39;, flush=True)
+
+print(&quot;\n 智谱清言图片理解&quot;)
+print(&quot;图片: https://chat-img.jwznb.com/0f6b27ece8a613c6e03c8254096a265a.jpg&quot;)
+for token in ChatClient.image_vision(&quot;这张图片里包含了什么？&quot;, &quot;https://chat-img.jwznb.com/0f6b27ece8a613c6e03c8254096a265a.jpg&quot;):
+    if token:
+        print(token, end=&#39;&#39;, flush=True)
+
+print(&quot;\n 智谱清言图片生成&quot;)
+print(&quot;提示词: 一辆列车行驶在轨道上&quot;)
+print(ChatClient.image_generation(&quot;一辆列车行驶在轨道上&quot;, 1024, 1024))
+</code></pre>
+<p>生成结果</p>
+<pre><code class="language-bash"> 智谱清言文字生成 (带上下文)
+问: 你的开发者是谁？我是谁？
+我是一个人工智能模型，由一个团队的开发者共同设计和训练的。作为用户，你是与我互动的人，你是r1a。很高兴与您交流！
+
+ 讯飞星火文字生成 (带上下文)
+问: 你的开发者是谁？我是谁？
+我是讯飞星火认知大模型，我的设计和构建都是由科大讯飞的团队进行的，并且不断进行更新和改进，以让我能够为用户提供更好的服务。
+
+ 讯飞星火文字生成 (带上下文)
+问: 我是谁？
+您是r1a！
+
+ 讯飞星火网络搜索
+搜索词: 云湖社交APP
+云湖社交APP是一款集多种功能于一体的社交软件，旨在为用户提供一个灵活、高效的交流平台。以下是对云湖社交APP的详细分析：
+1. **开放的消息接口**：云湖社交APP具备开放的服务接口，这意味着用户可以借助这些接口创造更多的可能性。
+2. **多设备支持**：该应用兼容多个操作系统，包括Android、iOS、Windows、MacOS等，确保用户在不同设备上都能流畅使用。
+3. **丰富的群聊功能**：云湖app支持不同类型的群组，满足不同用户的社交需求，无论是技术爱好者还是普通朋友，都能找到合适的交流圈子。
+4. **多样的交流方式**：除了文字聊天外，还支持语音和视频通讯，为用户提供更丰富的沟通体验。
+5. **隐私保护机制**：所有用户信息受到严格保护，确保用户在分享生活点滴时不会泄露个人信息。
+6. **机器人功能**：用户可以通过开放的服务接口创建自己的机器人，如官方机器人、服务监控机器人等，以提升工作效率。
+7. **UI优化与性能提升**：云湖社交APP不断优化其软件性能和用户界面，以提供更加流畅和愉悦的使用体验。
+8. **人工智能项目对接**：云湖社交APP作为生成式AI的最佳伴侣，可以无缝对接多种人工智能项目，帮助用户提高工作效率，实现创意的转化和应用。
+综上所述，云湖社交APP是一个多功能的社交平台，它不仅提供了基本的聊天功能，还通过开放的服务接口和隐私保护机制，为使用者提供了更多的互动机会和安全保障。无论是技术爱好者、普通朋友还是寻找新知的个体，都能在这个平台上找到适合自己的社交空间和互动方式。
+
+ 智谱清言图片理解
+图片: https://chat-img.jwznb.com/0f6b27ece8a613c6e03c8254096a265a.jpg
+这张图包含了很多表情符号，包括一个超大号的笑脸和很多小一号的笑脸。超大的笑脸是黄色的，正在融化或者流淌下来，而小的表情符号则是遍布在各个位置，背景为蓝绿色。
+
+ 智谱清言图片生成
+提示词: 一辆列车行驶在轨道上
+https://aigc-files.bigmodel.cn/api/cogview/20250111182941bc661da49c304234_0.png
+</code></pre>
+<p>各位觉得怎么样呢？</p>
+
+        </div>
+        <!-- end post content -->
+
+    </article>
+    <!-- end article body -->
+
+</div>
                 </div>
             </div>
             <!-- end right area -->
@@ -179,6 +371,11 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script src="/js/sidebar.js"></script>
 <script src="/js/search.js"></script>
 
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
     </body>
 
 </html>

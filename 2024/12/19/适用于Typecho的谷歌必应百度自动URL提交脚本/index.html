@@ -29,7 +29,6 @@
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/sidebar.css">
 <link rel="stylesheet" href="/css/post.css">
-<link rel="stylesheet" href="/css/comment.css">
 <link rel="stylesheet" href="/css/misc.css">
 <link rel="stylesheet" href="/css/page.css">
 <link rel="stylesheet" href="/css/footer.css">
@@ -71,7 +70,7 @@
                             </p>
                             <script>
 var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["IMPOSSIBLE IS NOTHING","路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
+var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
 var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
 description_random_intro.innerHTML = random_intro;
                             </script>
@@ -136,7 +135,114 @@ description_random_intro.innerHTML = random_intro;
             <!-- right area -->
             <div id="right">
                 <div class="row">
-                    <h1>Blog Post</h1>
+                    <div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2024/12/19/%E9%80%82%E7%94%A8%E4%BA%8ETypecho%E7%9A%84%E8%B0%B7%E6%AD%8C%E5%BF%85%E5%BA%94%E7%99%BE%E5%BA%A6%E8%87%AA%E5%8A%A8URL%E6%8F%90%E4%BA%A4%E8%84%9A%E6%9C%AC/">适用于Typecho的谷歌必应百度自动URL提交脚本</a>
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2024-12-19T10:28:00.000Z">2024-12-19</time>
+            </li>
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
+                    默认分类
+                </a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <h1 id="仅适用于使用mysql数据库安装的typecho且使用默认URL结构！"><a href="#仅适用于使用mysql数据库安装的typecho且使用默认URL结构！" class="headerlink" title="仅适用于使用mysql数据库安装的typecho且使用默认URL结构！"></a>仅适用于使用mysql数据库安装的typecho且使用默认URL结构！</h1><p>效果图：<br><img src="https://s.rmimg.com/2024-12-19/1734598864-426541-2024-12-19-165530.png" alt="Image description"></p>
+<p>参考：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36905522/article/details/136024994">https://blog.csdn.net/qq_36905522/article/details/136024994</a></p>
+<p>依赖：</p>
+<ul>
+<li>python3.x</li>
+<li>python内置包：json，urllib</li>
+<li>python第三方包：requests，httplib2，oauth2client</li>
+<li>mysql-driver：<a target="_blank" rel="noopener" href="https://dev.oneall.eu.org/archives/15/%EF%BC%88%E8%8B%A5%E4%BD%A0%E6%98%AFserv00">https://dev.oneall.eu.org/archives/15/（若你是serv00</a> s2也可以直接用我提供的地址）</li>
+<li>将下载的Google Index Api Key（一般为 <code>gen-lang-client-xxx.json</code> ）保存为 <code>GoogleIndexApiKey.json</code> </li>
+<li>准备必应和百度的API token</li>
+</ul>
+<p>代码：</p>
+<pre><code class="language-python">import json
+from urllib.parse import quote
+from oauth2client.service_account import ServiceAccountCredentials
+import httplib2
+import requests
+
+driver_url = &quot; mysql-driver地址 &quot;
+query_info = &#123;
+    &quot;host&quot;: &quot;typecho博客安装数据库地址&quot;,
+    &quot;port&quot;: &quot;typecho博客安装数据库端口&quot;,
+    &quot;username&quot;: &quot;typecho博客安装数据库用户名&quot;,
+    &quot;password&quot;: &quot;typecho博客安装数据库密码&quot;,
+    &quot;database&quot;: &quot;typecho博客安装数据库名&quot;,
+    &quot;querys&quot;: &quot;SELECT * FROM typecho_contents&quot;
+&#125;
+response = requests.post(driver_url, query_info)
+
+article = response.json()[0][&quot;results&quot;]
+blog_link_base = &quot;博客主页地址&quot;  #结尾不要加 /，如 https://dev.oneall.eu.org
+links = [blog_link_base, ]
+for item in article:
+    article_cid = item[&quot;cid&quot;]
+    article_type = item[&quot;type&quot;]
+    article_slug = item[&quot;slug&quot;]
+    if article_type == &quot;post&quot;:
+        links.append(f&quot;&#123;blog_link_base&#125;/archives/&#123;article_cid&#125;/&quot;)
+        continue
+    if article_type == &quot;page&quot;:
+        links.append(f&quot;&#123;blog_link_base&#125;/&#123;article_slug&#125;.html&quot;)
+        continue
+
+bing_index_api_url = &quot;https://www.bing.com/indexnow?url=&#123;&#125;&amp;key=必应API Key&quot;
+baidu_index_api_url = f&quot;http://data.zz.baidu.com/urls?site=&#123;blog_link_base&#125;&amp;token=百度API Token&quot;
+google_index_scopes = [&quot;https://www.googleapis.com/auth/indexing&quot;, ]
+google_index_endpoint = &quot;https://indexing.googleapis.com/v3/urlNotifications:publish&quot;
+google_index_key = &quot;GoogleIndexApiKey.json&quot;
+google_index_credentials = ServiceAccountCredentials.from_json_keyfile_name(google_index_key, scopes=google_index_scopes)
+google_index_http = google_index_credentials.authorize(httplib2.Http())
+for link in links:
+    print(&quot;\nIndexing:&quot;, link)
+    print(&quot;  Bing:&quot;, end=&quot; &quot;)
+    response = requests.get(bing_index_api_url.format(quote(link)))
+    print(response.status_code)
+    print(&quot;  Baidu:&quot;, end=&quot; &quot;)
+    response = requests.post(baidu_index_api_url, quote(link))
+    print(response.status_code)
+    print(&quot;  Google:&quot;, end=&quot; &quot;)
+    google_index_content = json.dumps(&#123;
+        &quot;url&quot;: link,
+        &quot;type&quot;: &quot;URL_UPDATED&quot;
+    &#125;)
+    response, content = google_index_http.request(google_index_endpoint, method=&quot;POST&quot;, body=google_index_content)
+    print(response[&quot;status&quot;])
+</code></pre>
+
+        </div>
+        <!-- end post content -->
+
+    </article>
+    <!-- end article body -->
+
+</div>
                 </div>
             </div>
             <!-- end right area -->
@@ -179,6 +285,11 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script src="/js/sidebar.js"></script>
 <script src="/js/search.js"></script>
 
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
     </body>
 
 </html>

@@ -29,7 +29,6 @@
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/sidebar.css">
 <link rel="stylesheet" href="/css/post.css">
-<link rel="stylesheet" href="/css/comment.css">
 <link rel="stylesheet" href="/css/misc.css">
 <link rel="stylesheet" href="/css/page.css">
 <link rel="stylesheet" href="/css/footer.css">
@@ -48,7 +47,7 @@
 
 <!-- description -->
 
-<meta name="description" content="功能：播放，暂停，快进，后退，进度条拖动 使用：  下载资源：player.css    player.js 在网页任意位置加入 &lt;div class=&quot;audio-player&quot;&gt;&lt;/div&gt; 在头部引入css，在末尾引入js 编写js  12audio_source.src = 音频URL;audio_play();    // 开始播放  源码：p" />
+<meta name="description" content="功能：播放，暂停，快进，后退，进度条拖动 使用：  下载资源：player.css    player.js 在网页任意位置加入 &lt;div class=&quot;audio-player&quot;&gt;&lt;/div&gt; 在头部引入css，在末尾引入js 编写js  audio_source.src = 音频URL; audio_play();    // 开始播放  源码：pl" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -71,7 +70,7 @@
                             </p>
                             <script>
 var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["IMPOSSIBLE IS NOTHING","路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
+var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
 var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
 description_random_intro.innerHTML = random_intro;
                             </script>
@@ -136,7 +135,182 @@ description_random_intro.innerHTML = random_intro;
             <!-- right area -->
             <div id="right">
                 <div class="row">
-                    <h1>Blog Post</h1>
+                    <div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2025/01/12/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84%E7%BD%91%E9%A1%B5%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8/">一个简易的网页音乐播放器</a>
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2025-01-12T10:02:00.000Z">2025-01-12</time>
+            </li>
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
+                    默认分类
+                </a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <p>功能：播放，暂停，快进，后退，进度条拖动<br><img src="https://s.rmimg.com/2025-01-12/1736671932-466215-2025-01-12-165206.png" alt="Image description"></p>
+<p>使用：</p>
+<ol>
+<li>下载资源：<a target="_blank" rel="noopener" href="https://runoneall.serv00.net/WebLitePlayer/player.css">player.css</a>    <a target="_blank" rel="noopener" href="https://runoneall.serv00.net/WebLitePlayer/player.js">player.js</a></li>
+<li>在网页任意位置加入 <code>&lt;div class=&quot;audio-player&quot;&gt;&lt;/div&gt;</code></li>
+<li>在头部引入css，在末尾引入js</li>
+<li>编写js</li>
+</ol>
+<pre><code class="language-javascript">audio_source.src = 音频URL;
+audio_play();    // 开始播放
+</code></pre>
+<p>源码：<br><code>player.css</code></p>
+<pre><code class="language-css">.audio-player &#123;
+    width: 300px;
+    height: 65px;
+    border: 1px solid black;
+    overflow: hidden;
+    white-space: nowrap;
+    background: white;
+&#125;
+#audio-avatar &#123;
+    height: auto;
+    width: auto;
+    max-height: 100%;
+    margin-right: 10px;
+    float: left;
+&#125;
+.audio-info &#123;
+    overflow: hidden;
+    position: relative;
+&#125;
+#audio-title &#123;
+    display: inline-block;
+    padding-left: 100%;
+    animation: showFullTitle 10s linear infinite;
+&#125;
+@keyframes showFullTitle &#123;
+    0% &#123; transform: translateX(0%); &#125;
+    100% &#123; transform: translateX(-100%); &#125;
+&#125;
+.audio-progress &#123;
+    display: inline-block;
+&#125;
+.audio-control &#123;
+    margin-right: 5px;
+    float: right;
+&#125;
+</code></pre>
+<p><code>player.js</code></p>
+<pre><code class="language-javascript">document.querySelector(&#39;.audio-player&#39;).innerHTML = `&lt;svg id=&quot;audio-avatar&quot; viewBox=&quot;0 0 1024 1024&quot; version=&quot;1.1&quot;
+    xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+    &lt;path
+        d=&quot;M391.424 938.688a48.896 48.896 0 0 1-49.92-49.728V212.928c0-24.832 18.304-44.8 41.6-49.728l497.344-77.888a49.984 49.984 0 0 1 39.936 11.648c11.648 9.92 16.64 23.168 16.64 38.08V812.8c0 28.16-21.632 49.664-49.92 49.664a48.896 48.896 0 0 1-49.92-49.728V193.024l-397.568 61.312v634.624c1.664 28.16-21.568 49.728-48.192 49.728z&quot;
+        fill=&quot;#172B4D&quot;&gt;&lt;/path&gt;
+    &lt;path
+        d=&quot;M888.768 862.464H632.576a48.896 48.896 0 0 1-49.92-49.728v-142.464c0-28.16 21.696-49.728 49.92-49.728h256.192c28.288 0 49.92 21.504 49.92 49.728v142.464a51.072 51.072 0 0 1-49.92 49.728z m-206.272-99.456h156.352v-43.072h-156.352v43.072zM391.424 938.688H135.232a48.896 48.896 0 0 1-49.92-49.728v-142.464c0-28.16 21.632-49.728 49.92-49.728h256.192c28.288 0 49.92 21.504 49.92 49.728v142.464a49.92 49.92 0 0 1-49.92 49.728z m-206.272-99.456h156.352v-43.072H185.152v43.072z&quot;
+        fill=&quot;#172B4D&quot;&gt;&lt;/path&gt;
+&lt;/svg&gt;
+&lt;div class=&quot;audio&quot;&gt;
+    &lt;div class=&quot;audio-info&quot;&gt;
+        &lt;audio id=&quot;audio-source&quot; src type=&quot;audio/mpeg&quot;&gt;&lt;/audio&gt;
+        &lt;span id=&quot;audio-title&quot;&gt;No Audio To Play&lt;/span&gt;&lt;br&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;audio-progress&quot;&gt;
+        &lt;input type=&quot;range&quot; id=&quot;audio-range&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;0&quot;
+            step=&quot;0.01&quot;&gt;
+        &lt;label id=&quot;audio-time&quot; for=&quot;audio-range&quot;&gt;0:00 / 0:00&lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;audio-control&quot;&gt;
+        &lt;button onclick=&quot;audio_back5s()&quot;&gt;-5s&lt;/button&gt;
+        &lt;button onclick=&quot;audio_play()&quot;&gt;Play&lt;/button&gt;
+        &lt;button onclick=&quot;audio_stop()&quot;&gt;Stop&lt;/button&gt;
+        &lt;button onclick=&quot;audio_forward5s()&quot;&gt;+5s&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;`;
+
+const audio_source = document.getElementById(&#39;audio-source&#39;);
+const audio_title = document.getElementById(&quot;audio-title&quot;);
+let current_audio_title = &quot;&quot;;
+const audio_range = document.getElementById(&quot;audio-range&quot;);
+const audio_time = document.getElementById(&quot;audio-time&quot;);
+let audio_end_time_length = 0;
+
+function audio_play() &#123;
+    if (audio_source.paused) &#123;
+        const new_audio_title = decodeURI(audio_source.src.split(&#39;/&#39;).pop().split(&#39;.&#39;).shift());
+        if (current_audio_title != new_audio_title) &#123;
+            audio_title.textContent = new_audio_title;
+            current_audio_title = audio_title.textContent;
+            audio_source.load();
+        &#125;
+        audio_source.play();
+    &#125;
+&#125;
+function audio_stop() &#123;
+    if (!audio_source.paused) &#123;
+        audio_source.pause();
+    &#125;
+&#125;
+function audio_back5s() &#123;
+    audio_play();
+    audio_source.currentTime -= 5;
+&#125;
+function audio_forward5s() &#123;
+    audio_play();
+    audio_source.currentTime += 5;
+&#125;
+
+function audio_current_time() &#123;
+    const audio_currentTime = audio_source.currentTime;
+    const audio_time_minutes = Math.floor(audio_currentTime / 60).toString();
+    const audio_time_seconds = Math.floor(audio_currentTime % 60).toString().padStart(2, &#39;0&#39;);
+    const audio_end_time = audio_time.textContent.slice(0-audio_end_time_length);
+    return `$&#123;audio_time_minutes&#125;:$&#123;audio_time_seconds&#125;` + &quot; / &quot; + audio_end_time;
+&#125;
+audio_source.onloadedmetadata = function() &#123;
+    const audio_duration = audio_source.duration;
+    audio_range.max = audio_duration;
+    const audio_time_minutes = Math.floor(audio_duration / 60).toString();
+    const audio_time_seconds = Math.floor(audio_duration % 60).toString().padStart(2, &#39;0&#39;);
+    audio_end_time_length = audio_time_minutes.length + audio_time_seconds.length + 1;
+    audio_time.textContent = &quot;0:00 / &quot; + `$&#123;audio_time_minutes&#125;:$&#123;audio_time_seconds&#125;`;
+&#125;
+audio_source.ontimeupdate = function() &#123;
+    audio_range.value = audio_source.currentTime;
+    audio_time.textContent = audio_current_time();
+&#125;
+audio_range.oninput = function() &#123;
+    audio_play();
+    audio_source.currentTime = audio_range.value;
+    audio_time.textContent = audio_current_time();
+&#125;
+</code></pre>
+<p>demo：<a target="_blank" rel="noopener" href="https://runoneall.serv00.net/WebLitePlayer/">https://runoneall.serv00.net/WebLitePlayer/</a></p>
+
+        </div>
+        <!-- end post content -->
+
+    </article>
+    <!-- end article body -->
+
+</div>
                 </div>
             </div>
             <!-- end right area -->
@@ -179,6 +353,11 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script src="/js/sidebar.js"></script>
 <script src="/js/search.js"></script>
 
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
     </body>
 
 </html>

@@ -29,7 +29,6 @@
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/sidebar.css">
 <link rel="stylesheet" href="/css/post.css">
-<link rel="stylesheet" href="/css/comment.css">
 <link rel="stylesheet" href="/css/misc.css">
 <link rel="stylesheet" href="/css/page.css">
 <link rel="stylesheet" href="/css/footer.css">
@@ -48,7 +47,7 @@
 
 <!-- description -->
 
-<meta name="description" content="一个用php写的简易订阅整合支持：合并订阅，零散节点，去重，以普通或base64格式返回 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182" />
+<meta name="description" content="一个用php写的简易订阅整合支持：合并订阅，零散节点，去重，以普通或base64格式返回 &lt;?php  function response($code, $message, $header = &quot;&quot;) &#123;     http_response_code($code);     if ($header != &quot;&quot;) &#123;" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -71,7 +70,7 @@
                             </p>
                             <script>
 var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["IMPOSSIBLE IS NOTHING","路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
+var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
 var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
 description_random_intro.innerHTML = random_intro;
                             </script>
@@ -136,7 +135,155 @@ description_random_intro.innerHTML = random_intro;
             <!-- right area -->
             <div id="right">
                 <div class="row">
-                    <h1>Blog Post</h1>
+                    <div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2025/02/11/%E7%AE%80%E6%98%93%E8%AE%A2%E9%98%85%E6%95%B4%E5%90%88%E5%B7%A5%E5%85%B7/">简易订阅整合工具</a>
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2025-02-11T07:36:54.000Z">2025-02-11</time>
+            </li>
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
+                    默认分类
+                </a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <p>一个用php写的简易订阅整合<br>支持：合并订阅，零散节点，去重，以普通或base64格式返回</p>
+<pre><code class="language-php">&lt;?php
+
+function response($code, $message, $header = &quot;&quot;)
+&#123;
+    http_response_code($code);
+    if ($header != &quot;&quot;) &#123;
+        header($header);
+    &#125;
+    echo $message;
+    exit;
+&#125;
+
+function download_file($url, $retry = 0)
+&#123;
+    $attempt = 0;
+    while ($attempt &lt;= $retry) &#123;
+        $attempt++;
+        $content = @file_get_contents($url);
+        if ($content !== false) &#123;
+            return $content;
+        &#125;
+    &#125;
+    response(500, &quot;Failed to download file: $url&quot;, &quot;Content-Type: text/plain; charset=UTF-8&quot;);
+&#125;
+
+function load_file_to_array($file_path)
+&#123;
+    $file_content = file_get_contents($file_path);
+    $file_content = str_replace(&quot;\r\n&quot;, &quot;\n&quot;, $file_content);
+    $lines = explode(&quot;\n&quot;, $file_content);
+    $lines = array_filter($lines);
+    return $lines;
+&#125;
+
+function load_string_to_array($string)
+&#123;
+    $string = str_replace(&quot;\r\n&quot;, &quot;\n&quot;, $string);
+    $lines = explode(&quot;\n&quot;, $string);
+    $lines = array_filter($lines);
+    return $lines;
+&#125;
+
+function response_nodes($node_array)
+&#123;
+    $content = implode(&quot;\n&quot;, $node_array);
+    $query_string = isset($_SERVER[&#39;QUERY_STRING&#39;]) ? $_SERVER[&#39;QUERY_STRING&#39;] : &quot;&quot;;
+    if ($query_string == &quot;base64&quot;) &#123;
+        $content = base64_encode($content);
+    &#125;
+    if ($query_string == &quot;clash&quot;) &#123;
+        $options = [
+            &#39;http&#39; =&gt; [
+                &#39;method&#39; =&gt; &#39;POST&#39;,
+                &#39;header&#39; =&gt; &#39;Content-Type: text/plain; charset=UTF-8&#39;,
+                &#39;content&#39; =&gt; $content
+            ]
+        ];
+        $context = stream_context_create($options);
+        $content = file_get_contents(
+            &quot;https://v2ray2clash.netlify.app/.netlify/functions/clash&quot;,
+            false,
+            $context
+        );
+    &#125;
+    response(200, $content, &quot;Content-Type: text/plain; charset=UTF-8&quot;);
+&#125;
+
+// load sub and scatter node list
+$sub_list = load_file_to_array(&quot;sub.txt&quot;);
+$scatter_nodes = load_file_to_array(&quot;scatter.txt&quot;);
+
+// get sub node list
+$sub_nodes = array();
+foreach ($sub_list as $sub) &#123;
+    $sub_content = download_file($sub, 3);
+    if (strpos($sub_content, &quot;://&quot;) === false) &#123;
+        $sub_content = base64_decode($sub_content);
+    &#125;
+    $sub_nodes = array_merge($sub_nodes, load_string_to_array($sub_content));
+&#125;
+
+// merge sub nodes and scatter nodes
+$nodes = array_merge($sub_nodes, $scatter_nodes);
+$nodes = array_filter($nodes);
+$nodes = array_unique($nodes);
+
+// response
+response_nodes($nodes);
+
+?&gt;
+</code></pre>
+<p>在同级目录新建 <code>sub.txt</code> 放置订阅，例如</p>
+<pre><code>https://sub.vip.sd/JPa6vvFgygVtNP2sGJ2r/download/nlmjj?target=V2Ray
+https://fly.j-s.us.kg/api/v1/client/subscribe?token=3275fdb3e5ff32434a293ca8ca8fe9dc
+</code></pre>
+<p>在同级目录新建 <code>scatter.txt</code> 放置零散节点，例如</p>
+<pre><code>ss://YWVzLTI1Ni1nY206NmQwNDMwNDEtOTY3Ni0zNDllLWE3MDYtMzgwYWY5NGUwNjJh@c9pwn-g01.fr01-ae5.entry.v50307shvkaa.art:20065#%E6%B3%95%E5%9B%BDW01
+ss://YWVzLTI1Ni1nY206NmQwNDMwNDEtOTY3Ni0zNDllLWE3MDYtMzgwYWY5NGUwNjJh@kn183-g01.us01-ae5.entry.v50307shvkaa.art:20010#%E7%BE%8E%E5%9B%BDW01
+ss://YWVzLTI1Ni1nY206NmQwNDMwNDEtOTY3Ni0zNDllLWE3MDYtMzgwYWY5NGUwNjJh@b0sdx-g01.ua01-ae5.entry.v50307shvkaa.art:20070#%E4%B9%8C%E5%85%8B%E5%85%B0W01
+ss://YWVzLTI1Ni1nY206NmQwNDMwNDEtOTY3Ni0zNDllLWE3MDYtMzgwYWY5NGUwNjJh@uh4r9-g01.us02-ae5.entry.v50307shvkaa.art:20015#%E7%BE%8E%E5%9B%BDW02
+ss://YWVzLTI1Ni1nY206NmQwNDMwNDEtOTY3Ni0zNDllLWE3MDYtMzgwYWY5NGUwNjJh@5e3gk-g01.de01-ae5.entry.v50307shvkaa.art:20050#%E5%BE%B7%E5%9B%BDW01
+ss://YWVzLTI1Ni1nY206NmQwNDMwNDEtOTY3Ni0zNDllLWE3MDYtMzgwYWY5NGUwNjJh@6tfkp-g01.ar01-ae5.entry.v50307shvkaa.art:20025#%E9%98%BF%E6%A0%B9%E5%BB%B7W01
+ss://YWVzLTI1Ni1nY206NmQwNDMwNDEtOTY3Ni0zNDllLWE3MDYtMzgwYWY5NGUwNjJh@tsh16-g01.ru01-ae5.entry.v50307shvkaa.art:20030#%E4%BF%84%E7%BD%97%E6%96%AFW01
+ss://YWVzLTI1Ni1nY206NmQwNDMwNDEtOTY3Ni0zNDllLWE3MDYtMzgwYWY5NGUwNjJh@13uc8-g01.tr01-ae5.entry.v50307shvkaa.art:20035#%E5%9C%9F%E8%80%B3%E5%85%B6W01
+</code></pre>
+<p>默认url格式，要以base64返回应增加 <code>?base64</code> 后缀<br>clash配置应增加 <code>?clash</code> 后缀<br>demo: <a target="_blank" rel="noopener" href="https://runoneall.serv00.net/NodeShare/">https://runoneall.serv00.net/NodeShare/</a></p>
+
+        </div>
+        <!-- end post content -->
+
+    </article>
+    <!-- end article body -->
+
+</div>
                 </div>
             </div>
             <!-- end right area -->
@@ -179,6 +326,11 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script src="/js/sidebar.js"></script>
 <script src="/js/search.js"></script>
 
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
     </body>
 
 </html>

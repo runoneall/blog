@@ -29,7 +29,6 @@
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/sidebar.css">
 <link rel="stylesheet" href="/css/post.css">
-<link rel="stylesheet" href="/css/comment.css">
 <link rel="stylesheet" href="/css/misc.css">
 <link rel="stylesheet" href="/css/page.css">
 <link rel="stylesheet" href="/css/footer.css">
@@ -71,7 +70,7 @@
                             </p>
                             <script>
 var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["IMPOSSIBLE IS NOTHING","路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
+var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
 var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
 description_random_intro.innerHTML = random_intro;
                             </script>
@@ -136,7 +135,58 @@ description_random_intro.innerHTML = random_intro;
             <!-- right area -->
             <div id="right">
                 <div class="row">
-                    <h1>Blog Post</h1>
+                    <div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2025/01/04/%E5%9C%A8Typecho%E4%B8%AD%E5%8A%A0%E5%85%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E5%8F%8B%E9%93%BE%E5%8A%9F%E8%83%BD/">在Typecho中加入自定义的友链功能</a>
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2025-01-04T14:04:43.000Z">2025-01-04</time>
+            </li>
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
+                    默认分类
+                </a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <p>首先在主题的 <code>functions.php</code> 中新加一个多行输入框<br><img src="https://s.rmimg.com/2025-01-04/1735994677-384654-2025-01-04-204227.png" alt="Image description"><br>名称随意<br>然后就可以用 <code>$this-&gt;options-&gt;你的自定义名称</code> 获取内容或 <code>$this-&gt;options-&gt;你的自定义名称()</code> 直接输出<br>例如我是用的json<br><img src="https://s.rmimg.com/2025-01-04/1735995064-865538-image.png" alt="Image description"></p>
+<p>然后新建一个独立页面，比如links，或者其他名称<br>建立一个插入点，比如 <code>&lt;div id=&quot;linkItemsArea&quot;&gt;&lt;/div&gt;</code><br><img src="https://s.rmimg.com/2025-01-04/1735994885-489446-image.png" alt="Image description"></p>
+<p>前端页面处理<br><img src="https://s.rmimg.com/2025-01-04/1735995491-925942-2025-01-04-205142.png" alt="Image description"><br>这样一个自定义友链就写好了，可以增加一点代码，使其更好看</p>
+<p>我的js代码</p>
+<pre><code class="language-javascript">let linkItemsHTML = &quot;&quot;;
+for (const JsonItem of JSON.parse(`&lt;?php $this-&gt;options-&gt;siteOutLinks() ?&gt;`)) &#123;
+  linkItemsHTML += `&lt;hr class=&quot;link-separator&quot;&gt;&lt;div class=&quot;link-item&quot;&gt;&lt;img class=&quot;link-item-avatar&quot; src=&quot;$&#123;JsonItem.avatar&#125;&quot;&gt;&lt;div class=&quot;link-item-content&quot;&gt;&lt;a href=&quot;$&#123;JsonItem.url&#125;&quot; target=&quot;_blank&quot;&gt;&lt;h2&gt;$&#123;JsonItem.title&#125;&lt;/h2&gt;&lt;/a&gt;&lt;p&gt;$&#123;JsonItem.description&#125;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;`;
+&#125;
+document.getElementById(&#39;linkItemsArea&#39;).innerHTML = linkItemsHTML;
+</code></pre>
+
+        </div>
+        <!-- end post content -->
+
+    </article>
+    <!-- end article body -->
+
+</div>
                 </div>
             </div>
             <!-- end right area -->
@@ -179,6 +229,11 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script src="/js/sidebar.js"></script>
 <script src="/js/search.js"></script>
 
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
     </body>
 
 </html>
