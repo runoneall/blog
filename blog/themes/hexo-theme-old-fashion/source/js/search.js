@@ -16,7 +16,10 @@ function SearchInit() {
   const targetSearch = location.hash.slice(3)
   if (targetSearch !== '') {
     SearchArticle();
+    return;
   }
+  searchInput.value = '';
+  location.hash = '';
 }
 
 SearchInit();
