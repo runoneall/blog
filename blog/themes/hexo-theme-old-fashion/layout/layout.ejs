@@ -12,7 +12,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="site-name">
-                            <a id="logo" href="/"><%- config.title %></a>
+                            <a id="logo" href="<%- url_for('') %>"><%-
+                                config.title %></a>
                             <p id="description_random_intro"
                                 class="description">
                                 <%- config.description %>
@@ -42,12 +43,12 @@ description_random_intro.innerHTML = random_intro;
                     <!-- page links -->
                     <a
                         class="<%- path.startsWith('index.html')? 'current' : '' %>"
-                        href="/">首页</a>
+                        href="<%- url_for('') %>">首页</a>
                     <% site.pages.each(p=> { if (!p.path.startsWith('404.html'))
                     { %>
                     <br />
                     <a class="<%- path.startsWith(p.path)? 'current' : '' %>"
-                        href="/<%- p.path %>"><%- p.title %></a>
+                        href="<%- url_for(p.path) %>"><%- p.title %></a>
                     <% }}); %>
                     <!-- end page links -->
 
@@ -68,7 +69,8 @@ description_random_intro.innerHTML = random_intro;
                     <input type="text" id="s" name="s" class="text"
                         placeholder="输入关键字搜索" />
                     <button type="submit" class="submit">
-                        <img src="/img/icon-search.png" alt="icon-search">
+                        <img src="<%- url_for('img/icon-search.png') %>"
+                            alt="icon-search">
                     </button>
                 </form>
                 <!-- end search -->
@@ -87,7 +89,7 @@ description_random_intro.innerHTML = random_intro;
             <!-- footer -->
             <div id="footer" role="contentinfo">
                 &copy; <%- new Date().getFullYear() %>
-                <a href="/"><%- config.title %></a>.
+                <a href="<%- url_for('') %>"><%- config.title %></a>.
                 <a
                     href="https://github.com/runoneall/hexo-theme-old-fashion">Old
                     Fasion</a>
@@ -97,7 +99,7 @@ description_random_intro.innerHTML = random_intro;
         </div>
         <!-- end outbox -->
 
-        <%- partial('script') %>
+        <%- partial('footer') %>
     </body>
 
 </html>

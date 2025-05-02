@@ -1,6 +1,6 @@
 <!-- extra css on links page -->
 <% if (path.startsWith('links')) { %>
-<link rel="stylesheet" href="/css/links.css">
+<link rel="stylesheet" href="<%- url_for('css/links.css') %>">
 <% } %>
 <!-- end extra css -->
 
@@ -8,7 +8,8 @@
 <div class="col-mb-12 col-8" id="main" role="main">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <h1 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="/<%- page.path %>"><%- page.title %></a>
+            <a itemprop="url" href="<%- url_for(page.path) %>"><%- page.title
+                %></a>
         </h1>
         <div class="post-content" itemprop="articleBody">
             <%- page.content %>
@@ -19,7 +20,7 @@
 
 <!-- extra js on links page -->
 <% if (path.startsWith('links')) { %>
-<script src="/js/links.js"></script>
+<script src="<%- url_for('js/links.js') %>"></script>
 <script>
 CORS_DRIVER = `<%- theme.cors_proxy %>`;
 putLinks(`<%- JSON.stringify(theme.links) %>`);

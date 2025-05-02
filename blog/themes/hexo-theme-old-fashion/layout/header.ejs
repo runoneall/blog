@@ -9,7 +9,7 @@
     rel="sitemap"
     type="application/xml"
     title="sitemap"
-    href="/sitemap.xml" />
+    href="<%- url_for('sitemap.xml') %>" />
 
 <!-- title -->
 <title>
@@ -18,18 +18,19 @@
 </title>
 
 <!-- css dependencies -->
-<link rel="stylesheet" href="/css/normalize.css" />
-<link rel="stylesheet" href="/css/grid.css" />
-<link rel="stylesheet" href="/css/highlight.css" />
-<link rel="stylesheet" href="/css/global.css" />
-<link rel="stylesheet" href="/css/search.css" />
-<link rel="stylesheet" href="/css/sidebar.css" />
-<link rel="stylesheet" href="/css/post.css" />
-<link rel="stylesheet" href="/css/comment.css" />
-<link rel="stylesheet" href="/css/misc.css" />
-<link rel="stylesheet" href="/css/page.css" />
-<link rel="stylesheet" href="/css/footer.css" />
-<link id="dark-style" rel="stylesheet" href="/css/dark.css" disabled />
+<link rel="stylesheet" href="<%- url_for('css/normalize.css') %>" />
+<link rel="stylesheet" href="<%- url_for('css/grid.css') %>" />
+<link rel="stylesheet" href="<%- url_for('css/highlight.css') %>" />
+<link rel="stylesheet" href="<%- url_for('css/global.css') %>" />
+<link rel="stylesheet" href="<%- url_for('css/search.css') %>" />
+<link rel="stylesheet" href="<%- url_for('css/sidebar.css') %>" />
+<link rel="stylesheet" href="<%- url_for('css/post.css') %>" />
+<link rel="stylesheet" href="<%- url_for('css/comment.css') %>" />
+<link rel="stylesheet" href="<%- url_for('css/misc.css') %>" />
+<link rel="stylesheet" href="<%- url_for('css/page.css') %>" />
+<link rel="stylesheet" href="<%- url_for('css/footer.css') %>" />
+<link id="dark-style" rel="stylesheet" href="<%- url_for('css/dark.css') %>"
+    disabled />
 
 <!-- favicon -->
 <link rel="apple-touch-icon" sizes="76x76" href="<%- theme.favicon %>" />
@@ -58,9 +59,9 @@ strip_html(description).substring(0, 200).trim().replace(/\n/g, ' ') } %>
     rel="alternate"
     type="application/rss+xml"
     title="r1a dev » RSS 2.0"
-    href="https://dev.oneall.eu.org/rss2.xml" />
+    href="<%- url_for('rss2.xml') %>" />
 <link
     rel="alternate"
     type="application/atom+xml"
     title="r1a dev » ATOM 1.0"
-    href="https://dev.oneall.eu.org/atom.xml" />
+    href="<%- url_for('atom.xml') %>" />

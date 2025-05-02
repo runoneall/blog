@@ -4,7 +4,8 @@
 
         <!-- post title -->
         <h2 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="/<%- post.path %>"><%- post.title %></a>
+            <a itemprop="url" href="<%- url_for(post.path) %>"><%- post.title
+                %></a>
         </h2>
         <!-- end post title -->
 
@@ -21,7 +22,8 @@
             <% if (post.categories.data && post.categories.data.length) { %>
             <li>分类:
                 <% post.categories.data.forEach(category => { %>
-                <a href="/<%- category.path %>"><%- category.name %></a>&nbsp;
+                <a href="<%- url_for(category.path) %>"><%- category.name
+                    %></a>&nbsp;
                 <% }) %>
             </li>
             <% } %>
