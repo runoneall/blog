@@ -20,7 +20,7 @@
       <% if (post.categories.data && post.categories.data.length) { %>
       <li>分类:
         <% post.categories.data.forEach(category => { %>
-        <a href="/<%- category.path %>"><%- category.name %></a>
+        <a href="/<%- category.path %>"><%- category.name %></a>&nbsp;
         <% }) %>
       </li>
       <% } %>
