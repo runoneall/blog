@@ -21,22 +21,23 @@
 </title>
 
 <!-- css dependencies -->
-<link rel="stylesheet" href="/css/normalize.css" />
-<link rel="stylesheet" href="/css/grid.css" />
-<link rel="stylesheet" href="/css/highlight.css" />
-<link rel="stylesheet" href="/css/global.css" />
-<link rel="stylesheet" href="/css/search.css" />
-<link rel="stylesheet" href="/css/sidebar.css" />
-<link rel="stylesheet" href="/css/post.css" />
-<link rel="stylesheet" href="/css/comment.css" />
-<link rel="stylesheet" href="/css/misc.css" />
-<link rel="stylesheet" href="/css/page.css" />
-<link rel="stylesheet" href="/css/footer.css" />
-<link id="dark-style" rel="stylesheet" href="/css/dark.css" disabled />
+
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/grid.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/sidebar.css">
+<link rel="stylesheet" href="/css/post.css">
+<link rel="stylesheet" href="/css/comment.css">
+<link rel="stylesheet" href="/css/misc.css">
+<link rel="stylesheet" href="/css/page.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/dark.css" id="dark-style" disabled>
+
 
 <!-- favicon -->
-<link rel="apple-touch-icon" sizes="76x76" href="https://dev.oneall.eu.org/favicon.webp" />
-<link rel="icon" href="https://dev.oneall.eu.org/favicon.webp" />
+<link rel="shortcut icon" href="https://dev.oneall.eu.org/favicon.webp">
 
 <!-- extra css -->
 
@@ -50,18 +51,11 @@
 <meta name="description" content="使用 vercel edge function 1234567891011121314151617181920212223242526272829303132333435export const runtime = &#x27;edge&#x27;;async function handleRequest(req: Request) &#123;    const url = new URL(re" />
 
 <!-- rss -->
-<link
-    rel="alternate"
-    type="application/rss+xml"
-    title="r1a dev » RSS 2.0"
-    href="https://dev.oneall.eu.org/rss2.xml" />
-<link
-    rel="alternate"
-    type="application/atom+xml"
-    title="r1a dev » ATOM 1.0"
-    href="https://dev.oneall.eu.org/atom.xml" />
-
-    <meta name="generator" content="Hexo 7.3.0"></head>
+<link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
+<link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
+    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
+</head>
 
     <body>
         <div id="outbox">
@@ -130,7 +124,8 @@ description_random_intro.innerHTML = random_intro;
                     <input type="text" id="s" name="s" class="text"
                         placeholder="输入关键字搜索" />
                     <button type="submit" class="submit">
-                        <img src="/img/icon-search.png" alt="icon-search">
+                        <img src="/img/icon-search.png"
+                            alt="icon-search">
                     </button>
                 </form>
                 <!-- end search -->
@@ -165,7 +160,7 @@ description_random_intro.innerHTML = random_intro;
 <!-- extra js -->
 
 <script>
-  console.log(String.raw`
+console.log(String.raw`
             ___              __
       _____<  /____ _   ____/ /___  _   __
      / ___// // __ `+ "`" + String.raw`/  / __  // _ \| | / /
@@ -177,16 +172,11 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 </script>
 
 
-<!-- dark button -->
+<!-- js dependencies -->
+
 <script src="/js/dark.js"></script>
-
-<!-- code hightlight -->
 <script src="/js/highlight.js"></script>
-
-<!-- sidebar button -->
 <script src="/js/sidebar.js"></script>
-
-<!-- search -->
 <script src="/js/search.js"></script>
 
     </body>
