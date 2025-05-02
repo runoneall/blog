@@ -28,3 +28,10 @@ feed:
   - atom.xml
   - rss2.xml
 ```
+
+- code highlight
+
+```yaml
+# Modify _config.yml
+syntax_highlighter: # disable build-in highlight
+```
