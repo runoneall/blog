@@ -17,7 +17,7 @@
 
 <!-- title -->
 <title>
-    Hello World | Runoneall
+    Links | Runoneall
 </title>
 
 <!-- css dependencies -->
@@ -47,7 +47,7 @@
 
 <!-- description -->
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick" />
+<meta name="description" content="Runoneall's Blog" />
 
 <!-- rss -->
 <link
@@ -107,7 +107,7 @@ description_random_intro.innerHTML = random_intro;
                         href="/about/index.html">About</a>
                     
                     <br />
-                    <a class=""
+                    <a class="current"
                         href="/links/index.html">Links</a>
                     
                     <!-- end page links -->
@@ -141,7 +141,50 @@ description_random_intro.innerHTML = random_intro;
             <!-- right area -->
             <div id="right">
                 <div class="row">
-                    <h1>Blog Post</h1>
+                    <!-- extra css on links page -->
+
+<link rel="stylesheet" href="/css/links.css">
+
+<!-- end extra css -->
+
+<!-- page -->
+<div class="col-mb-12 col-8" id="main" role="main">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/links/index.html">Links</a>
+        </h1>
+        <div class="post-content" itemprop="articleBody">
+            <h2 id="申请链接"><a href="#申请链接" class="headerlink" title="申请链接"></a>申请链接</h2><ul>
+<li>点击侧边栏 <code>Email</code></li>
+<li>邮件主题为 <code>链接申请</code></li>
+<li>邮件正文中指定 <code>博客/论坛/网站 链接</code>; <code>博客/论坛/网站 头像</code>; <code>博客/论坛/网站 标题</code>; <code>博客/论坛/网站 介绍</code>;</li>
+<li>可选 <code>RSS链接</code> 若不希望抓取请在邮件中明确告知</li>
+<li>互相添加</li>
+</ul>
+<h2 id="我的链接"><a href="#我的链接" class="headerlink" title="我的链接"></a>我的链接</h2><ul>
+<li>链接 <code>https://blog.oneall.eu.org</code></li>
+<li>头像 <code>https://dev.oneall.eu.org/favicon.webp</code></li>
+<li>标题 <code>r1a dev</code></li>
+<li>介绍 <code>r1a的开发记录/博客</code></li>
+<li>可选 RSS <code>https://blog.oneall.eu.org/rss2.xml</code></li>
+</ul>
+<div id="linkItemsArea"></div>
+<br>
+
+        </div>
+    </article>
+</div>
+<!-- end page -->
+
+<!-- extra js on links page -->
+
+<script src="/js/links.js"></script>
+<script>
+CORS_DRIVER = `https://vercel.oneall.eu.org/api/vap?`;
+putLinks(`[{"avatar":"https://dev.oneall.eu.org/favicon.webp","title":"r1a dev","url":"https://dev.oneall.eu.org","description":"r1a的开发记录/博客","rss":"https://dev.oneall.eu.org/feed"}]`);
+    </script>
+
+<!-- end extra js -->
                 </div>
             </div>
             <!-- end right area -->

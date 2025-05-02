@@ -71,5 +71,8 @@ function putLinks(link_json) {
         }
     }
     linkItemsArea.innerHTML = linkItemsHTML;
+    if (rssLinkItems.length === 0 || CORS_DRIVER === '') {
+        return;
+    }
     setTimeout(() => putRss(linkItemsArea, rssLinkItems), 0);
 }
