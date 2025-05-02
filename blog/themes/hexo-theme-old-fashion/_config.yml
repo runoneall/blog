@@ -16,7 +16,6 @@ cors_proxy: 'https://vercel.oneall.eu.org/api/vap?'
 
 # 随机站点介绍, 每行一个
 random_intro:
-- IMPOSSIBLE IS NOTHING
 - 路漫漫其修远兮，吾将上下而求索
 - 天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为
 - 惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。
