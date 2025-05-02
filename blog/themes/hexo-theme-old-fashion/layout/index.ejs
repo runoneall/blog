@@ -40,10 +40,8 @@
     <% }) %>
 
     <!-- pagination -->
-    <% var prefix_url_path = url_for('') %>
     <%- include('pagination', {
-    prefix_url_path: prefix_url_path.endsWith('/')? prefix_url_path :
-    prefix_url_path + '/',
+    prefix_url_path: url_for(''),
     }) %>
     <!-- end pagination -->
 
