@@ -1,28 +1,28 @@
-<!-- 在链接页面引入额外css -->
-<?php if ($this->is('page', 'links')): ?>
-<link rel="stylesheet"
-    href="<?php $this->options->themeUrl('style/links.css'); ?>">
-<?php endif; ?>
+<!-- extra css on links page -->
+<% if (path.startsWith('links')) { %>
+<link rel="stylesheet" href="/css/links.css">
+<% } %>
+<!-- end extra css -->
 
+<!-- page -->
 <div class="col-mb-12 col-8" id="main" role="main">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <h1 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="<?php $this->permalink() ?>"><?php
-                $this->title() ?></a>
+            <a itemprop="url" href="/<%- page.path %>"><%- page.title %></a>
         </h1>
         <div class="post-content" itemprop="articleBody">
-            <?php $this->content(); ?>
+            <%- page.content %>
         </div>
     </article>
-    <?php $this->need('comments.php'); ?>
-</div><!-- end #main-->
+</div>
+<!-- end page -->
 
-<!-- 在链接页面引入额外js -->
-<?php if ($this->is('page', 'links')): ?>
-<script src="<?php $this->options->themeUrl('script/links.js'); ?>"></script>
+<!-- extra js on links page -->
+<% if (path.startsWith('links')) { %>
+<script src="/js/links.js"></script>
 <script>
-        CORS_DRIVER = '<?php $corsProvider = $this->options->corsProvider;
-        echo ($corsProvider == '') ? $this->options->themeUrl . '/netdrive.php/' : $corsProvider; ?>';
-        putLinks(`<?php $this->options->siteOutLinks() ?>`);
+CORS_DRIVER = `<%- theme.cors_proxy %>`;
+putLinks(`<%- JSON.stringify(theme.links) %>`);
     </script>
-<?php endif; ?>
+<% } %>
+<!-- end extra js -->
