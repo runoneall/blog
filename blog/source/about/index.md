@@ -1,6 +1,7 @@
 ---
-title: About
-date: 2025-05-01 11:02:00
+title: 关于
+date: 2024-12-09 07:59
 ---
 
-This Is About Page
+本站使用 `Hexo` 构建, 使用 `Old Fasion` 主题显示, 托管于 `Netlify`
+暂不考虑开放评论, 联系请点击侧边栏 `Email`
