@@ -40,7 +40,10 @@
     <% }) %>
 
     <!-- pagination -->
-    <%- partial('pagination') %>
+    <% console.log(path) %>
+    <%- include('pagination', {
+    prefix_url_path: url_for(''),
+    }) %>
     <!-- end pagination -->
 
 </div>

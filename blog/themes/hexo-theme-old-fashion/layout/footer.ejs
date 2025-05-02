@@ -4,18 +4,14 @@
 <!-- extra js -->
 <% if (theme.extra_js) { %>
 <script>
-  <%- theme.extra_js %>
+<%- theme.extra_js %>
 </script>
 <% } %>
 
-<!-- dark button -->
-<script src="<%- url_for('js/dark.js') %>"></script>
-
-<!-- code hightlight -->
-<script src="<%- url_for('js/highlight.js') %>"></script>
-
-<!-- sidebar button -->
-<script src="<%- url_for('js/sidebar.js') %>"></script>
-
-<!-- search -->
-<script src="<%- url_for('js/search.js') %>"></script>
+<!-- js dependencies -->
+<%- js([
+'js/dark',
+'js/highlight',
+'js/sidebar',
+'js/search'
+]) %>

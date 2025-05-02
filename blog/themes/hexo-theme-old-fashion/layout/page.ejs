@@ -1,6 +1,6 @@
 <!-- extra css on links page -->
 <% if (path.startsWith('links')) { %>
-<link rel="stylesheet" href="<%- url_for('css/links.css') %>">
+<%- css('css/links') %>
 <% } %>
 <!-- end extra css -->
 
@@ -20,7 +20,7 @@
 
 <!-- extra js on links page -->
 <% if (path.startsWith('links')) { %>
-<script src="<%- url_for('js/links.js') %>"></script>
+<%- js('js/links') %>
 <script>
 CORS_DRIVER = `<%- theme.cors_proxy %>`;
 putLinks(`<%- JSON.stringify(theme.links) %>`);
