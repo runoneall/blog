@@ -46,11 +46,11 @@
           <!-- page links -->
           <a class="<%- path.startsWith('index.html')? 'current' : '' %>"
             href="/">首页</a>
-          <% site.pages.each(p=> { %>
+          <% site.pages.each(p=> { if (!p.path.startsWith('404.html')) { %>
           <br />
           <a class="<%- path.startsWith(p.path)? 'current' : '' %>"
             href="/<%- p.path %>"><%- p.title %></a>
-          <% }); %>
+          <% }}); %>
           <!-- end page links -->
 
           <!-- sidebar extra html -->
