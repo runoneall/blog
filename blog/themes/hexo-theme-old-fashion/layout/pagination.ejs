@@ -4,7 +4,7 @@
     <% if (page.prev) { %>
     <li class="prev">
         <a
-            href="<%- page.current - 1 === 1 ? url_for('') : '/page/' + (page.current - 1) %>">«
+            href="<%- page.current - 1 === 1 ? '/' : '/page/' + (page.current - 1) %>">«
             前一页</a>
     </li>
     <% } %>
