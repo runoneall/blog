@@ -1,14 +1,15 @@
 .page-navigator {
     font-family: monospace;
+    font-size: larger;
     list-style: none;
-    margin: 25px 0;
+    margin: 15px 0;
     padding: 0;
     text-align: center;
 }
 
 .page-navigator li {
     display: inline-block;
-    margin: 0 4px;
+    margin: 0;
 }
 
 .page-navigator a {

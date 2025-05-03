@@ -4,7 +4,7 @@
     <% if (page.prev) { %>
     <li class="prev">
         <a
-            href="<%- page.current - 1 === 1 ? prefix_url_path : prefix_url_path + 'page/' + (page.current - 1) %>">«
+            href="<%- page.current - 1 === 1 ? prefix_url_path : prefix_url_path + 'page/' + (page.current - 1) %>">&laquo;
             前一页</a>
     </li>
     <% } %>
@@ -14,7 +14,9 @@
     <% if (page.current !== 1) { %>
     <li><a href="<%- prefix_url_path %>">1</a></li>
     <% } else { %>
-    <li class="current">1</li>
+    <li class="current">
+        <a href="<%- prefix_url_path %>">1</a>
+    </li>
     <% } %>
     <!-- end first page link -->
 
@@ -31,7 +33,9 @@
     %>
     <% for (let i = start; i <= end; i++) { %>
     <% if (i === page.current) { %>
-    <li class="current"><%- i %></li>
+    <li class="current">
+        <a href="<%- prefix_url_path %>page/<%- i %>"><%- i %></a>
+    </li>
     <% } else if (i !== 1) { %>
     <li><a href="<%- prefix_url_path %>page/<%- i %>"><%- i %></a></li>
     <% } %>
@@ -50,7 +54,10 @@
     <li><a href="<%- prefix_url_path %>page/<%- page.total %>"><%- page.total
             %></a></li>
     <% } else { %>
-    <li class="current"><%- page.total %></li>
+    <li class="current">
+        <a href="<%- prefix_url_path %>page/<%- page.total %>"><%- page.total
+            %></a>
+    </li>
     <% } %>
     <% } %>
     <!-- end last page link -->
@@ -58,7 +65,8 @@
     <!-- next page link -->
     <% if (page.next) { %>
     <li class="next">
-        <a href="<%- prefix_url_path %>page/<%- page.current + 1 %>">后一页 »</a>
+        <a href="<%- prefix_url_path %>page/<%- page.current + 1 %>">后一页
+            &raquo;</a>
     </li>
     <% } %>
     <!-- end next page link -->
