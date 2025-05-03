@@ -14,6 +14,7 @@ categories: 默认分类
 
 于是我开始对原贴脚本进行修改
 `/etc/init.d/alist`
+
 ```shell
 #!/sbin/openrc-run
 

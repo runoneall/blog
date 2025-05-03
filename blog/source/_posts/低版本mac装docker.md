@@ -9,21 +9,25 @@ categories: 默认分类
 翻到台mac mini，运行macOS 10.15，已经不支持安装docker GUI了
 
 首先安装brew
+
 ```zsh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
 安装docker cli
+
 ```zsh
 brew install docker docker-compose
 ```
 
 安装colima做docker后端
+
 ```zsh
 brew install colima
 ```
 
 编译安装qemu（我用的7.2.0）
+
 ```zsh
 brew install pkg-config glib pixman ninja cmake wget sdl2 lzo
 wget https://download.qemu.org/qemu-7.2.0.tar.xz
@@ -37,6 +41,7 @@ qemu-system-x86_64 --version
 ```
 
 启动colima
+
 ```zsh
 colima start  # 后面看着给 --cpu 核心数 --memory 内存(GB)
 ```

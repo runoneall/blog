@@ -15,14 +15,16 @@ categories: 默认分类
 https://blog.csdn.net/qq_36905522/article/details/136024994
 
 依赖：
+
 - python3.x
 - python内置包：json，urllib
 - python第三方包：requests，httplib2，oauth2client
 - mysql-driver：https://dev.oneall.eu.org/archives/15/（若你是serv00 s2也可以直接用我提供的地址）
-- 将下载的Google Index Api Key（一般为 `gen-lang-client-xxx.json` ）保存为 `GoogleIndexApiKey.json` 
+- 将下载的Google Index Api Key（一般为 `gen-lang-client-xxx.json` ）保存为 `GoogleIndexApiKey.json`
 - 准备必应和百度的API token
 
 代码：
+
 ```python
 import json
 from urllib.parse import quote

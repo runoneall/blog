@@ -14,11 +14,12 @@ categories: 默认分类
 ![Image description](https://s.rmimg.com/2025-04-19/1745027143-928952-2025-04-19-094225.png)
 
 直接体验：
-https://yhfx.jwznb.com/share?key=YZInMjHRY6c2&ts=1745027189 
+https://yhfx.jwznb.com/share?key=YZInMjHRY6c2&ts=1745027189
 
 部署（需python3.12）
 
 依赖包：
+
 ```plaintext
 blinker==1.9.0
 certifi==2025.1.31
@@ -36,6 +37,7 @@ Werkzeug==3.1.3
 ```
 
 部署sdkFrame
+
 ```shell
 git clone https://github.com/runoneall/sdkFrame.git
 python3 -m sdkFrame -add-origin https://dev.oneall.eu.org/ryhsdk2/map.json -update-origin -set-env YUNHU_TOKEN=云湖机器人token -set-env 'SERVER=json:{   1 ↵
@@ -44,11 +46,12 @@ python3 -m sdkFrame -add-origin https://dev.oneall.eu.org/ryhsdk2/map.json -upda
     "debug": true,
     "threaded": true
   }'
-python3 -m sdkFrame -install-module SendMessage@r1a-ryhsdk2 
+python3 -m sdkFrame -install-module SendMessage@r1a-ryhsdk2
 python3 -m sdkFrame -install-module ServCommand@r1a-ryhsdk2 -install-module ServShortCut@r1a-ryhsdk2
 ```
 
 `AliceAPI.py`
+
 ```python
 import requests
 
@@ -163,6 +166,7 @@ Debian 12 (Bookworm) Minimal#Debian 11 (Bullseye) Minimal#Debian 12 DevKit#Ubunt
 ```
 
 `app.py`
+
 ```python
 import json
 import os

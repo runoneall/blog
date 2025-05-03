@@ -30,5 +30,6 @@ curl_close($ch);
 
 ?>
 ```
+
 保存为 `netdrive.php`
 只要在该php文件url后加上目标url便可，跟cf反代一样的

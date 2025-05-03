@@ -22,10 +22,11 @@ categories: 默认分类
 这样一个自定义友链就写好了，可以增加一点代码，使其更好看
 
 我的js代码
+
 ```javascript
 let linkItemsHTML = "";
 for (const JsonItem of JSON.parse(`<?php $this->options->siteOutLinks() ?>`)) {
   linkItemsHTML += `<hr class="link-separator"><div class="link-item"><img class="link-item-avatar" src="${JsonItem.avatar}"><div class="link-item-content"><a href="${JsonItem.url}" target="_blank"><h2>${JsonItem.title}</h2></a><p>${JsonItem.description}</p></div></div>`;
 }
-document.getElementById('linkItemsArea').innerHTML = linkItemsHTML;
+document.getElementById("linkItemsArea").innerHTML = linkItemsHTML;
 ```

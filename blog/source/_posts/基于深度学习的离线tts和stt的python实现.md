@@ -7,6 +7,7 @@ categories: 默认分类
 ---
 
 安装模型（stt用的vosk-model-cn-0.22，tts用的kokoro-v1.1-zh）
+
 ```zsh
 # vosk-model-cn-0.22
 wget https://alphacephei.com/vosk/models/vosk-model-cn-0.22.zip
@@ -21,7 +22,9 @@ wget https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v
 wget https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/raw/main/config.json
 cd ..
 ```
+
 安装依赖
+
 ```plaintext
 addict==2.4.0
 annotated-types==0.7.0
@@ -94,6 +97,7 @@ websockets==15.0.1
 ```
 
 tts.py
+
 ```python
 import sounddevice as sd
 import kokoro_onnx as kokoro
@@ -144,6 +148,7 @@ class TTS:
 ```
 
 stt.py
+
 ```python
 import json
 import vosk
@@ -182,6 +187,7 @@ class STT:
 ```
 
 用法
+
 ```python
 import tts
 import stt

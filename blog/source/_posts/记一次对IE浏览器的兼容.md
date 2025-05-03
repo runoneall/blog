@@ -20,4 +20,3 @@ categories: 默认分类
 
 当时的截图（IE7）
 ![Image description](https://s.rmimg.com/2025-01-04/1735963912-277278-4ada49847ea549faa435d09724db6c63.png)
-

@@ -7,11 +7,13 @@ categories: 默认分类
 ---
 
 若你的云湖装不上或出现如下问题
+
 ```
 yunhu: /lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.32' not found (required by /usr/share/yunhu/lib/libdesktop_drop_plugin.so)
 yunhu: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.38' not found (required by /usr/share/yunhu/lib/libflutter_webrtc_plugin.so)
 yunhu: /lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.32' not found (required by /usr/share/yunhu/lib/libflutter_webrtc_plugin.so)
 ```
+
 则可以继续看本文章
 
 这些依赖可以简单的通过apt安装

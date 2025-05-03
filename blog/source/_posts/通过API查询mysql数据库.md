@@ -16,6 +16,7 @@ demo: https://runoneall.serv00.net/Files/mysql-driver.php
 https://dev.oneall.eu.org/usr/uploads/2024/12/3853467506.zip
 
 请求方法:
+
 - 发送post请求
 - 表单格式
 - host指定数据库地址 String
@@ -26,6 +27,7 @@ https://dev.oneall.eu.org/usr/uploads/2024/12/3853467506.zip
 - querys指定查询语句 String （多个语句用`;;`隔开）
 
 请求示例:
+
 ```python
 import requests
 
@@ -41,7 +43,8 @@ data = {
 print(requests.post("https://runoneall.serv00.net/Files/mysql-driver.php", data=data).text)
 ```
 
-在Cloudflare Worker中使用:  (`await sqlQuery("SQL")`)
+在Cloudflare Worker中使用: (`await sqlQuery("SQL")`)
+
 ```js
 async function sqlQuery(sqls) {
     const apiUrl = 'https://runoneall.serv00.net/Files/mysql-driver.php'

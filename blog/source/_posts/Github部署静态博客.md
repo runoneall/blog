@@ -11,15 +11,16 @@ categories: 默认分类
 具体可看：https://github.com/runoneall/blog
 
 1. 创建仓库，名称随意，注意 .gitignore 选 Node
-这里我直接用blog做仓库名
+   这里我直接用blog做仓库名
 
 2. 创建codespace
-![Image description](https://s.rmimg.com/2025-05-01/1746087828-570689-2025-05-01-162319.png)
+   ![Image description](https://s.rmimg.com/2025-05-01/1746087828-570689-2025-05-01-162319.png)
 
 3. 按照hexo官方教程搭建博客
-这里文件夹我还是用 blog，`npx hexo init blog`
+   这里文件夹我还是用 blog，`npx hexo init blog`
 
 4. 搭建好后创建workflow
+
 ```yaml
 name: Build And Deploy to Public Branch
 
@@ -59,6 +60,7 @@ jobs:
           publish_branch: public
           keep_files: false
 ```
+
 意思是：拉取代码 -> 安装nodejs -> 安装hexo -> 安装依赖并生成静态文件 -> 提交到public分支
 (这里需要在仓库设置里创建名为REPO_TOKEN的secret，令牌需要对仓库有写入权限，勾选repo即可)
 

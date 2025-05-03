@@ -14,25 +14,24 @@ categories: 默认分类
 
 近日，Mojang宣布将从Minecraft服务器删除 PDB¹ 文件[预计将在1.21(1.21.10)版本],这将严重影响MC基岩版插件开发[第三方开发工具将不能使用,只有具有特殊访问权限的开发者(Minecraft 官方合作伙伴)才能继续进行更新]。对此,社区中有两种猜测：1.Mojang(微软)为了让基岩版的内置商店发展。2.为了防止第三方外挂客户端进行作弊。但无论如何这都将对基岩版插件社区造成沉重打击。
 
-截至文章发布,[LiteLDev](https://github.com/LiteLDev)宣布将停止开发 [LeviLamina](https://github.com/LiteLDev/LeviLamina)  (原LiteLonder加载器)，[BDSX](https://github.com/bdsx/bdsx)开发人员也表示如果官方删除PDB文件，项目将不会继续更新
+截至文章发布,[LiteLDev](https://github.com/LiteLDev)宣布将停止开发 [LeviLamina](https://github.com/LiteLDev/LeviLamina) (原LiteLonder加载器)，[BDSX](https://github.com/bdsx/bdsx)开发人员也表示如果官方删除PDB文件，项目将不会继续更新
 
 以下为[LiteLDev](https://github.com/LiteLDev)及[BDSX](https://github.com/bdsx/bdsx)宣布的内容：
 
 > 这个存储库将被存档，因为Mojang计划从他们未来发布的二进制文件中删除符号文件。
-> 
+>
 > 尽管社区要求提供完整的 PDB¹ 文件，但 Mojang 拒绝了，现在打算从未来的版本中删除符号文件。
-> 
+>
 > 这将使调试服务器和开发插件变得不可能，导致 LeviLamina 和其他插件的开发结束。
-> 
+>
 > 因此，未来不会开发任何重要的插件，例如关键错误修复、反作弊插件和社区需要的其他功能插件。但是，那些开发作弊的人仍然可以这样做，这使得社区很难创建反作弊插件来保护服务器。
-> 
+>
 > Mojang在开发服务器方面并不擅长，现在他们使社区无法开发插件。这是一个非常糟糕的决定。
-> 
+>
 > Mojang对社区的立场令人深感失望。我们敦促社区采取行动，发出我们的声音。通过在社交媒体上表达我们的担忧并向Mojang施加压力，我们希望他们能够重新考虑他们的决定。社区团结和集体努力可能会鼓励Mojang改变他们的方法。
-> 
-> 如果您对本通知有任何疑问或意见，请联系。liteldev@liteldev.com
-> [![pk0wkUU.jpg](https://s21.ax1x.com/2024/06/17/pk0wkUU.jpg)](https://imgse.com/i/pk0wkUU)
-> 
+>
+> 如果您对本通知有任何疑问或意见，请联系。liteldev@liteldev.com > [![pk0wkUU.jpg](https://s21.ax1x.com/2024/06/17/pk0wkUU.jpg)](https://imgse.com/i/pk0wkUU)
+>
 > [![pk0wFET.jpg](https://s21.ax1x.com/2024/06/17/pk0wFET.jpg)](https://imgse.com/i/pk0wFET)
 
 > 在BDS v.1.21预览版中，删除了非常重要且必不可少的调试信息

@@ -8,6 +8,7 @@ categories: 默认分类
 
 ![Image description](https://s.rmimg.com/2025-04-24/1745484882-765922-2025-04-24-165309.png)
 是从某个一键脚本抽离出来的
+
 ```sh
 new_swap=1024  # 单位MB
 swap_partitions=$(grep -E '^/dev/' /proc/swaps | awk '{print $1}')
@@ -23,4 +24,5 @@ chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile
 ```
+
 需要root，开机后运行一次就可以了
