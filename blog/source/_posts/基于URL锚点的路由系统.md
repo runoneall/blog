@@ -3,7 +3,7 @@ title: 基于URL锚点的路由系统
 date: 2025-02-13 09:28:00
 updated: 2025-02-28 14:23:48
 tags: []
-categories: 默认分类
+categories: 默认
 ---
 
 好处：不会显式刷新，语法简单，使用原生JS

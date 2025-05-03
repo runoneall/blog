@@ -3,7 +3,7 @@ title: vercel搭建跨域API
 date: 2025-03-23 07:34:00
 updated: 2025-03-24 12:05:27
 tags: []
-categories: 默认分类
+categories: 默认
 ---
 
 使用 `vercel edge function`

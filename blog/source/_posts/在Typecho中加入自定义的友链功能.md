@@ -3,7 +3,7 @@ title: 在Typecho中加入自定义的友链功能
 date: 2025-01-04 14:04:43
 updated: 2025-01-04 14:04:43
 tags: []
-categories: 默认分类
+categories: 默认
 ---
 
 首先在主题的 `functions.php` 中新加一个多行输入框

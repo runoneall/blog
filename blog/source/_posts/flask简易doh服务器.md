@@ -3,7 +3,7 @@ title: flask简易doh服务器
 date: 2025-01-16 16:46:00
 updated: 2025-01-21 14:26:48
 tags: []
-categories: 默认分类
+categories: 默认
 ---
 
 ```python

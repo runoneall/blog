@@ -3,7 +3,7 @@ title: Mini小鸡搭一个还算能用的云电脑
 date: 2025-04-22 10:40:00
 updated: 2025-04-23 16:30:00
 tags: []
-categories: 默认分类
+categories: 默认
 ---
 
 浏览网页一点问题没有，配置低的vps也可以看

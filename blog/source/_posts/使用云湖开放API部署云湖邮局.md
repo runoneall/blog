@@ -3,7 +3,7 @@ title: 使用云湖开放API部署云湖邮局
 date: 2024-12-09 10:51:00
 updated: 2025-04-10 14:22:44
 tags: []
-categories: 默认分类
+categories: 默认
 ---
 
 先上效果图

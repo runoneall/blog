@@ -3,7 +3,7 @@ title: 记一次对IE浏览器的兼容
 date: 2025-01-04 05:13:00
 updated: 2025-01-04 05:15:28
 tags: []
-categories: 默认分类
+categories: 默认
 ---
 
 能到IE7，但没截图，先用个IE8的截图吧

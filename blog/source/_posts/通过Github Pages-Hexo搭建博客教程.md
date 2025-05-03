@@ -3,7 +3,7 @@ title: 通过Github Pages+Hexo搭建博客教程
 date: 2024-12-09 11:38:35
 updated: 2024-12-09 11:38:35
 tags: []
-categories: 默认分类
+categories: 默认
 ---
 
 此方法适用于所有系统，但会存在路径与命令区别，请自行尝试后进行修改  

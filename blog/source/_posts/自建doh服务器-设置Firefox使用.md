@@ -3,7 +3,7 @@ title: 自建doh服务器+设置Firefox使用
 date: 2024-12-09 11:42:50
 updated: 2024-12-09 11:42:50
 tags: []
-categories: 默认分类
+categories: 默认
 ---
 
 # 前情提要

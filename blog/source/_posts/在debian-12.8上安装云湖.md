@@ -3,7 +3,7 @@ title: 在debian-12.8上安装云湖
 date: 2024-12-25 03:16:00
 updated: 2025-04-07 10:09:28
 tags: []
-categories: 默认分类
+categories: 默认
 ---
 
 若你的云湖装不上或出现如下问题

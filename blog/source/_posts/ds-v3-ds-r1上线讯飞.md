@@ -3,7 +3,7 @@ title: ds-v3，ds-r1上线讯飞
 date: 2025-02-17 12:53:00
 updated: 2025-02-17 14:57:38
 tags: []
-categories: 默认分类
+categories: 默认
 ---
 
 ![Image description](https://s.rmimg.com/2025-02-17/1739793084-706508-2025-02-17-195120.png)

@@ -3,7 +3,7 @@ title: shell脚本的一种混淆方式
 date: 2024-12-09 11:30:55
 updated: 2024-12-09 11:30:55
 tags: []
-categories: 默认分类
+categories: 默认
 ---
 
 灵感来源于：[rwkgyg/sing-box-yg](https://gitlab.com/rwkgyg/sing-box-yg)
