@@ -158,8 +158,8 @@ description_random_intro.innerHTML = random_intro;
             
             <li>分类:
                 
-                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
-                    默认分类
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认
                 </a>&nbsp;
                 
             </li>
@@ -186,48 +186,51 @@ YH_BOT_TOKEN = &quot;换成你的云湖机器人Token&quot;
 YH_USER_ID = &quot;换成你的ID&quot;
 </code></pre>
 <p>然后编写代码：</p>
-<pre><code class="language-javascript">import PostalMime from &#39;postal-mime&#39;;
+<pre><code class="language-javascript">import PostalMime from &quot;postal-mime&quot;;
 
 async function toYunhu(msg, env) &#123;
-    const token = env.YH_BOT_TOKEN
-    const apiUrl = &#39;https://chat-go.jwzhd.com/open-apis/v1/bot/send?token=&#39; + token
-    const response = await fetch(apiUrl, &#123;
-        method: &quot;POST&quot;,
-        headers: &#123; &quot;Content-Type&quot;: &quot;application/json; charset=utf-8&quot; &#125;,
-        body: JSON.stringify(&#123;
-            recvId: env.YH_USER_ID, recvType: &#39;user&#39;,
-            contentType: &#39;html&#39;, content: &#123; text: msg &#125;
-        &#125;)
-    &#125;)
-    return response.json()
+  const token = env.YH_BOT_TOKEN;
+  const apiUrl =
+    &quot;https://chat-go.jwzhd.com/open-apis/v1/bot/send?token=&quot; + token;
+  const response = await fetch(apiUrl, &#123;
+    method: &quot;POST&quot;,
+    headers: &#123; &quot;Content-Type&quot;: &quot;application/json; charset=utf-8&quot; &#125;,
+    body: JSON.stringify(&#123;
+      recvId: env.YH_USER_ID,
+      recvType: &quot;user&quot;,
+      contentType: &quot;html&quot;,
+      content: &#123; text: msg &#125;,
+    &#125;),
+  &#125;);
+  return response.json();
 &#125;
 
 export default &#123;
-    async email(message, env, ctx) &#123;
-        let email_string = ``;
-        const email_from = message.from;
-        const email_to = message.to;
-        email_string += `&lt;div style=&quot;background-color: white; color: black;&quot;&gt;
+  async email(message, env, ctx) &#123;
+    let email_string = ``;
+    const email_from = message.from;
+    const email_to = message.to;
+    email_string += `&lt;div style=&quot;background-color: white; color: black;&quot;&gt;
   &lt;ul&gt;
     &lt;li&gt;From: $&#123;email_from&#125;&lt;/li&gt;
     &lt;li&gt;To: $&#123;email_to&#125;&lt;/li&gt;
   &lt;/ul&gt;
   &lt;hr&gt;`;
-        const email_content = await PostalMime.parse(message.raw);
-        const email_subject = email_content.subject;
-        let email_text = email_content.html;
-        if (email_text == null) &#123;
-            email_text = email_content.text;
-        &#125;
-        email_string += `  &lt;details&gt;
+    const email_content = await PostalMime.parse(message.raw);
+    const email_subject = email_content.subject;
+    let email_text = email_content.html;
+    if (email_text == null) &#123;
+      email_text = email_content.text;
+    &#125;
+    email_string += `  &lt;details&gt;
     &lt;summary&gt;
       &lt;strong style=&quot;font-size: 20px;&quot;&gt;$&#123;email_subject&#125;&lt;/strong&gt;
     &lt;/summary&gt;
     $&#123;email_text&#125;
   &lt;/details&gt;
 &lt;/div&gt;`;
-        await toYunhu(email_string, env);
-    &#125;,
+    await toYunhu(email_string, env);
+  &#125;,
 &#125;;
 </code></pre>
 <p>最后使用wrangler部署</p>
@@ -241,73 +244,79 @@ export default &#123;
 <p>打开云湖控制台并新建自定义输入指令<br><img src="https://s.rmimg.com/2024-11-21/1732153422-509814-2024-11-21-94259.png" alt="Image description"><br>把每个表单ID对应的输入框名记下来！</p>
 <p>打开cloudflare网页编辑器并编写代码</p>
 <pre><code class="language-javascript">async function sendEmail(email_to, email_title, email_content, env) &#123;
-    const token = env.RESEND_EMAIL_TOKEN
-    const response = await fetch(&quot;https://api.resend.com/emails&quot;, &#123;
-        method: &quot;POST&quot;,
-        headers: &#123;
-            &quot;content-type&quot;: &quot;application/json&quot;,
-            &quot;Authorization&quot;: `Bearer $&#123;token&#125;`
-        &#125;,
-        body: JSON.stringify(&#123;
-            from: &quot;这里填入你的resend邮箱名，如果将域名解析到resend则可以填域名邮箱&quot;,
-            to: email_to,
-            subject: email_title,
-            html: email_content
-        &#125;)
-    &#125;);
-    return response.body;
+  const token = env.RESEND_EMAIL_TOKEN;
+  const response = await fetch(&quot;https://api.resend.com/emails&quot;, &#123;
+    method: &quot;POST&quot;,
+    headers: &#123;
+      &quot;content-type&quot;: &quot;application/json&quot;,
+      Authorization: `Bearer $&#123;token&#125;`,
+    &#125;,
+    body: JSON.stringify(&#123;
+      from: &quot;这里填入你的resend邮箱名，如果将域名解析到resend则可以填域名邮箱&quot;,
+      to: email_to,
+      subject: email_title,
+      html: email_content,
+    &#125;),
+  &#125;);
+  return response.body;
 &#125;
 
 async function toYunhu(msg, env) &#123;
-    const token = env.YH_BOT_TOKEN
-    const apiUrl = &#39;https://chat-go.jwzhd.com/open-apis/v1/bot/send?token=&#39;+token
-    const response = await fetch(apiUrl, &#123;method: &quot;POST&quot;,
-        headers: &#123;&quot;Content-Type&quot;: &quot;application/json; charset=utf-8&quot;&#125;,
-        body: JSON.stringify(&#123;
-            recvId: env.YH_USER_ID,recvType: &#39;user&#39;,
-            contentType: &#39;html&#39;,content: &#123;text: msg&#125;&#125;)&#125;)
-    return response.json()
+  const token = env.YH_BOT_TOKEN;
+  const apiUrl =
+    &quot;https://chat-go.jwzhd.com/open-apis/v1/bot/send?token=&quot; + token;
+  const response = await fetch(apiUrl, &#123;
+    method: &quot;POST&quot;,
+    headers: &#123; &quot;Content-Type&quot;: &quot;application/json; charset=utf-8&quot; &#125;,
+    body: JSON.stringify(&#123;
+      recvId: env.YH_USER_ID,
+      recvType: &quot;user&quot;,
+      contentType: &quot;html&quot;,
+      content: &#123; text: msg &#125;,
+    &#125;),
+  &#125;);
+  return response.json();
 &#125;
 
 async function toHTML(markdown, env) &#123;
-    const token = env.GH_REST_TOKEN
-    const response = await fetch(&quot;https://api.github.com/markdown&quot;, &#123;
-        method: &quot;POST&quot;,
-        headers: &#123;
-            &#39;Accept&#39;: &quot;application/vnd.github+json&quot;,
-            &#39;User-Agent&#39;: &quot;Markdown-To-Html-App&quot;,
-            &#39;Authorization&#39;: `Bearer $&#123;token&#125;`,
-            &#39;X-GitHub-Api-Version&#39;: &quot;2022-11-28&quot;
-        &#125;,
-        body: JSON.stringify(&#123;text: markdown&#125;),
-    &#125;)
-    return response.text();
+  const token = env.GH_REST_TOKEN;
+  const response = await fetch(&quot;https://api.github.com/markdown&quot;, &#123;
+    method: &quot;POST&quot;,
+    headers: &#123;
+      Accept: &quot;application/vnd.github+json&quot;,
+      &quot;User-Agent&quot;: &quot;Markdown-To-Html-App&quot;,
+      Authorization: `Bearer $&#123;token&#125;`,
+      &quot;X-GitHub-Api-Version&quot;: &quot;2022-11-28&quot;,
+    &#125;,
+    body: JSON.stringify(&#123; text: markdown &#125;),
+  &#125;);
+  return response.text();
 &#125;
 
 async function getEmailInfo(yhJson) &#123;
-    let email_info = &#123;&#125;
-    let formJson = yhJson[&#39;event&#39;][&#39;message&#39;][&#39;content&#39;][&#39;formJson&#39;]
-    if (formJson == null) &#123;
-        formJson = yhJson[&#39;event&#39;][&#39;message&#39;][&#39;content&#39;][&#39;formjson&#39;]
-    &#125;
-    email_info[&#39;address&#39;] = formJson[&#39;这里是 目标 输入框的表单ID&#39;][&#39;value&#39;]
-    email_info[&#39;title&#39;] = formJson[&#39;这里是 标题 输入框的表单ID&#39;][&#39;value&#39;]
-    email_info[&#39;content&#39;] = formJson[&#39;这里是 正文 输入框的表单ID&#39;][&#39;value&#39;]
-    return email_info
+  let email_info = &#123;&#125;;
+  let formJson = yhJson[&quot;event&quot;][&quot;message&quot;][&quot;content&quot;][&quot;formJson&quot;];
+  if (formJson == null) &#123;
+    formJson = yhJson[&quot;event&quot;][&quot;message&quot;][&quot;content&quot;][&quot;formjson&quot;];
+  &#125;
+  email_info[&quot;address&quot;] = formJson[&quot;这里是 目标 输入框的表单ID&quot;][&quot;value&quot;];
+  email_info[&quot;title&quot;] = formJson[&quot;这里是 标题 输入框的表单ID&quot;][&quot;value&quot;];
+  email_info[&quot;content&quot;] = formJson[&quot;这里是 正文 输入框的表单ID&quot;][&quot;value&quot;];
+  return email_info;
 &#125;
 
 export default &#123;
-    async fetch(request, env, ctx) &#123;
-        if (request.method == &quot;POST&quot;) &#123;
-            const email_info = await getEmailInfo((await request.json()))
-            const address = email_info[&#39;address&#39;]
-            const title = email_info[&#39;title&#39;]
-            const content = await toHTML(email_info[&#39;content&#39;], env)
-            const email_response = await sendEmail(address, title, content, env)
-            await toYunhu(&quot;已发送&quot;, env)
-            return new Response(email_response);
-        &#125;
-    &#125;,
+  async fetch(request, env, ctx) &#123;
+    if (request.method == &quot;POST&quot;) &#123;
+      const email_info = await getEmailInfo(await request.json());
+      const address = email_info[&quot;address&quot;];
+      const title = email_info[&quot;title&quot;];
+      const content = await toHTML(email_info[&quot;content&quot;], env);
+      const email_response = await sendEmail(address, title, content, env);
+      await toYunhu(&quot;已发送&quot;, env);
+      return new Response(email_response);
+    &#125;
+  &#125;,
 &#125;;
 </code></pre>
 <p>在 worker设置 -&gt; 变量和机密 那里新建变量</p>

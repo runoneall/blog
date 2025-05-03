@@ -158,8 +158,8 @@ description_random_intro.innerHTML = random_intro;
             
             <li>分类:
                 
-                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
-                    默认分类
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认
                 </a>&nbsp;
                 
             </li>
@@ -197,7 +197,7 @@ data = &#123;
 
 print(requests.post(&quot;https://runoneall.serv00.net/Files/mysql-driver.php&quot;, data=data).text)
 </code></pre>
-<p>在Cloudflare Worker中使用:  (<code>await sqlQuery(&quot;SQL&quot;)</code>)</p>
+<p>在Cloudflare Worker中使用: (<code>await sqlQuery(&quot;SQL&quot;)</code>)</p>
 <pre><code class="language-js">async function sqlQuery(sqls) &#123;
     const apiUrl = &#39;https://runoneall.serv00.net/Files/mysql-driver.php&#39;
     const info = &#123;

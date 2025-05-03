@@ -158,8 +158,8 @@ description_random_intro.innerHTML = random_intro;
             
             <li>分类:
                 
-                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
-                    默认分类
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认
                 </a>&nbsp;
                 
             </li>
@@ -229,7 +229,7 @@ class ChatClient:
         )
         for chunk in response:
             yield chunk.choices[0].delta.content
-    
+
     def image_generation(self, query: str, width: int, height: int):
         response = self.zhipu.images.generate(
             model=&quot;cogview-3-flash&quot;,

@@ -47,7 +47,7 @@
 
 <!-- description -->
 
-<meta name="description" content="使用 vercel edge function export const runtime = &#39;edge&#39;;  async function handleRequest(req: Request) &#123;     const url = new URL(req.url);     const targetUrl = decodeURIComponent(url.search)" />
+<meta name="description" content="使用 vercel edge function export const runtime = &quot;edge&quot;;  async function handleRequest(req: Request) &#123;   const url = new URL(req.url);   const targetUrl = decodeURIComponent(url.search).s" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -158,8 +158,8 @@ description_random_intro.innerHTML = random_intro;
             
             <li>分类:
                 
-                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
-                    默认分类
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认
                 </a>&nbsp;
                 
             </li>
@@ -170,33 +170,33 @@ description_random_intro.innerHTML = random_intro;
         <!-- post content -->
         <div class="post-content" itemprop="articleBody">
             <p>使用 <code>vercel edge function</code></p>
-<pre><code class="language-typescript">export const runtime = &#39;edge&#39;;
+<pre><code class="language-typescript">export const runtime = &quot;edge&quot;;
 
 async function handleRequest(req: Request) &#123;
-    const url = new URL(req.url);
-    const targetUrl = decodeURIComponent(url.search).slice(1);
+  const url = new URL(req.url);
+  const targetUrl = decodeURIComponent(url.search).slice(1);
 
-    const reqInit: RequestInit &amp; &#123; duplex?: string &#125; = &#123;
-        headers: req.headers,
-        method: req.method,
-        body: req.body,
-        redirect: &#39;follow&#39;,
-        duplex: &#39;half&#39;
-    &#125;;
-    const modifiedRequest = new Request(targetUrl, reqInit);
-    const resp = await fetch(modifiedRequest);
+  const reqInit: RequestInit &amp; &#123; duplex?: string &#125; = &#123;
+    headers: req.headers,
+    method: req.method,
+    body: req.body,
+    redirect: &quot;follow&quot;,
+    duplex: &quot;half&quot;,
+  &#125;;
+  const modifiedRequest = new Request(targetUrl, reqInit);
+  const resp = await fetch(modifiedRequest);
 
-    return new Response(resp.body, &#123;
-        status: resp.status,
-        statusText: resp.statusText,
-        headers: new Headers(&#123;
-            ...resp.headers,
-            &#39;Cache-Control&#39;: &#39;no-store&#39;,
-            &#39;Access-Control-Allow-Methods&#39;: &#39;GET, POST, PUT, DELETE, PATCH, OPTIONS&#39;,
-            &#39;Access-Control-Allow-Headers&#39;: &#39;*&#39;,
-            &#39;Access-Control-Allow-Origin&#39;: &#39;*&#39;,
-        &#125;),
-    &#125;);
+  return new Response(resp.body, &#123;
+    status: resp.status,
+    statusText: resp.statusText,
+    headers: new Headers(&#123;
+      ...resp.headers,
+      &quot;Cache-Control&quot;: &quot;no-store&quot;,
+      &quot;Access-Control-Allow-Methods&quot;: &quot;GET, POST, PUT, DELETE, PATCH, OPTIONS&quot;,
+      &quot;Access-Control-Allow-Headers&quot;: &quot;*&quot;,
+      &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+    &#125;),
+  &#125;);
 &#125;
 
 export const GET = handleRequest;

@@ -47,7 +47,7 @@
 
 <!-- description -->
 
-<meta name="description" content="好处：不会显式刷新，语法简单，使用原生JS router.js class HashRouter &#123;     constructor(container) &#123;         this.container = container;         this.routes = &#123;&#125;;          this.defaultHandler = () =&gt" />
+<meta name="description" content="好处：不会显式刷新，语法简单，使用原生JS router.js class HashRouter &#123;   constructor(container) &#123;     this.container = container;     this.routes = &#123;&#125;;      this.defaultHandler = () =&gt; this.show404" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -158,8 +158,8 @@ description_random_intro.innerHTML = random_intro;
             
             <li>分类:
                 
-                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
-                    默认分类
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认
                 </a>&nbsp;
                 
             </li>
@@ -172,94 +172,92 @@ description_random_intro.innerHTML = random_intro;
             <p>好处：不会显式刷新，语法简单，使用原生JS</p>
 <p><code>router.js</code></p>
 <pre><code class="language-javascript">class HashRouter &#123;
-    constructor(container) &#123;
-        this.container = container;
-        this.routes = &#123;&#125;;
+  constructor(container) &#123;
+    this.container = container;
+    this.routes = &#123;&#125;;
 
-        this.defaultHandler = () =&gt; this.show404(
-            this.container
-        );
+    this.defaultHandler = () =&gt; this.show404(this.container);
 
-        this.normalizePath = path =&gt; &#123;
-            if (!path) return &#39;/&#39;;
-            return path.startsWith(&#39;/&#39;) ? path : `/$&#123;path&#125;`;
-        &#125;;
+    this.normalizePath = (path) =&gt; &#123;
+      if (!path) return &quot;/&quot;;
+      return path.startsWith(&quot;/&quot;) ? path : `/$&#123;path&#125;`;
+    &#125;;
 
-        window.addEventListener(&#39;hashchange&#39;, () =&gt; this.handleRoute());
-        window.addEventListener(&#39;load&#39;, () =&gt; this.handleRoute());
-    &#125;
+    window.addEventListener(&quot;hashchange&quot;, () =&gt; this.handleRoute());
+    window.addEventListener(&quot;load&quot;, () =&gt; this.handleRoute());
+  &#125;
 
-    addRoute(path, handler) &#123;
-        const normalizedPath = this.normalizePath(path);
-        this.routes[normalizedPath] = handler;
-    &#125;
+  addRoute(path, handler) &#123;
+    const normalizedPath = this.normalizePath(path);
+    this.routes[normalizedPath] = handler;
+  &#125;
 
-    setDefaultHandler(handler) &#123;
-        this.defaultHandler = handler;
-    &#125;
+  setDefaultHandler(handler) &#123;
+    this.defaultHandler = handler;
+  &#125;
 
-    handleRoute() &#123;
-        const rawHash = window.location.hash.slice(1);
-        const currentPath = this.normalizePath(rawHash);
-        
-        const handler = this.routes[currentPath] || this.defaultHandler;
-        this.container.innerHTML = &#39;&#39;;
-        handler(this.container);
-    &#125;
+  handleRoute() &#123;
+    const rawHash = window.location.hash.slice(1);
+    const currentPath = this.normalizePath(rawHash);
 
-    show404(container) &#123;
-        container.innerHTML = &#39;&lt;h1&gt;404 Not Found&lt;/h1&gt;&#39;;
-    &#125;
+    const handler = this.routes[currentPath] || this.defaultHandler;
+    this.container.innerHTML = &quot;&quot;;
+    handler(this.container);
+  &#125;
+
+  show404(container) &#123;
+    container.innerHTML = &quot;&lt;h1&gt;404 Not Found&lt;/h1&gt;&quot;;
+  &#125;
 &#125;
 </code></pre>
 <p><code>index.html</code></p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
-
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
     &lt;title&gt;HashRouter&lt;/title&gt;
-&lt;/head&gt;
+  &lt;/head&gt;
 
-&lt;body&gt;
-
+  &lt;body&gt;
     &lt;h1&gt;HashRouter&lt;/h1&gt;
 
     &lt;div&gt;
-        &lt;a href=&quot;#/&quot;&gt;Home&lt;/a&gt;
-        &lt;a href=&quot;#/about&quot;&gt;About&lt;/a&gt;
-        &lt;a href=&quot;#/contact&quot;&gt;Contact&lt;/a&gt;
-        &lt;a href=&quot;#/null&quot;&gt;Null&lt;/a&gt;
+      &lt;a href=&quot;#/&quot;&gt;Home&lt;/a&gt;
+      &lt;a href=&quot;#/about&quot;&gt;About&lt;/a&gt;
+      &lt;a href=&quot;#/contact&quot;&gt;Contact&lt;/a&gt;
+      &lt;a href=&quot;#/null&quot;&gt;Null&lt;/a&gt;
     &lt;/div&gt;
-    &lt;div id=&quot;main-containter&quot; style=&quot;border: 1px solid black; margin: auto; padding: 20px;&quot;&gt;&lt;/div&gt;
+    &lt;div
+      id=&quot;main-containter&quot;
+      style=&quot;border: 1px solid black; margin: auto; padding: 20px;&quot;
+    &gt;&lt;/div&gt;
 
-    &lt;script src=&quot;/router.js&quot;&gt;&lt;/script&gt; &lt;!-- 引入JS文件 --&gt;
+    &lt;script src=&quot;/router.js&quot;&gt;&lt;/script&gt;
+    &lt;!-- 引入JS文件 --&gt;
     &lt;script&gt;
-        // 创建HashRouter实例
-        const router = new HashRouter(document.getElementById(&quot;main-containter&quot;));
+      // 创建HashRouter实例
+      const router = new HashRouter(document.getElementById(&quot;main-containter&quot;));
 
-        // 定义路由规则
-        router.addRoute(&quot;/&quot;, (containter) =&gt; &#123;
-            containter.innerHTML = &quot;Welcome to the homepage&quot;;
-        &#125;)
-        router.addRoute(&quot;/about&quot;, (containter) =&gt; &#123;
-            containter.innerHTML = &quot;About us&quot;;
-        &#125;)
-        router.addRoute(&quot;/contact&quot;, (containter) =&gt; &#123;
-            containter.innerHTML = &quot;Contact us&quot;;
-        &#125;)
+      // 定义路由规则
+      router.addRoute(&quot;/&quot;, (containter) =&gt; &#123;
+        containter.innerHTML = &quot;Welcome to the homepage&quot;;
+      &#125;);
+      router.addRoute(&quot;/about&quot;, (containter) =&gt; &#123;
+        containter.innerHTML = &quot;About us&quot;;
+      &#125;);
+      router.addRoute(&quot;/contact&quot;, (containter) =&gt; &#123;
+        containter.innerHTML = &quot;Contact us&quot;;
+      &#125;);
 
-        // 设置默认路由 (若不指定则默认插入 404 Not Found)
-        router.setDefaultHandler((containter) =&gt; &#123;
-            containter.innerHTML = &quot;Page not found&quot;;
-        &#125;);
+      // 设置默认路由 (若不指定则默认插入 404 Not Found)
+      router.setDefaultHandler((containter) =&gt; &#123;
+        containter.innerHTML = &quot;Page not found&quot;;
+      &#125;);
 
-        // 监听hashchange事件
-        router.handleRoute();
+      // 监听hashchange事件
+      router.handleRoute();
     &lt;/script&gt;
-
-&lt;/body&gt;
-
+  &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
 <ul>

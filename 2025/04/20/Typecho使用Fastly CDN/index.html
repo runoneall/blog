@@ -47,7 +47,7 @@
 
 <!-- description -->
 
-<meta name="description" content="主要介绍从FNL CDN迁移到Fastly的过程，及踩过的坑 某睿智博主花了两天搞的东西（悲 首先是得有 Fastly 账号，然后到 https://manage.fastly.com/configure 配置CDN服务 配置好后大概是这样 点击 Service configuration -&gt; Edit configuration -&gt; Clone to edit  配置源站" />
+<meta name="description" content="主要介绍从FNL CDN迁移到Fastly的过程，及踩过的坑 某睿智博主花了两天搞的东西（悲 首先是得有 Fastly 账号，然后到 https://manage.fastly.com/configure 配置CDN服务 配置好后大概是这样 点击 Service configuration -&gt; Edit configuration -&gt; Clone to edit  配置源站  点击" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -158,8 +158,8 @@ description_random_intro.innerHTML = random_intro;
             
             <li>分类:
                 
-                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
-                    默认分类
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认
                 </a>&nbsp;
                 
             </li>
@@ -175,9 +175,9 @@ description_random_intro.innerHTML = random_intro;
 <p>配置好后大概是这样<br><img src="https://s.rmimg.com/2025-04-20/1745147889-471716-2025-04-20-191804.png" alt="Image description"></p>
 <p>点击 Service configuration -&gt; Edit configuration -&gt; Clone to edit</p>
 <ol>
-<li>配置源站<br>  <img src="https://s.rmimg.com/2025-04-20/1745148062-585026-2025-04-20-192059.png" alt="Image description"><br>  <img src="https://s.rmimg.com/2025-04-20/1745152648-633351-2025-04-20-203722.png" alt="Image description"><br>  <img src="https://s.rmimg.com/2025-04-20/1745152742-341826-2025-04-20-203857.png" alt="Image description"><br>  <img src="https://s.rmimg.com/2025-04-20/1745152760-792035-2025-04-20-203916.png" alt="Image description"></li>
+<li>配置源站<br><img src="https://s.rmimg.com/2025-04-20/1745148062-585026-2025-04-20-192059.png" alt="Image description"><br><img src="https://s.rmimg.com/2025-04-20/1745152648-633351-2025-04-20-203722.png" alt="Image description"><br><img src="https://s.rmimg.com/2025-04-20/1745152742-341826-2025-04-20-203857.png" alt="Image description"><br><img src="https://s.rmimg.com/2025-04-20/1745152760-792035-2025-04-20-203916.png" alt="Image description"></li>
 </ol>
-<p>  点击 Origins 并找到源站（这里是Serv00）并点击笔图标</p>
+<p>点击 Origins 并找到源站（这里是Serv00）并点击笔图标</p>
 <ul>
 <li>Name 随便写</li>
 <li>Address 写源站IP</li>
@@ -188,7 +188,7 @@ description_random_intro.innerHTML = random_intro;
 <li>其他保持默认</li>
 </ul>
 <ol start="2">
-<li>配置加速选项<br>  点击 Settings 并按需求开启（以下是我的配置）</li>
+<li>配置加速选项<br>点击 Settings 并按需求开启（以下是我的配置）</li>
 </ol>
 <ul>
 <li>Serve stale content on origin failure</li>
@@ -197,9 +197,9 @@ description_random_intro.innerHTML = random_intro;
 <li>其余关闭</li>
 </ul>
 <ol start="3">
-<li>配置缓存<br>  <img src="https://s.rmimg.com/2025-04-20/1745153319-701066-2025-04-20-204833.png" alt="Image description"><br>  <img src="https://s.rmimg.com/2025-04-20/1745153361-225122-2025-04-20-204917.png" alt="Image description"><br>  <img src="https://s.rmimg.com/2025-04-20/1745153385-783210-2025-04-20-204942.png" alt="Image description"></li>
+<li>配置缓存<br><img src="https://s.rmimg.com/2025-04-20/1745153319-701066-2025-04-20-204833.png" alt="Image description"><br><img src="https://s.rmimg.com/2025-04-20/1745153361-225122-2025-04-20-204917.png" alt="Image description"><br><img src="https://s.rmimg.com/2025-04-20/1745153385-783210-2025-04-20-204942.png" alt="Image description"></li>
 </ol>
-<p>  Fastly默认缓存全站，当你发现后台 &#x2F;admin 进不去或有时能进去，请按照以下配置（我这19个version有10个都是栽在这了）</p>
+<p>Fastly默认缓存全站，当你发现后台 &#x2F;admin 进不去或有时能进去，请按照以下配置（我这19个version有10个都是栽在这了）</p>
 <ul>
 <li>Create cache setting</li>
 <li>Condition -&gt; attach a condition</li>
@@ -211,9 +211,9 @@ description_random_intro.innerHTML = random_intro;
 <li>其他留空</li>
 </ul>
 <ol start="4">
-<li>压缩<br>  <img src="https://s.rmimg.com/2025-04-20/1745153516-709386-2025-04-20-205152.png" alt="Image description"></li>
+<li>压缩<br><img src="https://s.rmimg.com/2025-04-20/1745153516-709386-2025-04-20-205152.png" alt="Image description"></li>
 </ol>
-<p>  点击 Content -&gt; Compression</p>
+<p>点击 Content -&gt; Compression</p>
 <ul>
 <li>按需开启</li>
 </ul>
@@ -221,7 +221,7 @@ description_random_intro.innerHTML = random_intro;
 <p>将域名接入Fastly</p>
 <ol>
 <li>前往 SSL 证书的 View subscription details</li>
-<li>找到 TLS configuration and DNS details -&gt; View &#x2F; Edit<br>  <img src="https://s.rmimg.com/2025-04-20/1745153906-304170-2025-04-20-205821.png" alt="Image description"></li>
+<li>找到 TLS configuration and DNS details -&gt; View &#x2F; Edit<br><img src="https://s.rmimg.com/2025-04-20/1745153906-304170-2025-04-20-205821.png" alt="Image description"></li>
 <li>按需选择添加记录即可</li>
 </ol>
 

@@ -158,8 +158,8 @@ description_random_intro.innerHTML = random_intro;
             
             <li>分类:
                 
-                <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
-                    默认分类
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认
                 </a>&nbsp;
                 
             </li>
@@ -197,36 +197,49 @@ description_random_intro.innerHTML = random_intro;
 <li>本博客使用 <code>Fluid</code> 主题，所以以 <code>Fluid</code> 主题为例</li>
 </ul>
 <h2 id="分支-安装并配置-Fluid-主题"><a href="#分支-安装并配置-Fluid-主题" class="headerlink" title="分支: 安装并配置 Fluid 主题"></a>分支: 安装并配置 <code>Fluid</code> 主题</h2><ul>
-<li>进入<a target="_blank" rel="noopener" href="https://github.com/fluid-dev/hexo-theme-fluid/releases">Github Releases</a></li>
-<li>找到标有 <code>Latest</code> 标签的版本并点击</li>
-<li>下滑找到 <code>Assets</code> 并点击 <code>Source code</code> （<code>zip</code> 或 <code>tar.gz</code>）</li>
-<li>将下载的压缩包解压，将文件夹重命名为 <code>fluid</code></li>
-<li>放入 <code>博客根目录</code> 下的 <code>themes</code> 文件夹下</li>
-<li>编辑 <code>博客根目录</code> 下的 <code>_config.yml</code> （在后续步骤中，这将简写为 <code>博客配置</code> ）<ul>
-<li>将 <code>theme</code> 改为 <code>fluid</code></li>
+<li><p>进入<a target="_blank" rel="noopener" href="https://github.com/fluid-dev/hexo-theme-fluid/releases">Github Releases</a></p>
+</li>
+<li><p>找到标有 <code>Latest</code> 标签的版本并点击</p>
+</li>
+<li><p>下滑找到 <code>Assets</code> 并点击 <code>Source code</code> （<code>zip</code> 或 <code>tar.gz</code>）</p>
+</li>
+<li><p>将下载的压缩包解压，将文件夹重命名为 <code>fluid</code></p>
+</li>
+<li><p>放入 <code>博客根目录</code> 下的 <code>themes</code> 文件夹下</p>
+</li>
+<li><p>编辑 <code>博客根目录</code> 下的 <code>_config.yml</code> （在后续步骤中，这将简写为 <code>博客配置</code> ）</p>
+<ul>
+<li>将 <code>theme</code> 改为 <code>fluid</code><ul>
 <li>将 <code>language</code> 改为 <code>zh-CN</code> （可选）</li>
 </ul>
 </li>
-<li>进入 <code>博客根目录</code> 下的 <code>themes</code> 文件夹下的 <code>fluid</code> 文件夹 （在此分支中，这将简写为 <code>Fluid主题根目录</code> ）</li>
-<li>编辑 <code>Fluid主题根目录</code> 下的 <code>_config.yml</code> （在此分支中，这将简写为 <code>Fluid主题配置</code> ）<ul>
-<li><code>favicon</code> （浏览器标签页图标，可为Url）</li>
+</ul>
+</li>
+<li><p>进入 <code>博客根目录</code> 下的 <code>themes</code> 文件夹下的 <code>fluid</code> 文件夹 （在此分支中，这将简写为 <code>Fluid主题根目录</code> ）</p>
+</li>
+<li><p>编辑 <code>Fluid主题根目录</code> 下的 <code>_config.yml</code> （在此分支中，这将简写为 <code>Fluid主题配置</code> ）</p>
+<ul>
+<li><p><code>favicon</code> （浏览器标签页图标，可为Url）</p>
+<ul>
 <li><code>apple_touch_icon</code> （浏览器标签页图标，但仅用于苹果设备，可为Url）</li>
 <li><code>copy_btn</code> （代码块复制按钮，可为 <code>true</code> 或 <code>false</code> ）</li>
 <li><code>typing</code> （打字机，可为 <code>true</code> 或 <code>false</code> ）</li>
 <li>页头<ul>
-<li><code>blog_title</code> （博客首页标题）</li>
+<li><code>blog_title</code> （博客首页标题）<ul>
 <li><code>menu</code> （导航栏选项，按需修改）</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><code>页脚</code><ul>
 <li><code>rss</code> （如果你的博客有rss，在这里填入地址）</li>
-<li><code>beian</code> （如果你有备案，在这里填写）（本站长不推荐，那样会很不自由）</li>
 </ul>
 </li>
+<li><code>beian</code> （如果你有备案，在这里填写）（本站长不推荐，那样会很不自由）</li>
 <li><code>首页</code><ul>
-<li><code>banner_img</code> （首页大图，推荐使用图片CDN）（其它地方的 <code>banner_img</code> 也一样）</li>
+<li><code>banner_img</code> （首页大图，推荐使用图片CDN）（其它地方的 <code>banner_img</code> 也一样）<ul>
 <li><code>slogan</code> （首页副标题，这里讲述随机一言的制作方法）<ul>
-<li>找到 <code>api</code> 选项</li>
+<li>找到 <code>api</code> 选项<ul>
 <li><code>enable</code> 填入 <code>true</code></li>
 <li><code>url</code> 填入 <code>&quot;https://v1.hitokoto.cn/&quot;</code></li>
 <li><code>method</code> 填入 <code>GET</code></li>
@@ -236,31 +249,36 @@ description_random_intro.innerHTML = random_intro;
 </li>
 </ul>
 </li>
-<li><code>关于页</code><ul>
-<li><code>hexo new page about</code> （创建关于页）</li>
-<li>编辑博客目录下的 <code>/source/about/index.md</code> 文件</li>
-</ul>
-<pre><code class="language-markdown"> ---
- title: about
- layout: about
- ---
-
- 这里写关于页的正文，支持 Markdown, HTML
-</code></pre>
-<ul>
-<li><code>avatar</code> （你的头像，可为Url）</li>
-<li><code>name</code> （你的互联网化名）</li>
-<li><code>intro</code> （你的个性介绍）</li>
-<li><code>icons</code> （你的社交平台链接）</li>
 </ul>
 </li>
+</ul>
+</li>
+<li><code>关于页</code><ul>
+<li><code>hexo new page about</code> （创建关于页）<ul>
+<li>编辑博客目录下的 <code>/source/about/index.md</code> 文件</li>
+</ul>
+<pre><code class="language-markdown">---
+
+title: about
+layout: about
+</code></pre>
+</li>
+</ul>
+<hr>
+</li>
+</ul>
+<p>这里写关于页的正文，支持 Markdown, HTML<br>&#96;&#96;&#96;    -<code>avatar</code>（你的头像，可为Url）<br>-<code>name</code>（你的互联网化名）<br>-<code>intro</code>（你的个性介绍）<br>-<code>icons</code> （你的社交平台链接）</p>
+<ul>
 <li><code>友链页</code><ul>
 <li><code>items</code> （照着示例写）</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>更多请看注释说明和<a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/start">主题官网</a></li>
+</ul>
+</li>
+<li><p>更多请看注释说明和<a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/start">主题官网</a></p>
+</li>
 </ul>
 <h2 id="分支结束"><a href="#分支结束" class="headerlink" title="分支结束"></a>分支结束</h2><h1 id="自定义-博客配置"><a href="#自定义-博客配置" class="headerlink" title="自定义 博客配置"></a>自定义 <code>博客配置</code></h1><ul>
 <li><code>title</code> （博客名）</li>
@@ -272,65 +290,72 @@ description_random_intro.innerHTML = random_intro;
 <h1 id="使用-gulp-压缩博客体积"><a href="#使用-gulp-压缩博客体积" class="headerlink" title="使用 gulp 压缩博客体积"></a>使用 <code>gulp</code> 压缩博客体积</h1><ul>
 <li>进入 <code>博客根目录</code></li>
 <li>安装 <code>gulp</code> 及附加功能<ul>
-<li><code>npm install --global gulp-cli</code> （全局安装gulp）</li>
+<li><code>npm install --global gulp-cli</code> （全局安装gulp）<ul>
 <li><code>npm install gulp-htmlclean --save-dev</code><br><code>npm install gulp-html-minifier-terser --save-dev</code><br>（安装gulp的压缩html功能）</li>
 <li><code>npm install gulp-clean-css --save-dev</code> （安装gulp的压缩css功能）</li>
 <li><code>npm install gulp-terser --save-dev</code> （安装gulp的压缩js功能）</li>
 </ul>
 </li>
+</ul>
+</li>
 <li>在 <code>博客根目录</code> 新建 <code>gulpfile.js</code> 文件并输入以下内容</li>
 </ul>
 <pre><code class="language-javascript">//用到的各个插件
-var gulp = require(&#39;gulp&#39;);
-var cleanCSS = require(&#39;gulp-clean-css&#39;);
-var htmlmin = require(&#39;gulp-html-minifier-terser&#39;);
-var htmlclean = require(&#39;gulp-htmlclean&#39;);
+var gulp = require(&quot;gulp&quot;);
+var cleanCSS = require(&quot;gulp-clean-css&quot;);
+var htmlmin = require(&quot;gulp-html-minifier-terser&quot;);
+var htmlclean = require(&quot;gulp-htmlclean&quot;);
 
 // gulp-tester
-var terser = require(&#39;gulp-terser&#39;);
+var terser = require(&quot;gulp-terser&quot;);
 
 // 压缩js
-gulp.task(&#39;compress&#39;, async() =&gt;&#123;
-  gulp.src([&#39;./public/**/*.js&#39;, &#39;!./public/**/*.min.js&#39;])
+gulp.task(&quot;compress&quot;, async () =&gt; &#123;
+  gulp
+    .src([&quot;./public/**/*.js&quot;, &quot;!./public/**/*.min.js&quot;])
     .pipe(terser())
-    .pipe(gulp.dest(&#39;./public&#39;))
+    .pipe(gulp.dest(&quot;./public&quot;));
 &#125;);
 
 //压缩css
-gulp.task(&#39;minify-css&#39;, () =&gt; &#123;
-    return gulp.src([&#39;./public/**/*.css&#39;])
-        .pipe(cleanCSS(&#123;
-            compatibility: &#39;ie11&#39;
-        &#125;))
-        .pipe(gulp.dest(&#39;./public&#39;));
+gulp.task(&quot;minify-css&quot;, () =&gt; &#123;
+  return gulp
+    .src([&quot;./public/**/*.css&quot;])
+    .pipe(
+      cleanCSS(&#123;
+        compatibility: &quot;ie11&quot;,
+      &#125;),
+    )
+    .pipe(gulp.dest(&quot;./public&quot;));
 &#125;);
 
 //压缩html
-gulp.task(&#39;minify-html&#39;, () =&gt; &#123;
-    return gulp.src(&#39;./public/**/*.html&#39;)
-        .pipe(htmlclean())
-        .pipe(htmlmin(&#123;
-            removeComments: true, //清除html注释
-            collapseWhitespace: true, //压缩html
-            collapseBooleanAttributes: true,
-            //省略布尔属性的值，例如：&lt;input checked=&quot;true&quot;/&gt; ==&gt; &lt;input /&gt;
-            removeEmptyAttributes: true,
-            //删除所有空格作属性值，例如：&lt;input id=&quot;&quot; /&gt; ==&gt; &lt;input /&gt;
-            removeScriptTypeAttributes: true,
-            //删除&lt;script&gt;的type=&quot;text/javascript&quot;
-            removeStyleLinkTypeAttributes: true,
-            //删除&lt;style&gt;和&lt;link&gt;的 type=&quot;text/css&quot;
-            minifyJS: true, //压缩页面 JS
-            minifyCSS: true, //压缩页面 CSS
-            minifyURLs: true  //压缩页面URL
-        &#125;))
-        .pipe(gulp.dest(&#39;./public&#39;))
+gulp.task(&quot;minify-html&quot;, () =&gt; &#123;
+  return gulp
+    .src(&quot;./public/**/*.html&quot;)
+    .pipe(htmlclean())
+    .pipe(
+      htmlmin(&#123;
+        removeComments: true, //清除html注释
+        collapseWhitespace: true, //压缩html
+        collapseBooleanAttributes: true,
+        //省略布尔属性的值，例如：&lt;input checked=&quot;true&quot;/&gt; ==&gt; &lt;input /&gt;
+        removeEmptyAttributes: true,
+        //删除所有空格作属性值，例如：&lt;input id=&quot;&quot; /&gt; ==&gt; &lt;input /&gt;
+        removeScriptTypeAttributes: true,
+        //删除&lt;script&gt;的type=&quot;text/javascript&quot;
+        removeStyleLinkTypeAttributes: true,
+        //删除&lt;style&gt;和&lt;link&gt;的 type=&quot;text/css&quot;
+        minifyJS: true, //压缩页面 JS
+        minifyCSS: true, //压缩页面 CSS
+        minifyURLs: true, //压缩页面URL
+      &#125;),
+    )
+    .pipe(gulp.dest(&quot;./public&quot;));
 &#125;);
 
 // 运行gulp命令时依次执行以下任务
-gulp.task(&#39;default&#39;, gulp.parallel(
-  &#39;compress&#39;, &#39;minify-css&#39;, &#39;minify-html&#39;
-))
+gulp.task(&quot;default&quot;, gulp.parallel(&quot;compress&quot;, &quot;minify-css&quot;, &quot;minify-html&quot;));
 </code></pre>
 <ul>
 <li>在博客启动时运行 <code>gulp</code> 命令</li>
@@ -366,21 +391,23 @@ hexo s
 </li>
 <li><p>打开<a target="_blank" rel="noopener" href="https://github.com/settings/ssh/new">GitHub SSH and GPG keys</a>页面</p>
 <ul>
-<li><code>Title</code> 为标题，任意写</li>
+<li><code>Title</code> 为标题，任意写<ul>
 <li><code>Key</code> 为公钥内容，将从 <code>id_rsa.pub</code> 复制的内容粘贴进去</li>
 <li>点击 <code>Add SSH key</code> 添加</li>
 <li>使用 <code>ssh -T git@github.com</code> 测试链接，出现 <code>Hi 你注册Github时用的用户名! You&#39;ve successfully authenticated, but GitHub does not provide shell access.</code> 则代表认证成功</li>
 </ul>
 </li>
+</ul>
+</li>
 <li><p>进入到 <code>博客根目录</code> 运行 <code>npm install hexo-deployer-git --save</code> 安装部署工具</p>
 </li>
 <li><p>编辑 <code>博客配置</code> 添加以下内容</p>
-<pre><code class="language-yaml"> # Deployment
- deploy:
-   type: git
-   repo: git@github.com:你注册Github时用的用户名/你注册Github时用的用户名.github.io.git
-   branch: blog  #分支名称，除main或master都行
-   ignore_hidden: false
+<pre><code class="language-yaml"># Deployment
+deploy:
+  type: git
+  repo: git@github.com:你注册Github时用的用户名/你注册Github时用的用户名.github.io.git
+  branch: blog #分支名称，除main或master都行
+  ignore_hidden: false
 </code></pre>
 </li>
 <li><p>编写 <code>deploy.sh</code> 便捷部署</p>
@@ -400,9 +427,11 @@ hexo d
 </li>
 <li><p>设置 <code>Build and deployment</code></p>
 <ul>
-<li><code>Source</code> 选择 <code>Deploy from a branch</code></li>
+<li><code>Source</code> 选择 <code>Deploy from a branch</code><ul>
 <li><code>Branch</code> 选择 <code>博客配置</code> 设置的分支名，路径选 <code>/(root)</code></li>
 <li>点击 <code>Save</code></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p>现在博客已成功部署好，进入 <code>https://你注册Github时用的用户名.github.io</code> 查看</p>
