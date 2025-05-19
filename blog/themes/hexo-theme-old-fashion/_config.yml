@@ -6,7 +6,7 @@ favicon: "https://dev.oneall.eu.org/favicon.webp"
 
 sidebar_extra_html: |- # 侧边栏额外html
   <a href="/rss2.xml">RSS</a><br>
-  <a href="mailto:email@example.com">Email</a><br>
+  <a href="mailto:dev@oneall.eu.org">Email</a><br>
 
 excerpt_length: 150 # 简介文章最大字数
 
