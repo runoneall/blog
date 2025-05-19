@@ -54,43 +54,46 @@ categories: 默认
 
   - `favicon` （浏览器标签页图标，可为Url）
 
-    - `apple_touch_icon` （浏览器标签页图标，但仅用于苹果设备，可为Url）
-    - `copy_btn` （代码块复制按钮，可为 `true` 或 `false` ）
-    - `typing` （打字机，可为 `true` 或 `false` ）
-    - 页头
-      - `blog_title` （博客首页标题）
-        - `menu` （导航栏选项，按需修改）
-    - `页脚`
-      - `rss` （如果你的博客有rss，在这里填入地址）
-    - `beian` （如果你有备案，在这里填写）（本站长不推荐，那样会很不自由）
-    - `首页`
-      - `banner_img` （首页大图，推荐使用图片CDN）（其它地方的 `banner_img` 也一样）
-        - `slogan` （首页副标题，这里讲述随机一言的制作方法）
-          - 找到 `api` 选项
-            - `enable` 填入 `true`
-            - `url` 填入 `"https://v1.hitokoto.cn/"`
-            - `method` 填入 `GET`
-            - `headers` 填入 `{}`
-            - `keys` 填入 `["hitokoto"]`
-    - `关于页`
-      - `hexo new page about` （创建关于页）
-        - 编辑博客目录下的 `/source/about/index.md` 文件
-        ```markdown
-        ---
+        - `apple_touch_icon` （浏览器标签页图标，但仅用于苹果设备，可为Url）
+        - `copy_btn` （代码块复制按钮，可为 `true` 或 `false` ）
+        - `typing` （打字机，可为 `true` 或 `false` ）
+        - 页头
+          - `blog_title` （博客首页标题）
+            - `menu` （导航栏选项，按需修改）
+        - `页脚`
+          - `rss` （如果你的博客有rss，在这里填入地址）
+        - `beian` （如果你有备案，在这里填写）（本站长不推荐，那样会很不自由）
+        - `首页`
+          - `banner_img` （首页大图，推荐使用图片CDN）（其它地方的 `banner_img` 也一样）
+            - `slogan` （首页副标题，这里讲述随机一言的制作方法）
+              - 找到 `api` 选项
+                - `enable` 填入 `true`
+                - `url` 填入 `"https://v1.hitokoto.cn/"`
+                - `method` 填入 `GET`
+                - `headers` 填入 `{}`
+                - `keys` 填入 `["hitokoto"]`
+        - `关于页`
 
-        title: about
-        layout: about
-        ```
-      ***
+          - `hexo new page about` （创建关于页）
 
-    这里写关于页的正文，支持 Markdown, HTML
-    ```	-`avatar`（你的头像，可为Url）
-    -`name`（你的互联网化名）
-    -`intro`（你的个性介绍）
-    -`icons` （你的社交平台链接）
+            - 编辑博客目录下的 `/source/about/index.md` 文件
 
-    - `友链页`
-      - `items` （照着示例写）
+            ```markdown
+            ---
+
+            title: about
+            layout: about
+            ```
+
+          ***
+
+        这里写关于页的正文，支持 Markdown, HTML
+        ```	-`avatar`（你的头像，可为Url）
+
+    -`name`（你的互联网化名）-`intro`（你的个性介绍）-`icons` （你的社交平台链接）
+
+        - `友链页`
+          - `items` （照着示例写）
 
 - 更多请看注释说明和[主题官网](https://hexo.fluid-dev.com/docs/start)
 
