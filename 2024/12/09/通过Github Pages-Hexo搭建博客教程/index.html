@@ -237,60 +237,46 @@
 <li><p>编辑 <code>Fluid主题根目录</code> 下的 <code>_config.yml</code> （在此分支中，这将简写为 <code>Fluid主题配置</code> ）</p>
 <ul>
 <li><p><code>favicon</code> （浏览器标签页图标，可为Url）</p>
-<ul>
-<li><code>apple_touch_icon</code> （浏览器标签页图标，但仅用于苹果设备，可为Url）</li>
-<li><code>copy_btn</code> （代码块复制按钮，可为 <code>true</code> 或 <code>false</code> ）</li>
-<li><code>typing</code> （打字机，可为 <code>true</code> 或 <code>false</code> ）</li>
-<li>页头<ul>
-<li><code>blog_title</code> （博客首页标题）<ul>
-<li><code>menu</code> （导航栏选项，按需修改）</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><code>页脚</code><ul>
-<li><code>rss</code> （如果你的博客有rss，在这里填入地址）</li>
-</ul>
-</li>
-<li><code>beian</code> （如果你有备案，在这里填写）（本站长不推荐，那样会很不自由）</li>
-<li><code>首页</code><ul>
-<li><code>banner_img</code> （首页大图，推荐使用图片CDN）（其它地方的 <code>banner_img</code> 也一样）<ul>
-<li><code>slogan</code> （首页副标题，这里讲述随机一言的制作方法）<ul>
-<li>找到 <code>api</code> 选项<ul>
-<li><code>enable</code> 填入 <code>true</code></li>
-<li><code>url</code> 填入 <code>&quot;https://v1.hitokoto.cn/&quot;</code></li>
-<li><code>method</code> 填入 <code>GET</code></li>
-<li><code>headers</code> 填入 <code>&#123;&#125;</code></li>
-<li><code>keys</code> 填入 <code>[&quot;hitokoto&quot;]</code></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><code>关于页</code><ul>
-<li><code>hexo new page about</code> （创建关于页）<ul>
-<li>编辑博客目录下的 <code>/source/about/index.md</code> 文件</li>
-</ul>
-<pre><code class="language-markdown">---
+<pre><code>- `apple_touch_icon` （浏览器标签页图标，但仅用于苹果设备，可为Url）
+- `copy_btn` （代码块复制按钮，可为 `true` 或 `false` ）
+- `typing` （打字机，可为 `true` 或 `false` ）
+- 页头
+  - `blog_title` （博客首页标题）
+    - `menu` （导航栏选项，按需修改）
+- `页脚`
+  - `rss` （如果你的博客有rss，在这里填入地址）
+- `beian` （如果你有备案，在这里填写）（本站长不推荐，那样会很不自由）
+- `首页`
+  - `banner_img` （首页大图，推荐使用图片CDN）（其它地方的 `banner_img` 也一样）
+    - `slogan` （首页副标题，这里讲述随机一言的制作方法）
+      - 找到 `api` 选项
+        - `enable` 填入 `true`
+        - `url` 填入 `&quot;https://v1.hitokoto.cn/&quot;`
+        - `method` 填入 `GET`
+        - `headers` 填入 `&#123;&#125;`
+        - `keys` 填入 `[&quot;hitokoto&quot;]`
+- `关于页`
 
-title: about
-layout: about
+  - `hexo new page about` （创建关于页）
+
+    - 编辑博客目录下的 `/source/about/index.md` 文件
+
+    ```markdown
+    ---
+
+    title: about
+    layout: about
+    ```
+
+  ***
+
+这里写关于页的正文，支持 Markdown, HTML
+```    -`avatar`（你的头像，可为Url）
 </code></pre>
-</li>
-</ul>
-<hr>
-</li>
-</ul>
-<p>这里写关于页的正文，支持 Markdown, HTML<br>&#96;&#96;&#96;    -<code>avatar</code>（你的头像，可为Url）<br>-<code>name</code>（你的互联网化名）<br>-<code>intro</code>（你的个性介绍）<br>-<code>icons</code> （你的社交平台链接）</p>
-<ul>
-<li><code>友链页</code><ul>
-<li><code>items</code> （照着示例写）</li>
-</ul>
-</li>
-</ul>
+<p>-<code>name</code>（你的互联网化名）-<code>intro</code>（你的个性介绍）-<code>icons</code> （你的社交平台链接）</p>
+<pre><code>- `友链页`
+  - `items` （照着示例写）
+</code></pre>
 </li>
 </ul>
 </li>
