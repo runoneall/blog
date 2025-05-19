@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
-
-    <head>
-        <!-- base -->
+  <head>
+    <!-- base -->
 <meta charset="UTF-8" />
 <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -52,90 +51,108 @@
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+  <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
-    <body>
-        <div id="outbox">
-            <!-- header -->
-            <div id="header" class="clearfix">
-                <div class="container">
-                    <div class="row">
-                        <div class="site-name">
-                            <a id="logo" href="/">Runoneall</a>
-                            <p id="description_random_intro"
-                                class="description">
-                                Runoneall's Blog
-                            </p>
-                            <script>
-var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
-var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
-description_random_intro.innerHTML = random_intro;
-                            </script>
-                        </div>
-                    </div>
-                </div>
+  <body>
+    <div id="outbox">
+      <!-- header -->
+      <div id="header" class="clearfix">
+        <div class="container">
+          <div class="row">
+            <div class="site-name">
+              <a id="logo" href="/">Runoneall</a>
+              <p id="description_random_intro" class="description">
+                Runoneall's Blog
+              </p>
+              <script>
+                var description_random_intro = document.getElementById(
+                  "description_random_intro"
+                );
+                var descriptions = JSON.parse(
+                  `["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`
+                );
+                var random_intro =
+                  descriptions[Math.floor(Math.random() * descriptions.length)];
+                description_random_intro.innerHTML = random_intro;
+              </script>
             </div>
-            <!-- end header -->
+          </div>
+        </div>
+      </div>
+      <!-- end header -->
 
-            <!-- sidebar button -->
-            <button id="side-btn" onclick="changeSideStatus()">
-                <input id="side-flag" type="checkbox" />
-                <label id="side-control" for="side-flag">≡</label>
-            </button>
+      <!-- sidebar button -->
+      <button id="side-btn" onclick="changeSideStatus()">
+        <input id="side-flag" type="checkbox" />
+        <label id="side-control" for="side-flag">≡</label>
+      </button>
 
-            <!-- left area -->
-            <div id="left">
-                <!-- left links -->
-                <div id="left-links">
-                    <!-- page links -->
-                    <a
-                        class=""
-                        href="/">首页</a>
-                    
-                    <br />
-                    <a class=""
-                        href="/about/index.html">关于</a>
-                    
-                    <br />
-                    <a class=""
-                        href="/links/index.html">链接</a>
-                    
-                    <!-- end page links -->
+      <!-- left area -->
+      <div id="left">
+        <!-- left links -->
+        <div id="left-links">
+          <!-- page links -->
+          <a
+            class=""
+            href="/"
+            >首页</a
+          >
+          
+          <br />
+          <a
+            class=""
+            href="/about/index.html"
+            >关于</a
+          >
+          
+          <br />
+          <a
+            class=""
+            href="/links/index.html"
+            >链接</a
+          >
+          
+          <!-- end page links -->
 
-                    <!-- sidebar extra html -->
-                    
-                    <br />
-                    <a href="/rss2.xml">RSS</a><br>
-<a href="mailto:email@example.com">Email</a><br>
-                    
-                    <!-- end sidebar extra html -->
+          <!-- sidebar extra html -->
+          
+          <br />
+          <a href="/rss2.xml">RSS</a><br>
+<a href="mailto:dev@oneall.eu.org">Email</a><br> 
+          <!-- end sidebar extra html -->
 
-                    <button id="dark-btn"
-                        onclick="changeDarkMode()">更换主题</button>
-                </div><hr>
-                <!-- end left links -->
+          <br /><button id="dark-btn" onclick="changeDarkMode()">
+            更换主题
+          </button>
+        </div>
+        <hr />
+        <!-- end left links -->
 
-                <!-- search -->
-                <form id="search" method="get" action="#" role="search">
-                    <input type="text" id="s" name="s" class="text"
-                        placeholder="输入关键字搜索" />
-                    <button type="submit" class="submit">
-                        <img src="/img/icon-search.png"
-                            alt="icon-search">
-                    </button>
-                </form>
-                <!-- end search -->
+        <!-- search -->
+        <form id="search" method="get" action="#" role="search">
+          <input
+            type="text"
+            id="s"
+            name="s"
+            class="text"
+            placeholder="输入关键字搜索"
+          />
+          <button type="submit" class="submit">
+            <img
+              src="/img/icon-search.png"
+              alt="icon-search"
+            />
+          </button>
+        </form>
+        <!-- end search -->
+      </div>
+      <!-- end left area -->
 
-            </div>
-            <!-- end left area -->
-
-            <!-- right area -->
-            <div id="right">
-                <div class="row">
-                    <div class="col-mb-12 col-8" id="main" role="main">
+      <!-- right area -->
+      <div id="right">
+        <div class="row"><div class="col-mb-12 col-8" id="main" role="main">
 
     <!-- article body -->
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
@@ -180,7 +197,7 @@ description_random_intro.innerHTML = random_intro;
 <p>因此，未来不会开发任何重要的插件，例如关键错误修复、反作弊插件和社区需要的其他功能插件。但是，那些开发作弊的人仍然可以这样做，这使得社区很难创建反作弊插件来保护服务器。</p>
 <p>Mojang在开发服务器方面并不擅长，现在他们使社区无法开发插件。这是一个非常糟糕的决定。</p>
 <p>Mojang对社区的立场令人深感失望。我们敦促社区采取行动，发出我们的声音。通过在社交媒体上表达我们的担忧并向Mojang施加压力，我们希望他们能够重新考虑他们的决定。社区团结和集体努力可能会鼓励Mojang改变他们的方法。</p>
-<p>如果您对本通知有任何疑问或意见，请联系。<a href="mailto:&#x6c;&#105;&#x74;&#101;&#108;&#x64;&#x65;&#118;&#64;&#x6c;&#105;&#116;&#101;&#x6c;&#x64;&#101;&#x76;&#46;&#x63;&#x6f;&#x6d;">liteldev@liteldev.com</a> &gt; <a target="_blank" rel="noopener" href="https://imgse.com/i/pk0wkUU"><img src="https://s21.ax1x.com/2024/06/17/pk0wkUU.jpg" alt="pk0wkUU.jpg"></a></p>
+<p>如果您对本通知有任何疑问或意见，请联系。<a href="mailto:&#108;&#105;&#116;&#101;&#108;&#x64;&#101;&#x76;&#64;&#108;&#105;&#x74;&#x65;&#x6c;&#100;&#x65;&#118;&#x2e;&#x63;&#x6f;&#x6d;">liteldev@liteldev.com</a> &gt; <a target="_blank" rel="noopener" href="https://imgse.com/i/pk0wkUU"><img src="https://s21.ax1x.com/2024/06/17/pk0wkUU.jpg" alt="pk0wkUU.jpg"></a></p>
 <p><a target="_blank" rel="noopener" href="https://imgse.com/i/pk0wFET"><img src="https://s21.ax1x.com/2024/06/17/pk0wFET.jpg" alt="pk0wFET.jpg"></a></p>
 </blockquote>
 <blockquote>
@@ -197,25 +214,24 @@ description_random_intro.innerHTML = random_intro;
     </article>
     <!-- end article body -->
 
-</div>
-                </div>
-            </div>
-            <!-- end right area -->
+</div></div>
+      </div>
+      <!-- end right area -->
 
-            <!-- footer -->
-            <div id="footer" role="contentinfo">
-                &copy; 2025
-                <a href="/">Runoneall</a>.
-                <a
-                    target="_blank" rel="noopener" href="https://github.com/runoneall/hexo-theme-old-fashion">Old
-                    Fasion</a>
-                Theme. Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>.
-            </div>
-            <!-- end footer -->
-        </div>
-        <!-- end outbox -->
+      <!-- footer -->
+      <div id="footer" role="contentinfo">
+        &copy; 2025
+        <a href="/">Runoneall</a>.
+        <a target="_blank" rel="noopener" href="https://github.com/runoneall/hexo-theme-old-fashion"
+          >Old Fasion</a
+        >
+        Theme. Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>.
+      </div>
+      <!-- end footer -->
+    </div>
+    <!-- end outbox -->
 
-        <!-- extra html -->
+    <!-- extra html -->
 
 
 <!-- extra js -->
@@ -245,6 +261,5 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script>
     hljs.highlightAll();
 </script>
-    </body>
-
+  </body>
 </html>

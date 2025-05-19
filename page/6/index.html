@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
-
-    <head>
-        <!-- base -->
+  <head>
+    <!-- base -->
 <meta charset="UTF-8" />
 <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -52,90 +51,108 @@
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+  <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
-    <body>
-        <div id="outbox">
-            <!-- header -->
-            <div id="header" class="clearfix">
-                <div class="container">
-                    <div class="row">
-                        <div class="site-name">
-                            <a id="logo" href="/">Runoneall</a>
-                            <p id="description_random_intro"
-                                class="description">
-                                Runoneall's Blog
-                            </p>
-                            <script>
-var description_random_intro = document.getElementById("description_random_intro");
-var descriptions = JSON.parse(`["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`);
-var random_intro = descriptions[Math.floor(Math.random() * descriptions.length)];
-description_random_intro.innerHTML = random_intro;
-                            </script>
-                        </div>
-                    </div>
-                </div>
+  <body>
+    <div id="outbox">
+      <!-- header -->
+      <div id="header" class="clearfix">
+        <div class="container">
+          <div class="row">
+            <div class="site-name">
+              <a id="logo" href="/">Runoneall</a>
+              <p id="description_random_intro" class="description">
+                Runoneall's Blog
+              </p>
+              <script>
+                var description_random_intro = document.getElementById(
+                  "description_random_intro"
+                );
+                var descriptions = JSON.parse(
+                  `["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`
+                );
+                var random_intro =
+                  descriptions[Math.floor(Math.random() * descriptions.length)];
+                description_random_intro.innerHTML = random_intro;
+              </script>
             </div>
-            <!-- end header -->
+          </div>
+        </div>
+      </div>
+      <!-- end header -->
 
-            <!-- sidebar button -->
-            <button id="side-btn" onclick="changeSideStatus()">
-                <input id="side-flag" type="checkbox" />
-                <label id="side-control" for="side-flag">≡</label>
-            </button>
+      <!-- sidebar button -->
+      <button id="side-btn" onclick="changeSideStatus()">
+        <input id="side-flag" type="checkbox" />
+        <label id="side-control" for="side-flag">≡</label>
+      </button>
 
-            <!-- left area -->
-            <div id="left">
-                <!-- left links -->
-                <div id="left-links">
-                    <!-- page links -->
-                    <a
-                        class=""
-                        href="/">首页</a>
-                    
-                    <br />
-                    <a class=""
-                        href="/about/index.html">关于</a>
-                    
-                    <br />
-                    <a class=""
-                        href="/links/index.html">链接</a>
-                    
-                    <!-- end page links -->
+      <!-- left area -->
+      <div id="left">
+        <!-- left links -->
+        <div id="left-links">
+          <!-- page links -->
+          <a
+            class=""
+            href="/"
+            >首页</a
+          >
+          
+          <br />
+          <a
+            class=""
+            href="/about/index.html"
+            >关于</a
+          >
+          
+          <br />
+          <a
+            class=""
+            href="/links/index.html"
+            >链接</a
+          >
+          
+          <!-- end page links -->
 
-                    <!-- sidebar extra html -->
-                    
-                    <br />
-                    <a href="/rss2.xml">RSS</a><br>
-<a href="mailto:email@example.com">Email</a><br>
-                    
-                    <!-- end sidebar extra html -->
+          <!-- sidebar extra html -->
+          
+          <br />
+          <a href="/rss2.xml">RSS</a><br>
+<a href="mailto:dev@oneall.eu.org">Email</a><br> 
+          <!-- end sidebar extra html -->
 
-                    <button id="dark-btn"
-                        onclick="changeDarkMode()">更换主题</button>
-                </div><hr>
-                <!-- end left links -->
+          <br /><button id="dark-btn" onclick="changeDarkMode()">
+            更换主题
+          </button>
+        </div>
+        <hr />
+        <!-- end left links -->
 
-                <!-- search -->
-                <form id="search" method="get" action="#" role="search">
-                    <input type="text" id="s" name="s" class="text"
-                        placeholder="输入关键字搜索" />
-                    <button type="submit" class="submit">
-                        <img src="/img/icon-search.png"
-                            alt="icon-search">
-                    </button>
-                </form>
-                <!-- end search -->
+        <!-- search -->
+        <form id="search" method="get" action="#" role="search">
+          <input
+            type="text"
+            id="s"
+            name="s"
+            class="text"
+            placeholder="输入关键字搜索"
+          />
+          <button type="submit" class="submit">
+            <img
+              src="/img/icon-search.png"
+              alt="icon-search"
+            />
+          </button>
+        </form>
+        <!-- end search -->
+      </div>
+      <!-- end left area -->
 
-            </div>
-            <!-- end left area -->
-
-            <!-- right area -->
-            <div id="right">
-                <div class="row">
-                    <div id="main" role="main">
+      <!-- right area -->
+      <div id="right">
+        <div class="row"><div id="main" role="main">
     
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
@@ -369,25 +386,24 @@ description_random_intro.innerHTML = random_intro;
     <!-- end pagination -->
 
 </div>
+</div>
+      </div>
+      <!-- end right area -->
 
-                </div>
-            </div>
-            <!-- end right area -->
+      <!-- footer -->
+      <div id="footer" role="contentinfo">
+        &copy; 2025
+        <a href="/">Runoneall</a>.
+        <a target="_blank" rel="noopener" href="https://github.com/runoneall/hexo-theme-old-fashion"
+          >Old Fasion</a
+        >
+        Theme. Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>.
+      </div>
+      <!-- end footer -->
+    </div>
+    <!-- end outbox -->
 
-            <!-- footer -->
-            <div id="footer" role="contentinfo">
-                &copy; 2025
-                <a href="/">Runoneall</a>.
-                <a
-                    target="_blank" rel="noopener" href="https://github.com/runoneall/hexo-theme-old-fashion">Old
-                    Fasion</a>
-                Theme. Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>.
-            </div>
-            <!-- end footer -->
-        </div>
-        <!-- end outbox -->
-
-        <!-- extra html -->
+    <!-- extra html -->
 
 
 <!-- extra js -->
@@ -417,6 +433,5 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script>
     hljs.highlightAll();
 </script>
-    </body>
-
+  </body>
 </html>
