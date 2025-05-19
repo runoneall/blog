@@ -5,7 +5,7 @@
  * Update: 2013.11.25
  */
 .container,
-.row>[class*="col-"] {
+.row > [class*="col-"] {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -23,15 +23,15 @@
   margin-left: -10px;
 }
 
-.row>[class*="col-"] {
+.row > [class*="col-"] {
   float: left;
   min-height: 1px;
   padding-right: 10px;
   padding-left: 10px;
 }
 
-.row>[class*="-push-"],
-.row>[class*="-pull-"] {
+.row > [class*="-push-"],
+.row > [class*="-pull-"] {
   position: relative;
 }
 
