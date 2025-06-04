@@ -9,8 +9,8 @@ categories: 默认
 能到IE7，但没截图，先用个IE8的截图吧
 用的在线IE浏览器
 
-![Image description](https://s.rmimg.com/2025-01-04/1735963406-821520-browserling-screenshot-1.png)
-![Image description](https://s.rmimg.com/2025-01-04/1735963415-666308-browserling-screenshot.png)
+![](https://s.rmimg.com/2025-01-04/1735963406-821520-browserling-screenshot-1.png)
+![](https://s.rmimg.com/2025-01-04/1735963415-666308-browserling-screenshot.png)
 
 问题最大的地方是友链页面（links）
 因不支持flex布局，所以“升级”到了float布局，兼容性+1
@@ -19,4 +19,4 @@ categories: 默认
 搜索框在IE7中会出bug，但是免费时间用完了，修不了
 
 当时的截图（IE7）
-![Image description](https://s.rmimg.com/2025-01-04/1735963912-277278-4ada49847ea549faa435d09724db6c63.png)
+![](https://s.rmimg.com/2025-01-04/1735963912-277278-4ada49847ea549faa435d09724db6c63.png)

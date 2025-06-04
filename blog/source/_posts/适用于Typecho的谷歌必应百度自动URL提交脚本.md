@@ -9,7 +9,7 @@ categories: 默认
 # 仅适用于使用mysql数据库安装的typecho且使用默认URL结构！
 
 效果图：
-![Image description](https://s.rmimg.com/2024-12-19/1734598864-426541-2024-12-19-165530.png)
+![](https://s.rmimg.com/2024-12-19/1734598864-426541-2024-12-19-165530.png)
 
 参考：
 https://blog.csdn.net/qq_36905522/article/details/136024994

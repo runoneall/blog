@@ -14,7 +14,7 @@ categories: 默认
    这里我直接用blog做仓库名
 
 2. 创建codespace
-   ![Image description](https://s.rmimg.com/2025-05-01/1746087828-570689-2025-05-01-162319.png)
+   ![](https://s.rmimg.com/2025-05-01/1746087828-570689-2025-05-01-162319.png)
 
 3. 按照hexo官方教程搭建博客
    这里文件夹我还是用 blog，`npx hexo init blog`

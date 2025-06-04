@@ -9,8 +9,8 @@ categories: 默认
 demo: https://runoneall.serv00.net/Files/mysql-driver.php
 
 效果图:
-![Image description](https://s.rmimg.com/2024-11-18/1731916381-650299-2024-11-18-34935.png)
-![Image description](https://s.rmimg.com/2024-11-18/1731916384-725557-2024-11-18-35001.png)
+![](https://s.rmimg.com/2024-11-18/1731916381-650299-2024-11-18-34935.png)
+![](https://s.rmimg.com/2024-11-18/1731916384-725557-2024-11-18-35001.png)
 
 代码下载:
 https://dev.oneall.eu.org/usr/uploads/2024/12/3853467506.zip

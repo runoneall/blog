@@ -10,7 +10,7 @@ categories: 默认
 https://github.com/runoneall/netlify-v2ray2clash
 
 效果图
-![Image description](https://s.rmimg.com/2025-01-30/1738177211-979039-2025-01-30-025909.png)
+![](https://s.rmimg.com/2025-01-30/1738177211-979039-2025-01-30-025909.png)
 
 基于这个项目精简而来
 https://github.com/7Sageer/sublink-worker

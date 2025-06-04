@@ -7,18 +7,18 @@ categories: 默认
 ---
 
 首先在主题的 `functions.php` 中新加一个多行输入框
-![Image description](https://s.rmimg.com/2025-01-04/1735994677-384654-2025-01-04-204227.png)
+![](https://s.rmimg.com/2025-01-04/1735994677-384654-2025-01-04-204227.png)
 名称随意
 然后就可以用 `$this->options->你的自定义名称` 获取内容或 `$this->options->你的自定义名称()` 直接输出
 例如我是用的json
-![Image description](https://s.rmimg.com/2025-01-04/1735995064-865538-image.png)
+![](https://s.rmimg.com/2025-01-04/1735995064-865538-image.png)
 
 然后新建一个独立页面，比如links，或者其他名称
 建立一个插入点，比如 `<div id="linkItemsArea"></div>`
-![Image description](https://s.rmimg.com/2025-01-04/1735994885-489446-image.png)
+![](https://s.rmimg.com/2025-01-04/1735994885-489446-image.png)
 
 前端页面处理
-![Image description](https://s.rmimg.com/2025-01-04/1735995491-925942-2025-01-04-205142.png)
+![](https://s.rmimg.com/2025-01-04/1735995491-925942-2025-01-04-205142.png)
 这样一个自定义友链就写好了，可以增加一点代码，使其更好看
 
 我的js代码

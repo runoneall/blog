@@ -9,9 +9,9 @@ categories: 默认
 云湖机器人（需下载云湖APP）
 
 效果图：
-![Image description](https://s.rmimg.com/2025-04-19/1745027138-305955-2025-04-19-093942.png)
-![Image description](https://s.rmimg.com/2025-04-19/1745027141-233577-2025-04-19-094122.png)
-![Image description](https://s.rmimg.com/2025-04-19/1745027143-928952-2025-04-19-094225.png)
+![](https://s.rmimg.com/2025-04-19/1745027138-305955-2025-04-19-093942.png)
+![](https://s.rmimg.com/2025-04-19/1745027141-233577-2025-04-19-094122.png)
+![](https://s.rmimg.com/2025-04-19/1745027143-928952-2025-04-19-094225.png)
 
 直接体验：
 https://yhfx.jwznb.com/share?key=YZInMjHRY6c2&ts=1745027189
@@ -148,14 +148,14 @@ class EphemeraAPI:
 
 快捷菜单设置（全部为普通按钮，事件推送）
 名称随意，记录菜单id
-![Image description](https://s.rmimg.com/2025-04-19/1745028339-727178-2025-04-19-100458.png)
+![](https://s.rmimg.com/2025-04-19/1745028339-727178-2025-04-19-100458.png)
 
 指令列表
 添加一个普通指令和一个自定义输入指令，名称随意，记录id
-![Image description](https://s.rmimg.com/2025-04-19/1745028453-377258-2025-04-19-100639.png)
+![](https://s.rmimg.com/2025-04-19/1745028453-377258-2025-04-19-100639.png)
 
 自定义输入表单（名称随意，记录id）
-![Image description](https://s.rmimg.com/2025-04-19/1745028539-43368-2025-04-19-100819.png)
+![](https://s.rmimg.com/2025-04-19/1745028539-43368-2025-04-19-100819.png)
 
 ```plaintext
 Plan选项

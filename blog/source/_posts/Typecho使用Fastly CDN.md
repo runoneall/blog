@@ -9,20 +9,20 @@ categories: 默认
 主要介绍从FNL CDN迁移到Fastly的过程，及踩过的坑
 
 ~~某睿智博主花了两天搞的东西（悲~~
-![Image description](https://s.rmimg.com/2025-04-20/1745147772-901837-2025-04-20-191339.png)
+![](https://s.rmimg.com/2025-04-20/1745147772-901837-2025-04-20-191339.png)
 
 首先是得有 Fastly 账号，然后到 https://manage.fastly.com/configure 配置CDN服务
 
 配置好后大概是这样
-![Image description](https://s.rmimg.com/2025-04-20/1745147889-471716-2025-04-20-191804.png)
+![](https://s.rmimg.com/2025-04-20/1745147889-471716-2025-04-20-191804.png)
 
 点击 Service configuration -> Edit configuration -> Clone to edit
 
 1. 配置源站
-   ![Image description](https://s.rmimg.com/2025-04-20/1745148062-585026-2025-04-20-192059.png)
-   ![Image description](https://s.rmimg.com/2025-04-20/1745152648-633351-2025-04-20-203722.png)
-   ![Image description](https://s.rmimg.com/2025-04-20/1745152742-341826-2025-04-20-203857.png)
-   ![Image description](https://s.rmimg.com/2025-04-20/1745152760-792035-2025-04-20-203916.png)
+   ![](https://s.rmimg.com/2025-04-20/1745148062-585026-2025-04-20-192059.png)
+   ![](https://s.rmimg.com/2025-04-20/1745152648-633351-2025-04-20-203722.png)
+   ![](https://s.rmimg.com/2025-04-20/1745152742-341826-2025-04-20-203857.png)
+   ![](https://s.rmimg.com/2025-04-20/1745152760-792035-2025-04-20-203916.png)
 
 点击 Origins 并找到源站（这里是Serv00）并点击笔图标
 
@@ -43,9 +43,9 @@ categories: 默认
 - 其余关闭
 
 3. 配置缓存
-   ![Image description](https://s.rmimg.com/2025-04-20/1745153319-701066-2025-04-20-204833.png)
-   ![Image description](https://s.rmimg.com/2025-04-20/1745153361-225122-2025-04-20-204917.png)
-   ![Image description](https://s.rmimg.com/2025-04-20/1745153385-783210-2025-04-20-204942.png)
+   ![](https://s.rmimg.com/2025-04-20/1745153319-701066-2025-04-20-204833.png)
+   ![](https://s.rmimg.com/2025-04-20/1745153361-225122-2025-04-20-204917.png)
+   ![](https://s.rmimg.com/2025-04-20/1745153385-783210-2025-04-20-204942.png)
 
 Fastly默认缓存全站，当你发现后台 /admin 进不去或有时能进去，请按照以下配置（我这19个version有10个都是栽在这了）
 
@@ -59,18 +59,18 @@ Fastly默认缓存全站，当你发现后台 /admin 进不去或有时能进去
 - 其他留空
 
 4. 压缩
-   ![Image description](https://s.rmimg.com/2025-04-20/1745153516-709386-2025-04-20-205152.png)
+   ![](https://s.rmimg.com/2025-04-20/1745153516-709386-2025-04-20-205152.png)
 
 点击 Content -> Compression
 
 - 按需开启
 
 若要配置 SSL 前往 https://manage.fastly.com/network/domains
-![Image description](https://s.rmimg.com/2025-04-20/1745153784-264081-2025-04-20-205619.png)
+![](https://s.rmimg.com/2025-04-20/1745153784-264081-2025-04-20-205619.png)
 
 将域名接入Fastly
 
 1. 前往 SSL 证书的 View subscription details
 2. 找到 TLS configuration and DNS details -> View / Edit
-   ![Image description](https://s.rmimg.com/2025-04-20/1745153906-304170-2025-04-20-205821.png)
+   ![](https://s.rmimg.com/2025-04-20/1745153906-304170-2025-04-20-205821.png)
 3. 按需选择添加记录即可

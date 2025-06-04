@@ -9,7 +9,7 @@ categories: 默认
 记一次从 claw cloud run 迁移到 fnl mini 的经历，之前已经重装成 alpine 系统了，所以是 alpine 部署 alist 教程
 
 基本版本可从 app launchpad 找到
-![Image description](https://s.rmimg.com/2025-04-29/1745916291-632035-2025-04-29-164259.png)
+![](https://s.rmimg.com/2025-04-29/1745916291-632035-2025-04-29-164259.png)
 
 ```shell
 apk add screen
@@ -25,7 +25,7 @@ cd ..
 ```
 
 在 ./alist server 时，会出现一次行密码，第一次登录需要
-![Image description](https://s.rmimg.com/2025-04-29/1745916389-874980-2025-04-29-163903.png)
+![](https://s.rmimg.com/2025-04-29/1745916389-874980-2025-04-29-163903.png)
 
 因为 alpine 使用 musl，所以需要下载 alist 的 musl 版本，若使用默认 gcc 版本会遇到命令无任何输出的情况
 

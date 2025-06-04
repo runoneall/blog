@@ -6,9 +6,9 @@ tags: []
 categories: 默认
 ---
 
-![Image description](https://s.rmimg.com/2025-02-17/1739793084-706508-2025-02-17-195120.png)
+![](https://s.rmimg.com/2025-02-17/1739793084-706508-2025-02-17-195120.png)
 限时免费，无限token
 个人实测：速度不理想
 
 链接：https://training.xfyun.cn/modelSquare
-![Image description](https://s.rmimg.com/2025-02-17/1739800574-259829-2025-02-17-215608.png)
+![](https://s.rmimg.com/2025-02-17/1739800574-259829-2025-02-17-215608.png)
