@@ -187,7 +187,7 @@
         <!-- post content -->
         <div class="post-content" itemprop="articleBody">
             <p>记一次从 claw cloud run 迁移到 fnl mini 的经历，之前已经重装成 alpine 系统了，所以是 alpine 部署 alist 教程</p>
-<p>基本版本可从 app launchpad 找到<br><img src="https://s.rmimg.com/2025-04-29/1745916291-632035-2025-04-29-164259.png" alt="Image description"></p>
+<p>基本版本可从 app launchpad 找到<br><img src="https://s.rmimg.com/2025-04-29/1745916291-632035-2025-04-29-164259.png"></p>
 <pre><code class="language-shell">apk add screen
 mkdir alistrun &amp;&amp; cd alistrun
 wget https://github.com/AlistGo/alist/releases/download/v3.41.0/alist-linux-musl-amd64.tar.gz
@@ -199,7 +199,7 @@ screen -R alist
 &lt;Control + A&gt; d
 cd ..
 </code></pre>
-<p>在 .&#x2F;alist server 时，会出现一次行密码，第一次登录需要<br><img src="https://s.rmimg.com/2025-04-29/1745916389-874980-2025-04-29-163903.png" alt="Image description"></p>
+<p>在 .&#x2F;alist server 时，会出现一次行密码，第一次登录需要<br><img src="https://s.rmimg.com/2025-04-29/1745916389-874980-2025-04-29-163903.png"></p>
 <p>因为 alpine 使用 musl，所以需要下载 alist 的 musl 版本，若使用默认 gcc 版本会遇到命令无任何输出的情况</p>
 <p>替换 releases&#x2F;download&#x2F;v3.41.0 可以安装 alist 其他版本</p>
 

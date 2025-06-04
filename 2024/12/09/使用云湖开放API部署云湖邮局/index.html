@@ -187,7 +187,7 @@
         <!-- post content -->
         <div class="post-content" itemprop="articleBody">
             <p>先上效果图</p>
-<p><img src="https://s.rmimg.com/2024-11-21/1732152952-218009-2024-11-21-92212.png" alt="Image description"><br><img src="https://s.rmimg.com/2024-11-21/1732152956-884414-2024-11-21-92314.png" alt="Image description"></p>
+<p><img src="https://s.rmimg.com/2024-11-21/1732152952-218009-2024-11-21-92212.png"><br><img src="https://s.rmimg.com/2024-11-21/1732152956-884414-2024-11-21-92314.png"></p>
 <p>不局限在云湖，任何有收发消息API的即时通讯软件都可以部署</p>
 <h1 id="收消息"><a href="#收消息" class="headerlink" title="收消息"></a>收消息</h1><ul>
 <li>使用Cloudflare Worker部署</li>
@@ -258,7 +258,7 @@ export default &#123;
 <li>准备 Resend Email Token（用于发送邮件）</li>
 <li>将域名解析到Resend（可选）（如果想用域名邮箱则必须）</li>
 </ul>
-<p>打开云湖控制台并新建自定义输入指令<br><img src="https://s.rmimg.com/2024-11-21/1732153422-509814-2024-11-21-94259.png" alt="Image description"><br>把每个表单ID对应的输入框名记下来！</p>
+<p>打开云湖控制台并新建自定义输入指令<br><img src="https://s.rmimg.com/2024-11-21/1732153422-509814-2024-11-21-94259.png"><br>把每个表单ID对应的输入框名记下来！</p>
 <p>打开cloudflare网页编辑器并编写代码</p>
 <pre><code class="language-javascript">async function sendEmail(email_to, email_title, email_content, env) &#123;
   const token = env.RESEND_EMAIL_TOKEN;

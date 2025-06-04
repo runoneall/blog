@@ -16,7 +16,7 @@
 
 <!-- title -->
 <title>
-    记一次对IE浏览器的兼容 | Runoneall
+    loc.cc使用acme.sh自动签ssl | Runoneall
 </title>
 
 <!-- css dependencies -->
@@ -46,7 +46,7 @@
 
 <!-- description -->
 
-<meta name="description" content="能到IE7，但没截图，先用个IE8的截图吧用的在线IE浏览器  问题最大的地方是友链页面（links）因不支持flex布局，所以“升级”到了float布局，兼容性+1 以及首页的标题区域和文章区域的间隔，这个可以使用margin-top解决，只在IE浏览器访问时在文章区域加入 margin-top: 40px;搜索框在IE7中会出bug，但是免费时间用完了，修不了 当时的截图（IE7）" />
+<meta name="description" content="关于如何添加 ns 记录，目前除手动同步两边记录外并未有好方法，改 SOA 并未生效关于 ssl 的问题，可以使用 webroot 验证，确保域名能够访问此处用 serv00 演示，因为可以用 devil 自动添加证书 演示：  安装 acme.sh  curl https://get.acme.sh | sh -s email=你的邮箱   设置验证路径  mkdir -p ~/ssl/upda" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -159,7 +159,7 @@
 
         <!-- post title -->
         <h1 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="/2025/01/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%AF%B9IE%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%85%BC%E5%AE%B9/">记一次对IE浏览器的兼容</a>
+            <a itemprop="url" href="/2025/06/04/loc-cc%E4%BD%BF%E7%94%A8acme-sh%E8%87%AA%E5%8A%A8%E7%AD%BEssl/">loc.cc使用acme.sh自动签ssl</a>
         </h1>
         <!-- end post title -->
 
@@ -170,7 +170,7 @@
             </li>
             <li>时间:
                 <time itemprop="datePublished"
-                    datetime="2025-01-04T05:13:00.000Z">2025-01-04</time>
+                    datetime="2025-06-04T13:14:47.000Z">2025-06-04</time>
             </li>
             
             <li>分类:
@@ -186,11 +186,46 @@
 
         <!-- post content -->
         <div class="post-content" itemprop="articleBody">
-            <p>能到IE7，但没截图，先用个IE8的截图吧<br>用的在线IE浏览器</p>
-<p><img src="https://s.rmimg.com/2025-01-04/1735963406-821520-browserling-screenshot-1.png"><br><img src="https://s.rmimg.com/2025-01-04/1735963415-666308-browserling-screenshot.png"></p>
-<p>问题最大的地方是友链页面（links）<br>因不支持flex布局，所以“升级”到了float布局，兼容性+1</p>
-<p>以及首页的标题区域和文章区域的间隔，这个可以使用margin-top解决，只在IE浏览器访问时在文章区域加入 <code>margin-top: 40px;</code><br>搜索框在IE7中会出bug，但是免费时间用完了，修不了</p>
-<p>当时的截图（IE7）<br><img src="https://s.rmimg.com/2025-01-04/1735963912-277278-4ada49847ea549faa435d09724db6c63.png"></p>
+            <p>关于如何添加 ns 记录，目前除手动同步两边记录外并未有好方法，改 SOA 并未生效<br>关于 ssl 的问题，可以使用 webroot 验证，确保域名能够访问<br>此处用 serv00 演示，因为可以用 devil 自动添加证书</p>
+<p>演示：<br><img src="https://s.rmimg.com/original/2X/5/562d06ecc9ce277082114386219d479ad64d70bc.png"></p>
+<ol>
+<li>安装 acme.sh</li>
+</ol>
+<pre><code class="language-shell">curl https://get.acme.sh | sh -s email=你的邮箱
+</code></pre>
+<ol start="2">
+<li>设置验证路径</li>
+</ol>
+<pre><code class="language-shell">mkdir -p ~/ssl/update-sh/ # 用于存放更新脚本
+mkdir -p ~/domains/你的域名/public_html/.well-known/acme-challenge # 用于webroot验证
+</code></pre>
+<ol start="3">
+<li>自动更新脚本（注意要用 <code>fullchain</code> 否则不完整）</li>
+</ol>
+<pre><code class="language-shell">#!/usr/local/bin/bash
+
+DOMAIN=&quot;你的域名&quot;
+IP=&quot;128.204.223.46&quot;
+CERT_DIR=&quot;~/ssl&quot;
+
+devil ssl www del $IP $DOMAIN
+devil ssl www add $IP &quot;$CERT_DIR/$DOMAIN.fullchain.crt&quot; &quot;$CERT_DIR/$DOMAIN.key&quot; $DOMAIN
+</code></pre>
+<ol start="4">
+<li>添加证书</li>
+</ol>
+<pre><code class="language-shell">acme.sh --issue -d 你的域名 \
+    -w ~/domains/你的域名/public_html \
+    --cert-file ~/ssl/你的域名.crt \
+    --key-file ~/ssl/你的域名.key \
+    --fullchain-file ~/ssl/你的域名.fullchain.crt \
+    --reloadcmd &quot;~/ssl/update-sh/你的域名.sh&quot;
+</code></pre>
+<ol start="5">
+<li>自动续期（如果没有）</li>
+</ol>
+<pre><code class="language-shell">acme.sh --install-cronjob
+</code></pre>
 
         </div>
         <!-- end post content -->
