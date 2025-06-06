@@ -16,7 +16,7 @@
 
 <!-- title -->
 <title>
-    Runoneall
+    claw run搭建2fa管理器 | Runoneall
 </title>
 
 <!-- css dependencies -->
@@ -46,7 +46,7 @@
 
 <!-- description -->
 
-<meta name="description" content="Runoneall's Blog" />
+<meta name="description" content="好处：除前端外基本没有网络开销，而且还很实用（可能是最有用的方式？）  GitHub 地址：https://github.com/quicklyon/2FAuth-docker 搭建：  Image：easysoft/2fauth:latest Usage：Fixed CPU：0.1 Memory：128M Port：8000 Local Storage：2G  费用：0.03*31=0.93，完" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -152,14 +152,15 @@
 
       <!-- right area -->
       <div id="right">
-        <div class="row"><div id="main" role="main">
-    
+        <div class="row"><div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
         <!-- post title -->
-        <h2 class="post-title" itemprop="name headline">
+        <h1 class="post-title" itemprop="name headline">
             <a itemprop="url" href="/2025/06/06/claw-run%E6%90%AD%E5%BB%BA2fa%E7%AE%A1%E7%90%86%E5%99%A8/">claw run搭建2fa管理器</a>
-        </h2>
+        </h1>
         <!-- end post title -->
 
         <!-- post meta -->
@@ -167,13 +168,16 @@
             <li itemprop="author" itemscope itemtype="http://schema.org/Person">
                 作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
             </li>
-            <li>时间: <time itemprop="datePublished"
-                    datetime="2025-06-06T10:38:46.000Z">2025-06-06</time></li>
-
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2025-06-06T10:38:46.000Z">2025-06-06</time>
+            </li>
             
             <li>分类:
                 
-                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a>&nbsp;
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认
+                </a>&nbsp;
                 
             </li>
             
@@ -181,90 +185,31 @@
         <!-- end post meta -->
 
         <!-- post content -->
-        <div class="post-content index-post-content" itemprop="articleBody">
-            好处：除前端外基本没有网络开销，而且还很实用（可能是最有用的方式？） GitHub 地址：https://github.com/quicklyon/2FAuth-docker 搭建： Image：easysoft/2fauth:latest Usage：Fixed CPU：0.1...
+        <div class="post-content" itemprop="articleBody">
+            <p>好处：<br>除前端外基本没有网络开销，而且还很实用（可能是最有用的方式？）</p>
+<p><img src="https://s.rmimg.com/optimized/2X/3/32f81fbe5df763e1753c501a1fce40c6f1f68949_2_1380x174.png"></p>
+<p>GitHub 地址：<br><a target="_blank" rel="noopener" href="https://github.com/quicklyon/2FAuth-docker">https://github.com/quicklyon/2FAuth-docker</a></p>
+<p>搭建：</p>
+<ul>
+<li>Image：<code>easysoft/2fauth:latest</code></li>
+<li>Usage：<code>Fixed</code></li>
+<li>CPU：<code>0.1</code></li>
+<li>Memory：<code>128M</code></li>
+<li>Port：<code>8000</code></li>
+<li>Local Storage：<code>2G</code></li>
+</ul>
+<p>费用：<br><img src="https://s.rmimg.com/original/2X/3/314cb4fad6aa1887dd8e296a855707595ebba15c.png"><br><code>0.03*31=0.93</code>，完全够</p>
+<p>后台管理：<br>因为目前这个 image 还有些 bug，所以得手动允许 CORS 和 Mixed Content（期待大佬修复）</p>
+<p><code>chrome://flags</code> 找到 <code>Insecure origins treated as secure</code> 添加 <code>http://你的域名</code> 并 <code>Enable</code><br>浏览器添加允许跨域插件并启动</p>
+<p>进入后台后点击底部的设置，往下滑找到 <code>禁用注册</code><br><img src="https://s.rmimg.com/original/2X/d/d585263e34f51fd729874eb9807db142dd51b8f4.png"></p>
+
         </div>
         <!-- end post content -->
 
     </article>
-    
-    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <!-- end article body -->
 
-        <!-- post title -->
-        <h2 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="/2025/06/04/loc-cc%E4%BD%BF%E7%94%A8acme-sh%E8%87%AA%E5%8A%A8%E7%AD%BEssl/">loc.cc使用acme.sh自动签ssl</a>
-        </h2>
-        <!-- end post title -->
-
-        <!-- post meta -->
-        <ul class="post-meta">
-            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
-                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
-            </li>
-            <li>时间: <time itemprop="datePublished"
-                    datetime="2025-06-04T13:14:47.000Z">2025-06-04</time></li>
-
-            
-            <li>分类:
-                
-                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a>&nbsp;
-                
-            </li>
-            
-        </ul>
-        <!-- end post meta -->
-
-        <!-- post content -->
-        <div class="post-content index-post-content" itemprop="articleBody">
-            关于如何添加 ns 记录，目前除手动同步两边记录外并未有好方法，改 SOA 并未生效关于 ssl 的问题，可以使用 webroot 验证，确保域名能够访问此处用 serv00 演示，因为可以用 devil 自动添加证书 演示： 安装 acme.sh curl https://get.acme.sh...
-        </div>
-        <!-- end post content -->
-
-    </article>
-    
-
-    <!-- pagination -->
-    
-    <ol class="page-navigator">
-
-        <!-- previous page link -->
-        
-        <!-- end previous page link -->
-
-        <!-- first page link -->
-        
-        <li class="current">
-            <a href="/">1</a>
-        </li>
-        
-        <!-- end first page link -->
-
-        <!-- ellipsis before nearby pages -->
-        
-        <!-- end ellipsis before nearby pages -->
-
-        <!-- nearby page numbers -->
-        
-        
-        <!-- end nearby page numbers -->
-
-        <!-- ellipsis after nearby pages -->
-        
-        <!-- end ellipsis after nearby pages -->
-
-        <!-- last page link -->
-        
-        <!-- end last page link -->
-
-        <!-- next page link -->
-        
-        <!-- end next page link -->
-
-    </ol>
-    <!-- end pagination -->
-
-</div>
-</div>
+</div></div>
       </div>
       <!-- end right area -->
 

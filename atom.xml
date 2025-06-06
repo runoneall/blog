@@ -6,7 +6,7 @@
   <link href="https://blog.oneall.eu.org/atom.xml" rel="self"/>
   
   <link href="https://blog.oneall.eu.org/"/>
-  <updated>2025-06-04T05:24:30.899Z</updated>
+  <updated>2025-06-06T02:43:54.323Z</updated>
   <id>https://blog.oneall.eu.org/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>claw run搭建2fa管理器</title>
+    <link href="https://blog.oneall.eu.org/2025/06/06/claw-run%E6%90%AD%E5%BB%BA2fa%E7%AE%A1%E7%90%86%E5%99%A8/"/>
+    <id>https://blog.oneall.eu.org/2025/06/06/claw-run%E6%90%AD%E5%BB%BA2fa%E7%AE%A1%E7%90%86%E5%99%A8/</id>
+    <published>2025-06-06T10:38:46.000Z</published>
+    <updated>2025-06-06T02:43:54.323Z</updated>
+    
+    <content type="html"><![CDATA[<p>好处：<br>除前端外基本没有网络开销，而且还很实用（可能是最有用的方式？）</p><p><img src="https://s.rmimg.com/optimized/2X/3/32f81fbe5df763e1753c501a1fce40c6f1f68949_2_1380x174.png"></p><p>GitHub 地址：<br><a href="https://github.com/quicklyon/2FAuth-docker">https://github.com/quicklyon/2FAuth-docker</a></p><p>搭建：</p><ul><li>Image：<code>easysoft/2fauth:latest</code></li><li>Usage：<code>Fixed</code></li><li>CPU：<code>0.1</code></li><li>Memory：<code>128M</code></li><li>Port：<code>8000</code></li><li>Local Storage：<code>2G</code></li></ul><p>费用：<br><img src="https://s.rmimg.com/original/2X/3/314cb4fad6aa1887dd8e296a855707595ebba15c.png"><br><code>0.03*31=0.93</code>，完全够</p><p>后台管理：<br>因为目前这个 image 还有些 bug，所以得手动允许 CORS 和 Mixed Content（期待大佬修复）</p><p><code>chrome://flags</code> 找到 <code>Insecure origins treated as secure</code> 添加 <code>http://你的域名</code> 并 <code>Enable</code><br>浏览器添加允许跨域插件并启动</p><p>进入后台后点击底部的设置，往下滑找到 <code>禁用注册</code><br><img src="https://s.rmimg.com/original/2X/d/d585263e34f51fd729874eb9807db142dd51b8f4.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;好处：&lt;br&gt;除前端外基本没有网络开销，而且还很实用（可能是最有用的方式？）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://s.rmimg.com/optimized/2X/3/32f81fbe5df763e1753c501a1fce40c6f1f68949_2_138</summary>
+      
+    
+    
+    
+    <category term="默认" scheme="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>loc.cc使用acme.sh自动签ssl</title>
     <link href="https://blog.oneall.eu.org/2025/06/04/loc-cc%E4%BD%BF%E7%94%A8acme-sh%E8%87%AA%E5%8A%A8%E7%AD%BEssl/"/>
     <id>https://blog.oneall.eu.org/2025/06/04/loc-cc%E4%BD%BF%E7%94%A8acme-sh%E8%87%AA%E5%8A%A8%E7%AD%BEssl/</id>
     <published>2025-06-04T13:14:47.000Z</published>
-    <updated>2025-06-04T05:24:30.899Z</updated>
+    <updated>2025-06-06T02:43:54.324Z</updated>
     
     <content type="html"><![CDATA[<p>关于如何添加 ns 记录，目前除手动同步两边记录外并未有好方法，改 SOA 并未生效<br>关于 ssl 的问题，可以使用 webroot 验证，确保域名能够访问<br>此处用 serv00 演示，因为可以用 devil 自动添加证书</p><p>演示：<br><img src="https://s.rmimg.com/original/2X/5/562d06ecc9ce277082114386219d479ad64d70bc.png"></p><ol><li>安装 acme.sh</li></ol><pre><code class="language-shell">curl https://get.acme.sh | sh -s email=你的邮箱</code></pre><ol start="2"><li>设置验证路径</li></ol><pre><code class="language-shell">mkdir -p ~/ssl/update-sh/ # 用于存放更新脚本mkdir -p ~/domains/你的域名/public_html/.well-known/acme-challenge # 用于webroot验证</code></pre><ol start="3"><li>自动更新脚本（注意要用 <code>fullchain</code> 否则不完整）</li></ol><pre><code class="language-shell">#!/usr/local/bin/bashDOMAIN=&quot;你的域名&quot;IP=&quot;128.204.223.46&quot;CERT_DIR=&quot;~/ssl&quot;devil ssl www del $IP $DOMAINdevil ssl www add $IP &quot;$CERT_DIR/$DOMAIN.fullchain.crt&quot; &quot;$CERT_DIR/$DOMAIN.key&quot; $DOMAIN</code></pre><ol start="4"><li>添加证书</li></ol><pre><code class="language-shell">acme.sh --issue -d 你的域名 \    -w ~/domains/你的域名/public_html \    --cert-file ~/ssl/你的域名.crt \    --key-file ~/ssl/你的域名.key \    --fullchain-file ~/ssl/你的域名.fullchain.crt \    --reloadcmd &quot;~/ssl/update-sh/你的域名.sh&quot;</code></pre><ol start="5"><li>自动续期（如果没有）</li></ol><pre><code class="language-shell">acme.sh --install-cronjob</code></pre>]]></content>
     
@@ -453,31 +476,6 @@ async function </summary>
       
       
     <summary type="html">&lt;p&gt;这是对 &lt;a href=&quot;https://dev.oneall.eu.org/archives/32/&quot;&gt;https://dev.oneall.eu.org/archives/32/&lt;/a&gt; 的补充&lt;br&gt;在原有友链基础上增加可选的 rss 选项&lt;br&gt;&lt;img src=&quot;</summary>
-      
-    
-    
-    
-    <category term="默认" scheme="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>用php解决跨域问题</title>
-    <link href="https://blog.oneall.eu.org/2025/03/17/%E7%94%A8php%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/"/>
-    <id>https://blog.oneall.eu.org/2025/03/17/%E7%94%A8php%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/</id>
-    <published>2025-03-17T12:24:56.000Z</published>
-    <updated>2025-03-17T12:24:56.000Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code class="language-php">&lt;?php$targetUrl = $_SERVER[&#39;REQUEST_URI&#39;];$targetUrl = substr($targetUrl, strpos($targetUrl, &#39;netdrive.php/&#39;) + 13);if ($targetUrl == &#39;&#39;) &#123;    exit;&#125;$ch = curl_init($targetUrl);curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);curl_setopt($ch, CURLOPT_HEADER, false);curl_setopt($ch, CURLOPT_USERAGENT, &#39;PHP cURL&#39;);header(&#39;Access-Control-Allow-Origin: *&#39;);header(&#39;Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS&#39;);header(&#39;Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization&#39;);curl_exec($ch);curl_close($ch);?&gt;</code></pre><p>保存为 <code>netdrive.php</code><br>只要在该php文件url后加上目标url便可，跟cf反代一样的</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;pre&gt;&lt;code class=&quot;language-php&quot;&gt;&amp;lt;?php
-
-$targetUrl = $_SERVER[&amp;#39;REQUEST_URI&amp;#39;];
-$targetUrl = substr($targetUrl, strpos($targetUrl, &amp;</summary>
       
     
     
