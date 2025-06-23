@@ -9,8 +9,33 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Mon, 16 Jun 2025 11:11:32 GMT</pubDate>
+    <pubDate>Mon, 23 Jun 2025 15:58:31 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>云湖网盘免费使用!</title>
+      <link>https://blog.oneall.eu.org/2025/06/23/%E4%BA%91%E6%B9%96%E7%BD%91%E7%9B%98%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8/</link>
+      <guid>https://blog.oneall.eu.org/2025/06/23/%E4%BA%91%E6%B9%96%E7%BD%91%E7%9B%98%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8/</guid>
+      <pubDate>Mon, 23 Jun 2025 15:58:31 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;注意：这是第三方实现，云湖本身不对用户提供网盘服务&lt;/p&gt;
+&lt;p&gt;开源地址：&lt;a href=&quot;https://github.com/runoneall/YunhuDriveGUI&quot;&gt;https://github.com/runoneall/YunhuDriveGUI&lt;/a&gt;</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>注意：这是第三方实现，云湖本身不对用户提供网盘服务</p><p>开源地址：<a href="https://github.com/runoneall/YunhuDriveGUI">https://github.com/runoneall/YunhuDriveGUI</a></p><p>安装命令：</p><pre><code class="language-shell">git clone https://github.com/runoneall/YunhuDriveGUI.gitcd YunhuDriveGUIgo mod tidygo run *.go</code></pre><p>特点：无限容量，无限保存时长，可分享，啥时候云湖倒闭啥时候停</p><p>注册用户：</p><ol><li>下载云湖 APP（应用商店搜）</li><li>先用手机号注册（强制的）</li><li>到设置里绑定邮箱（开启密码登录）</li><li>退出登录，在登录界面选择使用邮箱登录，点击忘记密码（设置初始密码）</li><li>打开云湖网盘客户端，点击登录，使用云湖账号登录即可</li></ol>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/06/23/%E4%BA%91%E6%B9%96%E7%BD%91%E7%9B%98%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>将webhook转换为websocket的工具</title>
@@ -498,30 +523,6 @@ async function </description>
       
       
       <comments>https://blog.oneall.eu.org/2025/03/23/vercel%E6%90%AD%E5%BB%BA%E8%B7%A8%E5%9F%9FAPI/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>整活成真的了!</title>
-      <link>https://blog.oneall.eu.org/2025/03/18/%E6%95%B4%E6%B4%BB%E6%88%90%E7%9C%9F%E7%9A%84%E4%BA%86-/</link>
-      <guid>https://blog.oneall.eu.org/2025/03/18/%E6%95%B4%E6%B4%BB%E6%88%90%E7%9C%9F%E7%9A%84%E4%BA%86-/</guid>
-      <pubDate>Tue, 18 Mar 2025 15:45:00 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;&lt;img src=&quot;https://s.rmimg.com/2025-03-18/1742308936-745290-renderedimage.jpg&quot;&gt;&lt;br&gt;&lt;img src=&quot;https://s.rmimg.com/2025-03-19/1742347706-834</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p><img src="https://s.rmimg.com/2025-03-18/1742308936-745290-renderedimage.jpg"><br><img src="https://s.rmimg.com/2025-03-19/1742347706-834125-1742308966-280949-2025-03-18-224237.png"></p><p>声明 <code>nic.xh.sd</code> 为本人整活所写，跟NodeLoc论坛无任何关系</p>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/03/18/%E6%95%B4%E6%B4%BB%E6%88%90%E7%9C%9F%E7%9A%84%E4%BA%86-/#disqus_thread</comments>
       
     </item>
     
