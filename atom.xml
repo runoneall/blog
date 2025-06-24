@@ -6,7 +6,7 @@
   <link href="https://blog.oneall.eu.org/atom.xml" rel="self"/>
   
   <link href="https://blog.oneall.eu.org/"/>
-  <updated>2025-06-23T15:58:31.000Z</updated>
+  <updated>2025-06-24T18:46:53.000Z</updated>
   <id>https://blog.oneall.eu.org/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python原生导入无缝衔接go与python</title>
+    <link href="https://blog.oneall.eu.org/2025/06/24/python%E5%8E%9F%E7%94%9F%E5%AF%BC%E5%85%A5%E6%97%A0%E7%BC%9D%E8%A1%94%E6%8E%A5go%E4%B8%8Epython/"/>
+    <id>https://blog.oneall.eu.org/2025/06/24/python%E5%8E%9F%E7%94%9F%E5%AF%BC%E5%85%A5%E6%97%A0%E7%BC%9D%E8%A1%94%E6%8E%A5go%E4%B8%8Epython/</id>
+    <published>2025-06-24T18:46:53.000Z</published>
+    <updated>2025-06-24T18:46:53.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>地址：<a href="https://github.com/FramerOrg/FramerModules/wiki/Module-Document#gobridge">https://github.com/FramerOrg/FramerModules/wiki/Module-Document#gobridge</a></p><p>这是一个给 Framer 写的模块，但可以拆开来用：</p><pre><code class="language-python">import sysimport osimport subprocessimport ctypesfrom importlib.abc import MetaPathFinder, Loaderfrom importlib.machinery import ModuleSpecclass GoLoader(Loader):    def __init__(self, so_path, fullname):        self.so_path = so_path        self.fullname = fullname    def create_module(self, spec):        return None    def exec_module(self, module):        # load library        lib = ctypes.cdll.LoadLibrary(self.so_path)        # dynamic function getter        def get_lib_attr(name):            return getattr(lib, name)        # bind to module        module.__getattr__ = get_lib_attrclass GoFinder(MetaPathFinder):    def find_spec(self, fullname, path, target=None):        # get import module name        module_name = fullname.split(&quot;.&quot;)[-1]        # go file search path        search_paths = sys.path if path is None else path        for base_path in search_paths:            # possible file paths            py_path = os.path.join(base_path, f&quot;&#123;module_name&#125;.py&quot;)            go_path = os.path.join(base_path, f&quot;&#123;module_name&#125;.go&quot;)            so_path = os.path.join(base_path, f&quot;&#123;module_name&#125;.so&quot;)            # ignore python file            if os.path.isfile(py_path):                continue            # process go file            if os.path.isfile(go_path):                # ensure newest compiled                self._ensure_compiled(go_path, so_path)                # custom module loader                loader = GoLoader(so_path, fullname)                # create module spec                return ModuleSpec(                    name=fullname, loader=loader, origin=go_path, is_package=True                )        return None    def _ensure_compiled(self, go_path, so_path):        # build if so file old        if not os.path.exists(so_path) or (            os.path.getmtime(go_path) &gt; os.path.getmtime(so_path)        ):            # compile go file            self._compile_go(go_path, so_path)    def _compile_go(self, go_path, so_path):        # build command        cmd = [&quot;go&quot;, &quot;build&quot;, &quot;-buildmode=c-shared&quot;, &quot;-o&quot;, so_path, go_path]        # run command        try:            result = subprocess.run(cmd, capture_output=True, text=True, check=True)            self.logger(f&quot;Compiled &#123;go_path&#125; -&gt; &#123;so_path&#125;&quot;)            if result.stderr:                self.logger(&quot;Compiler warnings: &quot; + result.stderr)        # catch errors        except subprocess.CalledProcessError as e:            raise ImportError(                f&quot;Go compilation failed for &#123;go_path&#125;:\n&quot;                f&quot;Exit code: &#123;e.returncode&#125;\n&quot;                f&quot;Error: &#123;e.stderr&#125;&quot;            ) from e        # if go not installed        except FileNotFoundError:            raise ImportError(&quot;Go compiler not found. Install from https://golang.org/&quot;)sys.meta_path.insert(0, GoFinder())</code></pre><p>将其保存为一个 python 文件，然后在项目入口处导入一下就行</p><p>首先准备一个叫 <code>mymodule.go</code> 的文件，内容如下：</p><pre><code class="language-go">package mainimport &quot;C&quot; //必须引入C库import &quot;fmt&quot;//加入下面注释代码，表示导出，可以被python调用//export PrintDllfunc PrintDll() &#123;fmt.Println(&quot;我来自dll&quot;)&#125;////export Sumfunc Sum(a int, b int) int &#123;return a + b&#125;func main() &#123;//必须加一个main函数，作为CGO编译的入口，无具体实现代码&#125;</code></pre><p>然后在 python 内可以直接用 <code>import mymodule</code><br>会自动将 go 编译为 so&#x2F;dylib&#x2F;dll，智能识别更改</p><p>每当 go 代码更改后会重新编译，时间较长，编译后下一次就不会重新编译了</p><p>以及用作为 python 包也是可以的，目录结构如下：<br><img src="https://s.rmimg.com/original/2X/1/1630d32b4829c738d16538bcc226b4ba2393696e.png"></p><p>可以直接用 <code>from testModule import mymodule</code></p><p>理论上任何能编译为共享库的语言都能用这套代码</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;地址：&lt;a href=&quot;https://github.com/FramerOrg/FramerModules/wiki/Module-Document#gobridge&quot;&gt;https://github.com/FramerOrg/FramerModules/wiki/Mod</summary>
+      
+    
+    
+    
+    <category term="默认" scheme="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>云湖网盘免费使用!</title>
@@ -70,7 +92,7 @@
     <link href="https://blog.oneall.eu.org/2025/06/06/claw-run%E6%90%AD%E5%BB%BA2fa%E7%AE%A1%E7%90%86%E5%99%A8/"/>
     <id>https://blog.oneall.eu.org/2025/06/06/claw-run%E6%90%AD%E5%BB%BA2fa%E7%AE%A1%E7%90%86%E5%99%A8/</id>
     <published>2025-06-06T10:38:46.000Z</published>
-    <updated>2025-06-23T07:59:39.255Z</updated>
+    <updated>2025-06-24T10:50:26.020Z</updated>
     
     <content type="html"><![CDATA[<p>好处：<br>除前端外基本没有网络开销，而且还很实用（可能是最有用的方式？）</p><p><img src="https://s.rmimg.com/optimized/2X/3/32f81fbe5df763e1753c501a1fce40c6f1f68949_2_1380x174.png"></p><p>GitHub 地址：<br><a href="https://github.com/quicklyon/2FAuth-docker">https://github.com/quicklyon/2FAuth-docker</a></p><p>搭建：</p><ul><li>Image：<code>easysoft/2fauth:latest</code></li><li>Usage：<code>Fixed</code></li><li>CPU：<code>0.1</code></li><li>Memory：<code>128M</code></li><li>Port：<code>8000</code></li><li>Local Storage：<code>2G</code></li></ul><p>费用：<br><img src="https://s.rmimg.com/original/2X/3/314cb4fad6aa1887dd8e296a855707595ebba15c.png"><br><code>0.03*31=0.93</code>，完全够</p><p>后台管理：<br>因为目前这个 image 还有些 bug，所以得手动允许 CORS 和 Mixed Content（期待大佬修复）</p><p><code>chrome://flags</code> 找到 <code>Insecure origins treated as secure</code> 添加 <code>http://你的域名</code> 并 <code>Enable</code><br>浏览器添加允许跨域插件并启动</p><p>进入后台后点击底部的设置，往下滑找到 <code>禁用注册</code><br><img src="https://s.rmimg.com/original/2X/d/d585263e34f51fd729874eb9807db142dd51b8f4.png"></p>]]></content>
     
@@ -93,7 +115,7 @@
     <link href="https://blog.oneall.eu.org/2025/06/04/loc-cc%E4%BD%BF%E7%94%A8acme-sh%E8%87%AA%E5%8A%A8%E7%AD%BEssl/"/>
     <id>https://blog.oneall.eu.org/2025/06/04/loc-cc%E4%BD%BF%E7%94%A8acme-sh%E8%87%AA%E5%8A%A8%E7%AD%BEssl/</id>
     <published>2025-06-04T13:14:47.000Z</published>
-    <updated>2025-06-23T07:59:39.255Z</updated>
+    <updated>2025-06-24T10:50:26.021Z</updated>
     
     <content type="html"><![CDATA[<p>关于如何添加 ns 记录，目前除手动同步两边记录外并未有好方法，改 SOA 并未生效<br>关于 ssl 的问题，可以使用 webroot 验证，确保域名能够访问<br>此处用 serv00 演示，因为可以用 devil 自动添加证书</p><p>演示：<br><img src="https://s.rmimg.com/original/2X/5/562d06ecc9ce277082114386219d479ad64d70bc.png"></p><ol><li>安装 acme.sh</li></ol><pre><code class="language-shell">curl https://get.acme.sh | sh -s email=你的邮箱</code></pre><ol start="2"><li>设置验证路径</li></ol><pre><code class="language-shell">mkdir -p ~/ssl/update-sh/ # 用于存放更新脚本mkdir -p ~/domains/你的域名/public_html/.well-known/acme-challenge # 用于webroot验证</code></pre><ol start="3"><li>自动更新脚本（注意要用 <code>fullchain</code> 否则不完整）</li></ol><pre><code class="language-shell">#!/usr/local/bin/bashDOMAIN=&quot;你的域名&quot;IP=&quot;128.204.223.46&quot;CERT_DIR=&quot;~/ssl&quot;devil ssl www del $IP $DOMAINdevil ssl www add $IP &quot;$CERT_DIR/$DOMAIN.fullchain.crt&quot; &quot;$CERT_DIR/$DOMAIN.key&quot; $DOMAIN</code></pre><ol start="4"><li>添加证书</li></ol><pre><code class="language-shell">acme.sh --issue -d 你的域名 \    -w ~/domains/你的域名/public_html \    --cert-file ~/ssl/你的域名.crt \    --key-file ~/ssl/你的域名.key \    --fullchain-file ~/ssl/你的域名.fullchain.crt \    --reloadcmd &quot;~/ssl/update-sh/你的域名.sh&quot;</code></pre><ol start="5"><li>自动续期（如果没有）</li></ol><pre><code class="language-shell">acme.sh --install-cronjob</code></pre>]]></content>
     
@@ -456,31 +478,6 @@ class EphemeraAPI:
     <summary type="html">&lt;p&gt;安装模型（stt用的vosk-model-cn-0.22，tts用的kokoro-v1.1-zh）&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-zsh&quot;&gt;# vosk-model-cn-0.22
 wget https://alphacephei.com/v</summary>
-      
-    
-    
-    
-    <category term="默认" scheme="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>vercel搭建跨域API</title>
-    <link href="https://blog.oneall.eu.org/2025/03/23/vercel%E6%90%AD%E5%BB%BA%E8%B7%A8%E5%9F%9FAPI/"/>
-    <id>https://blog.oneall.eu.org/2025/03/23/vercel%E6%90%AD%E5%BB%BA%E8%B7%A8%E5%9F%9FAPI/</id>
-    <published>2025-03-23T07:34:00.000Z</published>
-    <updated>2025-03-24T12:05:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>使用 <code>vercel edge function</code></p><pre><code class="language-typescript">export const runtime = &quot;edge&quot;;async function handleRequest(req: Request) &#123;  const url = new URL(req.url);  const targetUrl = decodeURIComponent(url.search).slice(1);  const reqInit: RequestInit &amp; &#123; duplex?: string &#125; = &#123;    headers: req.headers,    method: req.method,    body: req.body,    redirect: &quot;follow&quot;,    duplex: &quot;half&quot;,  &#125;;  const modifiedRequest = new Request(targetUrl, reqInit);  const resp = await fetch(modifiedRequest);  return new Response(resp.body, &#123;    status: resp.status,    statusText: resp.statusText,    headers: new Headers(&#123;      ...resp.headers,      &quot;Cache-Control&quot;: &quot;no-store&quot;,      &quot;Access-Control-Allow-Methods&quot;: &quot;GET, POST, PUT, DELETE, PATCH, OPTIONS&quot;,      &quot;Access-Control-Allow-Headers&quot;: &quot;*&quot;,      &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,    &#125;),  &#125;);&#125;export const GET = handleRequest;export const POST = handleRequest;export const PUT = handleRequest;export const DELETE = handleRequest;export const PATCH = handleRequest;export const OPTIONS = handleRequest;</code></pre><p>保存为 <code>vap.ts</code> (名称随意)<br>API地址: <code>&lt;域名&gt;/api/&lt;保存名称&gt;?&lt;目标URL&gt;</code></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;使用 &lt;code&gt;vercel edge function&lt;/code&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-typescript&quot;&gt;export const runtime = &amp;quot;edge&amp;quot;;
-
-async function </summary>
       
     
     
