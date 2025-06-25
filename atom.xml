@@ -6,7 +6,7 @@
   <link href="https://blog.oneall.eu.org/atom.xml" rel="self"/>
   
   <link href="https://blog.oneall.eu.org/"/>
-  <updated>2025-06-24T18:46:53.000Z</updated>
+  <updated>2025-06-25T16:47:32.000Z</updated>
   <id>https://blog.oneall.eu.org/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python通用跨语言导入器</title>
+    <link href="https://blog.oneall.eu.org/2025/06/25/python%E9%80%9A%E7%94%A8%E8%B7%A8%E8%AF%AD%E8%A8%80%E5%AF%BC%E5%85%A5%E5%99%A8/"/>
+    <id>https://blog.oneall.eu.org/2025/06/25/python%E9%80%9A%E7%94%A8%E8%B7%A8%E8%AF%AD%E8%A8%80%E5%AF%BC%E5%85%A5%E5%99%A8/</id>
+    <published>2025-06-25T16:47:32.000Z</published>
+    <updated>2025-06-25T16:47:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>本质就是打包成so，然后用CDLL加载，但是可以直接用import</p><p>文档：<a href="https://github.com/FramerOrg/CrossLanguage/wiki/Module-Document">https://github.com/FramerOrg/CrossLanguage/wiki/Module-Document</a></p><p>核心代码就是 <code>CrossLangImporter</code>，用Require返回ModuleSpec，封装了自动查找，运行编译，导入钩子</p><p>可以自定义后缀处理，当然是py文件优先</p><p>具体看如何添加处理器</p><pre><code class="language-python">class moduleMain:    def __init__(self, framer, logger):        self.framer = framer        self.logger = logger        self.extension = &quot;go&quot;        self.not_found_message = (            &quot;Go compiler not found. Install Go from https://golang.org/&quot;        )    def build_command(self, file_path, so_path):        return [            [&quot;go&quot;, &quot;mod&quot;, &quot;tidy&quot;],            [&quot;go&quot;, &quot;build&quot;, &quot;-buildmode=c-shared&quot;, &quot;-o&quot;, so_path, file_path],        ]</code></pre><p>其中moduleMain及init参数是framer固定的，不用管<br>主要实现：</p><ol><li>self.extension：声明该处理器能处理的文件</li><li>self.not_found_message：若找不到编译器，抛出的错误内容</li><li>build_command：返回一系列编译命令，其中file_path和so_path是固定的，编译时会进入file_path所在目录</li></ol><p>觉得不错就给Framer项目点个Star吧：<a href="https://github.com/FramerOrg/Framer">https://github.com/FramerOrg/Framer</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;本质就是打包成so，然后用CDLL加载，但是可以直接用import&lt;/p&gt;
+&lt;p&gt;文档：&lt;a href=&quot;https://github.com/FramerOrg/CrossLanguage/wiki/Module-Document&quot;&gt;https://github.com/</summary>
+      
+    
+    
+    
+    <category term="默认" scheme="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>python原生导入无缝衔接go与python</title>
@@ -92,7 +115,7 @@
     <link href="https://blog.oneall.eu.org/2025/06/06/claw-run%E6%90%AD%E5%BB%BA2fa%E7%AE%A1%E7%90%86%E5%99%A8/"/>
     <id>https://blog.oneall.eu.org/2025/06/06/claw-run%E6%90%AD%E5%BB%BA2fa%E7%AE%A1%E7%90%86%E5%99%A8/</id>
     <published>2025-06-06T10:38:46.000Z</published>
-    <updated>2025-06-24T10:50:26.020Z</updated>
+    <updated>2025-06-25T08:48:45.304Z</updated>
     
     <content type="html"><![CDATA[<p>好处：<br>除前端外基本没有网络开销，而且还很实用（可能是最有用的方式？）</p><p><img src="https://s.rmimg.com/optimized/2X/3/32f81fbe5df763e1753c501a1fce40c6f1f68949_2_1380x174.png"></p><p>GitHub 地址：<br><a href="https://github.com/quicklyon/2FAuth-docker">https://github.com/quicklyon/2FAuth-docker</a></p><p>搭建：</p><ul><li>Image：<code>easysoft/2fauth:latest</code></li><li>Usage：<code>Fixed</code></li><li>CPU：<code>0.1</code></li><li>Memory：<code>128M</code></li><li>Port：<code>8000</code></li><li>Local Storage：<code>2G</code></li></ul><p>费用：<br><img src="https://s.rmimg.com/original/2X/3/314cb4fad6aa1887dd8e296a855707595ebba15c.png"><br><code>0.03*31=0.93</code>，完全够</p><p>后台管理：<br>因为目前这个 image 还有些 bug，所以得手动允许 CORS 和 Mixed Content（期待大佬修复）</p><p><code>chrome://flags</code> 找到 <code>Insecure origins treated as secure</code> 添加 <code>http://你的域名</code> 并 <code>Enable</code><br>浏览器添加允许跨域插件并启动</p><p>进入后台后点击底部的设置，往下滑找到 <code>禁用注册</code><br><img src="https://s.rmimg.com/original/2X/d/d585263e34f51fd729874eb9807db142dd51b8f4.png"></p>]]></content>
     
@@ -115,7 +138,7 @@
     <link href="https://blog.oneall.eu.org/2025/06/04/loc-cc%E4%BD%BF%E7%94%A8acme-sh%E8%87%AA%E5%8A%A8%E7%AD%BEssl/"/>
     <id>https://blog.oneall.eu.org/2025/06/04/loc-cc%E4%BD%BF%E7%94%A8acme-sh%E8%87%AA%E5%8A%A8%E7%AD%BEssl/</id>
     <published>2025-06-04T13:14:47.000Z</published>
-    <updated>2025-06-24T10:50:26.021Z</updated>
+    <updated>2025-06-25T08:48:45.304Z</updated>
     
     <content type="html"><![CDATA[<p>关于如何添加 ns 记录，目前除手动同步两边记录外并未有好方法，改 SOA 并未生效<br>关于 ssl 的问题，可以使用 webroot 验证，确保域名能够访问<br>此处用 serv00 演示，因为可以用 devil 自动添加证书</p><p>演示：<br><img src="https://s.rmimg.com/original/2X/5/562d06ecc9ce277082114386219d479ad64d70bc.png"></p><ol><li>安装 acme.sh</li></ol><pre><code class="language-shell">curl https://get.acme.sh | sh -s email=你的邮箱</code></pre><ol start="2"><li>设置验证路径</li></ol><pre><code class="language-shell">mkdir -p ~/ssl/update-sh/ # 用于存放更新脚本mkdir -p ~/domains/你的域名/public_html/.well-known/acme-challenge # 用于webroot验证</code></pre><ol start="3"><li>自动更新脚本（注意要用 <code>fullchain</code> 否则不完整）</li></ol><pre><code class="language-shell">#!/usr/local/bin/bashDOMAIN=&quot;你的域名&quot;IP=&quot;128.204.223.46&quot;CERT_DIR=&quot;~/ssl&quot;devil ssl www del $IP $DOMAINdevil ssl www add $IP &quot;$CERT_DIR/$DOMAIN.fullchain.crt&quot; &quot;$CERT_DIR/$DOMAIN.key&quot; $DOMAIN</code></pre><ol start="4"><li>添加证书</li></ol><pre><code class="language-shell">acme.sh --issue -d 你的域名 \    -w ~/domains/你的域名/public_html \    --cert-file ~/ssl/你的域名.crt \    --key-file ~/ssl/你的域名.key \    --fullchain-file ~/ssl/你的域名.fullchain.crt \    --reloadcmd &quot;~/ssl/update-sh/你的域名.sh&quot;</code></pre><ol start="5"><li>自动续期（如果没有）</li></ol><pre><code class="language-shell">acme.sh --install-cronjob</code></pre>]]></content>
     
@@ -454,30 +477,6 @@ class EphemeraAPI:
     <summary type="html">&lt;p&gt;翻到台mac mini，运行macOS 10.15，已经不支持安装docker GUI了&lt;/p&gt;
 &lt;p&gt;首先安装brew&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-zsh&quot;&gt;/bin/bash -c &amp;quot;$(curl -fsSL https://</summary>
-      
-    
-    
-    
-    <category term="默认" scheme="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>基于深度学习的离线tts和stt的python实现</title>
-    <link href="https://blog.oneall.eu.org/2025/04/06/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%A6%BB%E7%BA%BFtts%E5%92%8Cstt%E7%9A%84python%E5%AE%9E%E7%8E%B0/"/>
-    <id>https://blog.oneall.eu.org/2025/04/06/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%A6%BB%E7%BA%BFtts%E5%92%8Cstt%E7%9A%84python%E5%AE%9E%E7%8E%B0/</id>
-    <published>2025-04-06T05:05:00.000Z</published>
-    <updated>2025-04-06T05:09:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>安装模型（stt用的vosk-model-cn-0.22，tts用的kokoro-v1.1-zh）</p><pre><code class="language-zsh"># vosk-model-cn-0.22wget https://alphacephei.com/vosk/models/vosk-model-cn-0.22.zipunzip vosk-model-cn-0.22.ziprm vosk-model-cn-0.22.zip# kokoro-v1.1-zhmkdir kokoro-v1.1-zhcd kokoro-v1.1-zhwget https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1/kokoro-v1.1-zh.onnxwget https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1/voices-v1.1-zh.binwget https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/raw/main/config.jsoncd ..</code></pre><p>安装依赖</p><pre><code class="language-plaintext">addict==2.4.0annotated-types==0.7.0anyio==4.9.0attrs==25.3.0babel==2.17.0certifi==2025.1.31cffi==1.17.1charset-normalizer==3.4.1cn2an==0.5.23colorama==0.4.6coloredlogs==15.0.1colorlog==6.9.0csvw==3.5.1distro==1.9.0dlinfo==2.0.0espeakng-loader==0.2.4exceptiongroup==1.2.2flatbuffers==25.2.10h11==0.14.0httpcore==1.0.7httpx==0.28.1humanfriendly==10.0idna==3.10isodate==0.7.2jieba==0.42.1jiter==0.9.0joblib==1.4.2jsonschema==4.23.0jsonschema-specifications==2024.10.1kokoro-onnx==0.4.7language-tags==1.2.0misaki==0.9.3mpmath==1.3.0numpy==2.2.4onnxruntime==1.21.0openai==1.70.0ordered-set==4.1.0packaging==24.2phonemizer-fork==3.3.1proces==0.1.7protobuf==6.30.2PyAudio==0.2.14pycparser==2.22pydantic==2.11.2pydantic_core==2.33.1pyparsing==3.2.3pypinyin==0.54.0pypinyin-dict==0.9.0python-dateutil==2.9.0.post0rdflib==7.1.4referencing==0.36.2regex==2024.11.6requests==2.32.3rfc3986==1.5.0rpds-py==0.24.0segments==2.3.0six==1.17.0sniffio==1.3.1sounddevice==0.5.1srt==3.5.3sympy==1.13.3tqdm==4.67.1typing-inspection==0.4.0typing_extensions==4.13.1uritemplate==4.1.1urllib3==2.3.0vosk==0.3.44websockets==15.0.1</code></pre><p>tts.py</p><pre><code class="language-python">import sounddevice as sdimport kokoro_onnx as kokorofrom misaki import zhimport asynciokokoro.MAX_PHONEME_LENGTH = 80class TTS:    def __init__(self):        self.g2p = zh.ZHG2P(version=&quot;1.1&quot;)        self.voice = &quot;zm_009&quot;        self.speed = 1.0        self.model = kokoro.Kokoro(            &quot;kokoro-v1.1-zh/model.onnx&quot;,            &quot;kokoro-v1.1-zh/voices.bin&quot;,            vocab_config=&quot;kokoro-v1.1-zh/config.json&quot;,        )        self.model.create(            self.get_phonemes(&quot;你好，世界！&quot;),            voice=self.voice,            speed=self.speed,            is_phonemes=True,        )        print(&quot;TTS initialized&quot;)    def set_speed(self, speed: float = 1.0):        self.speed = speed    def get_phonemes(self, text: str) -&gt; str:        phonemes, _ = self.g2p(text)        return phonemes    def speak(self, text: str):        async def stream_audio():            stream = self.model.create_stream(                self.get_phonemes(text),                voice=self.voice,                speed=self.speed,                is_phonemes=True,            )            async for audio, audio_rate in stream:                sd.play(audio, audio_rate)                sd.wait()        asyncio.run(stream_audio())</code></pre><p>stt.py</p><pre><code class="language-python">import jsonimport voskimport pyaudioclass STT:    def __init__(self):        self.recognizer = vosk.KaldiRecognizer(vosk.Model(&quot;vosk-model-cn-0.22&quot;), 16000)        self.mic = pyaudio.PyAudio()        self.stream = self.mic.open(            format=pyaudio.paInt16,            channels=1,            rate=16000,            input=True,            frames_per_buffer=4096,        )        self.stop_listening = False        print(&quot;STT initialized&quot;)    def listen(self, on_result: callable):        while not self.stop_listening:            if self.recognizer.AcceptWaveform(                self.stream.read(4096, exception_on_overflow=False)            ):                result = json.loads(self.recognizer.Result())                text: str = result.get(&quot;text&quot;, &quot;&quot;)                if text:                    on_result(text.replace(&quot; &quot;, &quot;&quot;))        self.stream.stop_stream()        self.stream.close()        self.mic.terminate()    def stop(self):        self.stop_listening = True</code></pre><p>用法</p><pre><code class="language-python">import ttsimport stttts_engine = tts.TTS()stt_engine = stt.STT()def call(text: str):    tts_engine.speak(text)    # your logic    #stt_engine.stop()  # stop mic listenstt_engine.listen(call)  # start mic listen</code></pre>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;安装模型（stt用的vosk-model-cn-0.22，tts用的kokoro-v1.1-zh）&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-zsh&quot;&gt;# vosk-model-cn-0.22
-wget https://alphacephei.com/v</summary>
       
     
     

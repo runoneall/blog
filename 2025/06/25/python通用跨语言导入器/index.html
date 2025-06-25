@@ -16,7 +16,7 @@
 
 <!-- title -->
 <title>
-    Runoneall
+    python通用跨语言导入器 | Runoneall
 </title>
 
 <!-- css dependencies -->
@@ -46,7 +46,7 @@
 
 <!-- description -->
 
-<meta name="description" content="Runoneall's Blog" />
+<meta name="description" content="本质就是打包成so，然后用CDLL加载，但是可以直接用import 文档：https://github.com/FramerOrg/CrossLanguage/wiki/Module-Document 核心代码就是 CrossLangImporter，用Require返回ModuleSpec，封装了自动查找，运行编译，导入钩子 可以自定义后缀处理，当然是py文件优先 具体看如何添加处理器 clas" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -152,14 +152,15 @@
 
       <!-- right area -->
       <div id="right">
-        <div class="row"><div id="main" role="main">
-    
+        <div class="row"><div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
         <!-- post title -->
-        <h2 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="/2025/01/04/%E5%9C%A8Typecho%E4%B8%AD%E5%8A%A0%E5%85%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E5%8F%8B%E9%93%BE%E5%8A%9F%E8%83%BD/">在Typecho中加入自定义的友链功能</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2025/06/25/python%E9%80%9A%E7%94%A8%E8%B7%A8%E8%AF%AD%E8%A8%80%E5%AF%BC%E5%85%A5%E5%99%A8/">python通用跨语言导入器</a>
+        </h1>
         <!-- end post title -->
 
         <!-- post meta -->
@@ -167,13 +168,16 @@
             <li itemprop="author" itemscope itemtype="http://schema.org/Person">
                 作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
             </li>
-            <li>时间: <time itemprop="datePublished"
-                    datetime="2025-01-04T14:04:43.000Z">2025-01-04</time></li>
-
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2025-06-25T16:47:32.000Z">2025-06-25</time>
+            </li>
             
             <li>分类:
                 
-                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a>&nbsp;
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认
+                </a>&nbsp;
                 
             </li>
             
@@ -181,110 +185,43 @@
         <!-- end post meta -->
 
         <!-- post content -->
-        <div class="post-content index-post-content" itemprop="articleBody">
-            首先在主题的 functions.php 中新加一个多行输入框名称随意然后就可以用 $this-&gt;options-&gt;你的自定义名称 获取内容或 $this-&gt;options-&gt;你的自定义名称() 直接输出例如我是用的json...
+        <div class="post-content" itemprop="articleBody">
+            <p>本质就是打包成so，然后用CDLL加载，但是可以直接用import</p>
+<p>文档：<a target="_blank" rel="noopener" href="https://github.com/FramerOrg/CrossLanguage/wiki/Module-Document">https://github.com/FramerOrg/CrossLanguage/wiki/Module-Document</a></p>
+<p>核心代码就是 <code>CrossLangImporter</code>，用Require返回ModuleSpec，封装了自动查找，运行编译，导入钩子</p>
+<p>可以自定义后缀处理，当然是py文件优先</p>
+<p>具体看如何添加处理器</p>
+<pre><code class="language-python">class moduleMain:
+    def __init__(self, framer, logger):
+        self.framer = framer
+        self.logger = logger
+
+        self.extension = &quot;go&quot;
+        self.not_found_message = (
+            &quot;Go compiler not found. Install Go from https://golang.org/&quot;
+        )
+
+    def build_command(self, file_path, so_path):
+        return [
+            [&quot;go&quot;, &quot;mod&quot;, &quot;tidy&quot;],
+            [&quot;go&quot;, &quot;build&quot;, &quot;-buildmode=c-shared&quot;, &quot;-o&quot;, so_path, file_path],
+        ]
+</code></pre>
+<p>其中moduleMain及init参数是framer固定的，不用管<br>主要实现：</p>
+<ol>
+<li>self.extension：声明该处理器能处理的文件</li>
+<li>self.not_found_message：若找不到编译器，抛出的错误内容</li>
+<li>build_command：返回一系列编译命令，其中file_path和so_path是固定的，编译时会进入file_path所在目录</li>
+</ol>
+<p>觉得不错就给Framer项目点个Star吧：<a target="_blank" rel="noopener" href="https://github.com/FramerOrg/Framer">https://github.com/FramerOrg/Framer</a></p>
+
         </div>
         <!-- end post content -->
 
     </article>
-    
-    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <!-- end article body -->
 
-        <!-- post title -->
-        <h2 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="/2025/01/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%AF%B9IE%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%85%BC%E5%AE%B9/">记一次对IE浏览器的兼容</a>
-        </h2>
-        <!-- end post title -->
-
-        <!-- post meta -->
-        <ul class="post-meta">
-            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
-                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
-            </li>
-            <li>时间: <time itemprop="datePublished"
-                    datetime="2025-01-04T05:13:00.000Z">2025-01-04</time></li>
-
-            
-            <li>分类:
-                
-                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a>&nbsp;
-                
-            </li>
-            
-        </ul>
-        <!-- end post meta -->
-
-        <!-- post content -->
-        <div class="post-content index-post-content" itemprop="articleBody">
-            能到IE7，但没截图，先用个IE8的截图吧用的在线IE浏览器 问题最大的地方是友链页面（links）因不支持flex布局，所以“升级”到了float布局，兼容性+1 以及首页的标题区域和文章区域的间隔，这个可以使用margin-top解决，只在IE浏览器访问时在文章区域加入 margin-top:...
-        </div>
-        <!-- end post content -->
-
-    </article>
-    
-
-    <!-- pagination -->
-    
-    <ol class="page-navigator">
-
-        <!-- previous page link -->
-        
-        <li class="prev">
-            <a
-                href="/page/4">&laquo;
-                前一页</a>
-        </li>
-        
-        <!-- end previous page link -->
-
-        <!-- first page link -->
-        
-        <li><a href="/">1</a></li>
-        
-        <!-- end first page link -->
-
-        <!-- ellipsis before nearby pages -->
-        
-        <li>...</li>
-        
-        <!-- end ellipsis before nearby pages -->
-
-        <!-- nearby page numbers -->
-        
-        
-        
-        <li><a href="/page/3">3</a></li>
-        
-        
-        
-        <li><a href="/page/4">4</a></li>
-        
-        
-        <!-- end nearby page numbers -->
-
-        <!-- ellipsis after nearby pages -->
-        
-        <!-- end ellipsis after nearby pages -->
-
-        <!-- last page link -->
-        
-        
-        <li class="current">
-            <a href="/page/5">5</a>
-        </li>
-        
-        
-        <!-- end last page link -->
-
-        <!-- next page link -->
-        
-        <!-- end next page link -->
-
-    </ol>
-    <!-- end pagination -->
-
-</div>
-</div>
+</div></div>
       </div>
       <!-- end right area -->
 
