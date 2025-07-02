@@ -9,8 +9,33 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Wed, 25 Jun 2025 16:47:32 GMT</pubDate>
+    <pubDate>Wed, 02 Jul 2025 03:18:31 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>自动滚动油猴脚本</title>
+      <link>https://blog.oneall.eu.org/2025/07/02/%E8%87%AA%E5%8A%A8%E6%BB%9A%E5%8A%A8%E6%B2%B9%E7%8C%B4%E8%84%9A%E6%9C%AC/</link>
+      <guid>https://blog.oneall.eu.org/2025/07/02/%E8%87%AA%E5%8A%A8%E6%BB%9A%E5%8A%A8%E6%B2%B9%E7%8C%B4%E8%84%9A%E6%9C%AC/</guid>
+      <pubDate>Wed, 02 Jul 2025 03:08:50 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;在日常摸鱼中，你可能会遇到频繁往下滚动的场景（比如看小说），而你又不想动鼠标，也不想动键盘，那么这个脚本适合你：&lt;/p&gt;
+&lt;p&gt;地址：&lt;a href=&quot;https://runoneall.serv00.net/Files/%e8%87%aa%e5%8a%a8%e6%bb%9</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>在日常摸鱼中，你可能会遇到频繁往下滚动的场景（比如看小说），而你又不想动鼠标，也不想动键盘，那么这个脚本适合你：</p><p>地址：<a href="https://runoneall.serv00.net/Files/%e8%87%aa%e5%8a%a8%e6%bb%9a%e5%8a%a8%e8%be%85%e5%8a%a9%e5%99%a8.js">自动滚动辅助器</a></p><p>找deepseek-r1写的，并修复了bug</p><p>演示：<br><img src="https://s.rmimg.com/optimized/2X/9/9189d7301a1c011fa4a7a977e09d748546b6e9bd_2_1380x988.jpeg"></p><p>点个赞吧球球了</p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/07/02/%E8%87%AA%E5%8A%A8%E6%BB%9A%E5%8A%A8%E6%B2%B9%E7%8C%B4%E8%84%9A%E6%9C%AC/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>python通用跨语言导入器</title>
@@ -493,32 +518,6 @@ class EphemeraAPI:
       
       
       <comments>https://blog.oneall.eu.org/2025/04/13/AliceNetwork%E5%BC%80%E5%8F%91%E8%80%85%E4%BA%91API%E5%B0%81%E8%A3%85/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>低版本mac装docker</title>
-      <link>https://blog.oneall.eu.org/2025/04/09/%E4%BD%8E%E7%89%88%E6%9C%ACmac%E8%A3%85docker/</link>
-      <guid>https://blog.oneall.eu.org/2025/04/09/%E4%BD%8E%E7%89%88%E6%9C%ACmac%E8%A3%85docker/</guid>
-      <pubDate>Wed, 09 Apr 2025 08:35:35 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;翻到台mac mini，运行macOS 10.15，已经不支持安装docker GUI了&lt;/p&gt;
-&lt;p&gt;首先安装brew&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-zsh&quot;&gt;/bin/bash -c &amp;quot;$(curl -fsSL https://</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>翻到台mac mini，运行macOS 10.15，已经不支持安装docker GUI了</p><p>首先安装brew</p><pre><code class="language-zsh">/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;</code></pre><p>安装docker cli</p><pre><code class="language-zsh">brew install docker docker-compose</code></pre><p>安装colima做docker后端</p><pre><code class="language-zsh">brew install colima</code></pre><p>编译安装qemu（我用的7.2.0）</p><pre><code class="language-zsh">brew install pkg-config glib pixman ninja cmake wget sdl2 lzowget https://download.qemu.org/qemu-7.2.0.tar.xztar -xf qemu-7.2.0.tar.xzrm qemu-7.2.0.tar.xz &amp;&amp; cd qemu-7.2.0./configure --target-list=x86_64-softmmu,aarch64-softmmu --enable-debug --enable-sdl --enable-vncmake -j$(sysctl -n hw.logicalcpu)sudo make installcd .. &amp;&amp; rm -rf qemu-7.2.0qemu-system-x86_64 --version</code></pre><p>启动colima</p><pre><code class="language-zsh">colima start  # 后面看着给 --cpu 核心数 --memory 内存(GB)</code></pre><p>运行 <code>docker ps</code> 查看是否安装成功（列表可能为空，无报错就是成功了）</p>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/04/09/%E4%BD%8E%E7%89%88%E6%9C%ACmac%E8%A3%85docker/#disqus_thread</comments>
       
     </item>
     
