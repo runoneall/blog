@@ -1,7 +1,6 @@
 ---
 title: 将域名添加到fnl小鸡上
 date: 2025-04-29 13:25:57
-updated: 2025-04-29 13:25:57
 tags: []
 categories: 默认
 ---

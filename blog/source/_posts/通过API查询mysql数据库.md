@@ -1,7 +1,6 @@
 ---
 title: 通过API查询mysql数据库
 date: 2024-12-09 12:53:00
-updated: 2024-12-09 13:05:00
 tags: []
 categories: 默认
 ---

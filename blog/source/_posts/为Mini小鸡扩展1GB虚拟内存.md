@@ -1,7 +1,6 @@
 ---
 title: 为Mini小鸡扩展1GB虚拟内存
 date: 2025-04-24 11:02:00
-updated: 2025-04-24 11:04:58
 tags: []
 categories: 默认
 ---

@@ -1,7 +1,6 @@
 ---
 title: alpine的alist服务脚本
 date: 2025-04-30 04:32:00
-updated: 2025-04-30 04:47:48
 tags: []
 categories: 默认
 ---

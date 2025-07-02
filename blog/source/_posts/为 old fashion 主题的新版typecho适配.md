@@ -1,7 +1,6 @@
 ---
 title: 为 old fashion 主题的新版typecho适配
 date: 2024-12-13 19:21:00
-updated: 2024-12-22 15:47:28
 tags: []
 categories: 默认
 ---

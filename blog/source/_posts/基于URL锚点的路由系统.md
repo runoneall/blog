@@ -1,7 +1,6 @@
 ---
 title: 基于URL锚点的路由系统
 date: 2025-02-13 09:28:00
-updated: 2025-02-28 14:23:48
 tags: []
 categories: 默认
 ---

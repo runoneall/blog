@@ -1,7 +1,6 @@
 ---
 title: 欢迎使用 Hexo
 date: 2024-12-09 03:59:53
-updated: 2024-12-09 03:59:53
 tags: []
 categories: 默认
 ---

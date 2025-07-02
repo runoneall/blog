@@ -1,7 +1,6 @@
 ---
 title: 一个简单的Go语言轮子
 date: 2024-12-09 12:43:00
-updated: 2024-12-09 12:43:00
 tags: []
 categories: 默认
 ---

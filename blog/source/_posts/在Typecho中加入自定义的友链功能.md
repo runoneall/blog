@@ -1,7 +1,6 @@
 ---
 title: 在Typecho中加入自定义的友链功能
 date: 2025-01-04 14:04:43
-updated: 2025-01-04 14:04:43
 tags: []
 categories: 默认
 ---

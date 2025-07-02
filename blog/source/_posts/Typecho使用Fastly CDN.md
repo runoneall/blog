@@ -1,7 +1,6 @@
 ---
 title: Typecho使用Fastly CDN
 date: 2025-04-20 15:01:00
-updated: 2025-04-20 15:02:35
 tags: []
 categories: 默认
 ---
