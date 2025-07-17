@@ -53,15 +53,15 @@ categories: 默认
 
 1. 登入到路由器
 2. 先运行 `opkg install kmod-nls-cp437 kmod-nls-iso8859-1 kmod-usb-core kmod-usb-ohci kmod-usb-storage kmod-usb2 mount-utils`
-   - 当你的盘为fat格式时运行 `opkg install kmod-fs-vfat`
-   - 当你的盘为ext3格式时运行 `opkg install kmod-fs-ext3`
-   - 当你的盘为ntfs格式时运行 `opkg install ntfs-3g`
-   - 当你的盘为ext4格式时运行 `opkg install kmod-fs-ext4`
+    - 当你的盘为fat格式时运行 `opkg install kmod-fs-vfat`
+    - 当你的盘为ext3格式时运行 `opkg install kmod-fs-ext3`
+    - 当你的盘为ntfs格式时运行 `opkg install ntfs-3g`
+    - 当你的盘为ext4格式时运行 `opkg install kmod-fs-ext4`
 3. 挂载
-   - 一般为 `/dev/sda1`
-   - 列出所有可用设备 `ls /dev | grep sda`
-   - 使用 `mount /dev/sda1 /mnt` 将设备挂载到 `/mnt` 目录
-   - 使用 `cd /mnt` 进入到设备
-   - 使用 `umount /mnt` 取消挂载 (!!! 拔出设备前一定要做 !!!)
-   - 路由器重启后需要重新挂载
+    - 一般为 `/dev/sda1`
+    - 列出所有可用设备 `ls /dev | grep sda`
+    - 使用 `mount /dev/sda1 /mnt` 将设备挂载到 `/mnt` 目录
+    - 使用 `cd /mnt` 进入到设备
+    - 使用 `umount /mnt` 取消挂载 (!!! 拔出设备前一定要做 !!!)
+    - 路由器重启后需要重新挂载
 4. 当挂载设备耗电较大 (如硬盘盒外接硬盘) 时, 建议使用外接供电, 否则路由器容易供电不足

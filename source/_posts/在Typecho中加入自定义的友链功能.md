@@ -25,7 +25,7 @@ categories: 默认
 ```javascript
 let linkItemsHTML = "";
 for (const JsonItem of JSON.parse(`<?php $this->options->siteOutLinks() ?>`)) {
-  linkItemsHTML += `<hr class="link-separator"><div class="link-item"><img class="link-item-avatar" src="${JsonItem.avatar}"><div class="link-item-content"><a href="${JsonItem.url}" target="_blank"><h2>${JsonItem.title}</h2></a><p>${JsonItem.description}</p></div></div>`;
+    linkItemsHTML += `<hr class="link-separator"><div class="link-item"><img class="link-item-avatar" src="${JsonItem.avatar}"><div class="link-item-content"><a href="${JsonItem.url}" target="_blank"><h2>${JsonItem.title}</h2></a><p>${JsonItem.description}</p></div></div>`;
 }
 document.getElementById("linkItemsArea").innerHTML = linkItemsHTML;
 ```

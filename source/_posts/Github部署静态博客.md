@@ -24,40 +24,40 @@ categories: 默认
 name: Build And Deploy to Public Branch
 
 on:
-  workflow_dispatch:
+    workflow_dispatch:
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
 
-      - name: Set up Node.js LTS
-        uses: actions/setup-node@main
-        with:
-          node-version: latest
+            - name: Set up Node.js LTS
+              uses: actions/setup-node@main
+              with:
+                  node-version: latest
 
-      - name: Install Hexo CLI
-        run: npm install hexo
+            - name: Install Hexo CLI
+              run: npm install hexo
 
-      - name: Install dependencies and generate
-        run: |
-          cd blog
-          npm install
-          npx hexo clean
-          npx hexo generate
+            - name: Install dependencies and generate
+              run: |
+                  cd blog
+                  npm install
+                  npx hexo clean
+                  npx hexo generate
 
-      - name: Deploy to public branch
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.REPO_TOKEN }}
-          publish_dir: ./blog/public
-          destination_dir: ./
-          publish_branch: public
-          keep_files: false
+            - name: Deploy to public branch
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.REPO_TOKEN }}
+                  publish_dir: ./blog/public
+                  destination_dir: ./
+                  publish_branch: public
+                  keep_files: false
 ```
 
 意思是：拉取代码 -> 安装nodejs -> 安装hexo -> 安装依赖并生成静态文件 -> 提交到public分支
