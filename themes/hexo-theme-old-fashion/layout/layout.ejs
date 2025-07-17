@@ -81,26 +81,7 @@
                         更换主题
                     </button>
                 </div>
-                <hr />
                 <!-- end left links -->
-
-                <!-- search -->
-                <form id="search" method="get" action="#" role="search">
-                    <input
-                        type="text"
-                        id="s"
-                        name="s"
-                        class="text"
-                        placeholder="输入关键字搜索"
-                    />
-                    <button type="submit" class="submit">
-                        <img
-                            src="<%- url_for('img/icon-search.png') %>"
-                            alt="icon-search"
-                        />
-                    </button>
-                </form>
-                <!-- end search -->
             </div>
             <!-- end left area -->
 
@@ -114,7 +95,8 @@
             <div id="footer" role="contentinfo">
                 &copy; <%- new Date().getFullYear() %>
                 <a href="<%- url_for('') %>"><%- config.title %></a>.
-                <a href="https://github.com/runoneall/hexo-theme-old-fashion"
+                <a
+                    href="https://github.com/runoneall/blog/tree/main/themes/hexo-theme-old-fashion"
                     >Old Fasion</a
                 >
                 Theme. Powered by <a href="https://hexo.io">Hexo</a>.

@@ -50,3 +50,27 @@ feed:
 # Modify _config.yml
 syntax_highlighter: # disable build-in highlight
 ```
+
+- Search
+
+```shell
+npm install hexo-generator-search --save
+```
+
+```yaml
+# Add To _config.yml
+search:
+    path: search.xml
+    field: post
+    content: true
+    format: html
+```
+
+Create File source/search/index.md
+
+```markdown
+---
+title: 搜索
+layout: search
+---
+```

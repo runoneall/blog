@@ -1,0 +1,45 @@
+<div class="col-mb-12 col-8" id="main" role="main">
+    <!-- css -->
+    <%- css('css/search') %>
+    <!-- end css -->
+
+    <!-- archive title -->
+    <h3 class="archive-title">搜索标题或文章内容</h3>
+    <!-- end archive title -->
+
+    <!-- search form -->
+    <div>
+        <form id="search" method="get" action="#" role="search">
+            <input
+                type="text"
+                id="s"
+                name="s"
+                class="text"
+                placeholder="输入关键字搜索"
+            />
+            <input
+                type="text"
+                id="excerpt_length"
+                name="excerpt_length"
+                class="text"
+                value="<%- theme.excerpt_length %>"
+                hidden
+            />
+            <button type="submit" class="submit">
+                <img
+                    src="<%- url_for('img/icon-search.png') %>"
+                    alt="icon-search"
+                />
+            </button>
+        </form>
+    </div>
+    <!-- end search form -->
+
+    <!-- search results -->
+    <div id="search-results"></div>
+    <!-- end search results -->
+
+    <!-- js -->
+    <%- js('js/search') %>
+    <!-- end js -->
+</div>
