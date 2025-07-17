@@ -9,8 +9,33 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Thu, 17 Jul 2025 14:51:34 GMT</pubDate>
+    <pubDate>Thu, 17 Jul 2025 14:57:07 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>hexo新主题old fashion</title>
+      <link>https://blog.oneall.eu.org/2025/07/17/hexo%E6%96%B0%E4%B8%BB%E9%A2%98old-fashion/</link>
+      <guid>https://blog.oneall.eu.org/2025/07/17/hexo%E6%96%B0%E4%B8%BB%E9%A2%98old-fashion/</guid>
+      <pubDate>Thu, 17 Jul 2025 22:52:48 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;自用主题，当前博客就是&lt;/p&gt;
+&lt;p&gt;GitHub地址：&lt;a href=&quot;https://github.com/runoneall/blog/tree/main/themes/hexo-theme-old-fashion&quot;&gt;https://github.com/runone</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>自用主题，当前博客就是</p><p>GitHub地址：<a href="https://github.com/runoneall/blog/tree/main/themes/hexo-theme-old-fashion">https://github.com/runoneall/blog/tree/main/themes/hexo-theme-old-fashion</a></p><p>原型：<a href="https://github.com/MrXiaoM/typecho-theme-old-fashion">https://github.com/MrXiaoM/typecho-theme-old-fashion</a><br>改版：<a href="https://github.com/runoneall/typecho-theme-old-fashion">https://github.com/runoneall/typecho-theme-old-fashion</a></p><p>后来从Typecho迁移到Hexo，于是开发了这个主题。</p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/07/17/hexo%E6%96%B0%E4%B8%BB%E9%A2%98old-fashion/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>自动滚动油猴脚本</title>
@@ -488,36 +513,6 @@
       
       
       <comments>https://blog.oneall.eu.org/2025/04/19/AliceNetwork%E5%BC%80%E5%8F%91%E8%80%85%E4%BA%91%E7%AE%A1%E7%90%86Bot/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>AliceNetwork开发者云API封装</title>
-      <link>https://blog.oneall.eu.org/2025/04/13/AliceNetwork%E5%BC%80%E5%8F%91%E8%80%85%E4%BA%91API%E5%B0%81%E8%A3%85/</link>
-      <guid>https://blog.oneall.eu.org/2025/04/13/AliceNetwork%E5%BC%80%E5%8F%91%E8%80%85%E4%BA%91API%E5%B0%81%E8%A3%85/</guid>
-      <pubDate>Sun, 13 Apr 2025 04:59:07 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;&lt;code&gt;AliceAPI.py&lt;/code&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;import requests
-
-
-class EphemeraAPI:
-    def __init__(self, api_token):
- </description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p><code>AliceAPI.py</code></p><pre><code class="language-python">import requestsclass EphemeraAPI:    def __init__(self, api_token):        self.EVO_API_BASE = &quot;https://app.alice.ws/cli/v1/Evo/&quot;        self.api_header = &#123;&quot;KP-APIToken&quot;: api_token&#125;    def EvoJob(self, job_name):        return self.EVO_API_BASE + job_name    def InstanceList(self):        resp = requests.get(self.EvoJob(&quot;Instance&quot;), headers=self.api_header).json()        if resp[&quot;status&quot;] != 200:            return None        return resp[&quot;data&quot;]    def PlanList(self):        resp = requests.get(self.EvoJob(&quot;Plan&quot;), headers=self.api_header).json()        if resp[&quot;status&quot;] != 200:            return None        PlanMap = &#123;&#125;        for plan in resp[&quot;data&quot;]:            PlanMap[plan[&quot;name&quot;]] = plan[&quot;id&quot;]        return PlanMap    def PlanOsList(self, plan_id):        resp = requests.post(            self.EvoJob(&quot;PlanToOS&quot;),            headers=self.api_header,            data=&#123;&quot;plan_id&quot;: str(plan_id)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return None        OSMap = &#123;&#125;        for _, osGroup in resp[&quot;data&quot;].items():            for osItem in osGroup[&quot;os&quot;]:                OSMap[osItem[&quot;name&quot;]] = osItem[&quot;id&quot;]        return OSMap    def InstanceDeploy(self, plan_id, os_id, hours):        resp = requests.post(            self.EvoJob(&quot;Deploy&quot;),            headers=self.api_header,            data=&#123;&quot;product_id&quot;: str(plan_id), &quot;os_id&quot;: str(os_id), &quot;time&quot;: str(hours)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return None        return resp[&quot;data&quot;]    def InstanceDestroy(self, instance_id):        resp = requests.post(            self.EvoJob(&quot;Destroy&quot;),            headers=self.api_header,            data=&#123;&quot;id&quot;: str(instance_id)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return False        return True    def InstancePower(self, instance_id, action):        resp = requests.post(            self.EvoJob(&quot;Power&quot;),            headers=self.api_header,            data=&#123;&quot;id&quot;: str(instance_id), &quot;action&quot;: str(action)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return False        return True    def InstanceRebuild(self, instance_id, os_id):        resp = requests.post(            self.EvoJob(&quot;Rebuild&quot;),            headers=self.api_header,            data=&#123;&quot;id&quot;: str(instance_id), &quot;os&quot;: str(os_id)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return False        return resp[&quot;data&quot;]    def InstanceRenewal(self, instance_id, hours):        resp = requests.post(            self.EvoJob(&quot;Renewal&quot;),            headers=self.api_header,            data=&#123;&quot;id&quot;: str(instance_id), &quot;time&quot;: str(hours)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return False        return True</code></pre><p>从 <a href="https://app.alice.ws/ephemera/console">控制台</a> 获取 <code>API Token</code><br>在同级目录新建 <code>kp-api-token.txt</code> 并写入token</p><pre><code class="language-python">from AliceAPI import EphemeraAPIdef GetApiToken():    with open(&quot;kp-api-token.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as token_file:        api_token = token_file.read()    return api_tokenEphemera = EphemeraAPI(GetApiToken())# ------------------------------------------------------# InstanceListprint(Ephemera.InstanceList())# ------------------------------------------------------# PlanListprint(Ephemera.PlanList())# ------------------------------------------------------# PlanOsListplans = Ephemera.PlanList()print(Ephemera.PlanOsList(plans[&quot;LAX.Evo.Micro&quot;]))# ------------------------------------------------------# InstanceDeployplans = Ephemera.PlanList()oss = Ephemera.PlanOsList(plans[&quot;LAX.Evo.Micro&quot;])print(    Ephemera.InstanceDeploy(        plans[&quot;LAX.Evo.Micro&quot;], oss[&quot;Debian 12 (Bookworm) Minimal&quot;], hours=1    ))# ------------------------------------------------------# InstanceDestroyplans = Ephemera.PlanList()oss = Ephemera.PlanOsList(plans[&quot;LAX.Evo.Micro&quot;])instance_id = Ephemera.InstanceDeploy(    plans[&quot;LAX.Evo.Micro&quot;], oss[&quot;Debian 12 (Bookworm) Minimal&quot;], hours=1)[&quot;id&quot;]print(Ephemera.InstanceDestroy(instance_id))# ------------------------------------------------------# InstancePowerplans = Ephemera.PlanList()oss = Ephemera.PlanOsList(plans[&quot;LAX.Evo.Micro&quot;])instance_id = Ephemera.InstanceDeploy(    plans[&quot;LAX.Evo.Micro&quot;], oss[&quot;Debian 12 (Bookworm) Minimal&quot;], hours=1)[&quot;id&quot;]print(Ephemera.InstancePower(instance_id, &quot;boot&quot;))  # boot shutdown restart poweroff# ------------------------------------------------------# InstanceRebuildplans = Ephemera.PlanList()oss = Ephemera.PlanOsList(plans[&quot;LAX.Evo.Micro&quot;])instance_id = Ephemera.InstanceDeploy(    plans[&quot;LAX.Evo.Micro&quot;], oss[&quot;Debian 12 (Bookworm) Minimal&quot;], hours=1)[&quot;id&quot;]print(Ephemera.InstanceRebuild(instance_id, oss[&quot;AlmaLinux 9 Latest&quot;]))# ------------------------------------------------------# InstanceRenewalplans = Ephemera.PlanList()oss = Ephemera.PlanOsList(plans[&quot;LAX.Evo.Micro&quot;])instance_id = Ephemera.InstanceDeploy(    plans[&quot;LAX.Evo.Micro&quot;], oss[&quot;Debian 12 (Bookworm) Minimal&quot;], hours=1)[&quot;id&quot;]print(Ephemera.InstanceRenewal(instance_id, hours=1))</code></pre>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/04/13/AliceNetwork%E5%BC%80%E5%8F%91%E8%80%85%E4%BA%91API%E5%B0%81%E8%A3%85/#disqus_thread</comments>
       
     </item>
     
