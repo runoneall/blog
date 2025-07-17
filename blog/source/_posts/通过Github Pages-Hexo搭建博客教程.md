@@ -50,6 +50,7 @@ categories: 默认
     - 将 `language` 改为 `zh-CN` （可选）
 - 进入 `博客根目录` 下的 `themes` 文件夹下的 `fluid` 文件夹 （在此分支中，这将简写为 `Fluid主题根目录` ）
 - 编辑 `Fluid主题根目录` 下的 `_config.yml` （在此分支中，这将简写为 `Fluid主题配置` ）
+
   - `favicon` （浏览器标签页图标，可为Url）
 
         - `apple_touch_icon` （浏览器标签页图标，但仅用于苹果设备，可为Url）

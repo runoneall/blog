@@ -123,15 +123,13 @@ textarea {
 /* Special Links */
 .post-meta a,
 .post-content a,
-.widget a,
-.comment-content a {
+.widget a {
   border-bottom: 1px solid #eee;
 }
 
 .post-meta a:hover,
 .post-content a:hover,
-.widget a:hover,
-.comment-content a:hover {
+.widget a:hover {
   border-bottom-color: transparent;
 }
 

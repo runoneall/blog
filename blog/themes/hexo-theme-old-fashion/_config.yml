@@ -41,8 +41,8 @@ links:
       title: "522小椿的小站",
       url: "https://blog.522.plus",
       description: "一个爱好二次元的个人博客小站",
-      rss: "https://blog.522.plus/?feed=rss2"
-  }
+      rss: "https://blog.522.plus/?feed=rss2",
+    }
 
 extra_css: "" # 额外CSS
 
