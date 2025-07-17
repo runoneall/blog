@@ -1,0 +1,73 @@
+#secondary {
+    padding-top: 15px;
+}
+
+.widget {
+    margin-bottom: 0px;
+}
+
+.widget-list {
+    list-style: none;
+    padding: 0;
+}
+
+.widget-list li {
+    margin: 5px 0;
+    line-height: 1;
+}
+
+.widget-list li ul {
+    margin-left: 15px;
+}
+
+.aligncenter,
+div.aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.alignleft {
+    float: left;
+}
+
+.alignright {
+    float: right;
+}
+
+img.alignleft {
+    margin: 0 15px 0 0;
+}
+
+img.alignright {
+    margin: 0 0 0 15px;
+}
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+.sr-only {
+    border: 0;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.sr-only.focusable:active,
+.sr-only.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+.invisible {
+    visibility: hidden;
+}

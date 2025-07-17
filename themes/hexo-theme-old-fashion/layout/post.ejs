@@ -1,0 +1,47 @@
+<div class="col-mb-12 col-8" id="main" role="main">
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="<%- url_for(page.path) %>"
+                ><%- page.title %></a
+            >
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者:
+                <a itemprop="name" href="#" rel="author"
+                    ><%- config.author %></a
+                >
+            </li>
+            <li>
+                时间:
+                <time
+                    itemprop="datePublished"
+                    datetime="<%- date_xml(page.date) %>"
+                    ><%- date(page.date, config.date_format) %></time
+                >
+            </li>
+            <% if (page.categories.data && page.categories.data.length) { %>
+            <li>
+                分类: <% page.categories.data.forEach(category => { %>
+                <a href="<%- url_for(category.path) %>">
+                    <%- category.name %> </a
+                >&nbsp;
+                <% }); %>
+            </li>
+            <% } %>
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <%- page.content %>
+        </div>
+        <!-- end post content -->
+    </article>
+    <!-- end article body -->
+</div>

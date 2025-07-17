@@ -1,0 +1,59 @@
+<!-- base -->
+<meta charset="UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="template" content="Old-Fasion-Theme" />
+
+<!-- sitemap -->
+<link
+    rel="sitemap"
+    type="application/xml"
+    title="sitemap"
+    href="<%- url_for('sitemap.xml') %>"
+/>
+
+<!-- title -->
+<title>
+    <%- page.title ? [page.title, config.title].join(theme.title_separator) :
+    config.title %>
+</title>
+
+<!-- css dependencies -->
+<%- css([
+'css/normalize',
+'css/grid',
+'css/highlight',
+'css/global',
+'css/search',
+'css/sidebar',
+'css/post',
+'css/misc',
+'css/page',
+'css/footer',
+{ href: 'css/dark', id: 'dark-style', disabled: true }
+]) %>
+
+<!-- favicon -->
+<%- favicon_tag(theme.favicon) %>
+
+<!-- extra css -->
+<% if (theme.extra_css) { %>
+<style>
+    <!- theme.extra_css !>
+</style>
+<% } %>
+
+<!-- keywords -->
+<% var keywords = page.keywords || config.keywords; if (keywords instanceof
+Array) { keywords = keywords.join(',') } %>
+<meta name="keywords" content="<%- keywords %>" />
+
+<!-- description -->
+<% var description = page.description || page.excerpt || (is_post() &&
+page.content) || config.description; if (description) { description =
+strip_html(description).substring(0, 200).trim().replace(/\n/g, ' ') } %>
+<meta name="description" content="<%- description %>" />
+
+<!-- rss -->
+<%- feed_tag('rss2.xml', { title: 'RSS 2.0', type: 'application/rss+xml' }) %>
+<%- feed_tag('atom.xml', { title: 'ATOM 1.0', type: 'application/atom+xml' }) %>

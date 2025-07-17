@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="<%- config.language %>">
+    <head>
+        <%- partial('header') %>
+    </head>
+
+    <body>
+        <div id="outbox">
+            <!-- header -->
+            <div id="header" class="clearfix">
+                <div class="container">
+                    <div class="row">
+                        <div class="site-name">
+                            <a id="logo" href="<%- url_for('') %>"
+                                ><%- config.title %></a
+                            >
+                            <p
+                                id="description_random_intro"
+                                class="description"
+                            >
+                                <%- config.description %>
+                            </p>
+                            <script>
+                                var description_random_intro =
+                                    document.getElementById(
+                                        "description_random_intro",
+                                    );
+                                var descriptions = JSON.parse(
+                                    `<%- JSON.stringify(theme.random_intro) %>`,
+                                );
+                                var random_intro =
+                                    descriptions[
+                                        Math.floor(
+                                            Math.random() * descriptions.length,
+                                        )
+                                    ];
+                                description_random_intro.innerHTML =
+                                    random_intro;
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end header -->
+
+            <!-- sidebar button -->
+            <button id="side-btn" onclick="changeSideStatus()">
+                <input id="side-flag" type="checkbox" />
+                <label id="side-control" for="side-flag">≡</label>
+            </button>
+
+            <!-- left area -->
+            <div id="left">
+                <!-- left links -->
+                <div id="left-links">
+                    <!-- page links -->
+                    <a
+                        class="<%- path.startsWith('index.html')? 'current' : '' %>"
+                        href="<%- url_for('') %>"
+                        >首页</a
+                    >
+                    <% site.pages.each(p=> { if (!p.path.startsWith('404.html'))
+                    { %>
+                    <br />
+                    <a
+                        class="<%- path.startsWith(p.path)? 'current' : '' %>"
+                        href="<%- url_for(p.path) %>"
+                        ><%- p.title %></a
+                    >
+                    <% }}); %>
+                    <!-- end page links -->
+
+                    <!-- sidebar extra html -->
+                    <% if (theme.sidebar_extra_html) { %>
+                    <br />
+                    <%- theme.sidebar_extra_html %>
+                    <% } %>
+                    <!-- end sidebar extra html -->
+
+                    <br /><button id="dark-btn" onclick="changeDarkMode()">
+                        更换主题
+                    </button>
+                </div>
+                <hr />
+                <!-- end left links -->
+
+                <!-- search -->
+                <form id="search" method="get" action="#" role="search">
+                    <input
+                        type="text"
+                        id="s"
+                        name="s"
+                        class="text"
+                        placeholder="输入关键字搜索"
+                    />
+                    <button type="submit" class="submit">
+                        <img
+                            src="<%- url_for('img/icon-search.png') %>"
+                            alt="icon-search"
+                        />
+                    </button>
+                </form>
+                <!-- end search -->
+            </div>
+            <!-- end left area -->
+
+            <!-- right area -->
+            <div id="right">
+                <div class="row"><%- body %></div>
+            </div>
+            <!-- end right area -->
+
+            <!-- footer -->
+            <div id="footer" role="contentinfo">
+                &copy; <%- new Date().getFullYear() %>
+                <a href="<%- url_for('') %>"><%- config.title %></a>.
+                <a href="https://github.com/runoneall/hexo-theme-old-fashion"
+                    >Old Fasion</a
+                >
+                Theme. Powered by <a href="https://hexo.io">Hexo</a>.
+            </div>
+            <!-- end footer -->
+        </div>
+        <!-- end outbox -->
+
+        <%- partial('footer') %>
+    </body>
+</html>
