@@ -84,15 +84,13 @@ textarea {
 
 .post-meta a,
 .post-content a,
-.widget a,
-.comment-content a {
+.widget a {
   border-bottom-color: rgb(53, 57, 59);
 }
 
 .post-meta a:hover,
 .post-content a:hover,
-.widget a:hover,
-.comment-content a:hover {
+.widget a:hover {
   border-bottom-color: transparent;
 }
 
@@ -166,49 +164,15 @@ textarea {
   background-color: rgb(34, 36, 38);
 }
 
-.comment-list li {
-  border-color: rgb(53, 57, 59);
-}
-
-.comment-list li.comment-level-odd {
-  background-color: rgb(27, 27, 20);
-}
-
-.comment-list li.comment-level-even {
-  background-color: rgb(24, 26, 27);
-}
-
-.comment-list li.comment-by-author {
-  background-color: rgb(49, 36, 0);
-}
-
-.comment-meta a {
-  color: rgb(168, 160, 149);
-}
-
-.comment-author {
-  color: rgb(189, 183, 175);
-}
-
-.comment-list .respond {
-  border-top-color: rgb(53, 57, 59);
-}
-
-#comment-form .required::after {
-  color: rgb(255, 61, 61);
-}
-
 #footer a {
   color: inherit;
 }
 
-.post-content a img,
-.comment-content a img {
+.post-content a img {
   background-color: rgb(24, 26, 27);
 }
 
-.post-content hr,
-.comment-content hr {
+.post-content hr {
   border-color: rgb(54, 59, 61);
 }
 

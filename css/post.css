@@ -54,32 +54,26 @@
   margin: 10px 0;
 }
 
-.post-content,
-.comment-content {
+.post-content {
   line-height: 1.2;
 }
 
-.post-content h2,
-.comment-content h2 {
+.post-content h2 {
   font-size: 1.28571em;
 }
 
 .post-content img,
-.comment-content img,
-.post-content video,
-.comment-content video {
+.post-content video {
   max-width: 100%;
 }
 
-.post-content a img,
-.comment-content a img {
+.post-content a img {
   background: #fff;
   position: relative;
   bottom: -4px;
 }
 
-.post-content hr,
-.comment-content hr {
+.post-content hr {
   margin: 2em auto;
   width: 100px;
   border: 1px solid #e9e9e9;
