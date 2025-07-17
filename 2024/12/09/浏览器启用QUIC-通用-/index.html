@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <!-- base -->
+<meta charset="UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="template" content="Old-Fasion-Theme" />
+
+<!-- sitemap -->
+<link
+    rel="sitemap"
+    type="application/xml"
+    title="sitemap"
+    href="/sitemap.xml" />
+
+<!-- title -->
+<title>
+    浏览器启用QUIC（通用） | Runoneall
+</title>
+
+<!-- css dependencies -->
+
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/grid.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/sidebar.css">
+<link rel="stylesheet" href="/css/post.css">
+<link rel="stylesheet" href="/css/misc.css">
+<link rel="stylesheet" href="/css/page.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/dark.css" id="dark-style" disabled>
+
+
+<!-- favicon -->
+<link rel="shortcut icon" href="https://dev.oneall.eu.org/favicon.webp">
+
+<!-- extra css -->
+
+
+<!-- keywords -->
+
+<meta name="keywords" content="Hexo,Blog,Runoneall" />
+
+<!-- description -->
+
+<meta name="description" content="此文章是对 自建doh服务器+设置Firefox使用 文章的补充 此教程适用于大部分基于 Gecko内核 和 Chromium内核 的浏览器 QUIC于 2024.10.3 还处于试验阶段，部分网站不支持QUIC  Chromium内核 在地址栏输入 chrome://flags ( MicrosoftEdge 为 edge://flags ) 找到 enable-quic 设置为 Enable" />
+
+<!-- rss -->
+<link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
+<link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
+  <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
+</head>
+
+  <body>
+    <div id="outbox">
+      <!-- header -->
+      <div id="header" class="clearfix">
+        <div class="container">
+          <div class="row">
+            <div class="site-name">
+              <a id="logo" href="/">Runoneall</a>
+              <p id="description_random_intro" class="description">
+                Runoneall's Blog
+              </p>
+              <script>
+                var description_random_intro = document.getElementById(
+                  "description_random_intro"
+                );
+                var descriptions = JSON.parse(
+                  `["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`
+                );
+                var random_intro =
+                  descriptions[Math.floor(Math.random() * descriptions.length)];
+                description_random_intro.innerHTML = random_intro;
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end header -->
+
+      <!-- sidebar button -->
+      <button id="side-btn" onclick="changeSideStatus()">
+        <input id="side-flag" type="checkbox" />
+        <label id="side-control" for="side-flag">≡</label>
+      </button>
+
+      <!-- left area -->
+      <div id="left">
+        <!-- left links -->
+        <div id="left-links">
+          <!-- page links -->
+          <a
+            class=""
+            href="/"
+            >首页</a
+          >
+          
+          <br />
+          <a
+            class=""
+            href="/links/index.html"
+            >链接</a
+          >
+          
+          <br />
+          <a
+            class=""
+            href="/about/index.html"
+            >关于</a
+          >
+          
+          <!-- end page links -->
+
+          <!-- sidebar extra html -->
+          
+          <br />
+          <a href="/rss2.xml">RSS</a><br>
+<a href="mailto:dev@oneall.eu.org">Email</a><br> 
+          <!-- end sidebar extra html -->
+
+          <br /><button id="dark-btn" onclick="changeDarkMode()">
+            更换主题
+          </button>
+        </div>
+        <hr />
+        <!-- end left links -->
+
+        <!-- search -->
+        <form id="search" method="get" action="#" role="search">
+          <input
+            type="text"
+            id="s"
+            name="s"
+            class="text"
+            placeholder="输入关键字搜索"
+          />
+          <button type="submit" class="submit">
+            <img
+              src="/img/icon-search.png"
+              alt="icon-search"
+            />
+          </button>
+        </form>
+        <!-- end search -->
+      </div>
+      <!-- end left area -->
+
+      <!-- right area -->
+      <div id="right">
+        <div class="row"><div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2024/12/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%90%AF%E7%94%A8QUIC-%E9%80%9A%E7%94%A8-/">浏览器启用QUIC（通用）</a>
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2024-12-09T11:41:54.000Z">2024-12-09</time>
+            </li>
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认
+                </a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <ul>
+<li>此文章是对 <a target="_blank" rel="noopener" href="https://runoneall.github.io/%E8%87%AA%E5%BB%BAdoh%E6%9C%8D%E5%8A%A1%E5%99%A8-%E8%AE%BE%E7%BD%AEFirefox%E4%BD%BF%E7%94%A8.html">自建doh服务器+设置Firefox使用</a> 文章的补充</li>
+<li>此教程适用于大部分基于 <code>Gecko内核</code> 和 <code>Chromium内核</code> 的浏览器</li>
+<li>QUIC于 <code>2024.10.3</code> 还处于试验阶段，部分网站不支持QUIC</li>
+</ul>
+<h1 id="Chromium内核"><a href="#Chromium内核" class="headerlink" title="Chromium内核"></a>Chromium内核</h1><ol>
+<li>在地址栏输入 <code>chrome://flags</code> ( <code>MicrosoftEdge</code> 为 <code>edge://flags</code> )</li>
+<li>找到 <code>enable-quic</code></li>
+<li>设置为 <code>Enabled</code></li>
+</ol>
+<h1 id="Gecko内核"><a href="#Gecko内核" class="headerlink" title="Gecko内核"></a>Gecko内核</h1><ol>
+<li>在地址栏输入 <code>about:config</code></li>
+<li>找到 <code>network.http.http3.enabled</code> (没有则新建，类型为 <code>bool</code> )</li>
+<li>设置为 <code>true</code></li>
+</ol>
+<h1 id="检测"><a href="#检测" class="headerlink" title="检测"></a>检测</h1><ol>
+<li>!!完全退出!! 浏览器 (不然部分浏览器会不生效)</li>
+<li>重新打开浏览器，前往 <a target="_blank" rel="noopener" href="https://quic.nginx.org/">quic.nginx.org</a></li>
+<li>等待检测完成</li>
+</ol>
+
+        </div>
+        <!-- end post content -->
+
+    </article>
+    <!-- end article body -->
+
+</div></div>
+      </div>
+      <!-- end right area -->
+
+      <!-- footer -->
+      <div id="footer" role="contentinfo">
+        &copy; 2025
+        <a href="/">Runoneall</a>.
+        <a target="_blank" rel="noopener" href="https://github.com/runoneall/hexo-theme-old-fashion"
+          >Old Fasion</a
+        >
+        Theme. Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>.
+      </div>
+      <!-- end footer -->
+    </div>
+    <!-- end outbox -->
+
+    <!-- extra html -->
+
+
+<!-- extra js -->
+
+<script>
+console.log(String.raw`
+            ___              __
+      _____<  /____ _   ____/ /___  _   __
+     / ___// // __ `+ "`" + String.raw`/  / __  // _ \| | / /
+    / /   / // /_/ /  / /_/ //  __/| |/ /
+   /_/   /_/ \__,_/   \__,_/ \___/ |___/
+
+LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
+`)
+</script>
+
+
+<!-- js dependencies -->
+
+<script src="/js/dark.js"></script>
+<script src="/js/highlight.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/search.js"></script>
+
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
+  </body>
+</html>

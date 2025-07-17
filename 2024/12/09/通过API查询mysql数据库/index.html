@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <!-- base -->
+<meta charset="UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="template" content="Old-Fasion-Theme" />
+
+<!-- sitemap -->
+<link
+    rel="sitemap"
+    type="application/xml"
+    title="sitemap"
+    href="/sitemap.xml" />
+
+<!-- title -->
+<title>
+    通过API查询mysql数据库 | Runoneall
+</title>
+
+<!-- css dependencies -->
+
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/grid.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/sidebar.css">
+<link rel="stylesheet" href="/css/post.css">
+<link rel="stylesheet" href="/css/misc.css">
+<link rel="stylesheet" href="/css/page.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/dark.css" id="dark-style" disabled>
+
+
+<!-- favicon -->
+<link rel="shortcut icon" href="https://dev.oneall.eu.org/favicon.webp">
+
+<!-- extra css -->
+
+
+<!-- keywords -->
+
+<meta name="keywords" content="Hexo,Blog,Runoneall" />
+
+<!-- description -->
+
+<meta name="description" content="demo: https://runoneall.serv00.net/Files/mysql-driver.php 效果图: 代码下载:https://dev.oneall.eu.org/usr/uploads/2024/12/3853467506.zip 请求方法:  发送post请求 表单格式 host指定数据库地址 String port指定端口 Int username指定用户 Strin" />
+
+<!-- rss -->
+<link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
+<link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
+  <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
+</head>
+
+  <body>
+    <div id="outbox">
+      <!-- header -->
+      <div id="header" class="clearfix">
+        <div class="container">
+          <div class="row">
+            <div class="site-name">
+              <a id="logo" href="/">Runoneall</a>
+              <p id="description_random_intro" class="description">
+                Runoneall's Blog
+              </p>
+              <script>
+                var description_random_intro = document.getElementById(
+                  "description_random_intro"
+                );
+                var descriptions = JSON.parse(
+                  `["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`
+                );
+                var random_intro =
+                  descriptions[Math.floor(Math.random() * descriptions.length)];
+                description_random_intro.innerHTML = random_intro;
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end header -->
+
+      <!-- sidebar button -->
+      <button id="side-btn" onclick="changeSideStatus()">
+        <input id="side-flag" type="checkbox" />
+        <label id="side-control" for="side-flag">≡</label>
+      </button>
+
+      <!-- left area -->
+      <div id="left">
+        <!-- left links -->
+        <div id="left-links">
+          <!-- page links -->
+          <a
+            class=""
+            href="/"
+            >首页</a
+          >
+          
+          <br />
+          <a
+            class=""
+            href="/links/index.html"
+            >链接</a
+          >
+          
+          <br />
+          <a
+            class=""
+            href="/about/index.html"
+            >关于</a
+          >
+          
+          <!-- end page links -->
+
+          <!-- sidebar extra html -->
+          
+          <br />
+          <a href="/rss2.xml">RSS</a><br>
+<a href="mailto:dev@oneall.eu.org">Email</a><br> 
+          <!-- end sidebar extra html -->
+
+          <br /><button id="dark-btn" onclick="changeDarkMode()">
+            更换主题
+          </button>
+        </div>
+        <hr />
+        <!-- end left links -->
+
+        <!-- search -->
+        <form id="search" method="get" action="#" role="search">
+          <input
+            type="text"
+            id="s"
+            name="s"
+            class="text"
+            placeholder="输入关键字搜索"
+          />
+          <button type="submit" class="submit">
+            <img
+              src="/img/icon-search.png"
+              alt="icon-search"
+            />
+          </button>
+        </form>
+        <!-- end search -->
+      </div>
+      <!-- end left area -->
+
+      <!-- right area -->
+      <div id="right">
+        <div class="row"><div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2024/12/09/%E9%80%9A%E8%BF%87API%E6%9F%A5%E8%AF%A2mysql%E6%95%B0%E6%8D%AE%E5%BA%93/">通过API查询mysql数据库</a>
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2024-12-09T12:53:00.000Z">2024-12-09</time>
+            </li>
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认
+                </a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <p>demo: <a target="_blank" rel="noopener" href="https://runoneall.serv00.net/Files/mysql-driver.php">https://runoneall.serv00.net/Files/mysql-driver.php</a></p>
+<p>效果图:<br><img src="https://s.rmimg.com/2024-11-18/1731916381-650299-2024-11-18-34935.png"><br><img src="https://s.rmimg.com/2024-11-18/1731916384-725557-2024-11-18-35001.png"></p>
+<p>代码下载:<br><a target="_blank" rel="noopener" href="https://dev.oneall.eu.org/usr/uploads/2024/12/3853467506.zip">https://dev.oneall.eu.org/usr/uploads/2024/12/3853467506.zip</a></p>
+<p>请求方法:</p>
+<ul>
+<li>发送post请求</li>
+<li>表单格式</li>
+<li>host指定数据库地址 String</li>
+<li>port指定端口 Int</li>
+<li>username指定用户 String</li>
+<li>password指定密码 String</li>
+<li>database指定数据库 String</li>
+<li>querys指定查询语句 String （多个语句用<code>;;</code>隔开）</li>
+</ul>
+<p>请求示例:</p>
+<pre><code class="language-python">import requests
+
+data = &#123;
+    &quot;host&quot;: &quot;&lt;地址&gt;&quot;,
+    &quot;port&quot;: &lt;端口&gt;,
+    &quot;username&quot;: &quot;&lt;用户名&gt;&quot;,
+    &quot;password&quot;: &quot;&lt;密码&gt;&quot;,
+    &quot;database&quot;: &quot;&lt;数据库名&gt;&quot;,
+    &quot;querys&quot;: &quot;&lt;查询语句&gt;&quot;
+&#125;
+
+print(requests.post(&quot;https://runoneall.serv00.net/Files/mysql-driver.php&quot;, data=data).text)
+</code></pre>
+<p>在Cloudflare Worker中使用: (<code>await sqlQuery(&quot;SQL&quot;)</code>)</p>
+<pre><code class="language-js">async function sqlQuery(sqls) &#123;
+    const apiUrl = &#39;https://runoneall.serv00.net/Files/mysql-driver.php&#39;
+    const info = &#123;
+        host: &quot;&lt;地址&gt;&quot;,port: &lt;端口&gt;,username: &quot;&lt;用户名&gt;&quot;,
+        password: &quot;&lt;密码&gt;&quot;,database: &quot;&lt;数据库名&gt;&quot;,querys: sqls&#125;;
+    const formData = new URLSearchParams()
+    for (const key in info) &#123;if (info.hasOwnProperty(key)) &#123;formData.append(key, info[key])&#125;&#125;
+    const response = await fetch(apiUrl, &#123;method: &quot;POST&quot;,
+        headers: &#123;&#39;Content-Type&#39;: &#39;application/x-www-form-urlencoded&#39;&#125;,
+        body: formData.toString()&#125;)
+    return response.body
+&#125;
+</code></pre>
+
+        </div>
+        <!-- end post content -->
+
+    </article>
+    <!-- end article body -->
+
+</div></div>
+      </div>
+      <!-- end right area -->
+
+      <!-- footer -->
+      <div id="footer" role="contentinfo">
+        &copy; 2025
+        <a href="/">Runoneall</a>.
+        <a target="_blank" rel="noopener" href="https://github.com/runoneall/hexo-theme-old-fashion"
+          >Old Fasion</a
+        >
+        Theme. Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>.
+      </div>
+      <!-- end footer -->
+    </div>
+    <!-- end outbox -->
+
+    <!-- extra html -->
+
+
+<!-- extra js -->
+
+<script>
+console.log(String.raw`
+            ___              __
+      _____<  /____ _   ____/ /___  _   __
+     / ___// // __ `+ "`" + String.raw`/  / __  // _ \| | / /
+    / /   / // /_/ /  / /_/ //  __/| |/ /
+   /_/   /_/ \__,_/   \__,_/ \___/ |___/
+
+LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
+`)
+</script>
+
+
+<!-- js dependencies -->
+
+<script src="/js/dark.js"></script>
+<script src="/js/highlight.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/search.js"></script>
+
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
+  </body>
+</html>

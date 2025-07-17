@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <!-- base -->
+<meta charset="UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="template" content="Old-Fasion-Theme" />
+
+<!-- sitemap -->
+<link
+    rel="sitemap"
+    type="application/xml"
+    title="sitemap"
+    href="/sitemap.xml" />
+
+<!-- title -->
+<title>
+    MiWiFi 3G(R3G) 一站式刷机 | Runoneall
+</title>
+
+<!-- css dependencies -->
+
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/grid.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/sidebar.css">
+<link rel="stylesheet" href="/css/post.css">
+<link rel="stylesheet" href="/css/misc.css">
+<link rel="stylesheet" href="/css/page.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/dark.css" id="dark-style" disabled>
+
+
+<!-- favicon -->
+<link rel="shortcut icon" href="https://dev.oneall.eu.org/favicon.webp">
+
+<!-- extra css -->
+
+
+<!-- keywords -->
+
+<meta name="keywords" content="Hexo,Blog,Runoneall" />
+
+<!-- description -->
+
+<meta name="description" content="本教程提供的文件有可能不是最新的, 并且有可能过时, 请注意甄别 本教程参考 小米路由器3G R3G 刷入Breed和OpenWrt 20.02.2 的记录, 小米路由器 3G 使用 OpenWRT, 小米R3G的USB挂载问题  准备 R3G路由器 电脑, 安装 python3 环境 安装了 requests 依赖包 全程使用有线连接 (!!! 不要用无线 !!!) VPN (也许?) !!!" />
+
+<!-- rss -->
+<link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
+<link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
+  <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
+</head>
+
+  <body>
+    <div id="outbox">
+      <!-- header -->
+      <div id="header" class="clearfix">
+        <div class="container">
+          <div class="row">
+            <div class="site-name">
+              <a id="logo" href="/">Runoneall</a>
+              <p id="description_random_intro" class="description">
+                Runoneall's Blog
+              </p>
+              <script>
+                var description_random_intro = document.getElementById(
+                  "description_random_intro"
+                );
+                var descriptions = JSON.parse(
+                  `["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`
+                );
+                var random_intro =
+                  descriptions[Math.floor(Math.random() * descriptions.length)];
+                description_random_intro.innerHTML = random_intro;
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end header -->
+
+      <!-- sidebar button -->
+      <button id="side-btn" onclick="changeSideStatus()">
+        <input id="side-flag" type="checkbox" />
+        <label id="side-control" for="side-flag">≡</label>
+      </button>
+
+      <!-- left area -->
+      <div id="left">
+        <!-- left links -->
+        <div id="left-links">
+          <!-- page links -->
+          <a
+            class=""
+            href="/"
+            >首页</a
+          >
+          
+          <br />
+          <a
+            class=""
+            href="/links/index.html"
+            >链接</a
+          >
+          
+          <br />
+          <a
+            class=""
+            href="/about/index.html"
+            >关于</a
+          >
+          
+          <!-- end page links -->
+
+          <!-- sidebar extra html -->
+          
+          <br />
+          <a href="/rss2.xml">RSS</a><br>
+<a href="mailto:dev@oneall.eu.org">Email</a><br> 
+          <!-- end sidebar extra html -->
+
+          <br /><button id="dark-btn" onclick="changeDarkMode()">
+            更换主题
+          </button>
+        </div>
+        <hr />
+        <!-- end left links -->
+
+        <!-- search -->
+        <form id="search" method="get" action="#" role="search">
+          <input
+            type="text"
+            id="s"
+            name="s"
+            class="text"
+            placeholder="输入关键字搜索"
+          />
+          <button type="submit" class="submit">
+            <img
+              src="/img/icon-search.png"
+              alt="icon-search"
+            />
+          </button>
+        </form>
+        <!-- end search -->
+      </div>
+      <!-- end left area -->
+
+      <!-- right area -->
+      <div id="right">
+        <div class="row"><div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2024/12/09/MiWiFi%203G-R3G-%20%E4%B8%80%E7%AB%99%E5%BC%8F%E5%88%B7%E6%9C%BA/">MiWiFi 3G(R3G) 一站式刷机</a>
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2024-12-09T11:37:18.000Z">2024-12-09</time>
+            </li>
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认
+                </a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <ul>
+<li>本教程提供的文件有可能不是最新的, 并且有可能过时, 请注意甄别</li>
+<li>本教程参考 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/milton/p/16163521.html">小米路由器3G R3G 刷入Breed和OpenWrt 20.02.2 的记录</a>, <a target="_blank" rel="noopener" href="https://www.ohyee.cc/post/note_miwifi_openwrt">小米路由器 3G 使用 OpenWRT</a>, <a target="_blank" rel="noopener" href="https://www.right.com.cn/FORUM/thread-836975-1-1.html">小米R3G的USB挂载问题</a></li>
+</ul>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><ul>
+<li>R3G路由器</li>
+<li>电脑, 安装 <code>python3</code> 环境</li>
+<li>安装了 <code>requests</code> 依赖包</li>
+<li>全程使用有线连接 (!!! 不要用无线 !!!)</li>
+<li>VPN (也许?)</li>
+<li>!!! 眼睛与脑子 !!!</li>
+</ul>
+<h1 id="解锁并获取权限"><a href="#解锁并获取权限" class="headerlink" title="解锁并获取权限"></a>解锁并获取权限</h1><ol>
+<li>下载开发版系统 <a target="_blank" rel="noopener" href="https://bigota.miwifi.com/xiaoqiang/rom/r3g/miwifi_r3g_firmware_12f97_2.25.124.bin">下载地址</a></li>
+<li>进入到路由器管理, 选择 <code>系统升级</code> - <code>本地升级</code> - <code>上传固件</code>, 选择下载的文件, 等待路由器更新重启完成</li>
+<li>登入到路由器后台, 查看是否为开发版系统, 如果是, 进行下一步, 否则重来或寻找其他方法</li>
+<li>下载解锁工具 <a target="_blank" rel="noopener" href="https://github.com/acecilia/OpenWRTInvasion/archive/refs/tags/0.0.8.zip">下载地址</a></li>
+<li>解压并进入, 运行 <code>pip3 install -r requirements.txt &amp;&amp; python3 remote_command_execution_vulnerability.py</code> 并填入信息, 等待一段时间后解锁成功, 然后保存 <code>FTP</code> 和 <code>SSH 或 Telnet</code> 的访问信息 (用户名 <code>root</code> 密码 <code>root</code> )</li>
+</ol>
+<h1 id="刷入不死Breed"><a href="#刷入不死Breed" class="headerlink" title="刷入不死Breed"></a>刷入不死Breed</h1><ol>
+<li>使用SSH或Telnet登入到路由器 (以下简称 <code>登入到路由器</code> )</li>
+<li>使用 <code>cat /proc/mtd</code> 查看闪存布局</li>
+<li>使用 <code>dd if=/dev/mtd4 of=/tmp/eeprom.bin</code> 备份 <code>eeprom</code></li>
+<li>使用FTP登入到路由器, 进入 <code>/tmp</code> 目录, 把 <code>eeprom.bin</code> 下载到本地存储</li>
+<li>下载Breed <a target="_blank" rel="noopener" href="https://breed.hackpascal.net/breed-mt7621-xiaomi-r3g.bin">下载地址</a> 并上传到路由器 <code>/tmp</code> 目录</li>
+<li>登入到路由器, 使用 <code>cd /tmp</code> 进入到目录, 使用 <code>mtd -r write /tmp/breed-R3G.bin Bootloader</code> 刷入Breed, 完成后路由器会自动重启, 等待重启完成</li>
+</ol>
+<h1 id="刷入OpenWrt"><a href="#刷入OpenWrt" class="headerlink" title="刷入OpenWrt"></a>刷入OpenWrt</h1><ol>
+<li>断开路由器电源, 按住 <code>Reset</code> 并重新接入电源, 当网口灯闪烁3次后浏览器输入 <code>192.168.1.1</code> 进入Breed管理面板</li>
+<li>点击 <code>Mac地址修改</code> 查看是否全为 <code>FF</code>, 如果是, 点击固件更新, 在 <code>eeprom</code> 处上传备份的 <code>eeprom</code> 文件</li>
+<li>下载OpenWrt固件 <a href="https://firmware-selector.openwrt.org/?version=23.05.4&target=ramips/mt7621&id=xiaomi_mi-router-3g">下载地址</a>, 进入后找到版本选择, 点击 <code>非SNAPSHOT</code> 的最新版本, 下载 <code>KERNEL1</code> 和 <code>ROOTFS0</code></li>
+<li>进入Breed, 点击环境变量, 删除 <code>normal_firmware_md5</code></li>
+<li>进入Breed, 选择固件更新, 在下拉框中选择 <code>Openwrt</code> , 按照提示上传 <code>KERNEL1</code> 和 <code>ROOTFS0</code> 文件, 点击自动重启, 稍等片刻即可安装完成</li>
+</ol>
+<h1 id="汉化"><a href="#汉化" class="headerlink" title="汉化"></a>汉化</h1><ol>
+<li>进入 <code>System</code> - <code>Software</code></li>
+<li>点击 <code>Update lists</code> 等待完成 (可能较慢, 如有动手能力可以点击 <code>Configure opkg</code> 自行换源)</li>
+<li>在 <code>Filter</code> 处输入 <code>luci-i18n-base-zh-cn</code> 并等待安装完成</li>
+<li>刷新页面</li>
+</ol>
+<h1 id="识别USB存储设备"><a href="#识别USB存储设备" class="headerlink" title="识别USB存储设备"></a>识别USB存储设备</h1><ol>
+<li>登入到路由器</li>
+<li>先运行 <code>opkg install kmod-nls-cp437 kmod-nls-iso8859-1 kmod-usb-core kmod-usb-ohci kmod-usb-storage kmod-usb2 mount-utils</code><ul>
+<li>当你的盘为fat格式时运行 <code>opkg install kmod-fs-vfat</code></li>
+<li>当你的盘为ext3格式时运行 <code>opkg install kmod-fs-ext3</code></li>
+<li>当你的盘为ntfs格式时运行 <code>opkg install ntfs-3g</code></li>
+<li>当你的盘为ext4格式时运行 <code>opkg install kmod-fs-ext4</code></li>
+</ul>
+</li>
+<li>挂载<ul>
+<li>一般为 <code>/dev/sda1</code></li>
+<li>列出所有可用设备 <code>ls /dev | grep sda</code></li>
+<li>使用 <code>mount /dev/sda1 /mnt</code> 将设备挂载到 <code>/mnt</code> 目录</li>
+<li>使用 <code>cd /mnt</code> 进入到设备</li>
+<li>使用 <code>umount /mnt</code> 取消挂载 (!!! 拔出设备前一定要做 !!!)</li>
+<li>路由器重启后需要重新挂载</li>
+</ul>
+</li>
+<li>当挂载设备耗电较大 (如硬盘盒外接硬盘) 时, 建议使用外接供电, 否则路由器容易供电不足</li>
+</ol>
+
+        </div>
+        <!-- end post content -->
+
+    </article>
+    <!-- end article body -->
+
+</div></div>
+      </div>
+      <!-- end right area -->
+
+      <!-- footer -->
+      <div id="footer" role="contentinfo">
+        &copy; 2025
+        <a href="/">Runoneall</a>.
+        <a target="_blank" rel="noopener" href="https://github.com/runoneall/hexo-theme-old-fashion"
+          >Old Fasion</a
+        >
+        Theme. Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>.
+      </div>
+      <!-- end footer -->
+    </div>
+    <!-- end outbox -->
+
+    <!-- extra html -->
+
+
+<!-- extra js -->
+
+<script>
+console.log(String.raw`
+            ___              __
+      _____<  /____ _   ____/ /___  _   __
+     / ___// // __ `+ "`" + String.raw`/  / __  // _ \| | / /
+    / /   / // /_/ /  / /_/ //  __/| |/ /
+   /_/   /_/ \__,_/   \__,_/ \___/ |___/
+
+LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
+`)
+</script>
+
+
+<!-- js dependencies -->
+
+<script src="/js/dark.js"></script>
+<script src="/js/highlight.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/search.js"></script>
+
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
+  </body>
+</html>

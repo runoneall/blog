@@ -1,0 +1,243 @@
+@layer {
+  html {
+    background-color: rgb(24, 26, 27) !important;
+    color-scheme: dark !important;
+  }
+
+  html,
+  body {
+    background-color: rgb(24, 26, 27);
+    border-color: rgb(115, 107, 94);
+    color: rgb(232, 230, 227);
+  }
+
+  a {
+    color: rgb(51, 145, 255);
+  }
+}
+
+a {
+  background-color: transparent;
+}
+
+abbr[title] {
+  border-bottom: none;
+}
+
+legend {
+  color: inherit;
+}
+
+body {
+  background-color: rgb(34, 36, 38);
+  color: rgb(189, 183, 175);
+}
+
+a,
+#dark-btn {
+  color: rgb(114, 160, 213);
+}
+
+a:hover,
+a:active {
+  color: rgb(189, 183, 175);
+}
+
+pre,
+code {
+  background-color: rgb(31, 33, 35);
+}
+
+code {
+  color: rgb(192, 92, 90);
+}
+
+pre code {
+  color: rgb(189, 183, 175);
+}
+
+blockquote {
+  border-left-color: rgb(53, 57, 59);
+  color: rgb(168, 160, 149);
+}
+
+table {
+  border-color: rgb(58, 62, 65);
+}
+
+table th,
+table td {
+  border-color: rgb(53, 57, 59);
+}
+
+table th {
+  background-color: rgb(31, 33, 35);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+textarea {
+  border-color: rgb(54, 59, 61);
+}
+
+.post-meta a,
+.post-content a,
+.widget a {
+  border-bottom-color: rgb(53, 57, 59);
+}
+
+.post-meta a:hover,
+.post-content a:hover,
+.widget a:hover {
+  border-bottom-color: transparent;
+}
+
+#header,
+#footer {
+  background-color: rgb(80, 75, 14);
+}
+
+#logo {
+  color: rgb(200, 195, 188);
+}
+
+.description {
+  color: rgb(189, 183, 175);
+}
+
+#outbox {
+  background-color: rgb(34, 36, 38);
+  border-color: rgb(123, 114, 101);
+}
+
+#side-btn {
+  background-color: rgb(49 55 62);
+}
+
+#dark-btn {
+  border-style: none;
+  background-color: transparent;
+}
+
+@media screen and (max-width: 700px) {
+  #left {
+    background-color: rgb(49 55 62);
+  }
+}
+
+.post {
+  border-bottom-color: rgb(123, 132, 139);
+}
+
+.post-meta {
+  color: rgb(168, 160, 149);
+}
+
+.post-meta li {
+  border-left-color: rgb(58, 62, 65);
+}
+
+.post-meta li:first-child {
+  border-style: none;
+}
+
+.post-near {
+  color: rgb(168, 160, 149);
+}
+
+.archive-title {
+  color: rgb(168, 160, 149);
+}
+
+.more a {
+  border-style: none;
+}
+
+.page-navigator a:hover {
+  background-color: rgb(34, 36, 38);
+}
+
+.page-navigator .current a {
+  color: rgb(189, 183, 175);
+  background-color: rgb(34, 36, 38);
+}
+
+#footer a {
+  color: inherit;
+}
+
+.post-content a img {
+  background-color: rgb(24, 26, 27);
+}
+
+.post-content hr {
+  border-color: rgb(54, 59, 61);
+}
+
+.hljs {
+  background-image: initial;
+  background-color: rgb(31, 33, 35);
+  color: rgb(189, 183, 175);
+}
+
+.hljs-comment {
+  color: rgb(163, 156, 144);
+}
+
+.hljs-punctuation,
+.hljs-tag {
+  color: rgba(189, 183, 175, 0.67);
+}
+
+.hljs-tag .hljs-attr,
+.hljs-tag .hljs-name {
+  color: rgb(189, 183, 175);
+}
+
+.hljs-deletion,
+.hljs-number,
+.hljs-quote,
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-string,
+.hljs-template-tag,
+.hljs-type {
+  color: rgb(255, 109, 109);
+}
+
+.hljs-section,
+.hljs-title {
+  color: rgb(255, 109, 109);
+}
+
+.hljs-link,
+.hljs-operator,
+.hljs-regexp,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-symbol,
+.hljs-template-variable,
+.hljs-variable {
+  color: rgb(179, 103, 103);
+}
+
+.hljs-literal {
+  color: rgb(131, 177, 115);
+}
+
+.hljs-addition,
+.hljs-built_in,
+.hljs-bullet,
+.hljs-code {
+  color: rgb(189, 255, 124);
+}
+
+.hljs-meta {
+  color: rgb(105, 186, 225);
+}
+
+.hljs-meta .hljs-string {
+  color: rgb(97, 176, 208);
+}

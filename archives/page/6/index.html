@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <!-- base -->
+<meta charset="UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="template" content="Old-Fasion-Theme" />
+
+<!-- sitemap -->
+<link
+    rel="sitemap"
+    type="application/xml"
+    title="sitemap"
+    href="/sitemap.xml" />
+
+<!-- title -->
+<title>
+    Runoneall
+</title>
+
+<!-- css dependencies -->
+
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/grid.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/sidebar.css">
+<link rel="stylesheet" href="/css/post.css">
+<link rel="stylesheet" href="/css/misc.css">
+<link rel="stylesheet" href="/css/page.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/dark.css" id="dark-style" disabled>
+
+
+<!-- favicon -->
+<link rel="shortcut icon" href="https://dev.oneall.eu.org/favicon.webp">
+
+<!-- extra css -->
+
+
+<!-- keywords -->
+
+<meta name="keywords" content="Hexo,Blog,Runoneall" />
+
+<!-- description -->
+
+<meta name="description" content="Runoneall's Blog" />
+
+<!-- rss -->
+<link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
+<link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
+  <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
+</head>
+
+  <body>
+    <div id="outbox">
+      <!-- header -->
+      <div id="header" class="clearfix">
+        <div class="container">
+          <div class="row">
+            <div class="site-name">
+              <a id="logo" href="/">Runoneall</a>
+              <p id="description_random_intro" class="description">
+                Runoneall's Blog
+              </p>
+              <script>
+                var description_random_intro = document.getElementById(
+                  "description_random_intro"
+                );
+                var descriptions = JSON.parse(
+                  `["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`
+                );
+                var random_intro =
+                  descriptions[Math.floor(Math.random() * descriptions.length)];
+                description_random_intro.innerHTML = random_intro;
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end header -->
+
+      <!-- sidebar button -->
+      <button id="side-btn" onclick="changeSideStatus()">
+        <input id="side-flag" type="checkbox" />
+        <label id="side-control" for="side-flag">≡</label>
+      </button>
+
+      <!-- left area -->
+      <div id="left">
+        <!-- left links -->
+        <div id="left-links">
+          <!-- page links -->
+          <a
+            class=""
+            href="/"
+            >首页</a
+          >
+          
+          <br />
+          <a
+            class=""
+            href="/links/index.html"
+            >链接</a
+          >
+          
+          <br />
+          <a
+            class=""
+            href="/about/index.html"
+            >关于</a
+          >
+          
+          <!-- end page links -->
+
+          <!-- sidebar extra html -->
+          
+          <br />
+          <a href="/rss2.xml">RSS</a><br>
+<a href="mailto:dev@oneall.eu.org">Email</a><br> 
+          <!-- end sidebar extra html -->
+
+          <br /><button id="dark-btn" onclick="changeDarkMode()">
+            更换主题
+          </button>
+        </div>
+        <hr />
+        <!-- end left links -->
+
+        <!-- search -->
+        <form id="search" method="get" action="#" role="search">
+          <input
+            type="text"
+            id="s"
+            name="s"
+            class="text"
+            placeholder="输入关键字搜索"
+          />
+          <button type="submit" class="submit">
+            <img
+              src="/img/icon-search.png"
+              alt="icon-search"
+            />
+          </button>
+        </form>
+        <!-- end search -->
+      </div>
+      <!-- end left area -->
+
+      <!-- right area -->
+      <div id="right">
+        <div class="row"><div id="main" role="main">
+    
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h2 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2024/12/09/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93php%E7%BD%91%E7%9B%98-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8%E7%A8%8B%E5%BA%8F/">一个简易php网盘/文件管理器程序</a>
+        </h2>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间: <time itemprop="datePublished"
+                    datetime="2024-12-09T13:07:02.000Z">2024-12-09</time></li>
+
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content index-post-content" itemprop="articleBody">
+            “自研”的PHP网盘程序，支持 上传下载文件，新建文件与文件夹，删除文件与文件夹，编辑文本文件有config.json，每一个功能都可以单独开关...
+        </div>
+        <!-- end post content -->
+
+    </article>
+    
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h2 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2024/12/09/%E9%80%9A%E8%BF%87API%E6%9F%A5%E8%AF%A2mysql%E6%95%B0%E6%8D%AE%E5%BA%93/">通过API查询mysql数据库</a>
+        </h2>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间: <time itemprop="datePublished"
+                    datetime="2024-12-09T12:53:00.000Z">2024-12-09</time></li>
+
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content index-post-content" itemprop="articleBody">
+            demo: https://runoneall.serv00.net/Files/mysql-driver.php 效果图: 代码下载:https://dev.oneall.eu.org/usr/uploads/2024/12/3853467506.zip 请求方法: 发送post请求 表单格式...
+        </div>
+        <!-- end post content -->
+
+    </article>
+    
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h2 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2024/12/09/%E8%87%AA%E5%88%B6xui%E6%89%B9%E9%87%8F%E6%A3%80%E6%B5%8B%E5%AD%98%E6%B4%BB%E8%84%9A%E6%9C%AC/">自制xui批量检测存活脚本</a>
+        </h2>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间: <time itemprop="datePublished"
+                    datetime="2024-12-09T12:46:00.000Z">2024-12-09</time></li>
+
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content index-post-content" itemprop="articleBody">
+            将得到的xui账号文件保存为 source.txt 下载脚本https://dev.oneall.eu.org/usr/uploads/2024/12/2068079931.zip 首先运行 tourl.py 生成登录url地址 再运行 scan.py 并指定密码开始检测
+        </div>
+        <!-- end post content -->
+
+    </article>
+    
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h2 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2024/12/09/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84Go%E8%AF%AD%E8%A8%80%E8%BD%AE%E5%AD%90/">一个简单的Go语言轮子</a>
+        </h2>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间: <time itemprop="datePublished"
+                    datetime="2024-12-09T12:43:00.000Z">2024-12-09</time></li>
+
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content index-post-content" itemprop="articleBody">
+            此为我自己在写项目时用到的轮子，整理了一下地址：https://github.com/runoneall/goutil实现：命令行参数，配置文件，日期，数据库，网络请求等相关功能，简化开发 command.go Command_Args() 返回类型 map[string]string 参数字典...
+        </div>
+        <!-- end post content -->
+
+    </article>
+    
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h2 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2024/12/09/%E8%87%AA%E5%8A%A8%E5%88%B6%E4%BD%9C%E5%B1%8F%E8%94%BD%E8%AF%8D%E8%84%9A%E6%9C%AC/">自动制作屏蔽词脚本</a>
+        </h2>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间: <time itemprop="datePublished"
+                    datetime="2024-12-09T12:40:51.000Z">2024-12-09</time></li>
+
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content index-post-content" itemprop="articleBody">
+            使用到的仓库: 屏蔽词库：https://github.com/57ing/Sensitive-word 域名词库：https://github.com/gfwlist/gfwlist import requests import os # 清理文件夹 os.system(&quot;cd...
+        </div>
+        <!-- end post content -->
+
+    </article>
+    
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h2 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2024/12/09/%E8%87%AA%E5%BB%BAdoh%E6%9C%8D%E5%8A%A1%E5%99%A8-%E8%AE%BE%E7%BD%AEFirefox%E4%BD%BF%E7%94%A8/">自建doh服务器+设置Firefox使用</a>
+        </h2>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间: <time itemprop="datePublished"
+                    datetime="2024-12-09T11:42:50.000Z">2024-12-09</time></li>
+
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content index-post-content" itemprop="articleBody">
+            前情提要 本教程不会详细解释各名词含义, 需要了解自行搜索 本教程有些步骤需要自行搜索, 肯定都有答案, 站长不想再写一遍 本教程站长亲测可用, 但因网络环境差异不保证可用性 本教程适用于Android, 但也支持其他平台(可能会有出入) 准备 Cloudflare账号 Github账号...
+        </div>
+        <!-- end post content -->
+
+    </article>
+    
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h2 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2024/12/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%90%AF%E7%94%A8QUIC-%E9%80%9A%E7%94%A8-/">浏览器启用QUIC（通用）</a>
+        </h2>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间: <time itemprop="datePublished"
+                    datetime="2024-12-09T11:41:54.000Z">2024-12-09</time></li>
+
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content index-post-content" itemprop="articleBody">
+            此文章是对 自建doh服务器+设置Firefox使用 文章的补充 此教程适用于大部分基于 Gecko内核 和 Chromium内核 的浏览器 QUIC于 2024.10.3 还处于试验阶段，部分网站不支持QUIC Chromium内核 在地址栏输入 chrome://flags (...
+        </div>
+        <!-- end post content -->
+
+    </article>
+    
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h2 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2024/12/09/%E9%87%8D%E5%A4%A7%E6%96%B0%E9%97%BB-%20Minecraft%E5%9F%BA%E5%B2%A9%E7%89%88%E6%8F%92%E4%BB%B6%E7%A4%BE%E5%8C%BA%E6%88%96%E5%B0%86%E4%B8%8D%E5%A4%8D%E5%AD%98%E5%9C%A8/">重大新闻! Minecraft基岩版插件社区或将不复存在</a>
+        </h2>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间: <time itemprop="datePublished"
+                    datetime="2024-12-09T11:40:17.000Z">2024-12-09</time></li>
+
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content index-post-content" itemprop="articleBody">
+            注意‼️文章中的插件指的是MC基岩版服务端中的使用加载器加载的插件(Plugin)，而非在客户端即可加载的模组(Addon)文章中可能有错误出现，请谅解，如果有错误请告诉我，我会及时改正 近日，Mojang宣布将从Minecraft服务器删除 PDB¹...
+        </div>
+        <!-- end post content -->
+
+    </article>
+    
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h2 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2024/12/09/%E9%80%9A%E8%BF%87Github%20Pages-Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">通过Github Pages+Hexo搭建博客教程</a>
+        </h2>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间: <time itemprop="datePublished"
+                    datetime="2024-12-09T11:38:35.000Z">2024-12-09</time></li>
+
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content index-post-content" itemprop="articleBody">
+            此方法适用于所有系统，但会存在路径与命令区别，请自行尝试后进行修改此教程使用Linux系统 前期准备 一个域名（没有也可以） 一台电脑（手机可用Termux） git（用于提交代码，到这里下载git安装包或使用包管理器安装） 一个Github账号（自行搜索）...
+        </div>
+        <!-- end post content -->
+
+    </article>
+    
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h2 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2024/12/09/MiWiFi%203G-R3G-%20%E4%B8%80%E7%AB%99%E5%BC%8F%E5%88%B7%E6%9C%BA/">MiWiFi 3G(R3G) 一站式刷机</a>
+        </h2>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间: <time itemprop="datePublished"
+                    datetime="2024-12-09T11:37:18.000Z">2024-12-09</time></li>
+
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content index-post-content" itemprop="articleBody">
+            本教程提供的文件有可能不是最新的, 并且有可能过时, 请注意甄别 本教程参考 小米路由器3G R3G 刷入Breed和OpenWrt 20.02.2 的记录, 小米路由器 3G 使用 OpenWRT, 小米R3G的USB挂载问题 准备 R3G路由器 电脑, 安装 python3 环境 安装了...
+        </div>
+        <!-- end post content -->
+
+    </article>
+    
+
+    <!-- pagination -->
+    
+    <ol class="page-navigator">
+
+        <!-- previous page link -->
+        
+        <li class="prev">
+            <a
+                href="/page/5">&laquo;
+                前一页</a>
+        </li>
+        
+        <!-- end previous page link -->
+
+        <!-- first page link -->
+        
+        <li><a href="/">1</a></li>
+        
+        <!-- end first page link -->
+
+        <!-- ellipsis before nearby pages -->
+        
+        <li>...</li>
+        
+        <!-- end ellipsis before nearby pages -->
+
+        <!-- nearby page numbers -->
+        
+        
+        
+        <li><a href="/page/4">4</a></li>
+        
+        
+        
+        <li><a href="/page/5">5</a></li>
+        
+        
+        
+        <li class="current">
+            <a href="/page/6">6</a>
+        </li>
+        
+        
+        <!-- end nearby page numbers -->
+
+        <!-- ellipsis after nearby pages -->
+        
+        <!-- end ellipsis after nearby pages -->
+
+        <!-- last page link -->
+        
+        
+        <li><a href="/page/7">7</a></li>
+        
+        
+        <!-- end last page link -->
+
+        <!-- next page link -->
+        
+        <li class="next">
+            <a href="/page/7">后一页
+                &raquo;</a>
+        </li>
+        
+        <!-- end next page link -->
+
+    </ol>
+    <!-- end pagination -->
+
+</div>
+</div>
+      </div>
+      <!-- end right area -->
+
+      <!-- footer -->
+      <div id="footer" role="contentinfo">
+        &copy; 2025
+        <a href="/">Runoneall</a>.
+        <a target="_blank" rel="noopener" href="https://github.com/runoneall/hexo-theme-old-fashion"
+          >Old Fasion</a
+        >
+        Theme. Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>.
+      </div>
+      <!-- end footer -->
+    </div>
+    <!-- end outbox -->
+
+    <!-- extra html -->
+
+
+<!-- extra js -->
+
+<script>
+console.log(String.raw`
+            ___              __
+      _____<  /____ _   ____/ /___  _   __
+     / ___// // __ `+ "`" + String.raw`/  / __  // _ \| | / /
+    / /   / // /_/ /  / /_/ //  __/| |/ /
+   /_/   /_/ \__,_/   \__,_/ \___/ |___/
+
+LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
+`)
+</script>
+
+
+<!-- js dependencies -->
+
+<script src="/js/dark.js"></script>
+<script src="/js/highlight.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/search.js"></script>
+
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
+  </body>
+</html>

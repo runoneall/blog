@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <!-- base -->
+<meta charset="UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="template" content="Old-Fasion-Theme" />
+
+<!-- sitemap -->
+<link
+    rel="sitemap"
+    type="application/xml"
+    title="sitemap"
+    href="/sitemap.xml" />
+
+<!-- title -->
+<title>
+    基于URL锚点的路由系统 | Runoneall
+</title>
+
+<!-- css dependencies -->
+
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/grid.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/sidebar.css">
+<link rel="stylesheet" href="/css/post.css">
+<link rel="stylesheet" href="/css/misc.css">
+<link rel="stylesheet" href="/css/page.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/dark.css" id="dark-style" disabled>
+
+
+<!-- favicon -->
+<link rel="shortcut icon" href="https://dev.oneall.eu.org/favicon.webp">
+
+<!-- extra css -->
+
+
+<!-- keywords -->
+
+<meta name="keywords" content="Hexo,Blog,Runoneall" />
+
+<!-- description -->
+
+<meta name="description" content="好处：不会显式刷新，语法简单，使用原生JS router.js class HashRouter &#123;   constructor(container) &#123;     this.container = container;     this.routes = &#123;&#125;;      this.defaultHandler = () =&gt; this.show404" />
+
+<!-- rss -->
+<link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
+<link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
+  <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
+</head>
+
+  <body>
+    <div id="outbox">
+      <!-- header -->
+      <div id="header" class="clearfix">
+        <div class="container">
+          <div class="row">
+            <div class="site-name">
+              <a id="logo" href="/">Runoneall</a>
+              <p id="description_random_intro" class="description">
+                Runoneall's Blog
+              </p>
+              <script>
+                var description_random_intro = document.getElementById(
+                  "description_random_intro"
+                );
+                var descriptions = JSON.parse(
+                  `["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`
+                );
+                var random_intro =
+                  descriptions[Math.floor(Math.random() * descriptions.length)];
+                description_random_intro.innerHTML = random_intro;
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end header -->
+
+      <!-- sidebar button -->
+      <button id="side-btn" onclick="changeSideStatus()">
+        <input id="side-flag" type="checkbox" />
+        <label id="side-control" for="side-flag">≡</label>
+      </button>
+
+      <!-- left area -->
+      <div id="left">
+        <!-- left links -->
+        <div id="left-links">
+          <!-- page links -->
+          <a
+            class=""
+            href="/"
+            >首页</a
+          >
+          
+          <br />
+          <a
+            class=""
+            href="/links/index.html"
+            >链接</a
+          >
+          
+          <br />
+          <a
+            class=""
+            href="/about/index.html"
+            >关于</a
+          >
+          
+          <!-- end page links -->
+
+          <!-- sidebar extra html -->
+          
+          <br />
+          <a href="/rss2.xml">RSS</a><br>
+<a href="mailto:dev@oneall.eu.org">Email</a><br> 
+          <!-- end sidebar extra html -->
+
+          <br /><button id="dark-btn" onclick="changeDarkMode()">
+            更换主题
+          </button>
+        </div>
+        <hr />
+        <!-- end left links -->
+
+        <!-- search -->
+        <form id="search" method="get" action="#" role="search">
+          <input
+            type="text"
+            id="s"
+            name="s"
+            class="text"
+            placeholder="输入关键字搜索"
+          />
+          <button type="submit" class="submit">
+            <img
+              src="/img/icon-search.png"
+              alt="icon-search"
+            />
+          </button>
+        </form>
+        <!-- end search -->
+      </div>
+      <!-- end left area -->
+
+      <!-- right area -->
+      <div id="right">
+        <div class="row"><div class="col-mb-12 col-8" id="main" role="main">
+
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2025/02/13/%E5%9F%BA%E4%BA%8EURL%E9%94%9A%E7%82%B9%E7%9A%84%E8%B7%AF%E7%94%B1%E7%B3%BB%E7%BB%9F/">基于URL锚点的路由系统</a>
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者: <a itemprop="name" href="#" rel="author">Tom Brown</a>
+            </li>
+            <li>时间:
+                <time itemprop="datePublished"
+                    datetime="2025-02-13T09:28:00.000Z">2025-02-13</time>
+            </li>
+            
+            <li>分类:
+                
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认
+                </a>&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <p>好处：不会显式刷新，语法简单，使用原生JS</p>
+<p><code>router.js</code></p>
+<pre><code class="language-javascript">class HashRouter &#123;
+  constructor(container) &#123;
+    this.container = container;
+    this.routes = &#123;&#125;;
+
+    this.defaultHandler = () =&gt; this.show404(this.container);
+
+    this.normalizePath = (path) =&gt; &#123;
+      if (!path) return &quot;/&quot;;
+      return path.startsWith(&quot;/&quot;) ? path : `/$&#123;path&#125;`;
+    &#125;;
+
+    window.addEventListener(&quot;hashchange&quot;, () =&gt; this.handleRoute());
+    window.addEventListener(&quot;load&quot;, () =&gt; this.handleRoute());
+  &#125;
+
+  addRoute(path, handler) &#123;
+    const normalizedPath = this.normalizePath(path);
+    this.routes[normalizedPath] = handler;
+  &#125;
+
+  setDefaultHandler(handler) &#123;
+    this.defaultHandler = handler;
+  &#125;
+
+  handleRoute() &#123;
+    const rawHash = window.location.hash.slice(1);
+    const currentPath = this.normalizePath(rawHash);
+
+    const handler = this.routes[currentPath] || this.defaultHandler;
+    this.container.innerHTML = &quot;&quot;;
+    handler(this.container);
+  &#125;
+
+  show404(container) &#123;
+    container.innerHTML = &quot;&lt;h1&gt;404 Not Found&lt;/h1&gt;&quot;;
+  &#125;
+&#125;
+</code></pre>
+<p><code>index.html</code></p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;title&gt;HashRouter&lt;/title&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;h1&gt;HashRouter&lt;/h1&gt;
+
+    &lt;div&gt;
+      &lt;a href=&quot;#/&quot;&gt;Home&lt;/a&gt;
+      &lt;a href=&quot;#/about&quot;&gt;About&lt;/a&gt;
+      &lt;a href=&quot;#/contact&quot;&gt;Contact&lt;/a&gt;
+      &lt;a href=&quot;#/null&quot;&gt;Null&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div
+      id=&quot;main-containter&quot;
+      style=&quot;border: 1px solid black; margin: auto; padding: 20px;&quot;
+    &gt;&lt;/div&gt;
+
+    &lt;script src=&quot;/router.js&quot;&gt;&lt;/script&gt;
+    &lt;!-- 引入JS文件 --&gt;
+    &lt;script&gt;
+      // 创建HashRouter实例
+      const router = new HashRouter(document.getElementById(&quot;main-containter&quot;));
+
+      // 定义路由规则
+      router.addRoute(&quot;/&quot;, (containter) =&gt; &#123;
+        containter.innerHTML = &quot;Welcome to the homepage&quot;;
+      &#125;);
+      router.addRoute(&quot;/about&quot;, (containter) =&gt; &#123;
+        containter.innerHTML = &quot;About us&quot;;
+      &#125;);
+      router.addRoute(&quot;/contact&quot;, (containter) =&gt; &#123;
+        containter.innerHTML = &quot;Contact us&quot;;
+      &#125;);
+
+      // 设置默认路由 (若不指定则默认插入 404 Not Found)
+      router.setDefaultHandler((containter) =&gt; &#123;
+        containter.innerHTML = &quot;Page not found&quot;;
+      &#125;);
+
+      // 监听hashchange事件
+      router.handleRoute();
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<ul>
+<li>创建HashRouter实例时需要传入容器对象<code>document.getElementById(&quot;main-containter&quot;)</code></li>
+<li>创建路由时处理函数会被传入 <code>containter</code> 代表容器对象</li>
+<li>运行处理函数前容器对象会被清空</li>
+</ul>
+
+        </div>
+        <!-- end post content -->
+
+    </article>
+    <!-- end article body -->
+
+</div></div>
+      </div>
+      <!-- end right area -->
+
+      <!-- footer -->
+      <div id="footer" role="contentinfo">
+        &copy; 2025
+        <a href="/">Runoneall</a>.
+        <a target="_blank" rel="noopener" href="https://github.com/runoneall/hexo-theme-old-fashion"
+          >Old Fasion</a
+        >
+        Theme. Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>.
+      </div>
+      <!-- end footer -->
+    </div>
+    <!-- end outbox -->
+
+    <!-- extra html -->
+
+
+<!-- extra js -->
+
+<script>
+console.log(String.raw`
+            ___              __
+      _____<  /____ _   ____/ /___  _   __
+     / ___// // __ `+ "`" + String.raw`/  / __  // _ \| | / /
+    / /   / // /_/ /  / /_/ //  __/| |/ /
+   /_/   /_/ \__,_/   \__,_/ \___/ |___/
+
+LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
+`)
+</script>
+
+
+<!-- js dependencies -->
+
+<script src="/js/dark.js"></script>
+<script src="/js/highlight.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/search.js"></script>
+
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
+  </body>
+</html>
