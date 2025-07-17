@@ -26,7 +26,6 @@
 <link rel="stylesheet" href="/css/grid.css">
 <link rel="stylesheet" href="/css/highlight.css">
 <link rel="stylesheet" href="/css/global.css">
-<link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/sidebar.css">
 <link rel="stylesheet" href="/css/post.css">
 <link rel="stylesheet" href="/css/misc.css">
@@ -148,26 +147,7 @@
                         更换主题
                     </button>
                 </div>
-                <hr />
                 <!-- end left links -->
-
-                <!-- search -->
-                <form id="search" method="get" action="#" role="search">
-                    <input
-                        type="text"
-                        id="s"
-                        name="s"
-                        class="text"
-                        placeholder="输入关键字搜索"
-                    />
-                    <button type="submit" class="submit">
-                        <img
-                            src="/img/icon-search.png"
-                            alt="icon-search"
-                        />
-                    </button>
-                </form>
-                <!-- end search -->
             </div>
             <!-- end left area -->
 
@@ -265,45 +245,45 @@
 <li><p>编辑 <code>Fluid主题根目录</code> 下的 <code>_config.yml</code> （在此分支中，这将简写为 <code>Fluid主题配置</code> ）</p>
 <ul>
 <li><p><code>favicon</code> （浏览器标签页图标，可为Url）</p>
-<pre><code>                                              - `apple_touch_icon` （浏览器标签页图标，但仅用于苹果设备，可为Url）
-                                              - `copy_btn` （代码块复制按钮，可为 `true` 或 `false` ）
-                                              - `typing` （打字机，可为 `true` 或 `false` ）
-                                              - 页头
-                                                - `blog_title` （博客首页标题）
-                                                  - `menu` （导航栏选项，按需修改）
-                                              - `页脚`
-                                                - `rss` （如果你的博客有rss，在这里填入地址）
-                                              - `beian` （如果你有备案，在这里填写）（本站长不推荐，那样会很不自由）
-                                              - `首页`
-                                                - `banner_img` （首页大图，推荐使用图片CDN）（其它地方的 `banner_img` 也一样）
-                                                  - `slogan` （首页副标题，这里讲述随机一言的制作方法）
-                                                    - 找到 `api` 选项
-                                                      - `enable` 填入 `true`
-                                                      - `url` 填入 `&quot;https://v1.hitokoto.cn/&quot;`
-                                                      - `method` 填入 `GET`
-                                                      - `headers` 填入 `&#123;&#125;`
-                                                      - `keys` 填入 `[&quot;hitokoto&quot;]`
-                                              - `关于页`
+<pre><code>                                                                    - `apple_touch_icon` （浏览器标签页图标，但仅用于苹果设备，可为Url）
+                                                                    - `copy_btn` （代码块复制按钮，可为 `true` 或 `false` ）
+                                                                    - `typing` （打字机，可为 `true` 或 `false` ）
+                                                                    - 页头
+                                                                      - `blog_title` （博客首页标题）
+                                                                        - `menu` （导航栏选项，按需修改）
+                                                                    - `页脚`
+                                                                      - `rss` （如果你的博客有rss，在这里填入地址）
+                                                                    - `beian` （如果你有备案，在这里填写）（本站长不推荐，那样会很不自由）
+                                                                    - `首页`
+                                                                      - `banner_img` （首页大图，推荐使用图片CDN）（其它地方的 `banner_img` 也一样）
+                                                                        - `slogan` （首页副标题，这里讲述随机一言的制作方法）
+                                                                          - 找到 `api` 选项
+                                                                            - `enable` 填入 `true`
+                                                                            - `url` 填入 `&quot;https://v1.hitokoto.cn/&quot;`
+                                                                            - `method` 填入 `GET`
+                                                                            - `headers` 填入 `&#123;&#125;`
+                                                                            - `keys` 填入 `[&quot;hitokoto&quot;]`
+                                                                    - `关于页`
 
-                                                - `hexo new page about` （创建关于页）
+                                                                      - `hexo new page about` （创建关于页）
 
-                                                  - 编辑博客目录下的 `/source/about/index.md` 文件
+                                                                        - 编辑博客目录下的 `/source/about/index.md` 文件
 
-                                                  ```markdown
-                                                  ---
+                                                                        ```markdown
+                                                                        ---
 
-                                                  title: about
-                                                  layout: about
-                                                  ```
+                                                                        title: about
+                                                                        layout: about
+                                                                        ```
 
-                                                ***
+                                                                      ***
 
-                                              这里写关于页的正文，支持 Markdown, HTML
-                                              ```    -`avatar`（你的头像，可为Url）
+                                                                    这里写关于页的正文，支持 Markdown, HTML
+                                                                    ```    -`avatar`（你的头像，可为Url）
 </code></pre>
 <p>  -<code>name</code>（你的互联网化名）-<code>intro</code>（你的个性介绍）-<code>icons</code> （你的社交平台链接）</p>
-<pre><code>                                              - `友链页`
-                                                - `items` （照着示例写）
+<pre><code>                                                                    - `友链页`
+                                                                      - `items` （照着示例写）
 </code></pre>
 </li>
 </ul>
@@ -483,7 +463,8 @@ hexo d
             <div id="footer" role="contentinfo">
                 &copy; 2025
                 <a href="/">Runoneall</a>.
-                <a target="_blank" rel="noopener" href="https://github.com/runoneall/hexo-theme-old-fashion"
+                <a
+                    target="_blank" rel="noopener" href="https://github.com/runoneall/blog/tree/main/themes/hexo-theme-old-fashion"
                     >Old Fasion</a
                 >
                 Theme. Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>.
@@ -515,7 +496,6 @@ LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
 <script src="/js/dark.js"></script>
 <script src="/js/highlight.js"></script>
 <script src="/js/sidebar.js"></script>
-<script src="/js/search.js"></script>
 
 
 <!-- code highlight -->
