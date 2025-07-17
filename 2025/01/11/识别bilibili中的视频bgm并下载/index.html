@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <!-- base -->
+<meta charset="UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="template" content="Old-Fasion-Theme" />
+
+<!-- sitemap -->
+<link
+    rel="sitemap"
+    type="application/xml"
+    title="sitemap"
+    href="/sitemap.xml"
+/>
+
+<!-- title -->
+<title>
+    识别bilibili中的视频bgm并下载 | Runoneall
+</title>
+
+<!-- css dependencies -->
+
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/grid.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/sidebar.css">
+<link rel="stylesheet" href="/css/post.css">
+<link rel="stylesheet" href="/css/misc.css">
+<link rel="stylesheet" href="/css/page.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/dark.css" id="dark-style" disabled>
+
+
+<!-- favicon -->
+<link rel="shortcut icon" href="https://dev.oneall.eu.org/favicon.webp">
+
+<!-- extra css -->
+
+
+<!-- keywords -->
+
+<meta name="keywords" content="Hexo,Blog,Runoneall" />
+
+<!-- description -->
+
+<meta name="description" content="准备  B站视频在线下载器 AHA Song Finder Spotify Downloader   在bilibili网页中打开一个链接, 或复制分享链接 打开 B站视频在线下载器 粘贴链接, 下载视频 打开 AHA Song Finder 并上传视频, 查找bgm 若分析出Spotify链接, 可以使用 Spotify Downloader 下载音乐" />
+
+<!-- rss -->
+<link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
+<link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
+
+    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="outbox">
+            <!-- header -->
+            <div id="header" class="clearfix">
+                <div class="container">
+                    <div class="row">
+                        <div class="site-name">
+                            <a id="logo" href="/"
+                                >Runoneall</a
+                            >
+                            <p
+                                id="description_random_intro"
+                                class="description"
+                            >
+                                Runoneall's Blog
+                            </p>
+                            <script>
+                                var description_random_intro =
+                                    document.getElementById(
+                                        "description_random_intro",
+                                    );
+                                var descriptions = JSON.parse(
+                                    `["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`,
+                                );
+                                var random_intro =
+                                    descriptions[
+                                        Math.floor(
+                                            Math.random() * descriptions.length,
+                                        )
+                                    ];
+                                description_random_intro.innerHTML =
+                                    random_intro;
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end header -->
+
+            <!-- sidebar button -->
+            <button id="side-btn" onclick="changeSideStatus()">
+                <input id="side-flag" type="checkbox" />
+                <label id="side-control" for="side-flag">≡</label>
+            </button>
+
+            <!-- left area -->
+            <div id="left">
+                <!-- left links -->
+                <div id="left-links">
+                    <!-- page links -->
+                    <a
+                        class=""
+                        href="/"
+                        >首页</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/search/index.html"
+                        >搜索</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/links/index.html"
+                        >链接</a
+                    >
+                    
+                    <!-- end page links -->
+
+                    <!-- sidebar extra html -->
+                    
+                    <br />
+                    <a href="/rss2.xml">RSS</a><br>
+<a href="mailto:dev@oneall.eu.org">Email</a><br>
+                    
+                    <!-- end sidebar extra html -->
+
+                    <br /><button id="dark-btn" onclick="changeDarkMode()">
+                        更换主题
+                    </button>
+                </div>
+                <hr />
+                <!-- end left links -->
+
+                <!-- search -->
+                <form id="search" method="get" action="#" role="search">
+                    <input
+                        type="text"
+                        id="s"
+                        name="s"
+                        class="text"
+                        placeholder="输入关键字搜索"
+                    />
+                    <button type="submit" class="submit">
+                        <img
+                            src="/img/icon-search.png"
+                            alt="icon-search"
+                        />
+                    </button>
+                </form>
+                <!-- end search -->
+            </div>
+            <!-- end left area -->
+
+            <!-- right area -->
+            <div id="right">
+                <div class="row"><div class="col-mb-12 col-8" id="main" role="main">
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2025/01/11/%E8%AF%86%E5%88%ABbilibili%E4%B8%AD%E7%9A%84%E8%A7%86%E9%A2%91bgm%E5%B9%B6%E4%B8%8B%E8%BD%BD/"
+                >识别bilibili中的视频bgm并下载</a
+            >
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者:
+                <a itemprop="name" href="#" rel="author"
+                    >Tom Brown</a
+                >
+            </li>
+            <li>
+                时间:
+                <time
+                    itemprop="datePublished"
+                    datetime="2025-01-11T16:15:00.000Z"
+                    >2025-01-11</time
+                >
+            </li>
+            
+            <li>
+                分类: 
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认 </a
+                >&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <p>准备</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.xtdowner.com/video/bilibili">B站视频在线下载器</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.aha-music.com/">AHA Song Finder</a></li>
+<li><a target="_blank" rel="noopener" href="https://spotifymate.com/en">Spotify Downloader</a></li>
+</ul>
+<ol>
+<li>在bilibili网页中打开一个链接, 或复制分享链接<br><img src="https://s.rmimg.com/2025-01-11/1736608349-332142-2025-01-11-231115.png"></li>
+<li>打开 <code>B站视频在线下载器</code> 粘贴链接, 下载视频</li>
+<li>打开 <code>AHA Song Finder</code> 并上传视频, 查找bgm</li>
+<li>若分析出Spotify链接, 可以使用 <code>Spotify Downloader</code> 下载音乐</li>
+</ol>
+
+        </div>
+        <!-- end post content -->
+    </article>
+    <!-- end article body -->
+</div>
+</div>
+            </div>
+            <!-- end right area -->
+
+            <!-- footer -->
+            <div id="footer" role="contentinfo">
+                &copy; 2025
+                <a href="/">Runoneall</a>.
+                <a target="_blank" rel="noopener" href="https://github.com/runoneall/hexo-theme-old-fashion"
+                    >Old Fasion</a
+                >
+                Theme. Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>.
+            </div>
+            <!-- end footer -->
+        </div>
+        <!-- end outbox -->
+
+        <!-- extra html -->
+
+
+<!-- extra js -->
+
+<script>
+    console.log(String.raw`
+            ___              __
+      _____<  /____ _   ____/ /___  _   __
+     / ___// // __ `+ "`" + String.raw`/  / __  // _ \| | / /
+    / /   / // /_/ /  / /_/ //  __/| |/ /
+   /_/   /_/ \__,_/   \__,_/ \___/ |___/
+
+LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
+`)
+</script>
+
+
+<!-- js dependencies -->
+
+<script src="/js/dark.js"></script>
+<script src="/js/highlight.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/search.js"></script>
+
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <!-- base -->
+<meta charset="UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="template" content="Old-Fasion-Theme" />
+
+<!-- sitemap -->
+<link
+    rel="sitemap"
+    type="application/xml"
+    title="sitemap"
+    href="/sitemap.xml"
+/>
+
+<!-- title -->
+<title>
+    python原生导入无缝衔接go与python | Runoneall
+</title>
+
+<!-- css dependencies -->
+
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/grid.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/sidebar.css">
+<link rel="stylesheet" href="/css/post.css">
+<link rel="stylesheet" href="/css/misc.css">
+<link rel="stylesheet" href="/css/page.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/dark.css" id="dark-style" disabled>
+
+
+<!-- favicon -->
+<link rel="shortcut icon" href="https://dev.oneall.eu.org/favicon.webp">
+
+<!-- extra css -->
+
+
+<!-- keywords -->
+
+<meta name="keywords" content="Hexo,Blog,Runoneall" />
+
+<!-- description -->
+
+<meta name="description" content="地址：https://github.com/FramerOrg/FramerModules/wiki/Module-Document#gobridge 这是一个给 Framer 写的模块，但可以拆开来用： import sys import os import subprocess import ctypes from importlib.abc import MetaPathFinder, Lo" />
+
+<!-- rss -->
+<link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
+<link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
+
+    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="outbox">
+            <!-- header -->
+            <div id="header" class="clearfix">
+                <div class="container">
+                    <div class="row">
+                        <div class="site-name">
+                            <a id="logo" href="/"
+                                >Runoneall</a
+                            >
+                            <p
+                                id="description_random_intro"
+                                class="description"
+                            >
+                                Runoneall's Blog
+                            </p>
+                            <script>
+                                var description_random_intro =
+                                    document.getElementById(
+                                        "description_random_intro",
+                                    );
+                                var descriptions = JSON.parse(
+                                    `["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`,
+                                );
+                                var random_intro =
+                                    descriptions[
+                                        Math.floor(
+                                            Math.random() * descriptions.length,
+                                        )
+                                    ];
+                                description_random_intro.innerHTML =
+                                    random_intro;
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end header -->
+
+            <!-- sidebar button -->
+            <button id="side-btn" onclick="changeSideStatus()">
+                <input id="side-flag" type="checkbox" />
+                <label id="side-control" for="side-flag">≡</label>
+            </button>
+
+            <!-- left area -->
+            <div id="left">
+                <!-- left links -->
+                <div id="left-links">
+                    <!-- page links -->
+                    <a
+                        class=""
+                        href="/"
+                        >首页</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/search/index.html"
+                        >搜索</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/links/index.html"
+                        >链接</a
+                    >
+                    
+                    <!-- end page links -->
+
+                    <!-- sidebar extra html -->
+                    
+                    <br />
+                    <a href="/rss2.xml">RSS</a><br>
+<a href="mailto:dev@oneall.eu.org">Email</a><br>
+                    
+                    <!-- end sidebar extra html -->
+
+                    <br /><button id="dark-btn" onclick="changeDarkMode()">
+                        更换主题
+                    </button>
+                </div>
+                <hr />
+                <!-- end left links -->
+
+                <!-- search -->
+                <form id="search" method="get" action="#" role="search">
+                    <input
+                        type="text"
+                        id="s"
+                        name="s"
+                        class="text"
+                        placeholder="输入关键字搜索"
+                    />
+                    <button type="submit" class="submit">
+                        <img
+                            src="/img/icon-search.png"
+                            alt="icon-search"
+                        />
+                    </button>
+                </form>
+                <!-- end search -->
+            </div>
+            <!-- end left area -->
+
+            <!-- right area -->
+            <div id="right">
+                <div class="row"><div class="col-mb-12 col-8" id="main" role="main">
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2025/06/24/python%E5%8E%9F%E7%94%9F%E5%AF%BC%E5%85%A5%E6%97%A0%E7%BC%9D%E8%A1%94%E6%8E%A5go%E4%B8%8Epython/"
+                >python原生导入无缝衔接go与python</a
+            >
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者:
+                <a itemprop="name" href="#" rel="author"
+                    >Tom Brown</a
+                >
+            </li>
+            <li>
+                时间:
+                <time
+                    itemprop="datePublished"
+                    datetime="2025-06-24T18:46:53.000Z"
+                    >2025-06-24</time
+                >
+            </li>
+            
+            <li>
+                分类: 
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认 </a
+                >&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <p>地址：<a target="_blank" rel="noopener" href="https://github.com/FramerOrg/FramerModules/wiki/Module-Document#gobridge">https://github.com/FramerOrg/FramerModules/wiki/Module-Document#gobridge</a></p>
+<p>这是一个给 Framer 写的模块，但可以拆开来用：</p>
+<pre><code class="language-python">import sys
+import os
+import subprocess
+import ctypes
+from importlib.abc import MetaPathFinder, Loader
+from importlib.machinery import ModuleSpec
+
+
+class GoLoader(Loader):
+    def __init__(self, so_path, fullname):
+        self.so_path = so_path
+        self.fullname = fullname
+
+    def create_module(self, spec):
+        return None
+
+    def exec_module(self, module):
+        # load library
+        lib = ctypes.cdll.LoadLibrary(self.so_path)
+
+        # dynamic function getter
+        def get_lib_attr(name):
+            return getattr(lib, name)
+
+        # bind to module
+        module.__getattr__ = get_lib_attr
+
+
+class GoFinder(MetaPathFinder):
+    def find_spec(self, fullname, path, target=None):
+        # get import module name
+        module_name = fullname.split(&quot;.&quot;)[-1]
+
+        # go file search path
+        search_paths = sys.path if path is None else path
+        for base_path in search_paths:
+
+            # possible file paths
+            py_path = os.path.join(base_path, f&quot;&#123;module_name&#125;.py&quot;)
+            go_path = os.path.join(base_path, f&quot;&#123;module_name&#125;.go&quot;)
+            so_path = os.path.join(base_path, f&quot;&#123;module_name&#125;.so&quot;)
+
+            # ignore python file
+            if os.path.isfile(py_path):
+                continue
+
+            # process go file
+            if os.path.isfile(go_path):
+
+                # ensure newest compiled
+                self._ensure_compiled(go_path, so_path)
+
+                # custom module loader
+                loader = GoLoader(so_path, fullname)
+
+                # create module spec
+                return ModuleSpec(
+                    name=fullname, loader=loader, origin=go_path, is_package=True
+                )
+        return None
+
+    def _ensure_compiled(self, go_path, so_path):
+        # build if so file old
+        if not os.path.exists(so_path) or (
+            os.path.getmtime(go_path) &gt; os.path.getmtime(so_path)
+        ):
+
+            # compile go file
+            self._compile_go(go_path, so_path)
+
+    def _compile_go(self, go_path, so_path):
+        # build command
+        cmd = [&quot;go&quot;, &quot;build&quot;, &quot;-buildmode=c-shared&quot;, &quot;-o&quot;, so_path, go_path]
+
+        # run command
+        try:
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            self.logger(f&quot;Compiled &#123;go_path&#125; -&gt; &#123;so_path&#125;&quot;)
+            if result.stderr:
+                self.logger(&quot;Compiler warnings: &quot; + result.stderr)
+
+        # catch errors
+        except subprocess.CalledProcessError as e:
+            raise ImportError(
+                f&quot;Go compilation failed for &#123;go_path&#125;:\n&quot;
+                f&quot;Exit code: &#123;e.returncode&#125;\n&quot;
+                f&quot;Error: &#123;e.stderr&#125;&quot;
+            ) from e
+
+        # if go not installed
+        except FileNotFoundError:
+            raise ImportError(&quot;Go compiler not found. Install from https://golang.org/&quot;)
+
+sys.meta_path.insert(0, GoFinder())
+</code></pre>
+<p>将其保存为一个 python 文件，然后在项目入口处导入一下就行</p>
+<p>首先准备一个叫 <code>mymodule.go</code> 的文件，内容如下：</p>
+<pre><code class="language-go">package main
+
+import &quot;C&quot; //必须引入C库
+
+import &quot;fmt&quot;
+
+//加入下面注释代码，表示导出，可以被python调用
+
+//export PrintDll
+func PrintDll() &#123;
+	fmt.Println(&quot;我来自dll&quot;)
+&#125;
+
+//
+//export Sum
+func Sum(a int, b int) int &#123;
+	return a + b
+&#125;
+
+func main() &#123;
+	//必须加一个main函数，作为CGO编译的入口，无具体实现代码
+&#125;
+</code></pre>
+<p>然后在 python 内可以直接用 <code>import mymodule</code><br>会自动将 go 编译为 so&#x2F;dylib&#x2F;dll，智能识别更改</p>
+<p>每当 go 代码更改后会重新编译，时间较长，编译后下一次就不会重新编译了</p>
+<p>以及用作为 python 包也是可以的，目录结构如下：<br><img src="https://s.rmimg.com/original/2X/1/1630d32b4829c738d16538bcc226b4ba2393696e.png"></p>
+<p>可以直接用 <code>from testModule import mymodule</code></p>
+<p>理论上任何能编译为共享库的语言都能用这套代码</p>
+
+        </div>
+        <!-- end post content -->
+    </article>
+    <!-- end article body -->
+</div>
+</div>
+            </div>
+            <!-- end right area -->
+
+            <!-- footer -->
+            <div id="footer" role="contentinfo">
+                &copy; 2025
+                <a href="/">Runoneall</a>.
+                <a target="_blank" rel="noopener" href="https://github.com/runoneall/hexo-theme-old-fashion"
+                    >Old Fasion</a
+                >
+                Theme. Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>.
+            </div>
+            <!-- end footer -->
+        </div>
+        <!-- end outbox -->
+
+        <!-- extra html -->
+
+
+<!-- extra js -->
+
+<script>
+    console.log(String.raw`
+            ___              __
+      _____<  /____ _   ____/ /___  _   __
+     / ___// // __ `+ "`" + String.raw`/  / __  // _ \| | / /
+    / /   / // /_/ /  / /_/ //  __/| |/ /
+   /_/   /_/ \__,_/   \__,_/ \___/ |___/
+
+LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
+`)
+</script>
+
+
+<!-- js dependencies -->
+
+<script src="/js/dark.js"></script>
+<script src="/js/highlight.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/search.js"></script>
+
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
+
+    </body>
+</html>
