@@ -25,7 +25,6 @@ jobs:
 
       - name: Install dependencies and generate
         run: |
-          cd blog
           npm install
           npx hexo clean
           npx hexo generate
@@ -34,7 +33,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.REPO_TOKEN }}
-          publish_dir: ./blog/public
+          publish_dir: ./public
           destination_dir: ./
           publish_branch: public
           keep_files: false
