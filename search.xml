@@ -1,0 +1,1204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>自动滚动油猴脚本</title>
+      <link href="/2025/07/02/%E8%87%AA%E5%8A%A8%E6%BB%9A%E5%8A%A8%E6%B2%B9%E7%8C%B4%E8%84%9A%E6%9C%AC/"/>
+      <url>/2025/07/02/%E8%87%AA%E5%8A%A8%E6%BB%9A%E5%8A%A8%E6%B2%B9%E7%8C%B4%E8%84%9A%E6%9C%AC/</url>
+      
+        <content type="html"><![CDATA[<p>在日常摸鱼中，你可能会遇到频繁往下滚动的场景（比如看小说），而你又不想动鼠标，也不想动键盘，那么这个脚本适合你：</p><p>地址：<a href="https://runoneall.serv00.net/Files/%e8%87%aa%e5%8a%a8%e6%bb%9a%e5%8a%a8%e8%be%85%e5%8a%a9%e5%99%a8.js">自动滚动辅助器</a></p><p>找deepseek-r1写的，并修复了bug</p><p>演示：<br><img src="https://s.rmimg.com/optimized/2X/9/9189d7301a1c011fa4a7a977e09d748546b6e9bd_2_1380x988.jpeg"></p><p>点个赞吧球球了</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>python通用跨语言导入器</title>
+      <link href="/2025/06/25/python%E9%80%9A%E7%94%A8%E8%B7%A8%E8%AF%AD%E8%A8%80%E5%AF%BC%E5%85%A5%E5%99%A8/"/>
+      <url>/2025/06/25/python%E9%80%9A%E7%94%A8%E8%B7%A8%E8%AF%AD%E8%A8%80%E5%AF%BC%E5%85%A5%E5%99%A8/</url>
+      
+        <content type="html"><![CDATA[<p>本质就是打包成so，然后用CDLL加载，但是可以直接用import</p><p>文档：<a href="https://github.com/FramerOrg/CrossLanguage/wiki/Module-Document">https://github.com/FramerOrg/CrossLanguage/wiki/Module-Document</a></p><p>核心代码就是 <code>CrossLangImporter</code>，用Require返回ModuleSpec，封装了自动查找，运行编译，导入钩子</p><p>可以自定义后缀处理，当然是py文件优先</p><p>具体看如何添加处理器</p><pre><code class="language-python">class moduleMain:    def __init__(self, framer, logger):        self.framer = framer        self.logger = logger        self.extension = &quot;go&quot;        self.not_found_message = (            &quot;Go compiler not found. Install Go from https://golang.org/&quot;        )    def build_command(self, file_path, so_path):        return [            [&quot;go&quot;, &quot;mod&quot;, &quot;tidy&quot;],            [&quot;go&quot;, &quot;build&quot;, &quot;-buildmode=c-shared&quot;, &quot;-o&quot;, so_path, file_path],        ]</code></pre><p>其中moduleMain及init参数是framer固定的，不用管<br>主要实现：</p><ol><li>self.extension：声明该处理器能处理的文件</li><li>self.not_found_message：若找不到编译器，抛出的错误内容</li><li>build_command：返回一系列编译命令，其中file_path和so_path是固定的，编译时会进入file_path所在目录</li></ol><p>觉得不错就给Framer项目点个Star吧：<a href="https://github.com/FramerOrg/Framer">https://github.com/FramerOrg/Framer</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>python原生导入无缝衔接go与python</title>
+      <link href="/2025/06/24/python%E5%8E%9F%E7%94%9F%E5%AF%BC%E5%85%A5%E6%97%A0%E7%BC%9D%E8%A1%94%E6%8E%A5go%E4%B8%8Epython/"/>
+      <url>/2025/06/24/python%E5%8E%9F%E7%94%9F%E5%AF%BC%E5%85%A5%E6%97%A0%E7%BC%9D%E8%A1%94%E6%8E%A5go%E4%B8%8Epython/</url>
+      
+        <content type="html"><![CDATA[<p>地址：<a href="https://github.com/FramerOrg/FramerModules/wiki/Module-Document#gobridge">https://github.com/FramerOrg/FramerModules/wiki/Module-Document#gobridge</a></p><p>这是一个给 Framer 写的模块，但可以拆开来用：</p><pre><code class="language-python">import sysimport osimport subprocessimport ctypesfrom importlib.abc import MetaPathFinder, Loaderfrom importlib.machinery import ModuleSpecclass GoLoader(Loader):    def __init__(self, so_path, fullname):        self.so_path = so_path        self.fullname = fullname    def create_module(self, spec):        return None    def exec_module(self, module):        # load library        lib = ctypes.cdll.LoadLibrary(self.so_path)        # dynamic function getter        def get_lib_attr(name):            return getattr(lib, name)        # bind to module        module.__getattr__ = get_lib_attrclass GoFinder(MetaPathFinder):    def find_spec(self, fullname, path, target=None):        # get import module name        module_name = fullname.split(&quot;.&quot;)[-1]        # go file search path        search_paths = sys.path if path is None else path        for base_path in search_paths:            # possible file paths            py_path = os.path.join(base_path, f&quot;&#123;module_name&#125;.py&quot;)            go_path = os.path.join(base_path, f&quot;&#123;module_name&#125;.go&quot;)            so_path = os.path.join(base_path, f&quot;&#123;module_name&#125;.so&quot;)            # ignore python file            if os.path.isfile(py_path):                continue            # process go file            if os.path.isfile(go_path):                # ensure newest compiled                self._ensure_compiled(go_path, so_path)                # custom module loader                loader = GoLoader(so_path, fullname)                # create module spec                return ModuleSpec(                    name=fullname, loader=loader, origin=go_path, is_package=True                )        return None    def _ensure_compiled(self, go_path, so_path):        # build if so file old        if not os.path.exists(so_path) or (            os.path.getmtime(go_path) &gt; os.path.getmtime(so_path)        ):            # compile go file            self._compile_go(go_path, so_path)    def _compile_go(self, go_path, so_path):        # build command        cmd = [&quot;go&quot;, &quot;build&quot;, &quot;-buildmode=c-shared&quot;, &quot;-o&quot;, so_path, go_path]        # run command        try:            result = subprocess.run(cmd, capture_output=True, text=True, check=True)            self.logger(f&quot;Compiled &#123;go_path&#125; -&gt; &#123;so_path&#125;&quot;)            if result.stderr:                self.logger(&quot;Compiler warnings: &quot; + result.stderr)        # catch errors        except subprocess.CalledProcessError as e:            raise ImportError(                f&quot;Go compilation failed for &#123;go_path&#125;:\n&quot;                f&quot;Exit code: &#123;e.returncode&#125;\n&quot;                f&quot;Error: &#123;e.stderr&#125;&quot;            ) from e        # if go not installed        except FileNotFoundError:            raise ImportError(&quot;Go compiler not found. Install from https://golang.org/&quot;)sys.meta_path.insert(0, GoFinder())</code></pre><p>将其保存为一个 python 文件，然后在项目入口处导入一下就行</p><p>首先准备一个叫 <code>mymodule.go</code> 的文件，内容如下：</p><pre><code class="language-go">package mainimport &quot;C&quot; //必须引入C库import &quot;fmt&quot;//加入下面注释代码，表示导出，可以被python调用//export PrintDllfunc PrintDll() &#123;fmt.Println(&quot;我来自dll&quot;)&#125;////export Sumfunc Sum(a int, b int) int &#123;return a + b&#125;func main() &#123;//必须加一个main函数，作为CGO编译的入口，无具体实现代码&#125;</code></pre><p>然后在 python 内可以直接用 <code>import mymodule</code><br>会自动将 go 编译为 so&#x2F;dylib&#x2F;dll，智能识别更改</p><p>每当 go 代码更改后会重新编译，时间较长，编译后下一次就不会重新编译了</p><p>以及用作为 python 包也是可以的，目录结构如下：<br><img src="https://s.rmimg.com/original/2X/1/1630d32b4829c738d16538bcc226b4ba2393696e.png"></p><p>可以直接用 <code>from testModule import mymodule</code></p><p>理论上任何能编译为共享库的语言都能用这套代码</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>云湖网盘免费使用!</title>
+      <link href="/2025/06/23/%E4%BA%91%E6%B9%96%E7%BD%91%E7%9B%98%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8/"/>
+      <url>/2025/06/23/%E4%BA%91%E6%B9%96%E7%BD%91%E7%9B%98%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[<p>注意：这是第三方实现，云湖本身不对用户提供网盘服务</p><p>开源地址：<a href="https://github.com/runoneall/YunhuDriveGUI">https://github.com/runoneall/YunhuDriveGUI</a></p><p>安装命令：</p><pre><code class="language-shell">git clone https://github.com/runoneall/YunhuDriveGUI.gitcd YunhuDriveGUIgo mod tidygo run *.go</code></pre><p>特点：无限容量，无限保存时长，可分享，啥时候云湖倒闭啥时候停</p><p>注册用户：</p><ol><li>下载云湖 APP（应用商店搜）</li><li>先用手机号注册（强制的）</li><li>到设置里绑定邮箱（开启密码登录）</li><li>退出登录，在登录界面选择使用邮箱登录，点击忘记密码（设置初始密码）</li><li>打开云湖网盘客户端，点击登录，使用云湖账号登录即可</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>将webhook转换为websocket的工具</title>
+      <link href="/2025/06/16/%E5%B0%86webhook%E8%BD%AC%E6%8D%A2%E4%B8%BAwebsocket%E7%9A%84%E5%B7%A5%E5%85%B7/"/>
+      <url>/2025/06/16/%E5%B0%86webhook%E8%BD%AC%E6%8D%A2%E4%B8%BAwebsocket%E7%9A%84%E5%B7%A5%E5%85%B7/</url>
+      
+        <content type="html"><![CDATA[<p>地址：<br><a href="https://github.com/FramerOrg/HookToWS">https://github.com/FramerOrg/HookToWS</a></p><p>特点：</p><ol><li>支持多客户端</li><li>无需持久化</li><li>无需多端口</li></ol><p>docker安装：</p><pre><code class="language-shell">docker pull runoneall/hook-to-wsdocker run -d --name hook-to-ws -p 3000:3000 -e WS_AUTH_TOKEN=your_secure_token_here -e PORT=3000 runoneall/hook-to-ws</code></pre><p>连接：<br>首先连接ws：</p><pre><code class="language-plaintext">ws://&lt;your_domain&gt;:&lt;port&gt;/?token=&lt;your_token&gt;&amp;path=&lt;your_path&gt;</code></pre><p>然后程序会在 &#x2F;webhook&#x2F;<your_path> 处监听POST请求</p><p>对应的webhook地址为：</p><pre><code class="language-plaintext">http://&lt;your_domain&gt;:&lt;port&gt;/webhook/&lt;your_path&gt;</code></pre><p>如果有ssl那就是 wss 和 https</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>claw run搭建2fa管理器</title>
+      <link href="/2025/06/06/claw-run%E6%90%AD%E5%BB%BA2fa%E7%AE%A1%E7%90%86%E5%99%A8/"/>
+      <url>/2025/06/06/claw-run%E6%90%AD%E5%BB%BA2fa%E7%AE%A1%E7%90%86%E5%99%A8/</url>
+      
+        <content type="html"><![CDATA[<p>好处：<br>除前端外基本没有网络开销，而且还很实用（可能是最有用的方式？）</p><p><img src="https://s.rmimg.com/optimized/2X/3/32f81fbe5df763e1753c501a1fce40c6f1f68949_2_1380x174.png"></p><p>GitHub 地址：<br><a href="https://github.com/quicklyon/2FAuth-docker">https://github.com/quicklyon/2FAuth-docker</a></p><p>搭建：</p><ul><li>Image：<code>easysoft/2fauth:latest</code></li><li>Usage：<code>Fixed</code></li><li>CPU：<code>0.1</code></li><li>Memory：<code>128M</code></li><li>Port：<code>8000</code></li><li>Local Storage：<code>2G</code></li></ul><p>费用：<br><img src="https://s.rmimg.com/original/2X/3/314cb4fad6aa1887dd8e296a855707595ebba15c.png"><br><code>0.03*31=0.93</code>，完全够</p><p>后台管理：<br>因为目前这个 image 还有些 bug，所以得手动允许 CORS 和 Mixed Content（期待大佬修复）</p><p><code>chrome://flags</code> 找到 <code>Insecure origins treated as secure</code> 添加 <code>http://你的域名</code> 并 <code>Enable</code><br>浏览器添加允许跨域插件并启动</p><p>进入后台后点击底部的设置，往下滑找到 <code>禁用注册</code><br><img src="https://s.rmimg.com/original/2X/d/d585263e34f51fd729874eb9807db142dd51b8f4.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>loc.cc使用acme.sh自动签ssl</title>
+      <link href="/2025/06/04/loc-cc%E4%BD%BF%E7%94%A8acme-sh%E8%87%AA%E5%8A%A8%E7%AD%BEssl/"/>
+      <url>/2025/06/04/loc-cc%E4%BD%BF%E7%94%A8acme-sh%E8%87%AA%E5%8A%A8%E7%AD%BEssl/</url>
+      
+        <content type="html"><![CDATA[<p>关于如何添加 ns 记录，目前除手动同步两边记录外并未有好方法，改 SOA 并未生效<br>关于 ssl 的问题，可以使用 webroot 验证，确保域名能够访问<br>此处用 serv00 演示，因为可以用 devil 自动添加证书</p><p>演示：<br><img src="https://s.rmimg.com/original/2X/5/562d06ecc9ce277082114386219d479ad64d70bc.png"></p><ol><li>安装 acme.sh</li></ol><pre><code class="language-shell">curl https://get.acme.sh | sh -s email=你的邮箱</code></pre><ol start="2"><li>设置验证路径</li></ol><pre><code class="language-shell">mkdir -p ~/ssl/update-sh/ # 用于存放更新脚本mkdir -p ~/domains/你的域名/public_html/.well-known/acme-challenge # 用于webroot验证</code></pre><ol start="3"><li>自动更新脚本（注意要用 <code>fullchain</code> 否则不完整）</li></ol><pre><code class="language-shell">#!/usr/local/bin/bashDOMAIN=&quot;你的域名&quot;IP=&quot;128.204.223.46&quot;CERT_DIR=&quot;~/ssl&quot;devil ssl www del $IP $DOMAINdevil ssl www add $IP &quot;$CERT_DIR/$DOMAIN.fullchain.crt&quot; &quot;$CERT_DIR/$DOMAIN.key&quot; $DOMAIN</code></pre><ol start="4"><li>添加证书</li></ol><pre><code class="language-shell">acme.sh --issue -d 你的域名 \    -w ~/domains/你的域名/public_html \    --cert-file ~/ssl/你的域名.crt \    --key-file ~/ssl/你的域名.key \    --fullchain-file ~/ssl/你的域名.fullchain.crt \    --reloadcmd &quot;~/ssl/update-sh/你的域名.sh&quot;</code></pre><ol start="5"><li>自动续期（如果没有）</li></ol><pre><code class="language-shell">acme.sh --install-cronjob</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>免费docker容器鸡</title>
+      <link href="/2025/05/19/%E5%85%8D%E8%B4%B9docker%E5%AE%B9%E5%99%A8%E9%B8%A1/"/>
+      <url>/2025/05/19/%E5%85%8D%E8%B4%B9docker%E5%AE%B9%E5%99%A8%E9%B8%A1/</url>
+      
+        <content type="html"><![CDATA[<p>免费 docker 容器鸡，可开端口，每次一小时，不限次，有 root<br>地址：<a href="https://kodekloud.com/">https://kodekloud.com/</a></p><p>注册后找到 AI Tutor 的课程</p><p><img src="https://s.rmimg.com/original/2X/d/d76f37e8e4f0c28bffc45d48ac31e21c21c31599.png"></p><p>前面的介绍不用看，直接到后面的实操阶段：xxx tutor</p><p><img src="https://s.rmimg.com/original/2X/6/672ae5bc827d40d8c2f1988684dac8b325058643.jpeg"></p><p><img src="https://s.rmimg.com/original/2X/0/00cd04eb774d2cd25d9c553e8f459c48012e49c8.png"></p><p>但注意：只有 1 小时<br><img src="https://s.rmimg.com/original/2X/1/1f223478fe57622a2432c6fc29c73453782ce8ca.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Github部署静态博客</title>
+      <link href="/2025/05/01/Github%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/"/>
+      <url>/2025/05/01/Github%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</url>
+      
+        <content type="html"><![CDATA[<p>此文章非Pages教程，我打算从typecho迁移到hexo，但是之前因为文件丢过一次，导致整个博客彻底停更，就一直用的typecho，后来得群友启发，用GitHub Action自动打包推到Netlify，颇有成效，于是写篇文章出来</p><p>具体可看：<a href="https://github.com/runoneall/blog">https://github.com/runoneall/blog</a></p><ol><li><p>创建仓库，名称随意，注意 .gitignore 选 Node<br>这里我直接用blog做仓库名</p></li><li><p>创建codespace<br><img src="https://s.rmimg.com/2025-05-01/1746087828-570689-2025-05-01-162319.png"></p></li><li><p>按照hexo官方教程搭建博客<br>这里文件夹我还是用 blog，<code>npx hexo init blog</code></p></li><li><p>搭建好后创建workflow</p></li></ol><pre><code class="language-yaml">name: Build And Deploy to Public Branchon:    workflow_dispatch:jobs:    build-and-deploy:        runs-on: ubuntu-latest        steps:            - name: Checkout repository              uses: actions/checkout@v4              with:                  fetch-depth: 0            - name: Set up Node.js LTS              uses: actions/setup-node@main              with:                  node-version: latest            - name: Install Hexo CLI              run: npm install hexo            - name: Install dependencies and generate              run: |                  cd blog                  npm install                  npx hexo clean                  npx hexo generate            - name: Deploy to public branch              uses: peaceiris/actions-gh-pages@v3              with:                  github_token: $&#123;&#123; secrets.REPO_TOKEN &#125;&#125;                  publish_dir: ./blog/public                  destination_dir: ./                  publish_branch: public                  keep_files: false</code></pre><p>意思是：拉取代码 -&gt; 安装nodejs -&gt; 安装hexo -&gt; 安装依赖并生成静态文件 -&gt; 提交到public分支<br>(这里需要在仓库设置里创建名为REPO_TOKEN的secret，令牌需要对仓库有写入权限，勾选repo即可)</p><ol start="5"><li>在netlify上创建项目，选择blog仓库，分支选public，点部署即可</li></ol><p>这样一来只要GitHub不炸文件就丢不了</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>alpine的alist服务脚本</title>
+      <link href="/2025/04/30/alpine%E7%9A%84alist%E6%9C%8D%E5%8A%A1%E8%84%9A%E6%9C%AC/"/>
+      <url>/2025/04/30/alpine%E7%9A%84alist%E6%9C%8D%E5%8A%A1%E8%84%9A%E6%9C%AC/</url>
+      
+        <content type="html"><![CDATA[<p>此是对 <a href="https://dev.oneall.eu.org/archives/63">https://dev.oneall.eu.org/archives/63</a> 的补充<br>原帖用的 screen 来启动 alist，但缺点是开机得手动启动</p><p>于是我参考了这篇帖子 <a href="https://mailberry.com.cn/2024/12/alpine-install-alist">https://mailberry.com.cn/2024/12/alpine-install-alist</a><br>实测不可用</p><p>于是我开始对原贴脚本进行修改<br><code>/etc/init.d/alist</code></p><pre><code class="language-shell">#!/sbin/openrc-runname=&quot;alist&quot;description=&quot;Alist service&quot;pidfile=&quot;/var/run/alist.pid&quot;directory=&quot;/root/alistrun&quot;command=&quot;./alist&quot;command_args=&quot;server&quot;depend() &#123;    need net&#125;start_pre() &#123;    checkpath --directory --owner root:root --mode 0755 &quot;$directory&quot;&#125;start() &#123;    ebegin &quot;Starting $name&quot;    cd &quot;$directory&quot; || return 1    nohup $command $command_args &gt;/dev/null 2&gt;&amp;1 &amp;    echo $! &gt; &quot;$pidfile&quot;    eend $?&#125;stop() &#123;    ebegin &quot;Stopping $name&quot;    if [ -f &quot;$pidfile&quot; ]; then        kill $(cat &quot;$pidfile&quot;) 2&gt;/dev/null        rm -f &quot;$pidfile&quot;    fi    eend $?&#125;</code></pre><pre><code class="language-shell">chmod +x /etc/init.d/alistrc-update add alist</code></pre><p>启动：<code>rc-service alist start</code><br>停止：<code>rc-service alist stop</code><br>状态：<code>rc-service alist status</code></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>将域名添加到fnl小鸡上</title>
+      <link href="/2025/04/29/%E5%B0%86%E5%9F%9F%E5%90%8D%E6%B7%BB%E5%8A%A0%E5%88%B0fnl%E5%B0%8F%E9%B8%A1%E4%B8%8A/"/>
+      <url>/2025/04/29/%E5%B0%86%E5%9F%9F%E5%90%8D%E6%B7%BB%E5%8A%A0%E5%88%B0fnl%E5%B0%8F%E9%B8%A1%E4%B8%8A/</url>
+      
+        <content type="html"><![CDATA[<p>这里以 alist.oneall.eu.org 为例</p><ol><li><p>开放端口<br><img src="https://s.rmimg.com/2025-04-29/1745919888-694481-2025-04-29-173721.png"></p></li><li><p>将域名指向fnl小鸡ip（先不开小黄云过验证）<br><img src="https://s.rmimg.com/2025-04-29/1745919695-388859-2025-04-29-173609.png"></p></li><li><p>到管理面板添加域名<br><img src="https://s.rmimg.com/2025-04-29/1745919743-131494-2025-04-29-173734.png"></p></li><li><p>按要求添加根域验证（验证成功后打开小黄云）<br><img src="https://s.rmimg.com/2025-04-29/1745919794-600079-2025-04-29-173632.png"></p></li><li><p>创建origin rules<br><img src="https://s.rmimg.com/2025-04-29/1745919847-337763-2025-04-29-173839.png"><br><img src="https://s.rmimg.com/2025-04-29/1745919930-493146-2025-04-29-173846.png"></p></li><li><p>若小鸡没有ssl证书<br><img src="https://s.rmimg.com/2025-04-29/1745919953-923417-2025-04-29-173642.png"></p></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>alpine部署alist</title>
+      <link href="/2025/04/29/alpine%E9%83%A8%E7%BD%B2alist/"/>
+      <url>/2025/04/29/alpine%E9%83%A8%E7%BD%B2alist/</url>
+      
+        <content type="html"><![CDATA[<p>记一次从 claw cloud run 迁移到 fnl mini 的经历，之前已经重装成 alpine 系统了，所以是 alpine 部署 alist 教程</p><p>基本版本可从 app launchpad 找到<br><img src="https://s.rmimg.com/2025-04-29/1745916291-632035-2025-04-29-164259.png"></p><pre><code class="language-shell">apk add screenmkdir alistrun &amp;&amp; cd alistrunwget https://github.com/AlistGo/alist/releases/download/v3.41.0/alist-linux-musl-amd64.tar.gztar -xzf alist-linux-musl-amd64.tar.gzrm alist-linux-musl-amd64.tar.gzchmod +x alistscreen -R alist./alist server&lt;Control + A&gt; dcd ..</code></pre><p>在 .&#x2F;alist server 时，会出现一次行密码，第一次登录需要<br><img src="https://s.rmimg.com/2025-04-29/1745916389-874980-2025-04-29-163903.png"></p><p>因为 alpine 使用 musl，所以需要下载 alist 的 musl 版本，若使用默认 gcc 版本会遇到命令无任何输出的情况</p><p>替换 releases&#x2F;download&#x2F;v3.41.0 可以安装 alist 其他版本</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>这存储用不完了</title>
+      <link href="/2025/04/28/%E8%BF%99%E5%AD%98%E5%82%A8%E7%94%A8%E4%B8%8D%E5%AE%8C%E4%BA%86/"/>
+      <url>/2025/04/28/%E8%BF%99%E5%AD%98%E5%82%A8%E7%94%A8%E4%B8%8D%E5%AE%8C%E4%BA%86/</url>
+      
+        <content type="html"><![CDATA[<p><img src="https://s.rmimg.com/2025-04-28/1745845841-390892-2025-04-28-210911.png"><br>第一个用的阿里云盘Open的驱动，貌似直接登录会卡住，用的扫码的方式获取token，存了部完整的魔禁，还剩60多G</p><p>第二个是cfr2，存储容量不明，有说总共10G的，有说每月10G的，主要是文件分享和图床，开了域名访问和页面缓存规则</p><p>第三个是看到 <a href="https://www.nodeloc.com/d/27848">https://www.nodeloc.com/d/27848</a> 领的，现在被薅没了，选的ny</p><p>第四个是看到 <a href="https://www.nodeloc.com/d/5943">https://www.nodeloc.com/d/5943</a> 领的，没用邀请码，貌似现在是超过20G要收费了</p><p>这个Alist部署在claw cloud run上，每月5刀赠金，消耗0.04每天，完全没问题</p><p>挂载时策略选302，与服务商服务器直连，不会消耗alist服务器流量</p><p>还剩 60+25+20&#x3D;105G，完全够用，我不是屯屯党</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>为Mini小鸡扩展1GB虚拟内存</title>
+      <link href="/2025/04/24/%E4%B8%BAMini%E5%B0%8F%E9%B8%A1%E6%89%A9%E5%B1%951GB%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/"/>
+      <url>/2025/04/24/%E4%B8%BAMini%E5%B0%8F%E9%B8%A1%E6%89%A9%E5%B1%951GB%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/</url>
+      
+        <content type="html"><![CDATA[<p><img src="https://s.rmimg.com/2025-04-24/1745484882-765922-2025-04-24-165309.png"><br>是从某个一键脚本抽离出来的</p><pre><code class="language-sh">new_swap=1024  # 单位MBswap_partitions=$(grep -E &#39;^/dev/&#39; /proc/swaps | awk &#39;&#123;print $1&#125;&#39;)for partition in $swap_partitions; do    swapoff &quot;$partition&quot;    wipefs -a &quot;$partition&quot;    mkswap -f &quot;$partition&quot;doneswapoff /swapfilerm -f /swapfiledd if=/dev/zero of=/swapfile bs=1M count=$new_swapchmod 600 /swapfilemkswap /swapfileswapon /swapfile</code></pre><p>需要root，开机后运行一次就可以了</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>一个占用较小的网络浏览器</title>
+      <link href="/2025/04/23/%E4%B8%80%E4%B8%AA%E5%8D%A0%E7%94%A8%E8%BE%83%E5%B0%8F%E7%9A%84%E7%BD%91%E7%BB%9C%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
+      <url>/2025/04/23/%E4%B8%80%E4%B8%AA%E5%8D%A0%E7%94%A8%E8%BE%83%E5%B0%8F%E7%9A%84%E7%BD%91%E7%BB%9C%E6%B5%8F%E8%A7%88%E5%99%A8/</url>
+      
+        <content type="html"><![CDATA[<p>是对 <a href="https://dev.oneall.eu.org/archives/59">https://dev.oneall.eu.org/archives/59</a> 的补充<br><img src="https://s.rmimg.com/2025-04-23/1745422179-289992-2025-04-23-232812.png"><br>图中博客是vuepress，算是较现代了，占用还算可以<br><code>apk add falkon</code></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Mini小鸡搭一个还算能用的云电脑</title>
+      <link href="/2025/04/22/Mini%E5%B0%8F%E9%B8%A1%E6%90%AD%E4%B8%80%E4%B8%AA%E8%BF%98%E7%AE%97%E8%83%BD%E7%94%A8%E7%9A%84%E4%BA%91%E7%94%B5%E8%84%91/"/>
+      <url>/2025/04/22/Mini%E5%B0%8F%E9%B8%A1%E6%90%AD%E4%B8%80%E4%B8%AA%E8%BF%98%E7%AE%97%E8%83%BD%E7%94%A8%E7%9A%84%E4%BA%91%E7%94%B5%E8%84%91/</url>
+      
+        <content type="html"><![CDATA[<p>浏览网页一点问题没有，配置低的vps也可以看<br><img src="https://s.rmimg.com/2025-04-22/1745310185-392883-2025-04-22-161856.png"></p><p>第一步刷轻量系统，这里用alpine 3.20</p><pre><code class="language-sh">wget -O vps.sh https://raw.githubusercontent.com/everett7623/vps_scripts/main/vps.sh &amp;&amp; chmod +x vps.sh &amp;&amp; clear &amp;&amp; ./vps.sh</code></pre><ol><li>安装桌面（这里用lxqt加lxdm）</li></ol><pre><code class="language-sh">setup-xorg-basesetup-user  # 桌面不能root登录apk add lxqt-desktop lxqt-core lxqt-panel lxqt-admin lxqt-config lxqt-notificationd lxqt-powermanagement lxqt-themes openbox setxkbmapaddgroup &lt;user&gt; input  # 将新创建的普通用户加入input和video组addgroup &lt;user&gt; videoapk add dbus dbus-x11 lxdmrc-update add dbusrc-update add lxdmreboot</code></pre><ol start="2"><li>字体和图标</li></ol><pre><code class="language-sh">apk add breeze-icons font-noto-cjk</code></pre><ol start="3"><li>浏览器（火狐算是比较流畅的了）</li></ol><pre><code class="language-sh">apk add firefox</code></pre><ol start="4"><li><p>开启VNC<br><img src="https://s.rmimg.com/2025-04-22/1745311117-804227-2025-04-22-163755.png"></p></li><li><p>重启系统</p></li></ol><pre><code class="language-sh">reboot</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>这次的ba 6th pv吃了不少Eva的点</title>
+      <link href="/2025/04/21/%E8%BF%99%E6%AC%A1%E7%9A%84ba%206th%20pv%E5%90%83%E4%BA%86%E4%B8%8D%E5%B0%91Eva%E7%9A%84%E7%82%B9/"/>
+      <url>/2025/04/21/%E8%BF%99%E6%AC%A1%E7%9A%84ba%206th%20pv%E5%90%83%E4%BA%86%E4%B8%8D%E5%B0%91Eva%E7%9A%84%E7%82%B9/</url>
+      
+        <content type="html"><![CDATA[<p>以下仅表个人观点，欢迎勘误</p><ol><li><p>绫波丽泡LCL<br><img src="https://s.rmimg.com/2025-04-21/1745221853-895725-2025-04-21-153511.png"></p></li><li><p>WILLE在巴黎修复反L结界<br><img src="https://s.rmimg.com/2025-04-21/1745223009-343942-2025-04-21-153637.png"></p></li><li><p>NERV的一艘战舰（推测为Erbsünde）<br><img src="https://s.rmimg.com/2025-04-21/1745223105-626384-2025-04-21-153832.png"></p></li><li><p>暴走的初号机<br><img src="https://s.rmimg.com/2025-04-21/1745223167-554678-2025-04-21-153951.png"></p></li><li><p>量产机<br><img src="https://s.rmimg.com/2025-04-21/1745223179-105679-2025-04-21-154025.png"></p></li><li><p>屋岛作战前（虽然人数不对）<br><img src="https://s.rmimg.com/2025-04-21/1745223201-309792-2025-04-21-154039.png"></p></li><li><p>大决战前明日香和真希波<br><img src="https://s.rmimg.com/2025-04-21/1745223324-691409-2025-04-21-154126.png"></p></li><li><p>初号机和13号机（碇源堂和碇真嗣）<br><img src="https://s.rmimg.com/2025-04-21/1745223444-926117-2025-04-21-154201.png"></p></li><li><p>装备阳电子炮4444C开火<br><img src="https://s.rmimg.com/2025-04-21/1745223582-250486-2025-04-21-154330.png"></p></li><li><p>初号机光翼<br><img src="https://s.rmimg.com/2025-04-21/1745223659-685648-2025-04-21-154428.png"><br><img src="https://s.rmimg.com/2025-04-21/1745223661-64023-2025-04-21-154444.png"></p></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Typecho使用Fastly CDN</title>
+      <link href="/2025/04/20/Typecho%E4%BD%BF%E7%94%A8Fastly%20CDN/"/>
+      <url>/2025/04/20/Typecho%E4%BD%BF%E7%94%A8Fastly%20CDN/</url>
+      
+        <content type="html"><![CDATA[<p>主要介绍从FNL CDN迁移到Fastly的过程，及踩过的坑</p><p><del>某睿智博主花了两天搞的东西（悲</del><br><img src="https://s.rmimg.com/2025-04-20/1745147772-901837-2025-04-20-191339.png"></p><p>首先是得有 Fastly 账号，然后到 <a href="https://manage.fastly.com/configure">https://manage.fastly.com/configure</a> 配置CDN服务</p><p>配置好后大概是这样<br><img src="https://s.rmimg.com/2025-04-20/1745147889-471716-2025-04-20-191804.png"></p><p>点击 Service configuration -&gt; Edit configuration -&gt; Clone to edit</p><ol><li>配置源站<br><img src="https://s.rmimg.com/2025-04-20/1745148062-585026-2025-04-20-192059.png"><br><img src="https://s.rmimg.com/2025-04-20/1745152648-633351-2025-04-20-203722.png"><br><img src="https://s.rmimg.com/2025-04-20/1745152742-341826-2025-04-20-203857.png"><br><img src="https://s.rmimg.com/2025-04-20/1745152760-792035-2025-04-20-203916.png"></li></ol><p>点击 Origins 并找到源站（这里是Serv00）并点击笔图标</p><ul><li>Name 随便写</li><li>Address 写源站IP</li><li>Enable TLS 若源站有则开启（Serv00 Panel域名有，这里开启）</li><li>Certificate hostname 要和源站 TLS 证书匹配</li><li>SNI hostname 若源站有证书则点开 Match the SNI hostname to the Certificate hostname</li><li>Override host 填博客域名，这里是 dev.oneall.eu.org</li><li>其他保持默认</li></ul><ol start="2"><li>配置加速选项<br>点击 Settings 并按需求开启（以下是我的配置）</li></ol><ul><li>Serve stale content on origin failure</li><li>Force TLS and enable HSTS</li><li>HTTP&#x2F;3</li><li>其余关闭</li></ul><ol start="3"><li>配置缓存<br><img src="https://s.rmimg.com/2025-04-20/1745153319-701066-2025-04-20-204833.png"><br><img src="https://s.rmimg.com/2025-04-20/1745153361-225122-2025-04-20-204917.png"><br><img src="https://s.rmimg.com/2025-04-20/1745153385-783210-2025-04-20-204942.png"></li></ol><p>Fastly默认缓存全站，当你发现后台 &#x2F;admin 进不去或有时能进去，请按照以下配置（我这19个version有10个都是栽在这了）</p><ul><li>Create cache setting</li><li>Condition -&gt; attach a condition</li><li>Name: Is Admin</li><li>Apply if: req.url ~ “^&#x2F;admin”</li><li>Save and apply to this cache setting</li><li>Name: 随便写</li><li>Action: Pass</li><li>其他留空</li></ul><ol start="4"><li>压缩<br><img src="https://s.rmimg.com/2025-04-20/1745153516-709386-2025-04-20-205152.png"></li></ol><p>点击 Content -&gt; Compression</p><ul><li>按需开启</li></ul><p>若要配置 SSL 前往 <a href="https://manage.fastly.com/network/domains">https://manage.fastly.com/network/domains</a><br><img src="https://s.rmimg.com/2025-04-20/1745153784-264081-2025-04-20-205619.png"></p><p>将域名接入Fastly</p><ol><li>前往 SSL 证书的 View subscription details</li><li>找到 TLS configuration and DNS details -&gt; View &#x2F; Edit<br><img src="https://s.rmimg.com/2025-04-20/1745153906-304170-2025-04-20-205821.png"></li><li>按需选择添加记录即可</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>AliceNetwork开发者云管理Bot</title>
+      <link href="/2025/04/19/AliceNetwork%E5%BC%80%E5%8F%91%E8%80%85%E4%BA%91%E7%AE%A1%E7%90%86Bot/"/>
+      <url>/2025/04/19/AliceNetwork%E5%BC%80%E5%8F%91%E8%80%85%E4%BA%91%E7%AE%A1%E7%90%86Bot/</url>
+      
+        <content type="html"><![CDATA[<p>云湖机器人（需下载云湖APP）</p><p>效果图：<br><img src="https://s.rmimg.com/2025-04-19/1745027138-305955-2025-04-19-093942.png"><br><img src="https://s.rmimg.com/2025-04-19/1745027141-233577-2025-04-19-094122.png"><br><img src="https://s.rmimg.com/2025-04-19/1745027143-928952-2025-04-19-094225.png"></p><p>直接体验：<br><a href="https://yhfx.jwznb.com/share?key=YZInMjHRY6c2&ts=1745027189">https://yhfx.jwznb.com/share?key=YZInMjHRY6c2&amp;ts=1745027189</a></p><p>部署（需python3.12）</p><p>依赖包：</p><pre><code class="language-plaintext">blinker==1.9.0certifi==2025.1.31charset-normalizer==3.4.1click==8.1.8filetype==1.2.0Flask==3.1.0idna==3.10itsdangerous==2.2.0Jinja2==3.1.6MarkupSafe==3.0.2requests==2.32.3urllib3==2.4.0Werkzeug==3.1.3</code></pre><p>部署sdkFrame</p><pre><code class="language-shell">git clone https://github.com/runoneall/sdkFrame.gitpython3 -m sdkFrame -add-origin https://dev.oneall.eu.org/ryhsdk2/map.json -update-origin -set-env YUNHU_TOKEN=云湖机器人token -set-env &#39;SERVER=json:&#123;   1 ↵    &quot;host&quot;: &quot;0.0.0.0&quot;,    &quot;port&quot;: 端口,    &quot;debug&quot;: true,    &quot;threaded&quot;: true  &#125;&#39;python3 -m sdkFrame -install-module SendMessage@r1a-ryhsdk2python3 -m sdkFrame -install-module ServCommand@r1a-ryhsdk2 -install-module ServShortCut@r1a-ryhsdk2</code></pre><p><code>AliceAPI.py</code></p><pre><code class="language-python">import requestsclass EphemeraAPI:    def __init__(self, api_token):        self.EVO_API_BASE = &quot;https://app.alice.ws/cli/v1/Evo/&quot;        self.api_header = &#123;&quot;KP-APIToken&quot;: api_token&#125;    def EvoJob(self, job_name):        return self.EVO_API_BASE + job_name    def InstanceList(self):        resp = requests.get(self.EvoJob(&quot;Instance&quot;), headers=self.api_header).json()        if resp[&quot;status&quot;] != 200:            return None        return resp[&quot;data&quot;]    def PlanList(self):        resp = requests.get(self.EvoJob(&quot;Plan&quot;), headers=self.api_header).json()        if resp[&quot;status&quot;] != 200:            return None        PlanMap = &#123;&#125;        for plan in resp[&quot;data&quot;]:            PlanMap[plan[&quot;name&quot;]] = plan[&quot;id&quot;]        return PlanMap    def PlanOsList(self, plan_id):        resp = requests.post(            self.EvoJob(&quot;PlanToOS&quot;),            headers=self.api_header,            data=&#123;&quot;plan_id&quot;: str(plan_id)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return None        OSMap = &#123;&#125;        for _, osGroup in resp[&quot;data&quot;].items():            for osItem in osGroup[&quot;os&quot;]:                OSMap[osItem[&quot;name&quot;]] = osItem[&quot;id&quot;]        return OSMap    def InstanceDeploy(self, plan_id, os_id, hours):        resp = requests.post(            self.EvoJob(&quot;Deploy&quot;),            headers=self.api_header,            data=&#123;&quot;product_id&quot;: str(plan_id), &quot;os_id&quot;: str(os_id), &quot;time&quot;: str(hours)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return None        return resp[&quot;data&quot;]    def InstanceDestroy(self, instance_id):        resp = requests.post(            self.EvoJob(&quot;Destroy&quot;),            headers=self.api_header,            data=&#123;&quot;id&quot;: str(instance_id)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return False        return True    def InstancePower(self, instance_id, action):        resp = requests.post(            self.EvoJob(&quot;Power&quot;),            headers=self.api_header,            data=&#123;&quot;id&quot;: str(instance_id), &quot;action&quot;: str(action)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return False        return True    def InstanceRebuild(self, instance_id, os_id):        resp = requests.post(            self.EvoJob(&quot;Rebuild&quot;),            headers=self.api_header,            data=&#123;&quot;id&quot;: str(instance_id), &quot;os&quot;: str(os_id)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return False        return resp[&quot;data&quot;]    def InstanceRenewal(self, instance_id, hours):        resp = requests.post(            self.EvoJob(&quot;Renewal&quot;),            headers=self.api_header,            data=&#123;&quot;id&quot;: str(instance_id), &quot;time&quot;: str(hours)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return False        return True</code></pre><p>到 <a href="https://www.yhchat.com/control">https://www.yhchat.com/control</a> 创建机器人</p><p>快捷菜单设置（全部为普通按钮，事件推送）<br>名称随意，记录菜单id<br><img src="https://s.rmimg.com/2025-04-19/1745028339-727178-2025-04-19-100458.png"></p><p>指令列表<br>添加一个普通指令和一个自定义输入指令，名称随意，记录id<br><img src="https://s.rmimg.com/2025-04-19/1745028453-377258-2025-04-19-100639.png"></p><p>自定义输入表单（名称随意，记录id）<br><img src="https://s.rmimg.com/2025-04-19/1745028539-43368-2025-04-19-100819.png"></p><pre><code class="language-plaintext">Plan选项LAX.Evo.Micro#LAX.Evo.Standard#LAX.Evo.Pro#LAX.Evo.UltraOS选项Debian 12 (Bookworm) Minimal#Debian 11 (Bullseye) Minimal#Debian 12 DevKit#Ubuntu Server 20.04 LTS Minimal#Ubuntu Server 22.04 LTS Minimal#CentOS 7 Minimal#CentOS Stream 9 Minimal#AlmaLinux 8 Minimal#AlmaLinux 9 Latest#Alpine Linux 3.19</code></pre><p><code>app.py</code></p><pre><code class="language-python">import jsonimport osimport sdkFrameimport AliceAPIsdk = sdkFrame.init()if not os.path.exists(&quot;db.json&quot;):    with open(&quot;db.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:        f.write(&quot;&#123;&#125;&quot;)def ReadDB():    with open(&quot;db.json&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:        return json.load(f)def WriteDB(data_dict):    with open(&quot;db.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:        json.dump(data_dict, fp=f, indent=2, ensure_ascii=True)def SetToken(data):    event = data[&quot;event&quot;]    if event[&quot;chat&quot;][&quot;chatType&quot;] == &quot;bot&quot;:        uid = event[&quot;sender&quot;][&quot;senderId&quot;]        token = event[&quot;message&quot;][&quot;content&quot;][&quot;text&quot;]        WriteDB(&#123;**ReadDB(), **&#123;uid: &#123;&quot;token&quot;: token&#125;&#125;&#125;)        sdk.SendMessage.Text(uid, &quot;user&quot;, f&quot;Set &#123;uid&#125; Token &#123;token&#125;&quot;)def InstanceConfig(data):    event = data[&quot;event&quot;]    if event[&quot;chat&quot;][&quot;chatType&quot;] == &quot;bot&quot;:        uid = event[&quot;sender&quot;][&quot;senderId&quot;]        formJson = event[&quot;message&quot;][&quot;content&quot;][&quot;formJson&quot;]        target_plan = formJson[&quot;Plan 选择框表单ID&quot;][&quot;selectValue&quot;]        target_os = formJson[&quot;OS 选择框表单ID&quot;][&quot;selectValue&quot;]        target_hours = formJson[&quot;Hours 输入框表单ID&quot;][&quot;value&quot;]        db = ReadDB()        if uid in db and &quot;token&quot; in db[uid]:            db[uid][&quot;plan&quot;] = target_plan            db[uid][&quot;os&quot;] = target_os            db[uid][&quot;hours&quot;] = target_hours            WriteDB(db)            sdk.SendMessage.Text(                uid,                &quot;user&quot;,                f&quot;&quot;&quot;Default Config:- Plan: &#123;target_plan&#125;- OS: &#123;target_os&#125;- Hours: &#123;target_hours&#125;&quot;&quot;&quot;,            )        else:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;Set Token First&quot;)def InstanceInfo(data):    event = data[&quot;event&quot;]    if event[&quot;senderType&quot;] == &quot;user&quot;:        db = ReadDB()        uid = event[&quot;senderId&quot;]        if uid not in db or &quot;token&quot; not in db[uid]:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;Set Token First&quot;)            return        if &quot;instance_id&quot; not in db[uid]:            db[uid][&quot;instance_id&quot;] = &quot;&quot;        if db[uid][&quot;instance_id&quot;] == &quot;&quot;:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;No Instance Deployed&quot;)            return        instance_id = db[uid][&quot;instance_id&quot;]        sdk.SendMessage.Text(uid, &quot;user&quot;, f&quot;Checking Instance &#123;instance_id&#125;...&quot;)        resp = AliceAPI.EphemeraAPI(db[uid][&quot;token&quot;]).InstanceList()        if resp == None:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;Check Failed&quot;)            return        for instance in resp:            if str(instance[&quot;id&quot;]) == instance_id:                sdk.SendMessage.Text(                    uid,                    &quot;user&quot;,                    f&quot;&quot;&quot;Server &#123;instance_id&#125;:- Ipv4: &#123;instance[&quot;ipv4&quot;]&#125;- Ipv6: &#123;instance[&quot;ipv6&quot;]&#125;- Hostname: &#123;instance[&quot;hostname&quot;]&#125;- Cpu Total: &#123;instance[&quot;cpu&quot;]&#125; Core- Cpu Type: &#123;instance[&quot;cpu_name&quot;]&#125;- Memory Total: &#123;instance[&quot;memory&quot;]&#125; MB- Disk Total: &#123;instance[&quot;disk&quot;]&#125; GB- Disk Type: &#123;instance[&quot;disk_type&quot;]&#125;- User: &#123;instance[&quot;user&quot;]&#125;- Password: &#123;instance[&quot;password&quot;]&#125;- Status: &#123;instance[&quot;status&quot;]&#125;- Created At: &#123;instance[&quot;creation_at&quot;]&#125;- Expired At: &#123;instance[&quot;expiration_at&quot;]&#125;- Plan: &#123;instance[&quot;plan&quot;]&#125;- Region: &#123;instance[&quot;region&quot;]&#125;- OS: &#123;instance[&quot;os&quot;]&#125;&quot;&quot;&quot;,                )                breakdef InstanceDeploy(data):    event = data[&quot;event&quot;]    if event[&quot;senderType&quot;] == &quot;user&quot;:        db = ReadDB()        uid = event[&quot;senderId&quot;]        if uid not in db or &quot;token&quot; not in db[uid]:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;Set Token First&quot;)            return        if &quot;plan&quot; not in db[uid] or &quot;os&quot; not in db[uid] or &quot;hours&quot; not in db[uid]:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;Set Default Config First&quot;)            return        if &quot;instance_id&quot; in db[uid] and db[uid][&quot;instance_id&quot;] != &quot;&quot;:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;Instance Already Deployed&quot;)            return        sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;Deploying Instance...&quot;)        target_plan = db[uid][&quot;plan&quot;]        target_os = db[uid][&quot;os&quot;]        target_hours = db[uid][&quot;hours&quot;]        Ephemera = AliceAPI.EphemeraAPI(db[uid][&quot;token&quot;])        plans = Ephemera.PlanList()        oss = Ephemera.PlanOsList(plans[target_plan])        resp = Ephemera.InstanceDeploy(            Ephemera.PlanList()[target_plan], oss[target_os], hours=int(target_hours)        )        if resp == None:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;Deploy Failed&quot;)            return        db[uid][&quot;instance_id&quot;] = str(resp[&quot;id&quot;])        WriteDB(db)        sdk.SendMessage.Text(            uid,            &quot;user&quot;,            f&quot;Instance &#123;resp[&#39;id&#39;]&#125; Deployed, Please Wait for 2-3 minutes, Use Info Button to Check Status&quot;,        )def InstanceDestroy(data):    event = data[&quot;event&quot;]    if event[&quot;senderType&quot;] == &quot;user&quot;:        db = ReadDB()        uid = event[&quot;senderId&quot;]        if uid not in db or &quot;token&quot; not in db[uid]:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;Set Token First&quot;)            return        if &quot;instance_id&quot; not in db[uid] or db[uid][&quot;instance_id&quot;] == &quot;&quot;:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;No Instance Deployed&quot;)            return        instance_id = db[uid][&quot;instance_id&quot;]        sdk.SendMessage.Text(uid, &quot;user&quot;, f&quot;Destroying Instance &#123;instance_id&#125;...&quot;)        resp = AliceAPI.EphemeraAPI(db[uid][&quot;token&quot;]).InstanceDestroy(instance_id)        if resp == False:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;Destroy Failed&quot;)            return        del db[uid][&quot;instance_id&quot;]        WriteDB(db)        sdk.SendMessage.Text(uid, &quot;user&quot;, f&quot;Instance &#123;instance_id&#125; Destroyed&quot;)def power_action(data, action):    event = data[&quot;event&quot;]    if event[&quot;senderType&quot;] == &quot;user&quot;:        db = ReadDB()        uid = event[&quot;senderId&quot;]        if uid not in db or &quot;token&quot; not in db[uid]:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;Set Token First&quot;)            return        if &quot;instance_id&quot; not in db[uid] or db[uid][&quot;instance_id&quot;] == &quot;&quot;:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;No Instance Deployed&quot;)            return        instance_id = db[uid][&quot;instance_id&quot;]        sdk.SendMessage.Text(            uid, &quot;user&quot;, f&quot;Performing &#123;action&#125; on Instance &#123;instance_id&#125;...&quot;        )        resp = AliceAPI.EphemeraAPI(db[uid][&quot;token&quot;]).InstancePower(instance_id, action)        if resp == False:            sdk.SendMessage.Text(uid, &quot;user&quot;, f&quot;&#123;action&#125; Failed&quot;)            return        sdk.SendMessage.Text(uid, &quot;user&quot;, f&quot;Instance &#123;instance_id&#125; &#123;action&#125;ed&quot;)def InstanceBoot(data):    power_action(data, &quot;boot&quot;)def InstanceShutdown(data):    power_action(data, &quot;shutdown&quot;)def InstanceRestart(data):    power_action(data, &quot;restart&quot;)def InstancePoweroff(data):    power_action(data, &quot;poweroff&quot;)def InstanceRebuild(data):    event = data[&quot;event&quot;]    if event[&quot;senderType&quot;] == &quot;user&quot;:        db = ReadDB()        uid = event[&quot;senderId&quot;]        if uid not in db or &quot;token&quot; not in db[uid]:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;Set Token First&quot;)            return        if &quot;plan&quot; not in db[uid] or &quot;os&quot; not in db[uid]:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;Set Default Config First&quot;)            return        if &quot;instance_id&quot; not in db[uid] or db[uid][&quot;instance_id&quot;] == &quot;&quot;:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;No Instance Deployed&quot;)            return        instance_id = db[uid][&quot;instance_id&quot;]        sdk.SendMessage.Text(uid, &quot;user&quot;, f&quot;Rebuilding Instance &#123;instance_id&#125;...&quot;)        Ephemera = AliceAPI.EphemeraAPI(db[uid][&quot;token&quot;])        plans = Ephemera.PlanList()        oss = Ephemera.PlanOsList(plans[db[uid][&quot;plan&quot;]])        resp = Ephemera.InstanceRebuild(instance_id, oss[db[uid][&quot;os&quot;]])        if resp == False:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;Rebuild Failed&quot;)            return        sdk.SendMessage.Text(uid, &quot;user&quot;, f&quot;Instance &#123;instance_id&#125; Rebuilt&quot;)def InstanceRenewal(data):    event = data[&quot;event&quot;]    if event[&quot;senderType&quot;] == &quot;user&quot;:        db = ReadDB()        uid = event[&quot;senderId&quot;]        if uid not in db or &quot;token&quot; not in db[uid]:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;Set Token First&quot;)            return        if &quot;instance_id&quot; not in db[uid] or db[uid][&quot;instance_id&quot;] == &quot;&quot;:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;No Instance Deployed&quot;)            return        instance_id = db[uid][&quot;instance_id&quot;]        sdk.SendMessage.Text(uid, &quot;user&quot;, f&quot;Renewing Instance &#123;instance_id&#125;...&quot;)        target_hours = db[uid][&quot;hours&quot;]        resp = AliceAPI.EphemeraAPI(db[uid][&quot;token&quot;]).InstanceRenewal(            instance_id, int(target_hours)        )        if resp == False:            sdk.SendMessage.Text(uid, &quot;user&quot;, &quot;Renewal Failed&quot;)            return        sdk.SendMessage.Text(            uid, &quot;user&quot;, f&quot;Instance &#123;instance_id&#125; Renewed &#123;target_hours&#125; hours&quot;        )sdk.ServCommand.AddHandle(SetToken, Set Token 指令ID)sdk.ServCommand.AddHandle(InstanceConfig, Default Config 指令ID)sdk.ServShortCut.AddHandle(InstanceInfo, &quot;Info 菜单ID&quot;)sdk.ServShortCut.AddHandle(InstanceDeploy, &quot;Deploy 菜单ID&quot;)sdk.ServShortCut.AddHandle(InstanceDestroy, &quot;Destroy 菜单ID&quot;)sdk.ServShortCut.AddHandle(InstanceBoot, &quot;Boot 菜单ID&quot;)sdk.ServShortCut.AddHandle(InstanceShutdown, &quot;Shutdown 菜单ID&quot;)sdk.ServShortCut.AddHandle(InstanceRestart, &quot;Restart 菜单ID&quot;)sdk.ServShortCut.AddHandle(InstancePoweroff, &quot;Poweroff 菜单ID&quot;)sdk.ServShortCut.AddHandle(InstanceRebuild, &quot;Rebuild 菜单ID&quot;)sdk.ServShortCut.AddHandle(InstanceRenewal, &quot;Renewal 菜单ID&quot;)sdk.Server.AddTrigger(sdk.ServCommand)sdk.Server.AddTrigger(sdk.ServShortCut)sdk.Server.Start()</code></pre><p>启动后填入到 <code>配置消息订阅接口</code></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>AliceNetwork开发者云API封装</title>
+      <link href="/2025/04/13/AliceNetwork%E5%BC%80%E5%8F%91%E8%80%85%E4%BA%91API%E5%B0%81%E8%A3%85/"/>
+      <url>/2025/04/13/AliceNetwork%E5%BC%80%E5%8F%91%E8%80%85%E4%BA%91API%E5%B0%81%E8%A3%85/</url>
+      
+        <content type="html"><![CDATA[<p><code>AliceAPI.py</code></p><pre><code class="language-python">import requestsclass EphemeraAPI:    def __init__(self, api_token):        self.EVO_API_BASE = &quot;https://app.alice.ws/cli/v1/Evo/&quot;        self.api_header = &#123;&quot;KP-APIToken&quot;: api_token&#125;    def EvoJob(self, job_name):        return self.EVO_API_BASE + job_name    def InstanceList(self):        resp = requests.get(self.EvoJob(&quot;Instance&quot;), headers=self.api_header).json()        if resp[&quot;status&quot;] != 200:            return None        return resp[&quot;data&quot;]    def PlanList(self):        resp = requests.get(self.EvoJob(&quot;Plan&quot;), headers=self.api_header).json()        if resp[&quot;status&quot;] != 200:            return None        PlanMap = &#123;&#125;        for plan in resp[&quot;data&quot;]:            PlanMap[plan[&quot;name&quot;]] = plan[&quot;id&quot;]        return PlanMap    def PlanOsList(self, plan_id):        resp = requests.post(            self.EvoJob(&quot;PlanToOS&quot;),            headers=self.api_header,            data=&#123;&quot;plan_id&quot;: str(plan_id)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return None        OSMap = &#123;&#125;        for _, osGroup in resp[&quot;data&quot;].items():            for osItem in osGroup[&quot;os&quot;]:                OSMap[osItem[&quot;name&quot;]] = osItem[&quot;id&quot;]        return OSMap    def InstanceDeploy(self, plan_id, os_id, hours):        resp = requests.post(            self.EvoJob(&quot;Deploy&quot;),            headers=self.api_header,            data=&#123;&quot;product_id&quot;: str(plan_id), &quot;os_id&quot;: str(os_id), &quot;time&quot;: str(hours)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return None        return resp[&quot;data&quot;]    def InstanceDestroy(self, instance_id):        resp = requests.post(            self.EvoJob(&quot;Destroy&quot;),            headers=self.api_header,            data=&#123;&quot;id&quot;: str(instance_id)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return False        return True    def InstancePower(self, instance_id, action):        resp = requests.post(            self.EvoJob(&quot;Power&quot;),            headers=self.api_header,            data=&#123;&quot;id&quot;: str(instance_id), &quot;action&quot;: str(action)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return False        return True    def InstanceRebuild(self, instance_id, os_id):        resp = requests.post(            self.EvoJob(&quot;Rebuild&quot;),            headers=self.api_header,            data=&#123;&quot;id&quot;: str(instance_id), &quot;os&quot;: str(os_id)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return False        return resp[&quot;data&quot;]    def InstanceRenewal(self, instance_id, hours):        resp = requests.post(            self.EvoJob(&quot;Renewal&quot;),            headers=self.api_header,            data=&#123;&quot;id&quot;: str(instance_id), &quot;time&quot;: str(hours)&#125;,        ).json()        if resp[&quot;status&quot;] != 200:            return False        return True</code></pre><p>从 <a href="https://app.alice.ws/ephemera/console">控制台</a> 获取 <code>API Token</code><br>在同级目录新建 <code>kp-api-token.txt</code> 并写入token</p><pre><code class="language-python">from AliceAPI import EphemeraAPIdef GetApiToken():    with open(&quot;kp-api-token.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as token_file:        api_token = token_file.read()    return api_tokenEphemera = EphemeraAPI(GetApiToken())# ------------------------------------------------------# InstanceListprint(Ephemera.InstanceList())# ------------------------------------------------------# PlanListprint(Ephemera.PlanList())# ------------------------------------------------------# PlanOsListplans = Ephemera.PlanList()print(Ephemera.PlanOsList(plans[&quot;LAX.Evo.Micro&quot;]))# ------------------------------------------------------# InstanceDeployplans = Ephemera.PlanList()oss = Ephemera.PlanOsList(plans[&quot;LAX.Evo.Micro&quot;])print(    Ephemera.InstanceDeploy(        plans[&quot;LAX.Evo.Micro&quot;], oss[&quot;Debian 12 (Bookworm) Minimal&quot;], hours=1    ))# ------------------------------------------------------# InstanceDestroyplans = Ephemera.PlanList()oss = Ephemera.PlanOsList(plans[&quot;LAX.Evo.Micro&quot;])instance_id = Ephemera.InstanceDeploy(    plans[&quot;LAX.Evo.Micro&quot;], oss[&quot;Debian 12 (Bookworm) Minimal&quot;], hours=1)[&quot;id&quot;]print(Ephemera.InstanceDestroy(instance_id))# ------------------------------------------------------# InstancePowerplans = Ephemera.PlanList()oss = Ephemera.PlanOsList(plans[&quot;LAX.Evo.Micro&quot;])instance_id = Ephemera.InstanceDeploy(    plans[&quot;LAX.Evo.Micro&quot;], oss[&quot;Debian 12 (Bookworm) Minimal&quot;], hours=1)[&quot;id&quot;]print(Ephemera.InstancePower(instance_id, &quot;boot&quot;))  # boot shutdown restart poweroff# ------------------------------------------------------# InstanceRebuildplans = Ephemera.PlanList()oss = Ephemera.PlanOsList(plans[&quot;LAX.Evo.Micro&quot;])instance_id = Ephemera.InstanceDeploy(    plans[&quot;LAX.Evo.Micro&quot;], oss[&quot;Debian 12 (Bookworm) Minimal&quot;], hours=1)[&quot;id&quot;]print(Ephemera.InstanceRebuild(instance_id, oss[&quot;AlmaLinux 9 Latest&quot;]))# ------------------------------------------------------# InstanceRenewalplans = Ephemera.PlanList()oss = Ephemera.PlanOsList(plans[&quot;LAX.Evo.Micro&quot;])instance_id = Ephemera.InstanceDeploy(    plans[&quot;LAX.Evo.Micro&quot;], oss[&quot;Debian 12 (Bookworm) Minimal&quot;], hours=1)[&quot;id&quot;]print(Ephemera.InstanceRenewal(instance_id, hours=1))</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>低版本mac装docker</title>
+      <link href="/2025/04/09/%E4%BD%8E%E7%89%88%E6%9C%ACmac%E8%A3%85docker/"/>
+      <url>/2025/04/09/%E4%BD%8E%E7%89%88%E6%9C%ACmac%E8%A3%85docker/</url>
+      
+        <content type="html"><![CDATA[<p>翻到台mac mini，运行macOS 10.15，已经不支持安装docker GUI了</p><p>首先安装brew</p><pre><code class="language-zsh">/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;</code></pre><p>安装docker cli</p><pre><code class="language-zsh">brew install docker docker-compose</code></pre><p>安装colima做docker后端</p><pre><code class="language-zsh">brew install colima</code></pre><p>编译安装qemu（我用的7.2.0）</p><pre><code class="language-zsh">brew install pkg-config glib pixman ninja cmake wget sdl2 lzowget https://download.qemu.org/qemu-7.2.0.tar.xztar -xf qemu-7.2.0.tar.xzrm qemu-7.2.0.tar.xz &amp;&amp; cd qemu-7.2.0./configure --target-list=x86_64-softmmu,aarch64-softmmu --enable-debug --enable-sdl --enable-vncmake -j$(sysctl -n hw.logicalcpu)sudo make installcd .. &amp;&amp; rm -rf qemu-7.2.0qemu-system-x86_64 --version</code></pre><p>启动colima</p><pre><code class="language-zsh">colima start  # 后面看着给 --cpu 核心数 --memory 内存(GB)</code></pre><p>运行 <code>docker ps</code> 查看是否安装成功（列表可能为空，无报错就是成功了）</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>基于深度学习的离线tts和stt的python实现</title>
+      <link href="/2025/04/06/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%A6%BB%E7%BA%BFtts%E5%92%8Cstt%E7%9A%84python%E5%AE%9E%E7%8E%B0/"/>
+      <url>/2025/04/06/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%A6%BB%E7%BA%BFtts%E5%92%8Cstt%E7%9A%84python%E5%AE%9E%E7%8E%B0/</url>
+      
+        <content type="html"><![CDATA[<p>安装模型（stt用的vosk-model-cn-0.22，tts用的kokoro-v1.1-zh）</p><pre><code class="language-zsh"># vosk-model-cn-0.22wget https://alphacephei.com/vosk/models/vosk-model-cn-0.22.zipunzip vosk-model-cn-0.22.ziprm vosk-model-cn-0.22.zip# kokoro-v1.1-zhmkdir kokoro-v1.1-zhcd kokoro-v1.1-zhwget https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1/kokoro-v1.1-zh.onnxwget https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1/voices-v1.1-zh.binwget https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/raw/main/config.jsoncd ..</code></pre><p>安装依赖</p><pre><code class="language-plaintext">addict==2.4.0annotated-types==0.7.0anyio==4.9.0attrs==25.3.0babel==2.17.0certifi==2025.1.31cffi==1.17.1charset-normalizer==3.4.1cn2an==0.5.23colorama==0.4.6coloredlogs==15.0.1colorlog==6.9.0csvw==3.5.1distro==1.9.0dlinfo==2.0.0espeakng-loader==0.2.4exceptiongroup==1.2.2flatbuffers==25.2.10h11==0.14.0httpcore==1.0.7httpx==0.28.1humanfriendly==10.0idna==3.10isodate==0.7.2jieba==0.42.1jiter==0.9.0joblib==1.4.2jsonschema==4.23.0jsonschema-specifications==2024.10.1kokoro-onnx==0.4.7language-tags==1.2.0misaki==0.9.3mpmath==1.3.0numpy==2.2.4onnxruntime==1.21.0openai==1.70.0ordered-set==4.1.0packaging==24.2phonemizer-fork==3.3.1proces==0.1.7protobuf==6.30.2PyAudio==0.2.14pycparser==2.22pydantic==2.11.2pydantic_core==2.33.1pyparsing==3.2.3pypinyin==0.54.0pypinyin-dict==0.9.0python-dateutil==2.9.0.post0rdflib==7.1.4referencing==0.36.2regex==2024.11.6requests==2.32.3rfc3986==1.5.0rpds-py==0.24.0segments==2.3.0six==1.17.0sniffio==1.3.1sounddevice==0.5.1srt==3.5.3sympy==1.13.3tqdm==4.67.1typing-inspection==0.4.0typing_extensions==4.13.1uritemplate==4.1.1urllib3==2.3.0vosk==0.3.44websockets==15.0.1</code></pre><p>tts.py</p><pre><code class="language-python">import sounddevice as sdimport kokoro_onnx as kokorofrom misaki import zhimport asynciokokoro.MAX_PHONEME_LENGTH = 80class TTS:    def __init__(self):        self.g2p = zh.ZHG2P(version=&quot;1.1&quot;)        self.voice = &quot;zm_009&quot;        self.speed = 1.0        self.model = kokoro.Kokoro(            &quot;kokoro-v1.1-zh/model.onnx&quot;,            &quot;kokoro-v1.1-zh/voices.bin&quot;,            vocab_config=&quot;kokoro-v1.1-zh/config.json&quot;,        )        self.model.create(            self.get_phonemes(&quot;你好，世界！&quot;),            voice=self.voice,            speed=self.speed,            is_phonemes=True,        )        print(&quot;TTS initialized&quot;)    def set_speed(self, speed: float = 1.0):        self.speed = speed    def get_phonemes(self, text: str) -&gt; str:        phonemes, _ = self.g2p(text)        return phonemes    def speak(self, text: str):        async def stream_audio():            stream = self.model.create_stream(                self.get_phonemes(text),                voice=self.voice,                speed=self.speed,                is_phonemes=True,            )            async for audio, audio_rate in stream:                sd.play(audio, audio_rate)                sd.wait()        asyncio.run(stream_audio())</code></pre><p>stt.py</p><pre><code class="language-python">import jsonimport voskimport pyaudioclass STT:    def __init__(self):        self.recognizer = vosk.KaldiRecognizer(vosk.Model(&quot;vosk-model-cn-0.22&quot;), 16000)        self.mic = pyaudio.PyAudio()        self.stream = self.mic.open(            format=pyaudio.paInt16,            channels=1,            rate=16000,            input=True,            frames_per_buffer=4096,        )        self.stop_listening = False        print(&quot;STT initialized&quot;)    def listen(self, on_result: callable):        while not self.stop_listening:            if self.recognizer.AcceptWaveform(                self.stream.read(4096, exception_on_overflow=False)            ):                result = json.loads(self.recognizer.Result())                text: str = result.get(&quot;text&quot;, &quot;&quot;)                if text:                    on_result(text.replace(&quot; &quot;, &quot;&quot;))        self.stream.stop_stream()        self.stream.close()        self.mic.terminate()    def stop(self):        self.stop_listening = True</code></pre><p>用法</p><pre><code class="language-python">import ttsimport stttts_engine = tts.TTS()stt_engine = stt.STT()def call(text: str):    tts_engine.speak(text)    # your logic    #stt_engine.stop()  # stop mic listenstt_engine.listen(call)  # start mic listen</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>vercel搭建跨域API</title>
+      <link href="/2025/03/23/vercel%E6%90%AD%E5%BB%BA%E8%B7%A8%E5%9F%9FAPI/"/>
+      <url>/2025/03/23/vercel%E6%90%AD%E5%BB%BA%E8%B7%A8%E5%9F%9FAPI/</url>
+      
+        <content type="html"><![CDATA[<p>使用 <code>vercel edge function</code></p><pre><code class="language-typescript">export const runtime = &quot;edge&quot;;async function handleRequest(req: Request) &#123;    const url = new URL(req.url);    const targetUrl = decodeURIComponent(url.search).slice(1);    const reqInit: RequestInit &amp; &#123; duplex?: string &#125; = &#123;        headers: req.headers,        method: req.method,        body: req.body,        redirect: &quot;follow&quot;,        duplex: &quot;half&quot;,    &#125;;    const modifiedRequest = new Request(targetUrl, reqInit);    const resp = await fetch(modifiedRequest);    return new Response(resp.body, &#123;        status: resp.status,        statusText: resp.statusText,        headers: new Headers(&#123;            ...resp.headers,            &quot;Cache-Control&quot;: &quot;no-store&quot;,            &quot;Access-Control-Allow-Methods&quot;:                &quot;GET, POST, PUT, DELETE, PATCH, OPTIONS&quot;,            &quot;Access-Control-Allow-Headers&quot;: &quot;*&quot;,            &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,        &#125;),    &#125;);&#125;export const GET = handleRequest;export const POST = handleRequest;export const PUT = handleRequest;export const DELETE = handleRequest;export const PATCH = handleRequest;export const OPTIONS = handleRequest;</code></pre><p>保存为 <code>vap.ts</code> (名称随意)<br>API地址: <code>&lt;域名&gt;/api/&lt;保存名称&gt;?&lt;目标URL&gt;</code></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>整活成真的了!</title>
+      <link href="/2025/03/18/%E6%95%B4%E6%B4%BB%E6%88%90%E7%9C%9F%E7%9A%84%E4%BA%86-/"/>
+      <url>/2025/03/18/%E6%95%B4%E6%B4%BB%E6%88%90%E7%9C%9F%E7%9A%84%E4%BA%86-/</url>
+      
+        <content type="html"><![CDATA[<p><img src="https://s.rmimg.com/2025-03-18/1742308936-745290-renderedimage.jpg"><br><img src="https://s.rmimg.com/2025-03-19/1742347706-834125-1742308966-280949-2025-03-18-224237.png"></p><p>声明 <code>nic.xh.sd</code> 为本人整活所写，跟NodeLoc论坛无任何关系</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>查看博客友链最新更新了什么?</title>
+      <link href="/2025/03/18/%E6%9F%A5%E7%9C%8B%E5%8D%9A%E5%AE%A2%E5%8F%8B%E9%93%BE%E6%9C%80%E6%96%B0%E6%9B%B4%E6%96%B0%E4%BA%86%E4%BB%80%E4%B9%88-/"/>
+      <url>/2025/03/18/%E6%9F%A5%E7%9C%8B%E5%8D%9A%E5%AE%A2%E5%8F%8B%E9%93%BE%E6%9C%80%E6%96%B0%E6%9B%B4%E6%96%B0%E4%BA%86%E4%BB%80%E4%B9%88-/</url>
+      
+        <content type="html"><![CDATA[<p>这是对 <a href="https://dev.oneall.eu.org/archives/32/">https://dev.oneall.eu.org/archives/32/</a> 的补充<br>在原有友链基础上增加可选的 rss 选项<br><img src="https://s.rmimg.com/2025-03-18/1742262324-200112-2025-03-18-094451.png"><br>支持自动分析 rss 和 atom</p><pre><code class="language-javascript">// 本人js不好大体是这么个意思// 使用 https://dev.oneall.eu.org/archives/49/ 跨域请求function xhrGet(url) &#123;    return new Promise((resolve, reject) =&gt; &#123;        const xhr = new XMLHttpRequest();        xhr.open(&quot;GET&quot;, &quot;https://dev.oneall.eu.org/netdrive.php/&quot; + url, true);        xhr.onload = function () &#123;            if (xhr.status &gt;= 200 &amp;&amp; xhr.status &lt; 300) &#123;                resolve(xhr.responseText);            &#125; else &#123;                reject(new Error(`HTTP Error: $&#123;xhr.status&#125;`));            &#125;        &#125;;        xhr.onerror = function () &#123;            reject(new Error(&quot;Network Error&quot;));        &#125;;        xhr.send();    &#125;);&#125;async function putRss(linkItemsArea, rssLinkItems) &#123;    if (rssLinkItems.length === 0) &#123;        return;    &#125;    linkItemsArea.innerHTML += `&lt;div id=&quot;links-rss&quot;&gt;&lt;h2&gt;近期更新&lt;/h2&gt;&lt;ul&gt;&lt;/ul&gt;&lt;/div&gt;`;    const rssItemsArea = linkItemsArea.querySelector(&quot;#links-rss ul&quot;);    for (const rssLinkItem of rssLinkItems) &#123;        xhrGet(rssLinkItem)            .then((xmlString) =&gt; &#123;                const xmlStringParser = new DOMParser();                const xmlDoc = xmlStringParser.parseFromString(                    xmlString,                    &quot;text/xml&quot;,                );                atomFeed = xmlDoc.getElementsByTagName(&quot;feed&quot;);                rssFeed = xmlDoc.getElementsByTagName(&quot;rss&quot;);                if (atomFeed.length &gt; 0) &#123;                    const blogName =                        atomFeed[0].getElementsByTagName(&quot;title&quot;)[0]                            .textContent;                    rssItemsArea.innerHTML += `&lt;h3&gt;$&#123;blogName&#125;:&lt;/h3&gt;`;                    const first10Items = [                        ...atomFeed[0].getElementsByTagName(&quot;entry&quot;),                    ].slice(0, 10);                    first10Items.forEach((item) =&gt; &#123;                        const blog_title =                            item.getElementsByTagName(&quot;title&quot;)[0].textContent;                        const blog_link = item                            .getElementsByTagName(&quot;link&quot;)[0]                            .getAttribute(&quot;href&quot;);                        rssItemsArea.innerHTML += `&lt;li&gt;&lt;a href=&quot;$&#123;blog_link&#125;&quot; target=&quot;_blank&quot;&gt;$&#123;blog_title&#125;&lt;/a&gt;&lt;/li&gt;`;                    &#125;);                &#125; else if (rssFeed.length &gt; 0) &#123;                    const blogName =                        rssFeed[0].getElementsByTagName(&quot;title&quot;)[0].textContent;                    rssItemsArea.innerHTML += `&lt;h3&gt;$&#123;blogName&#125;:&lt;/h3&gt;`;                    const first10Items = [                        ...rssFeed[0].getElementsByTagName(&quot;item&quot;),                    ].slice(0, 10);                    first10Items.forEach((item) =&gt; &#123;                        const blog_title =                            item.getElementsByTagName(&quot;title&quot;)[0].textContent;                        const blog_link =                            item.getElementsByTagName(&quot;link&quot;)[0].textContent;                        rssItemsArea.innerHTML += `&lt;li&gt;&lt;a href=&quot;$&#123;blog_link&#125;&quot; target=&quot;_blank&quot;&gt;$&#123;blog_title&#125;&lt;/a&gt;&lt;/li&gt;`;                    &#125;);                &#125; else &#123;                    console.log(&quot;Unknown feed type &quot; + rssLinkItem);                &#125;            &#125;)            .catch(() =&gt; &#123;&#125;);    &#125;&#125;function putLinks(link_json) &#123;    const linkJson = JSON.parse(link_json);    const linkItemsArea = document.getElementById(&quot;linkItemsArea&quot;);    let linkItemsHTML = &quot;&quot;;    let rssLinkItems = [];    for (const linkItem of linkJson) &#123;        linkItemsHTML += `&lt;div class=&quot;link-item&quot;&gt;&lt;img class=&quot;link-item-avatar&quot; src=&quot;$&#123;linkItem.avatar&#125;&quot;&gt;&lt;div class=&quot;link-item-content&quot;&gt;&lt;a href=&quot;$&#123;linkItem.url&#125;&quot; target=&quot;_blank&quot;&gt;&lt;h2&gt;$&#123;linkItem.title&#125;&lt;/h2&gt;&lt;/a&gt;&lt;p&gt;$&#123;linkItem.description&#125;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;`;        if (linkItem.rss) &#123;            rssLinkItems.push(linkItem.rss);        &#125;    &#125;    linkItemsArea.innerHTML = linkItemsHTML;    setTimeout(() =&gt; putRss(linkItemsArea, rssLinkItems), 0);&#125;</code></pre><pre><code class="language-css">#linkItemsArea &#123;    width: 100%;    display: grid;    grid-template-columns: repeat(2, 1fr);    gap: 10px;&#125;@media screen and (max-width: 700px) &#123;    #linkItemsArea &#123;        grid-template-columns: repeat(1, 1fr);    &#125;&#125;.link-item &#123;    height: 100px;    overflow: hidden;    border: 1px solid gray;&#125;.link-item a &#123;    color: inherit !important;&#125;.link-item-avatar &#123;    float: left;    width: auto;    height: auto;    max-height: 100%;    margin-right: 10px;    border-right: 1px solid gray;&#125;.link-item-content &#123;    height: 100%;&#125;#linkItemsArea #links-rss &#123;    grid-column: 1 / -1;&#125;</code></pre><p>效果：异步加载最新 10 篇文章<br><img src="https://s.rmimg.com/2025-03-18/1742262484-796693-2025-03-18-094759.png"><br>具体可看：<a href="https://dev.oneall.eu.org/links.html%EF%BC%88%E8%8B%A5%E5%8F%91%E7%8E%B0%E9%94%99%E4%BD%8D%E5%B0%B1%E6%98%AF%E7%BC%93%E5%AD%98%E6%9C%AA%E5%A4%B1%E6%95%88%EF%BC%89">https://dev.oneall.eu.org/links.html（若发现错位就是缓存未失效）</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>用php解决跨域问题</title>
+      <link href="/2025/03/17/%E7%94%A8php%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/"/>
+      <url>/2025/03/17/%E7%94%A8php%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<pre><code class="language-php">&lt;?php$targetUrl = $_SERVER[&#39;REQUEST_URI&#39;];$targetUrl = substr($targetUrl, strpos($targetUrl, &#39;netdrive.php/&#39;) + 13);if ($targetUrl == &#39;&#39;) &#123;    exit;&#125;$ch = curl_init($targetUrl);curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);curl_setopt($ch, CURLOPT_HEADER, false);curl_setopt($ch, CURLOPT_USERAGENT, &#39;PHP cURL&#39;);header(&#39;Access-Control-Allow-Origin: *&#39;);header(&#39;Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS&#39;);header(&#39;Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization&#39;);curl_exec($ch);curl_close($ch);?&gt;</code></pre><p>保存为 <code>netdrive.php</code><br>只要在该php文件url后加上目标url便可，跟cf反代一样的</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>夜深人静，有利于思考</title>
+      <link href="/2025/03/10/%E5%A4%9C%E6%B7%B1%E4%BA%BA%E9%9D%99-%E6%9C%89%E5%88%A9%E4%BA%8E%E6%80%9D%E8%80%83/"/>
+      <url>/2025/03/10/%E5%A4%9C%E6%B7%B1%E4%BA%BA%E9%9D%99-%E6%9C%89%E5%88%A9%E4%BA%8E%E6%80%9D%E8%80%83/</url>
+      
+        <content type="html"><![CDATA[<p><img src="https://s.rmimg.com/2025-03-11/1741627488-644373-screenshot-20250311-012333-trebuchet.png"><br>纯萌新一个，第一次玩到这么深<br>以前都是下水道2-3层就死了</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>openrouter免费api</title>
+      <link href="/2025/03/08/openrouter%E5%85%8D%E8%B4%B9api/"/>
+      <url>/2025/03/08/openrouter%E5%85%8D%E8%B4%B9api/</url>
+      
+        <content type="html"><![CDATA[<p><img src="https://s.rmimg.com/2025-03-08/1741402625-724226-2025-03-08-105352.png"><br>速度可以，有人说经常502，暂未发现<br>（图中是 <code>deepseek-v3</code>）</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>ds-v3，ds-r1上线讯飞</title>
+      <link href="/2025/02/17/ds-v3-ds-r1%E4%B8%8A%E7%BA%BF%E8%AE%AF%E9%A3%9E/"/>
+      <url>/2025/02/17/ds-v3-ds-r1%E4%B8%8A%E7%BA%BF%E8%AE%AF%E9%A3%9E/</url>
+      
+        <content type="html"><![CDATA[<p><img src="https://s.rmimg.com/2025-02-17/1739793084-706508-2025-02-17-195120.png"><br>限时免费，无限token<br>个人实测：速度不理想</p><p>链接：<a href="https://training.xfyun.cn/modelSquare">https://training.xfyun.cn/modelSquare</a><br><img src="https://s.rmimg.com/2025-02-17/1739800574-259829-2025-02-17-215608.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>基于URL锚点的路由系统</title>
+      <link href="/2025/02/13/%E5%9F%BA%E4%BA%8EURL%E9%94%9A%E7%82%B9%E7%9A%84%E8%B7%AF%E7%94%B1%E7%B3%BB%E7%BB%9F/"/>
+      <url>/2025/02/13/%E5%9F%BA%E4%BA%8EURL%E9%94%9A%E7%82%B9%E7%9A%84%E8%B7%AF%E7%94%B1%E7%B3%BB%E7%BB%9F/</url>
+      
+        <content type="html"><![CDATA[<p>好处：不会显式刷新，语法简单，使用原生JS</p><p><code>router.js</code></p><pre><code class="language-javascript">class HashRouter &#123;    constructor(container) &#123;        this.container = container;        this.routes = &#123;&#125;;        this.defaultHandler = () =&gt; this.show404(this.container);        this.normalizePath = (path) =&gt; &#123;            if (!path) return &quot;/&quot;;            return path.startsWith(&quot;/&quot;) ? path : `/$&#123;path&#125;`;        &#125;;        window.addEventListener(&quot;hashchange&quot;, () =&gt; this.handleRoute());        window.addEventListener(&quot;load&quot;, () =&gt; this.handleRoute());    &#125;    addRoute(path, handler) &#123;        const normalizedPath = this.normalizePath(path);        this.routes[normalizedPath] = handler;    &#125;    setDefaultHandler(handler) &#123;        this.defaultHandler = handler;    &#125;    handleRoute() &#123;        const rawHash = window.location.hash.slice(1);        const currentPath = this.normalizePath(rawHash);        const handler = this.routes[currentPath] || this.defaultHandler;        this.container.innerHTML = &quot;&quot;;        handler(this.container);    &#125;    show404(container) &#123;        container.innerHTML = &quot;&lt;h1&gt;404 Not Found&lt;/h1&gt;&quot;;    &#125;&#125;</code></pre><p><code>index.html</code></p><pre><code class="language-html">&lt;!DOCTYPE html&gt;&lt;html&gt;    &lt;head&gt;        &lt;meta charset=&quot;UTF-8&quot; /&gt;        &lt;title&gt;HashRouter&lt;/title&gt;    &lt;/head&gt;    &lt;body&gt;        &lt;h1&gt;HashRouter&lt;/h1&gt;        &lt;div&gt;            &lt;a href=&quot;#/&quot;&gt;Home&lt;/a&gt;            &lt;a href=&quot;#/about&quot;&gt;About&lt;/a&gt;            &lt;a href=&quot;#/contact&quot;&gt;Contact&lt;/a&gt;            &lt;a href=&quot;#/null&quot;&gt;Null&lt;/a&gt;        &lt;/div&gt;        &lt;div            id=&quot;main-containter&quot;            style=&quot;border: 1px solid black; margin: auto; padding: 20px;&quot;        &gt;&lt;/div&gt;        &lt;script src=&quot;/router.js&quot;&gt;&lt;/script&gt;        &lt;!-- 引入JS文件 --&gt;        &lt;script&gt;            // 创建HashRouter实例            const router = new HashRouter(                document.getElementById(&quot;main-containter&quot;),            );            // 定义路由规则            router.addRoute(&quot;/&quot;, (containter) =&gt; &#123;                containter.innerHTML = &quot;Welcome to the homepage&quot;;            &#125;);            router.addRoute(&quot;/about&quot;, (containter) =&gt; &#123;                containter.innerHTML = &quot;About us&quot;;            &#125;);            router.addRoute(&quot;/contact&quot;, (containter) =&gt; &#123;                containter.innerHTML = &quot;Contact us&quot;;            &#125;);            // 设置默认路由 (若不指定则默认插入 404 Not Found)            router.setDefaultHandler((containter) =&gt; &#123;                containter.innerHTML = &quot;Page not found&quot;;            &#125;);            // 监听hashchange事件            router.handleRoute();        &lt;/script&gt;    &lt;/body&gt;&lt;/html&gt;</code></pre><ul><li>创建HashRouter实例时需要传入容器对象<code>document.getElementById(&quot;main-containter&quot;)</code></li><li>创建路由时处理函数会被传入 <code>containter</code> 代表容器对象</li><li>运行处理函数前容器对象会被清空</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>简易订阅整合工具</title>
+      <link href="/2025/02/11/%E7%AE%80%E6%98%93%E8%AE%A2%E9%98%85%E6%95%B4%E5%90%88%E5%B7%A5%E5%85%B7/"/>
+      <url>/2025/02/11/%E7%AE%80%E6%98%93%E8%AE%A2%E9%98%85%E6%95%B4%E5%90%88%E5%B7%A5%E5%85%B7/</url>
+      
+        <content type="html"><![CDATA[<p>一个用php写的简易订阅整合<br>支持：合并订阅，零散节点，去重，以普通或base64格式返回</p><pre><code class="language-php">&lt;?phpfunction response($code, $message, $header = &quot;&quot;)&#123;    http_response_code($code);    if ($header != &quot;&quot;) &#123;        header($header);    &#125;    echo $message;    exit;&#125;function download_file($url, $retry = 0)&#123;    $attempt = 0;    while ($attempt &lt;= $retry) &#123;        $attempt++;        $content = @file_get_contents($url);        if ($content !== false) &#123;            return $content;        &#125;    &#125;    response(500, &quot;Failed to download file: $url&quot;, &quot;Content-Type: text/plain; charset=UTF-8&quot;);&#125;function load_file_to_array($file_path)&#123;    $file_content = file_get_contents($file_path);    $file_content = str_replace(&quot;\r\n&quot;, &quot;\n&quot;, $file_content);    $lines = explode(&quot;\n&quot;, $file_content);    $lines = array_filter($lines);    return $lines;&#125;function load_string_to_array($string)&#123;    $string = str_replace(&quot;\r\n&quot;, &quot;\n&quot;, $string);    $lines = explode(&quot;\n&quot;, $string);    $lines = array_filter($lines);    return $lines;&#125;function response_nodes($node_array)&#123;    $content = implode(&quot;\n&quot;, $node_array);    $query_string = isset($_SERVER[&#39;QUERY_STRING&#39;]) ? $_SERVER[&#39;QUERY_STRING&#39;] : &quot;&quot;;    if ($query_string == &quot;base64&quot;) &#123;        $content = base64_encode($content);    &#125;    if ($query_string == &quot;clash&quot;) &#123;        $options = [            &#39;http&#39; =&gt; [                &#39;method&#39; =&gt; &#39;POST&#39;,                &#39;header&#39; =&gt; &#39;Content-Type: text/plain; charset=UTF-8&#39;,                &#39;content&#39; =&gt; $content            ]        ];        $context = stream_context_create($options);        $content = file_get_contents(            &quot;https://v2ray2clash.netlify.app/.netlify/functions/clash&quot;,            false,            $context        );    &#125;    response(200, $content, &quot;Content-Type: text/plain; charset=UTF-8&quot;);&#125;// load sub and scatter node list$sub_list = load_file_to_array(&quot;sub.txt&quot;);$scatter_nodes = load_file_to_array(&quot;scatter.txt&quot;);// get sub node list$sub_nodes = array();foreach ($sub_list as $sub) &#123;    $sub_content = download_file($sub, 3);    if (strpos($sub_content, &quot;://&quot;) === false) &#123;        $sub_content = base64_decode($sub_content);    &#125;    $sub_nodes = array_merge($sub_nodes, load_string_to_array($sub_content));&#125;// merge sub nodes and scatter nodes$nodes = array_merge($sub_nodes, $scatter_nodes);$nodes = array_filter($nodes);$nodes = array_unique($nodes);// responseresponse_nodes($nodes);?&gt;</code></pre><p>在同级目录新建 <code>sub.txt</code> 放置订阅，例如</p><pre><code>https://sub.vip.sd/JPa6vvFgygVtNP2sGJ2r/download/nlmjj?target=V2Rayhttps://fly.j-s.us.kg/api/v1/client/subscribe?token=3275fdb3e5ff32434a293ca8ca8fe9dc</code></pre><p>在同级目录新建 <code>scatter.txt</code> 放置零散节点，例如</p><pre><code>ss://YWVzLTI1Ni1nY206NmQwNDMwNDEtOTY3Ni0zNDllLWE3MDYtMzgwYWY5NGUwNjJh@c9pwn-g01.fr01-ae5.entry.v50307shvkaa.art:20065#%E6%B3%95%E5%9B%BDW01ss://YWVzLTI1Ni1nY206NmQwNDMwNDEtOTY3Ni0zNDllLWE3MDYtMzgwYWY5NGUwNjJh@kn183-g01.us01-ae5.entry.v50307shvkaa.art:20010#%E7%BE%8E%E5%9B%BDW01ss://YWVzLTI1Ni1nY206NmQwNDMwNDEtOTY3Ni0zNDllLWE3MDYtMzgwYWY5NGUwNjJh@b0sdx-g01.ua01-ae5.entry.v50307shvkaa.art:20070#%E4%B9%8C%E5%85%8B%E5%85%B0W01ss://YWVzLTI1Ni1nY206NmQwNDMwNDEtOTY3Ni0zNDllLWE3MDYtMzgwYWY5NGUwNjJh@uh4r9-g01.us02-ae5.entry.v50307shvkaa.art:20015#%E7%BE%8E%E5%9B%BDW02ss://YWVzLTI1Ni1nY206NmQwNDMwNDEtOTY3Ni0zNDllLWE3MDYtMzgwYWY5NGUwNjJh@5e3gk-g01.de01-ae5.entry.v50307shvkaa.art:20050#%E5%BE%B7%E5%9B%BDW01ss://YWVzLTI1Ni1nY206NmQwNDMwNDEtOTY3Ni0zNDllLWE3MDYtMzgwYWY5NGUwNjJh@6tfkp-g01.ar01-ae5.entry.v50307shvkaa.art:20025#%E9%98%BF%E6%A0%B9%E5%BB%B7W01ss://YWVzLTI1Ni1nY206NmQwNDMwNDEtOTY3Ni0zNDllLWE3MDYtMzgwYWY5NGUwNjJh@tsh16-g01.ru01-ae5.entry.v50307shvkaa.art:20030#%E4%BF%84%E7%BD%97%E6%96%AFW01ss://YWVzLTI1Ni1nY206NmQwNDMwNDEtOTY3Ni0zNDllLWE3MDYtMzgwYWY5NGUwNjJh@13uc8-g01.tr01-ae5.entry.v50307shvkaa.art:20035#%E5%9C%9F%E8%80%B3%E5%85%B6W01</code></pre><p>默认url格式，要以base64返回应增加 <code>?base64</code> 后缀<br>clash配置应增加 <code>?clash</code> 后缀<br>demo: <a href="https://runoneall.serv00.net/NodeShare/">https://runoneall.serv00.net/NodeShare/</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>一个简易订阅转换api</title>
+      <link href="/2025/01/29/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E8%AE%A2%E9%98%85%E8%BD%AC%E6%8D%A2api/"/>
+      <url>/2025/01/29/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E8%AE%A2%E9%98%85%E8%BD%AC%E6%8D%A2api/</url>
+      
+        <content type="html"><![CDATA[<p>仅支持v2ray转clash<br><a href="https://github.com/runoneall/netlify-v2ray2clash">https://github.com/runoneall/netlify-v2ray2clash</a></p><p>效果图<br><img src="https://s.rmimg.com/2025-01-30/1738177211-979039-2025-01-30-025909.png"></p><p>基于这个项目精简而来<br><a href="https://github.com/7Sageer/sublink-worker">https://github.com/7Sageer/sublink-worker</a><br>（主要是给我订阅整合增加clash支持）</p><p>demo：<a href="https://v2ray2clash.netlify.app/.netlify/functions/clash">https://v2ray2clash.netlify.app/.netlify/functions/clash</a><br>发送post请求，把v2ray链接放到body里，返回yaml</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>xh.sd注册局网站上线</title>
+      <link href="/2025/01/29/xh.sd%E6%B3%A8%E5%86%8C%E5%B1%80%E7%BD%91%E7%AB%99%E4%B8%8A%E7%BA%BF/"/>
+      <url>/2025/01/29/xh.sd%E6%B3%A8%E5%86%8C%E5%B1%80%E7%BD%91%E7%AB%99%E4%B8%8A%E7%BA%BF/</url>
+      
+        <content type="html"><![CDATA[<p>桌面端UI写完了，移动端优化等明天</p><p>若https链接访问后会有错位现象，请使用http版本，cf缓存的锅<br><a href="http://nic.xh.sd/">http://nic.xh.sd/</a><br><a href="https://nic.xh.sd/">https://nic.xh.sd/</a></p><p>手写的css，但排版和配图是ai的，<a href="https://nic-website.pagen.io/">https://nic-website.pagen.io/</a><br>用一天时间搓了个这东西出来，还能看</p><p>链接全部指向nodeloc或free nodeloc（还有一个Never Gonna Give You Up，在Contact的时候会出现）</p><p>1.28: 移动端优化完成，等缓存失效ing…<br>源码下载: <a href="https://nic.xh.sd/files.zip">https://nic.xh.sd/files.zip</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>几个草台班子聚在一块写出来的东西</title>
+      <link href="/2025/01/29/%E5%87%A0%E4%B8%AA%E8%8D%89%E5%8F%B0%E7%8F%AD%E5%AD%90%E8%81%9A%E5%9C%A8%E4%B8%80%E5%9D%97%E5%86%99%E5%87%BA%E6%9D%A5%E7%9A%84%E4%B8%9C%E8%A5%BF/"/>
+      <url>/2025/01/29/%E5%87%A0%E4%B8%AA%E8%8D%89%E5%8F%B0%E7%8F%AD%E5%AD%90%E8%81%9A%E5%9C%A8%E4%B8%80%E5%9D%97%E5%86%99%E5%87%BA%E6%9D%A5%E7%9A%84%E4%B8%9C%E8%A5%BF/</url>
+      
+        <content type="html"><![CDATA[<p>地址：<a href="https://qzweb.s00s2.rr.nu/">https://qzweb.s00s2.rr.nu/</a><br>简单来说是一个叫轻昼的软件的网页版（本体也挺简单的）</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>update不写where导致的数据丢失</title>
+      <link href="/2025/01/21/update%E4%B8%8D%E5%86%99where%E5%AF%BC%E8%87%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1/"/>
+      <url>/2025/01/21/update%E4%B8%8D%E5%86%99where%E5%AF%BC%E8%87%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1/</url>
+      
+        <content type="html"><![CDATA[<p><img src="https://s.rmimg.com/2025-01-21/1737452371-507903-2025-01-21-173516.png"><br><img src="https://s.rmimg.com/2025-01-21/1737452375-461538-2025-01-21-173608.png"><br><img src="https://s.rmimg.com/2025-01-21/1737452379-228242-2025-01-21-173621.png"><br><img src="https://s.rmimg.com/2025-01-21/1737452382-121652-2025-01-21-173640.png"><br><img src="https://s.rmimg.com/2025-01-21/1737452385-609505-2025-01-21-173655.png"><br><img src="https://s.rmimg.com/2025-01-21/1737452388-891458-2025-01-21-173715.png"><br>用生产环境开发跟这一比都算轻的…</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>flask简易doh服务器</title>
+      <link href="/2025/01/16/flask%E7%AE%80%E6%98%93doh%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+      <url>/2025/01/16/flask%E7%AE%80%E6%98%93doh%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
+      
+        <content type="html"><![CDATA[<pre><code class="language-python">import base64import socketimport randomfrom urllib import request as urllib_requestfrom urllib import parse as urllib_parsefrom flask import Flask, make_responsefrom flask import request as flask_requestapp = Flask(__name__)socket.setdefaulttimeout(5)dnss = [    &quot;8.8.8.8&quot;,    &quot;8.8.4.4&quot;,    &quot;1.1.1.1&quot;,    &quot;1.0.0.1&quot;]jsonapis = [    &quot;https://cloudflare-dns.com/dns-query&quot;,    &quot;https://dns.google/resolve&quot;]def send_dns_query(dns_query: bytes) -&gt; bytes:    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)    sock.sendto(dns_query, (random.choice(dnss), 53))    rx, _ = sock.recvfrom(4096)    sock.close()    return rx@app.route(&quot;/dns-query&quot;, methods=[&quot;GET&quot;, &quot;POST&quot;])def dns_query():    if &quot;Content-Type&quot; not in flask_request.headers or flask_request.headers[&quot;Content-Type&quot;] != &quot;application/dns-message&quot;:        return make_response(&quot;Invalid Content-Type&quot;, 400, &#123;&quot;Content-Type&quot;: &quot;text/plain; charset=utf-8&quot;&#125;)    if flask_request.method == &quot;GET&quot;:        dns_query = base64.urlsafe_b64decode(flask_request.args.get(&quot;dns&quot;) + &quot;===&quot;)        dns_response = send_dns_query(dns_query)        return make_response(dns_response, 200, &#123;&quot;Content-Type&quot;: &quot;application/dns-message&quot;&#125;)    if flask_request.method == &quot;POST&quot;:        dns_query = flask_request.stream.read()        dns_response = send_dns_query(dns_query)        return make_response(dns_response, 200, &#123;&quot;Content-Type&quot;: &quot;application/dns-message&quot;&#125;)    return make_response(&quot;Invalid Method&quot;, 405, &#123;&quot;Content-Type&quot;: &quot;text/plain; charset=utf-8&quot;&#125;)@app.route(&quot;/resolve&quot;, methods=[&quot;GET&quot;])def dns_json():    if &quot;Accept&quot; not in flask_request.headers or flask_request.headers[&quot;Accept&quot;] != &quot;application/dns-json&quot;:        return make_response(&quot;Invalid Accept&quot;, 400, &#123;&quot;Content-Type&quot;: &quot;text/plain; charset=utf-8&quot;&#125;)    target_domain = flask_request.args.get(&quot;name&quot;)    target_type = flask_request.args.get(&quot;type&quot;)    if not target_domain or not target_type:        return make_response(&quot;Invalid Request&quot;, 400, &#123;&quot;Content-Type&quot;: &quot;text/plain; charset=utf-8&quot;&#125;)    query_url = random.choice(jsonapis) + &quot;?name=&quot; + urllib_parse.quote(target_domain) + &quot;&amp;type=&quot; + urllib_parse.quote(target_type)    req_headers = &#123;&quot;Accept&quot;: &quot;application/dns-json&quot;&#125;    req = urllib_request.Request(query_url, headers=req_headers)    rep = urllib_request.urlopen(req)    rep_status = rep.getcode()    rep_content_type = rep.headers.get(&#39;Content-Type&#39;)    rep_body = rep.read()    rep.close()    return make_response(rep_body, rep_status, &#123;&quot;Content-Type&quot;: rep_content_type&#125;)if __name__ == &quot;__main__&quot;:    app.run()</code></pre><p>全类型支持：普通dns查询，jsonapi<br>普通dns查询地址：<code>/dns-query</code><br>jsonapi查询地址：<code>/resolve</code></p><p>demo：<a href="https://doh.xserver.rr.nu/">https://doh.xserver.rr.nu</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>一个简易的网页音乐播放器</title>
+      <link href="/2025/01/12/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84%E7%BD%91%E9%A1%B5%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8/"/>
+      <url>/2025/01/12/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84%E7%BD%91%E9%A1%B5%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8/</url>
+      
+        <content type="html"><![CDATA[<p>功能：播放，暂停，快进，后退，进度条拖动<br><img src="https://s.rmimg.com/2025-01-12/1736671932-466215-2025-01-12-165206.png"></p><p>使用：</p><ol><li>下载资源：<a href="https://runoneall.serv00.net/WebLitePlayer/player.css">player.css</a> <a href="https://runoneall.serv00.net/WebLitePlayer/player.js">player.js</a></li><li>在网页任意位置加入 <code>&lt;div class=&quot;audio-player&quot;&gt;&lt;/div&gt;</code></li><li>在头部引入css，在末尾引入js</li><li>编写js</li></ol><pre><code class="language-javascript">audio_source.src = 音频URL;audio_play(); // 开始播放</code></pre><p>源码：<br><code>player.css</code></p><pre><code class="language-css">.audio-player &#123;    width: 300px;    height: 65px;    border: 1px solid black;    overflow: hidden;    white-space: nowrap;    background: white;&#125;#audio-avatar &#123;    height: auto;    width: auto;    max-height: 100%;    margin-right: 10px;    float: left;&#125;.audio-info &#123;    overflow: hidden;    position: relative;&#125;#audio-title &#123;    display: inline-block;    padding-left: 100%;    animation: showFullTitle 10s linear infinite;&#125;@keyframes showFullTitle &#123;    0% &#123;        transform: translateX(0%);    &#125;    100% &#123;        transform: translateX(-100%);    &#125;&#125;.audio-progress &#123;    display: inline-block;&#125;.audio-control &#123;    margin-right: 5px;    float: right;&#125;</code></pre><p><code>player.js</code></p><pre><code class="language-javascript">document.querySelector(&quot;.audio-player&quot;).innerHTML =    `&lt;svg id=&quot;audio-avatar&quot; viewBox=&quot;0 0 1024 1024&quot; version=&quot;1.1&quot;    xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;    &lt;path        d=&quot;M391.424 938.688a48.896 48.896 0 0 1-49.92-49.728V212.928c0-24.832 18.304-44.8 41.6-49.728l497.344-77.888a49.984 49.984 0 0 1 39.936 11.648c11.648 9.92 16.64 23.168 16.64 38.08V812.8c0 28.16-21.632 49.664-49.92 49.664a48.896 48.896 0 0 1-49.92-49.728V193.024l-397.568 61.312v634.624c1.664 28.16-21.568 49.728-48.192 49.728z&quot;        fill=&quot;#172B4D&quot;&gt;&lt;/path&gt;    &lt;path        d=&quot;M888.768 862.464H632.576a48.896 48.896 0 0 1-49.92-49.728v-142.464c0-28.16 21.696-49.728 49.92-49.728h256.192c28.288 0 49.92 21.504 49.92 49.728v142.464a51.072 51.072 0 0 1-49.92 49.728z m-206.272-99.456h156.352v-43.072h-156.352v43.072zM391.424 938.688H135.232a48.896 48.896 0 0 1-49.92-49.728v-142.464c0-28.16 21.632-49.728 49.92-49.728h256.192c28.288 0 49.92 21.504 49.92 49.728v142.464a49.92 49.92 0 0 1-49.92 49.728z m-206.272-99.456h156.352v-43.072H185.152v43.072z&quot;        fill=&quot;#172B4D&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;div class=&quot;audio&quot;&gt;    &lt;div class=&quot;audio-info&quot;&gt;        &lt;audio id=&quot;audio-source&quot; src type=&quot;audio/mpeg&quot;&gt;&lt;/audio&gt;        &lt;span id=&quot;audio-title&quot;&gt;No Audio To Play&lt;/span&gt;&lt;br&gt;    &lt;/div&gt;    &lt;div class=&quot;audio-progress&quot;&gt;        &lt;input type=&quot;range&quot; id=&quot;audio-range&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;0&quot;            step=&quot;0.01&quot;&gt;        &lt;label id=&quot;audio-time&quot; for=&quot;audio-range&quot;&gt;0:00 / 0:00&lt;/label&gt;    &lt;/div&gt;    &lt;div class=&quot;audio-control&quot;&gt;        &lt;button onclick=&quot;audio_back5s()&quot;&gt;-5s&lt;/button&gt;        &lt;button onclick=&quot;audio_play()&quot;&gt;Play&lt;/button&gt;        &lt;button onclick=&quot;audio_stop()&quot;&gt;Stop&lt;/button&gt;        &lt;button onclick=&quot;audio_forward5s()&quot;&gt;+5s&lt;/button&gt;    &lt;/div&gt;&lt;/div&gt;`;const audio_source = document.getElementById(&quot;audio-source&quot;);const audio_title = document.getElementById(&quot;audio-title&quot;);let current_audio_title = &quot;&quot;;const audio_range = document.getElementById(&quot;audio-range&quot;);const audio_time = document.getElementById(&quot;audio-time&quot;);let audio_end_time_length = 0;function audio_play() &#123;    if (audio_source.paused) &#123;        const new_audio_title = decodeURI(            audio_source.src.split(&quot;/&quot;).pop().split(&quot;.&quot;).shift(),        );        if (current_audio_title != new_audio_title) &#123;            audio_title.textContent = new_audio_title;            current_audio_title = audio_title.textContent;            audio_source.load();        &#125;        audio_source.play();    &#125;&#125;function audio_stop() &#123;    if (!audio_source.paused) &#123;        audio_source.pause();    &#125;&#125;function audio_back5s() &#123;    audio_play();    audio_source.currentTime -= 5;&#125;function audio_forward5s() &#123;    audio_play();    audio_source.currentTime += 5;&#125;function audio_current_time() &#123;    const audio_currentTime = audio_source.currentTime;    const audio_time_minutes = Math.floor(audio_currentTime / 60).toString();    const audio_time_seconds = Math.floor(audio_currentTime % 60)        .toString()        .padStart(2, &quot;0&quot;);    const audio_end_time = audio_time.textContent.slice(        0 - audio_end_time_length,    );    return (        `$&#123;audio_time_minutes&#125;:$&#123;audio_time_seconds&#125;` + &quot; / &quot; + audio_end_time    );&#125;audio_source.onloadedmetadata = function () &#123;    const audio_duration = audio_source.duration;    audio_range.max = audio_duration;    const audio_time_minutes = Math.floor(audio_duration / 60).toString();    const audio_time_seconds = Math.floor(audio_duration % 60)        .toString()        .padStart(2, &quot;0&quot;);    audio_end_time_length =        audio_time_minutes.length + audio_time_seconds.length + 1;    audio_time.textContent =        &quot;0:00 / &quot; + `$&#123;audio_time_minutes&#125;:$&#123;audio_time_seconds&#125;`;&#125;;audio_source.ontimeupdate = function () &#123;    audio_range.value = audio_source.currentTime;    audio_time.textContent = audio_current_time();&#125;;audio_range.oninput = function () &#123;    audio_play();    audio_source.currentTime = audio_range.value;    audio_time.textContent = audio_current_time();&#125;;</code></pre><p>demo：<a href="https://runoneall.serv00.net/WebLitePlayer/">https://runoneall.serv00.net/WebLitePlayer/</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>识别bilibili中的视频bgm并下载</title>
+      <link href="/2025/01/11/%E8%AF%86%E5%88%ABbilibili%E4%B8%AD%E7%9A%84%E8%A7%86%E9%A2%91bgm%E5%B9%B6%E4%B8%8B%E8%BD%BD/"/>
+      <url>/2025/01/11/%E8%AF%86%E5%88%ABbilibili%E4%B8%AD%E7%9A%84%E8%A7%86%E9%A2%91bgm%E5%B9%B6%E4%B8%8B%E8%BD%BD/</url>
+      
+        <content type="html"><![CDATA[<p>准备</p><ul><li><a href="https://www.xtdowner.com/video/bilibili">B站视频在线下载器</a></li><li><a href="https://www.aha-music.com/">AHA Song Finder</a></li><li><a href="https://spotifymate.com/en">Spotify Downloader</a></li></ul><ol><li>在bilibili网页中打开一个链接, 或复制分享链接<br><img src="https://s.rmimg.com/2025-01-11/1736608349-332142-2025-01-11-231115.png"></li><li>打开 <code>B站视频在线下载器</code> 粘贴链接, 下载视频</li><li>打开 <code>AHA Song Finder</code> 并上传视频, 查找bgm</li><li>若分析出Spotify链接, 可以使用 <code>Spotify Downloader</code> 下载音乐</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>讯飞星火和智谱清言的组合技</title>
+      <link href="/2025/01/11/%E8%AE%AF%E9%A3%9E%E6%98%9F%E7%81%AB%E5%92%8C%E6%99%BA%E8%B0%B1%E6%B8%85%E8%A8%80%E7%9A%84%E7%BB%84%E5%90%88%E6%8A%80/"/>
+      <url>/2025/01/11/%E8%AE%AF%E9%A3%9E%E6%98%9F%E7%81%AB%E5%92%8C%E6%99%BA%E8%B0%B1%E6%B8%85%E8%A8%80%E7%9A%84%E7%BB%84%E5%90%88%E6%8A%80/</url>
+      
+        <content type="html"><![CDATA[<p>都使用不限量免费模型进行测试<br>星火lite有无限量选项，智谱的flash是免费的，这两个一个图文并茂（文生图，文生视频）一个博古通今（支持网络搜索）</p><p>我是用python的openai库来管理，并写成独立的python文件进行调用，<code>ai.py</code></p><pre><code class="language-python">from openai import OpenAIzhipu_api_key = &quot;&quot;xinghuo_api_password = &quot;&quot;class ChatClient:    def __init__(self):        self.zhipu = OpenAI(            api_key=zhipu_api_key,            base_url=&quot;https://open.bigmodel.cn/api/paas/v4/&quot;,        )        self.xinghuo = OpenAI(            api_key=xinghuo_api_password,            base_url=&quot;https://spark-api-open.xf-yun.com/v1&quot;,        )    def zhipu_chat(self, query: str, history: list[dict[str, str]] = [], **kwargs):        history.append(&#123;&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: query&#125;)        response = self.zhipu.chat.completions.create(            model=&quot;glm-4-flash&quot;, messages=history, stream=True, **kwargs        )        for chunk in response:            yield chunk    def xinghuo_chat(self, query: str, history: list[dict[str, str]] = [], **kwargs):        history.append(&#123;&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: query&#125;)        response = self.xinghuo.chat.completions.create(            model=&quot;lite&quot;, messages=history, stream=True, **kwargs        )        for chunk in response:            yield chunk    def web_search(self, query: str):        query = &quot;搜索并总结：&quot; + query        response = self.xinghuo_chat(query, max_tokens=4096, top_p=1.0, temperature=1.0)        for chunk in response:            yield chunk.choices[0].delta.content    def image_vision(self, query: str, image_url: str):        response = self.zhipu.chat.completions.create(            model=&quot;glm-4v-flash&quot;,            messages=[                &#123;                    &quot;role&quot;: &quot;user&quot;,                    &quot;content&quot;: [                        &#123;&quot;type&quot;: &quot;image_url&quot;, &quot;image_url&quot;: &#123;&quot;url&quot;: image_url&#125;&#125;,                        &#123;&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: query&#125;,                    ],                &#125;            ],            stream=True,            max_tokens=1024,            top_p=1.0,            temperature=1.0,        )        for chunk in response:            yield chunk.choices[0].delta.content    def image_generation(self, query: str, width: int, height: int):        response = self.zhipu.images.generate(            model=&quot;cogview-3-flash&quot;,            prompt=query,            size=f&quot;&#123;width&#125;x&#123;height&#125;&quot;,        )        return response.data[0].url</code></pre><p>调用示例</p><pre><code class="language-python">import aiai.zhipu_api_key = &quot;智谱api key&quot;ai.xinghuo_api_password = &quot;星火 api password&quot;ChatClient = ai.ChatClient()history = [      # 上下文    &#123;        &quot;role&quot;: &quot;user&quot;,        &quot;content&quot;: &quot;在下面的对话中，你要记住我的名字是r1a！&quot;    &#125;,    &#123;        &quot;role&quot;: &quot;assistant&quot;,        &quot;content&quot;: &quot;好的，r1a。&quot;    &#125;]print(&quot;\n 智谱清言文字生成 (带上下文)&quot;)print(&quot;问: 你的开发者是谁？我是谁？&quot;)for chunk in ChatClient.zhipu_chat(&quot;你的开发者是谁？我是谁？&quot;, history, max_tokens=4095, top_p=1.0, temperature=1.0):    token = chunk.choices[0].delta.content    if token:        print(token, end=&#39;&#39;, flush=True)print(&quot;\n 讯飞星火文字生成 (带上下文)&quot;)print(&quot;问: 我是谁？&quot;)for chunk in ChatClient.xinghuo_chat(&quot;我是谁？&quot;, history, max_tokens=4095, top_p=1.0, temperature=1.0):    token = chunk.choices[0].delta.content    if token:        print(token, end=&#39;&#39;, flush=True)print(&quot;\n 讯飞星火网络搜索&quot;)print(&quot;搜索词: 云湖社交APP&quot;)for token in ChatClient.web_search(&quot;云湖社交APP&quot;):    if token:        print(token, end=&#39;&#39;, flush=True)print(&quot;\n 智谱清言图片理解&quot;)print(&quot;图片: https://chat-img.jwznb.com/0f6b27ece8a613c6e03c8254096a265a.jpg&quot;)for token in ChatClient.image_vision(&quot;这张图片里包含了什么？&quot;, &quot;https://chat-img.jwznb.com/0f6b27ece8a613c6e03c8254096a265a.jpg&quot;):    if token:        print(token, end=&#39;&#39;, flush=True)print(&quot;\n 智谱清言图片生成&quot;)print(&quot;提示词: 一辆列车行驶在轨道上&quot;)print(ChatClient.image_generation(&quot;一辆列车行驶在轨道上&quot;, 1024, 1024))</code></pre><p>生成结果</p><pre><code class="language-bash"> 智谱清言文字生成 (带上下文)问: 你的开发者是谁？我是谁？我是一个人工智能模型，由一个团队的开发者共同设计和训练的。作为用户，你是与我互动的人，你是r1a。很高兴与您交流！ 讯飞星火文字生成 (带上下文)问: 你的开发者是谁？我是谁？我是讯飞星火认知大模型，我的设计和构建都是由科大讯飞的团队进行的，并且不断进行更新和改进，以让我能够为用户提供更好的服务。 讯飞星火文字生成 (带上下文)问: 我是谁？您是r1a！ 讯飞星火网络搜索搜索词: 云湖社交APP云湖社交APP是一款集多种功能于一体的社交软件，旨在为用户提供一个灵活、高效的交流平台。以下是对云湖社交APP的详细分析：1. **开放的消息接口**：云湖社交APP具备开放的服务接口，这意味着用户可以借助这些接口创造更多的可能性。2. **多设备支持**：该应用兼容多个操作系统，包括Android、iOS、Windows、MacOS等，确保用户在不同设备上都能流畅使用。3. **丰富的群聊功能**：云湖app支持不同类型的群组，满足不同用户的社交需求，无论是技术爱好者还是普通朋友，都能找到合适的交流圈子。4. **多样的交流方式**：除了文字聊天外，还支持语音和视频通讯，为用户提供更丰富的沟通体验。5. **隐私保护机制**：所有用户信息受到严格保护，确保用户在分享生活点滴时不会泄露个人信息。6. **机器人功能**：用户可以通过开放的服务接口创建自己的机器人，如官方机器人、服务监控机器人等，以提升工作效率。7. **UI优化与性能提升**：云湖社交APP不断优化其软件性能和用户界面，以提供更加流畅和愉悦的使用体验。8. **人工智能项目对接**：云湖社交APP作为生成式AI的最佳伴侣，可以无缝对接多种人工智能项目，帮助用户提高工作效率，实现创意的转化和应用。综上所述，云湖社交APP是一个多功能的社交平台，它不仅提供了基本的聊天功能，还通过开放的服务接口和隐私保护机制，为使用者提供了更多的互动机会和安全保障。无论是技术爱好者、普通朋友还是寻找新知的个体，都能在这个平台上找到适合自己的社交空间和互动方式。 智谱清言图片理解图片: https://chat-img.jwznb.com/0f6b27ece8a613c6e03c8254096a265a.jpg这张图包含了很多表情符号，包括一个超大号的笑脸和很多小一号的笑脸。超大的笑脸是黄色的，正在融化或者流淌下来，而小的表情符号则是遍布在各个位置，背景为蓝绿色。 智谱清言图片生成提示词: 一辆列车行驶在轨道上https://aigc-files.bigmodel.cn/api/cogview/20250111182941bc661da49c304234_0.png</code></pre><p>各位觉得怎么样呢？</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>给博客增加深色主题支持</title>
+      <link href="/2025/01/09/%E7%BB%99%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E6%B7%B1%E8%89%B2%E4%B8%BB%E9%A2%98%E6%94%AF%E6%8C%81/"/>
+      <url>/2025/01/09/%E7%BB%99%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E6%B7%B1%E8%89%B2%E4%B8%BB%E9%A2%98%E6%94%AF%E6%8C%81/</url>
+      
+        <content type="html"><![CDATA[<ol><li>新建深色主题css文件, 名称随意, 如 <code>dark.css</code></li><li>找到主题颜色的css文件, 将所有关于颜色定义的代码复制到 <code>dark.css</code> 里</li><li>编辑 <code>dark.css</code> 文件内的颜色值</li><li>在页面任意位置增加一个切换按钮, id随意, 内容随意, 如 <code>&lt;button id=&quot;dark-btn&quot;&gt;更换主题&lt;/button&gt;</code></li><li>增加js代码用于切换</li></ol><pre><code class="language-javascript">const darkBtn = document.getElementById(&quot;切换按钮ID&quot;);darkBtn.addEventListener(&quot;click&quot;, () =&gt; &#123;    const head = document.getElementsByTagName(&quot;head&quot;)[0];    const darkStyle = document.getElementById(&quot;dark-style&quot;);    if (darkStyle) &#123;        head.removeChild(darkStyle);        document.cookie = &quot;colorScheme=light; path=/; expires=0&quot;;    &#125; else &#123;        const link = document.createElement(&quot;link&quot;);        link.id = &quot;dark-style&quot;;        link.rel = &quot;stylesheet&quot;;        link.href = &quot;深色主题css文件路径(dark.css文件路径)&quot;;        head.appendChild(link);        document.cookie = &quot;colorScheme=dark; path=/; expires=0&quot;;    &#125;&#125;);function isDarkMode() &#123;    const cookies = document.cookie.split(&quot;;&quot;);    for (let i = 0; i &lt; cookies.length; i++) &#123;        let cookie = cookies[i].trim();        if (cookie.startsWith(&quot;colorScheme=&quot;)) &#123;            const value = cookie.substring(&quot;colorScheme=&quot;.length);            return value === &quot;dark&quot;;        &#125;    &#125;    return false;&#125;if (isDarkMode()) &#123;    darkBtn.click();&#125;</code></pre><p>注意: 该方法需要启用缓存, 不然效果很差</p><p>提示: 快速获取网站暗色CSS的方法</p><ol><li>安装 DarkReader</li><li>打开你的网站，使用DarkReader暗化</li><li>打开控制台，运行</li></ol><pre><code class="language-javascript">[...document.querySelectorAll(&quot;.darkreader&quot;)]    .flatMap((stylesheet) =&gt; [...stylesheet.sheet.cssRules])    .map((rule) =&gt; rule.cssText)    .filter(Boolean)    .join(&quot;  &quot;);</code></pre><p>然后输出的css就是你网站的暗色主题</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>NL tg群里的给各位看个乐子</title>
+      <link href="/2025/01/06/NL%20tg%E7%BE%A4%E9%87%8C%E7%9A%84%E7%BB%99%E5%90%84%E4%BD%8D%E7%9C%8B%E4%B8%AA%E4%B9%90%E5%AD%90/"/>
+      <url>/2025/01/06/NL%20tg%E7%BE%A4%E9%87%8C%E7%9A%84%E7%BB%99%E5%90%84%E4%BD%8D%E7%9C%8B%E4%B8%AA%E4%B9%90%E5%AD%90/</url>
+      
+        <content type="html"><![CDATA[<p>前情提要：<br>时间因<a href="https://forum.serv00.com/d/2176-strengthen-registration-detection">此贴</a>而起，但是我没错：<br><img src="https://s.rmimg.com/2025-01-06/1736167290-515754-image.png"></p><p>起因：<br><img src="https://s.rmimg.com/2025-01-06/1736167352-935013-image.png"><br><img src="https://s.rmimg.com/2025-01-06/1736167379-34634-image.png"></p><p>经过：<br><img src="https://s.rmimg.com/2025-01-06/1736167463-264271-image.png"><br><img src="https://s.rmimg.com/2025-01-06/1736167494-100384-image.png"><br><img src="https://s.rmimg.com/2025-01-06/1736167525-838011-image.png"><br><img src="https://s.rmimg.com/2025-01-06/1736167567-34073-image.png"><br><img src="https://s.rmimg.com/2025-01-06/1736167595-596676-image.png"><br><img src="https://s.rmimg.com/2025-01-06/1736167626-795587-image.png"><br><img src="https://s.rmimg.com/2025-01-06/1736167662-597265-image.png"><br><img src="https://s.rmimg.com/2025-01-06/1736167688-251981-image.png"><br><img src="https://s.rmimg.com/2025-01-06/1736167758-236082-image.png"></p><p>结果：<br>emmm，没结果了，不过我想说，你如果觉得你的行为很对，请到Serv00论坛来反驳我，在tg群里骂我算本事吗？<br>我那帖子200多人看过，也不见你一句说我反对</p><p><a href="https://www.nodeloc.com/d/20042/8">https://www.nodeloc.com/d/20042/8</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>在Typecho中加入自定义的友链功能</title>
+      <link href="/2025/01/04/%E5%9C%A8Typecho%E4%B8%AD%E5%8A%A0%E5%85%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E5%8F%8B%E9%93%BE%E5%8A%9F%E8%83%BD/"/>
+      <url>/2025/01/04/%E5%9C%A8Typecho%E4%B8%AD%E5%8A%A0%E5%85%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E5%8F%8B%E9%93%BE%E5%8A%9F%E8%83%BD/</url>
+      
+        <content type="html"><![CDATA[<p>首先在主题的 <code>functions.php</code> 中新加一个多行输入框<br><img src="https://s.rmimg.com/2025-01-04/1735994677-384654-2025-01-04-204227.png"><br>名称随意<br>然后就可以用 <code>$this-&gt;options-&gt;你的自定义名称</code> 获取内容或 <code>$this-&gt;options-&gt;你的自定义名称()</code> 直接输出<br>例如我是用的json<br><img src="https://s.rmimg.com/2025-01-04/1735995064-865538-image.png"></p><p>然后新建一个独立页面，比如links，或者其他名称<br>建立一个插入点，比如 <code>&lt;div id=&quot;linkItemsArea&quot;&gt;&lt;/div&gt;</code><br><img src="https://s.rmimg.com/2025-01-04/1735994885-489446-image.png"></p><p>前端页面处理<br><img src="https://s.rmimg.com/2025-01-04/1735995491-925942-2025-01-04-205142.png"><br>这样一个自定义友链就写好了，可以增加一点代码，使其更好看</p><p>我的js代码</p><pre><code class="language-javascript">let linkItemsHTML = &quot;&quot;;for (const JsonItem of JSON.parse(`&lt;?php $this-&gt;options-&gt;siteOutLinks() ?&gt;`)) &#123;    linkItemsHTML += `&lt;hr class=&quot;link-separator&quot;&gt;&lt;div class=&quot;link-item&quot;&gt;&lt;img class=&quot;link-item-avatar&quot; src=&quot;$&#123;JsonItem.avatar&#125;&quot;&gt;&lt;div class=&quot;link-item-content&quot;&gt;&lt;a href=&quot;$&#123;JsonItem.url&#125;&quot; target=&quot;_blank&quot;&gt;&lt;h2&gt;$&#123;JsonItem.title&#125;&lt;/h2&gt;&lt;/a&gt;&lt;p&gt;$&#123;JsonItem.description&#125;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;`;&#125;document.getElementById(&quot;linkItemsArea&quot;).innerHTML = linkItemsHTML;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>记一次对IE浏览器的兼容</title>
+      <link href="/2025/01/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%AF%B9IE%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%85%BC%E5%AE%B9/"/>
+      <url>/2025/01/04/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%AF%B9IE%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%85%BC%E5%AE%B9/</url>
+      
+        <content type="html"><![CDATA[<p>能到IE7，但没截图，先用个IE8的截图吧<br>用的在线IE浏览器</p><p><img src="https://s.rmimg.com/2025-01-04/1735963406-821520-browserling-screenshot-1.png"><br><img src="https://s.rmimg.com/2025-01-04/1735963415-666308-browserling-screenshot.png"></p><p>问题最大的地方是友链页面（links）<br>因不支持flex布局，所以“升级”到了float布局，兼容性+1</p><p>以及首页的标题区域和文章区域的间隔，这个可以使用margin-top解决，只在IE浏览器访问时在文章区域加入 <code>margin-top: 40px;</code><br>搜索框在IE7中会出bug，但是免费时间用完了，修不了</p><p>当时的截图（IE7）<br><img src="https://s.rmimg.com/2025-01-04/1735963912-277278-4ada49847ea549faa435d09724db6c63.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>记一次对博客的性能优化</title>
+      <link href="/2024/12/27/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%AF%B9%E5%8D%9A%E5%AE%A2%E7%9A%84%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+      <url>/2024/12/27/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%AF%B9%E5%8D%9A%E5%AE%A2%E7%9A%84%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</url>
+      
+        <content type="html"><![CDATA[<p>主要有这几个方面:</p><ol><li>缓存&#x2F;压缩, 这个简单, 去托管那里打开即可</li><li>关于jquery, 这个主题用到了jquery, 但是用处却是作为侧边栏的展开与折叠, 这完全是大材小用, 我用纯js实现了同样的功能, 并移除了jquery. (缺点是手机端侧边栏展开与折叠的动画没了, 但这用少部分微不足道的动画换取性能提升, 我认为很值)</li><li>关于外部js资源, 如这个站使用了matomo的分析, 但对于整个网站的加载并无太多依赖, 在script标签后面加上async, 使用异步加载便可</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>能把serv00用的这么狠也是神人了（有后续）</title>
+      <link href="/2024/12/27/%E8%83%BD%E6%8A%8Aserv00%E7%94%A8%E7%9A%84%E8%BF%99%E4%B9%88%E7%8B%A0%E4%B9%9F%E6%98%AF%E7%A5%9E%E4%BA%BA%E4%BA%86-%E6%9C%89%E5%90%8E%E7%BB%AD-/"/>
+      <url>/2024/12/27/%E8%83%BD%E6%8A%8Aserv00%E7%94%A8%E7%9A%84%E8%BF%99%E4%B9%88%E7%8B%A0%E4%B9%9F%E6%98%AF%E7%A5%9E%E4%BA%BA%E4%BA%86-%E6%9C%89%E5%90%8E%E7%BB%AD-/</url>
+      
+        <content type="html"><![CDATA[<p>我搞了个serv00自动保号，群友图方便（也有不会的）就让我帮忙一起保号<br>然后…..</p><p><img src="https://s.rmimg.com/2024-12-26/1735218727-510414-26-12-2024-21425-panel13serv00com.jpg"><br>能把serv00用的这么狠的也是神人了，想着劝告他一下，结果…</p><p><img src="https://s.rmimg.com/2024-12-26/1735218760-184981-2024-12-26-210702.png"><br>啊？不知道？？？关键是他还没被封号！wt?!!</p><p>后续：<br><img src="https://s.rmimg.com/2024-12-26/1735220484-636430-2024-12-26-214017.png"><br>他那个机器人各个群都在用，分分钟上百条消息，全存变量里，6！</p><p><img src="https://s.rmimg.com/2024-12-26/1735222240-16183-telegram-cloud-photo-size-5-6298648232431043865-y.jpg"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>在debian-12.8上安装云湖</title>
+      <link href="/2024/12/25/%E5%9C%A8debian-12.8%E4%B8%8A%E5%AE%89%E8%A3%85%E4%BA%91%E6%B9%96/"/>
+      <url>/2024/12/25/%E5%9C%A8debian-12.8%E4%B8%8A%E5%AE%89%E8%A3%85%E4%BA%91%E6%B9%96/</url>
+      
+        <content type="html"><![CDATA[<p>若你的云湖装不上或出现如下问题</p><pre><code>yunhu: /lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.32&#39; not found (required by /usr/share/yunhu/lib/libdesktop_drop_plugin.so)yunhu: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.38&#39; not found (required by /usr/share/yunhu/lib/libflutter_webrtc_plugin.so)yunhu: /lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.32&#39; not found (required by /usr/share/yunhu/lib/libflutter_webrtc_plugin.so)</code></pre><p>则可以继续看本文章</p><p>这些依赖可以简单的通过apt安装<br><code>mpv</code>, <code>libsqlite3-dev:amd64</code>, <code>libmpv2:amd64</code></p><p>这些依赖需要添加软件源安装<br><code>libc6</code><br>软件源: <code>deb http://deb.debian.org/debian sid main</code><br>参考: <a href="https://blog.csdn.net/weixin_45970111/article/details/130842401">https://blog.csdn.net/weixin_45970111/article/details/130842401</a></p><p>这些依赖需要编译安装<br><code>gcc-14.2.0 (libstdc++.so.6.0.33)</code><br>下载: <a href="http://ftp.gnu.org/gnu/gcc/gcc-14.2.0/">http://ftp.gnu.org/gnu/gcc/gcc-14.2.0/</a><br>参考: <a href="https://zhuanlan.zhihu.com/p/498529973">https://zhuanlan.zhihu.com/p/498529973</a></p><p>(因可能违反Serv00 Tos, 编译好的so文件不再提供, 请前往反馈群云盘的 <code>linux-yh-libs</code> 文件夹获取)</p><p>然后<a href="https://www.yhchat.com/c/p/1087">前往下载页面</a>正常安装即可</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>HttpCats 表情包</title>
+      <link href="/2024/12/22/HttpCats%20%E8%A1%A8%E6%83%85%E5%8C%85/"/>
+      <url>/2024/12/22/HttpCats%20%E8%A1%A8%E6%83%85%E5%8C%85/</url>
+      
+        <content type="html"><![CDATA[<p><a href="https://http.cat/">https://http.cat</a></p><p><img src="https://s.rmimg.com/2024-12-22/1734870655-469155-100-continue.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870656-864282-101-switching-protocols.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870657-473797-102-processing.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870657-795373-103-early-hints.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870658-95968-200-ok.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870658-298696-201-created.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870658-496143-202-accepted.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870658-698208-203-non-authoritative-information.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870659-203091-204-no-content.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870659-394701-205-reset-content.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870659-906233-206-partial-content.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870660-307675-207-multi-status.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870660-898853-208-already-reported.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870661-310503-214-transformation-applied.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870661-883270-226-im-used.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870662-596889-300-multiple-choices.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870662-990674-301-moved-permanently.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870663-420439-302-found.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870663-898501-303-see-other.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870664-200430-304-not-modified.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870702-564384-305-use-proxy.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870702-863486-307-temporary-redirect.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870703-163784-308-permanent-redirect.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870703-585211-400-bad-request.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870703-886076-401-unauthorized.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870704-98119-402-payment-required.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870704-481481-403-forbidden.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870704-976268-404-not-found.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870705-199622-405-method-not-allowed.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870706-3508-406-not-acceptable.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870706-701589-407-proxy-authentication-required.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870707-480373-408-request-timeout.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870708-300753-409-conflict.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870708-707667-410-gone.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870709-208406-411-length-required.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870709-706191-412-precondition-failed.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870710-201597-413-payload-too-large.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870710-512897-414-request-uri-too-long.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870710-906124-415-unsupported-media-type.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870711-199874-416-request-range-not-satisfiable.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870766-656536-417-expectation-failed.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870767-70506-418-im-a-teapot.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870767-460728-420-enhance-your-calm.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870768-72011-421-misdirected-request.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870768-292814-422-unprocessable-entity.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870768-567270-423-locked.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870768-966095-424-failed-dependency.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870795-884795-425-too-early.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870796-394993-426-upgrade-required.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870796-990797-428-precondition-required.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870797-696653-429-too-many-requests.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870797-993320-431-request-header-fields-too-large.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870798-595228-444-no-response.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870820-301214-450-blocked-by-windows-parental-controls.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870820-605987-451-unavailable-for-legal-reasons.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870821-203829-495-ssl-certificate-error.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870821-707430-496-ssl-certificate-required.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870822-297214-497-http-request-sent-to-https-port.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870822-721975-498-token-expired-invalid.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870823-300701-499-client-closed-request.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870824-106307-500-internal-server-error.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870841-78979-501-not-implemented.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870842-683174-502-bad-gateway.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870844-416188-503-service-unavailable.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870845-902213-504-gateway-timeout.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870846-601748-506-variant-also-negotiates.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870847-401580-507-insufficient-storage.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870848-5647-508-loop-detected.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870849-35903-509-bandwidth-limit-exceeded.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870850-231979-510-not-extended.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870874-923533-511-network-authentication-required.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870875-232465-521-web-server-is-down.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870875-444723-522-connection-timed-out.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870875-753139-523-origin-is-unreachable.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870876-246970-525-ssl-handshake-failed.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870876-526189-530-site-frozen.jpg"><br><img src="https://s.rmimg.com/2024-12-22/1734870876-732885-599-network-connect-timeout-error.jpg"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>适用于Typecho的谷歌必应百度自动URL提交脚本</title>
+      <link href="/2024/12/19/%E9%80%82%E7%94%A8%E4%BA%8ETypecho%E7%9A%84%E8%B0%B7%E6%AD%8C%E5%BF%85%E5%BA%94%E7%99%BE%E5%BA%A6%E8%87%AA%E5%8A%A8URL%E6%8F%90%E4%BA%A4%E8%84%9A%E6%9C%AC/"/>
+      <url>/2024/12/19/%E9%80%82%E7%94%A8%E4%BA%8ETypecho%E7%9A%84%E8%B0%B7%E6%AD%8C%E5%BF%85%E5%BA%94%E7%99%BE%E5%BA%A6%E8%87%AA%E5%8A%A8URL%E6%8F%90%E4%BA%A4%E8%84%9A%E6%9C%AC/</url>
+      
+        <content type="html"><![CDATA[<h1 id="仅适用于使用mysql数据库安装的typecho且使用默认URL结构！"><a href="#仅适用于使用mysql数据库安装的typecho且使用默认URL结构！" class="headerlink" title="仅适用于使用mysql数据库安装的typecho且使用默认URL结构！"></a>仅适用于使用mysql数据库安装的typecho且使用默认URL结构！</h1><p>效果图：<br><img src="https://s.rmimg.com/2024-12-19/1734598864-426541-2024-12-19-165530.png"></p><p>参考：<br><a href="https://blog.csdn.net/qq_36905522/article/details/136024994">https://blog.csdn.net/qq_36905522/article/details/136024994</a></p><p>依赖：</p><ul><li>python3.x</li><li>python内置包：json，urllib</li><li>python第三方包：requests，httplib2，oauth2client</li><li>mysql-driver：<a href="https://dev.oneall.eu.org/archives/15/%EF%BC%88%E8%8B%A5%E4%BD%A0%E6%98%AFserv00">https://dev.oneall.eu.org/archives/15/（若你是serv00</a> s2也可以直接用我提供的地址）</li><li>将下载的Google Index Api Key（一般为 <code>gen-lang-client-xxx.json</code> ）保存为 <code>GoogleIndexApiKey.json</code></li><li>准备必应和百度的API token</li></ul><p>代码：</p><pre><code class="language-python">import jsonfrom urllib.parse import quotefrom oauth2client.service_account import ServiceAccountCredentialsimport httplib2import requestsdriver_url = &quot; mysql-driver地址 &quot;query_info = &#123;    &quot;host&quot;: &quot;typecho博客安装数据库地址&quot;,    &quot;port&quot;: &quot;typecho博客安装数据库端口&quot;,    &quot;username&quot;: &quot;typecho博客安装数据库用户名&quot;,    &quot;password&quot;: &quot;typecho博客安装数据库密码&quot;,    &quot;database&quot;: &quot;typecho博客安装数据库名&quot;,    &quot;querys&quot;: &quot;SELECT * FROM typecho_contents&quot;&#125;response = requests.post(driver_url, query_info)article = response.json()[0][&quot;results&quot;]blog_link_base = &quot;博客主页地址&quot;  #结尾不要加 /，如 https://dev.oneall.eu.orglinks = [blog_link_base, ]for item in article:    article_cid = item[&quot;cid&quot;]    article_type = item[&quot;type&quot;]    article_slug = item[&quot;slug&quot;]    if article_type == &quot;post&quot;:        links.append(f&quot;&#123;blog_link_base&#125;/archives/&#123;article_cid&#125;/&quot;)        continue    if article_type == &quot;page&quot;:        links.append(f&quot;&#123;blog_link_base&#125;/&#123;article_slug&#125;.html&quot;)        continuebing_index_api_url = &quot;https://www.bing.com/indexnow?url=&#123;&#125;&amp;key=必应API Key&quot;baidu_index_api_url = f&quot;http://data.zz.baidu.com/urls?site=&#123;blog_link_base&#125;&amp;token=百度API Token&quot;google_index_scopes = [&quot;https://www.googleapis.com/auth/indexing&quot;, ]google_index_endpoint = &quot;https://indexing.googleapis.com/v3/urlNotifications:publish&quot;google_index_key = &quot;GoogleIndexApiKey.json&quot;google_index_credentials = ServiceAccountCredentials.from_json_keyfile_name(google_index_key, scopes=google_index_scopes)google_index_http = google_index_credentials.authorize(httplib2.Http())for link in links:    print(&quot;\nIndexing:&quot;, link)    print(&quot;  Bing:&quot;, end=&quot; &quot;)    response = requests.get(bing_index_api_url.format(quote(link)))    print(response.status_code)    print(&quot;  Baidu:&quot;, end=&quot; &quot;)    response = requests.post(baidu_index_api_url, quote(link))    print(response.status_code)    print(&quot;  Google:&quot;, end=&quot; &quot;)    google_index_content = json.dumps(&#123;        &quot;url&quot;: link,        &quot;type&quot;: &quot;URL_UPDATED&quot;    &#125;)    response, content = google_index_http.request(google_index_endpoint, method=&quot;POST&quot;, body=google_index_content)    print(response[&quot;status&quot;])</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>为 old fashion 主题的新版typecho适配</title>
+      <link href="/2024/12/13/%E4%B8%BA%20old%20fashion%20%E4%B8%BB%E9%A2%98%E7%9A%84%E6%96%B0%E7%89%88typecho%E9%80%82%E9%85%8D/"/>
+      <url>/2024/12/13/%E4%B8%BA%20old%20fashion%20%E4%B8%BB%E9%A2%98%E7%9A%84%E6%96%B0%E7%89%88typecho%E9%80%82%E9%85%8D/</url>
+      
+        <content type="html"><![CDATA[<p>主题GitHub：<a href="https://github.com/MrXiaoM/typecho-theme-old-fashion">https://github.com/MrXiaoM/typecho-theme-old-fashion</a></p><h1 id="环境介绍："><a href="#环境介绍：" class="headerlink" title="环境介绍："></a>环境介绍：</h1><ul><li>typecho版本：1.2.1</li><li>php版本&#x2F;扩展：默认</li></ul><h1 id="主要问题："><a href="#主要问题：" class="headerlink" title="主要问题："></a>主要问题：</h1><ul><li>主题安装后，点击主题设置，会报500错误，<code>Class &#39;Typecho\Widget\Helper\Form\Element\TextArea&#39; not found</code></li><li>当在手机端浏览时，搜索框会挡住大部分标题</li></ul><h1 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h1><ul><li>将TextArea写法变更为：<code>\Typecho\Widget\Helper\Form\Element\Textarea</code></li><li>将搜索框移到左侧边栏（当手机端浏览时，侧边栏会被折叠）</li></ul><h1 id="影响文件："><a href="#影响文件：" class="headerlink" title="影响文件："></a>影响文件：</h1><ul><li>functions.php</li><li>header.php</li><li>style.css</li></ul><h1 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h1><ul><li><a href="https://dev.oneall.eu.org/usr/uploads/2024/12/2726861087.zip">https://dev.oneall.eu.org/usr/uploads/2024/12/2726861087.zip</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hysteria2表情包</title>
+      <link href="/2024/12/09/Hysteria2%E8%A1%A8%E6%83%85%E5%8C%85/"/>
+      <url>/2024/12/09/Hysteria2%E8%A1%A8%E6%83%85%E5%8C%85/</url>
+      
+        <content type="html"><![CDATA[<h1 id="无文字版"><a href="#无文字版" class="headerlink" title="无文字版"></a>无文字版</h1><p><img src="https://s.rmimg.com/2024-11-07/1730943260-564709-1730942657949.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943260-687019-1730942741539.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943262-38136-1730942972086.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943262-188800-1730942746060.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943262-288499-1730942986995.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943262-338682-1730942993035.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943262-667394-1730943003603.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943262-725048-1730942998400.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943262-792436-1730943008411.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943263-559260-1730943018257.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943263-857260-1730943013516.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943263-907168-1730943023702.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943264-81994-1730943028610.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943265-703604-1730943033520.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943265-769669-1730943044097.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943265-854270-1730943038948.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943265-905966-1730943048844.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943266-4694-1730943053391.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943266-61780-1730943061689.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730943266-350360-1730943057612.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730947802-604644-1730947750186.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730947802-688777-1730947756059.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730947802-748527-1730947765833.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730947803-623959-1730947761557.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730947803-675945-1730947770042.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730947803-821894-1730947773670.jpg" alt="img"></p><h1 id="有文字版"><a href="#有文字版" class="headerlink" title="有文字版"></a>有文字版</h1><p><img src="https://s.rmimg.com/2024-11-07/1730946928-809453-1730946737625.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946929-107786-1730946741988.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946929-276992-1730946754071.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946929-357040-1730946747040.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946929-516766-1730946758913.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946929-574189-1730946763907.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946929-807919-1730946774679.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946929-881617-1730946768356.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946929-937008-1730946778929.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946930-94812-1730946783400.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946931-127255-1730946791981.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946931-176043-1730946787795.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946931-256626-1730946796069.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946931-317597-1730946800334.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946931-372773-1730946810477.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946931-426369-1730946804625.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946931-477988-1730946814953.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946931-539541-1730946819484.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946931-593028-1730946828932.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730946931-898485-1730946824100.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730947630-841951-1730947572948.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730947631-35808-1730947577393.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730947631-609269-1730947582480.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730947631-891866-1730947586293.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730947632-108385-1730947590627.jpg" alt="img"><br><img src="https://s.rmimg.com/2024-11-07/1730947632-393097-1730947594654.jpg" alt="img"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>一个简易php网盘/文件管理器程序</title>
+      <link href="/2024/12/09/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93php%E7%BD%91%E7%9B%98-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8%E7%A8%8B%E5%BA%8F/"/>
+      <url>/2024/12/09/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93php%E7%BD%91%E7%9B%98-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8%E7%A8%8B%E5%BA%8F/</url>
+      
+        <content type="html"><![CDATA[<p>“自研”的PHP网盘程序，支持 上传下载文件，新建文件与文件夹，删除文件与文件夹，编辑文本文件<br>有config.json，每一个功能都可以单独开关</p><p>demo：<a href="http://phpdrive-dev.web1337.net/">http://phpdrive-dev.web1337.net/</a><br>开源地址：<a href="https://github.com/runoneall/phpdrive">https://github.com/runoneall/phpdrive</a></p><p><del>TODO：管理面板</del> 管理面板已完成</p><p>测试阶段，欢迎挑错<br>（部分代码使用ai编写）</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>通过API查询mysql数据库</title>
+      <link href="/2024/12/09/%E9%80%9A%E8%BF%87API%E6%9F%A5%E8%AF%A2mysql%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+      <url>/2024/12/09/%E9%80%9A%E8%BF%87API%E6%9F%A5%E8%AF%A2mysql%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+      
+        <content type="html"><![CDATA[<p>demo: <a href="https://runoneall.serv00.net/Files/mysql-driver.php">https://runoneall.serv00.net/Files/mysql-driver.php</a></p><p>效果图:<br><img src="https://s.rmimg.com/2024-11-18/1731916381-650299-2024-11-18-34935.png"><br><img src="https://s.rmimg.com/2024-11-18/1731916384-725557-2024-11-18-35001.png"></p><p>代码下载:<br><a href="https://dev.oneall.eu.org/usr/uploads/2024/12/3853467506.zip">https://dev.oneall.eu.org/usr/uploads/2024/12/3853467506.zip</a></p><p>请求方法:</p><ul><li>发送post请求</li><li>表单格式</li><li>host指定数据库地址 String</li><li>port指定端口 Int</li><li>username指定用户 String</li><li>password指定密码 String</li><li>database指定数据库 String</li><li>querys指定查询语句 String （多个语句用<code>;;</code>隔开）</li></ul><p>请求示例:</p><pre><code class="language-python">import requestsdata = &#123;    &quot;host&quot;: &quot;&lt;地址&gt;&quot;,    &quot;port&quot;: &lt;端口&gt;,    &quot;username&quot;: &quot;&lt;用户名&gt;&quot;,    &quot;password&quot;: &quot;&lt;密码&gt;&quot;,    &quot;database&quot;: &quot;&lt;数据库名&gt;&quot;,    &quot;querys&quot;: &quot;&lt;查询语句&gt;&quot;&#125;print(requests.post(&quot;https://runoneall.serv00.net/Files/mysql-driver.php&quot;, data=data).text)</code></pre><p>在Cloudflare Worker中使用: (<code>await sqlQuery(&quot;SQL&quot;)</code>)</p><pre><code class="language-js">async function sqlQuery(sqls) &#123;    const apiUrl = &#39;https://runoneall.serv00.net/Files/mysql-driver.php&#39;    const info = &#123;        host: &quot;&lt;地址&gt;&quot;,port: &lt;端口&gt;,username: &quot;&lt;用户名&gt;&quot;,        password: &quot;&lt;密码&gt;&quot;,database: &quot;&lt;数据库名&gt;&quot;,querys: sqls&#125;;    const formData = new URLSearchParams()    for (const key in info) &#123;if (info.hasOwnProperty(key)) &#123;formData.append(key, info[key])&#125;&#125;    const response = await fetch(apiUrl, &#123;method: &quot;POST&quot;,        headers: &#123;&#39;Content-Type&#39;: &#39;application/x-www-form-urlencoded&#39;&#125;,        body: formData.toString()&#125;)    return response.body&#125;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>自制xui批量检测存活脚本</title>
+      <link href="/2024/12/09/%E8%87%AA%E5%88%B6xui%E6%89%B9%E9%87%8F%E6%A3%80%E6%B5%8B%E5%AD%98%E6%B4%BB%E8%84%9A%E6%9C%AC/"/>
+      <url>/2024/12/09/%E8%87%AA%E5%88%B6xui%E6%89%B9%E9%87%8F%E6%A3%80%E6%B5%8B%E5%AD%98%E6%B4%BB%E8%84%9A%E6%9C%AC/</url>
+      
+        <content type="html"><![CDATA[<p>将得到的xui账号文件保存为 <code>source.txt</code><br><img src="https://s.rmimg.com/2024-11-22/1732280249-188191-2024-11-22-85242.png"></p><p>下载脚本<br><a href="https://dev.oneall.eu.org/usr/uploads/2024/12/2068079931.zip">https://dev.oneall.eu.org/usr/uploads/2024/12/2068079931.zip</a></p><p>首先运行 <code>tourl.py</code> 生成登录url地址<br><img src="https://s.rmimg.com/2024-11-22/1732280223-441826-2024-11-22-85422.png"><br><img src="https://s.rmimg.com/2024-11-22/1732280421-407646-2024-11-22-85453.png"></p><p>再运行 scan.py 并指定密码开始检测<br><img src="https://s.rmimg.com/2024-11-22/1732280295-508836-2024-11-22-85110.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>一个简单的Go语言轮子</title>
+      <link href="/2024/12/09/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84Go%E8%AF%AD%E8%A8%80%E8%BD%AE%E5%AD%90/"/>
+      <url>/2024/12/09/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84Go%E8%AF%AD%E8%A8%80%E8%BD%AE%E5%AD%90/</url>
+      
+        <content type="html"><![CDATA[<p>此为我自己在写项目时用到的轮子，整理了一下<br>地址：<a href="https://github.com/runoneall/goutil">https://github.com/runoneall/goutil</a><br>实现：命令行参数，配置文件，日期，数据库，网络请求等相关功能，简化开发</p><h2 id="command-go"><a href="#command-go" class="headerlink" title="command.go"></a>command.go</h2><ul><li><code>Command_Args()</code> 返回类型 <code>map[string]string</code> 参数字典</li><li><code>Command_GetArg(arg string)</code> 返回类型 <code>string</code> 参数 <code>arg</code> 的值，如果不存在返回空字符串</li></ul><h2 id="config-go"><a href="#config-go" class="headerlink" title="config.go"></a>config.go</h2><ul><li><code>Config_Read_File(filepath string)</code> 返回类型 <code>map[string]interface&#123;&#125;</code> 从文件中获取配置，返回配置字典</li><li><code>Config_Write_File(filepath string, configMap map[string]interface&#123;&#125;)</code> 无返回 将配置字典写入文件</li><li><code>Config_Format(content string, targetFormat string)</code> 返回类型 <code>map[string]interface&#123;&#125;</code> 从字符串中解析配置，需指定配置类型 <code>targetFormat</code>，返回配置字典</li></ul><h2 id="date-go"><a href="#date-go" class="headerlink" title="date.go"></a>date.go</h2><ul><li><code>Date_Format(formatQuery string, useLong bool, useAlias bool)</code> 返回类型 <code>string</code> 解析日期字符串 <code>formatQuery</code>; 使用 <code>&#123;&#123;year&#125;&#125;</code> 作为年, <code>&#123;&#123;month&#125;&#125;</code> 作为月, <code>&#123;&#123;day&#125;&#125;</code> 作为日, <code>&#123;&#123;hour&#125;&#125;</code> 作为时, <code>&#123;&#123;minute&#125;&#125;</code> 作为分, <code>&#123;&#123;second&#125;&#125;</code> 作为秒, <code>&#123;&#123;week&#125;&#125;</code> 作为星期; 设置 <code>useLong</code> 为 <code>true</code> 自动补零, 设置 <code>useAlias</code> 为 <code>true</code> 使用月和星期的英文名</li></ul><h2 id="mysql-go"><a href="#mysql-go" class="headerlink" title="mysql.go"></a>mysql.go</h2><ul><li><code>Mysql_MakeDSN(host string, port int, user string, password string, dbname string)</code> 返回类型 <code>string</code> 制作 DSN 字符串</li><li><code>Mysql_Connect(dsn string)</code> 返回类型 <code>*sql.DB</code> 使用 DSN 连接数据库，返回数据库连接对象</li><li><code>Mysql_Exec(db *sql.DB, sql string)</code> 返回类型 <code>sql.Result</code> 运行 SQL 语句，返回结果对象</li><li><code>Mysql_Query(db *sql.DB, sql string)</code> 返回类型 <code>[]map[string]interface&#123;&#125;</code> 使用 SQL 语句查询数据库，返回结果字典</li><li><code>Mysql_Close(db *sql.DB)</code> 无返回 关闭数据库连接</li></ul><h2 id="network-go"><a href="#network-go" class="headerlink" title="network.go"></a>network.go</h2><ul><li><code>Network_Get(url string, headers ...map[string]string)</code> 返回类型 <code>*http.Response</code> 发送 GET 请求到 <code>url</code>，可选请求头 <code>headers</code></li><li><code>Network_Post(url string, data any, dataType string, headers ...map[string]string)</code> 返回类型 <code>*http.Response</code> 发送 POST 请求到 <code>url</code>， <code>data</code> 为 请求体， <code>dataType</code> 为请求体类型, 可选请求头 <code>headers</code>; 当 <code>dataType</code> 为 <code>text</code> data 必须为 <code>string</code>, 当 <code>dataType</code> 为 <code>binary</code> data 必须为 <code>[]byte</code>, 当 <code>dataType</code> 为 <code>json</code> data 必须为 <code>map[string]interface&#123;&#125;</code>, 当 <code>dataType</code> 为 <code>form-kv</code> data 必须为 <code>map[string]string</code>, 当 <code>dataType</code> 为 <code>form-file</code> data 必须为 <code>map[string]string</code> 格式 <code>键名:文件路径</code></li></ul><h2 id="gobr-script"><a href="#gobr-script" class="headerlink" title="gobr script"></a>gobr script</h2><ul><li>自己的一个简单的shell脚本，自动编译go文件并运行，支持参数传递</li><li>使用: <code>gobr &lt;build name&gt; [sub args]</code></li><li><code>&lt;build name&gt;</code> 为要编译的go文件名，不包含后缀 <code>.go</code></li><li><code>[sub args]</code> 为传递给go文件的参数</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>自动制作屏蔽词脚本</title>
+      <link href="/2024/12/09/%E8%87%AA%E5%8A%A8%E5%88%B6%E4%BD%9C%E5%B1%8F%E8%94%BD%E8%AF%8D%E8%84%9A%E6%9C%AC/"/>
+      <url>/2024/12/09/%E8%87%AA%E5%8A%A8%E5%88%B6%E4%BD%9C%E5%B1%8F%E8%94%BD%E8%AF%8D%E8%84%9A%E6%9C%AC/</url>
+      
+        <content type="html"><![CDATA[<p>使用到的仓库:</p><ul><li>屏蔽词库：<a href="https://github.com/57ing/Sensitive-word">https://github.com/57ing/Sensitive-word</a></li><li>域名词库：<a href="https://github.com/gfwlist/gfwlist">https://github.com/gfwlist/gfwlist</a></li></ul><pre><code class="language-python">import requestsimport os# 清理文件夹os.system(&quot;cd source &amp;&amp; rm -rf ./*&quot;)# 下载屏蔽词文件block_word_url = &quot;https://codeload.github.com/57ing/Sensitive-word/zip/refs/heads/master&quot;response = requests.get(block_word_url, stream=True)response.raise_for_status()with open(&quot;./source/block_words.zip&quot;, &#39;wb&#39;) as f:    for chunk in response.iter_content(chunk_size=1024):        if chunk:            f.write(chunk)# 解压屏蔽词文件os.system(&quot;unzip ./source/block_words.zip -d ./source/&quot;)os.system(&quot;rm ./source/block_words.zip&quot;)os.system(&quot;cd ./source/Sensitive-word-master &amp;&amp; rm README.md key.txt 敏感词库表统计.xlsx 敏感词库表统计.txt&quot;)os.system(&quot;cd ./source/Sensitive-word-master &amp;&amp; mv ./* ..&quot;)os.system(&quot;cd ./source &amp;&amp; rm -rf ./Sensitive-word-master&quot;)# 转换屏蔽词文件编码file_list = os.listdir(&quot;./source&quot;)for file_item in file_list:    with open(f&quot;./source/&#123;file_item&#125;&quot;, &#39;r&#39;, encoding=&quot;gb18030&quot;) as f_in:        content = f_in.read()    with open(f&quot;./source/&#123;file_item&#125;&quot;, &#39;w&#39;, encoding=&quot;utf-8&quot;) as f_out:        f_out.write(content)# 下载GFW文件gfw_url = &quot;https://raw.githubusercontent.com/gfwlist/gfwlist/refs/heads/master/gfwlist.txt&quot;response = requests.get(gfw_url, stream=True)with open(&quot;./source/gfwlist_encode.txt&quot;, &#39;wb&#39;) as f:    for chunk in response.iter_content(chunk_size=1024):        if chunk:            f.write(chunk)os.system(&quot;cd ./source &amp;&amp; base64 -d gfwlist_encode.txt &gt; gfwlist_decode.txt&quot;)os.system(&quot;cd ./source &amp;&amp; rm gfwlist_encode.txt&quot;)# 筛选GFW文件with open(&quot;./source/gfwlist_decode.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:    content = f.read()content = content.split(&quot;\n&quot;)content = [i for i in content if i != &quot;&quot;]lines = list()for item in content:    if &quot;*&quot; in item:        continue    if item.startswith(&quot;||&quot;):        lines.append(item[2:])        continue    if item.startswith(&quot;|&quot;):        lines.append(item[1:])        continue    if item.startswith(&quot;.&quot;):        lines.append(item[1:])        continuewith open(&quot;./source/gfwlist.txt&quot;, &quot;a&quot;, encoding=&quot;utf-8&quot;) as f:    for line in lines:        f.write(line+&quot;\n&quot;)os.system(&quot;cd ./source &amp;&amp; rm gfwlist_decode.txt&quot;)# 整合文件file_list = os.listdir(&quot;./source&quot;)for file_item in file_list:    with open(f&quot;./source/&#123;file_item&#125;&quot;, &#39;r&#39;, encoding=&quot;utf-8&quot;) as f:        content = f.read()    content = content.split(&quot;\n&quot;)    content = [i for i in content if i != &quot;&quot;]    with open(&quot;./source/block-words.txt&quot;, &#39;a&#39;, encoding=&quot;utf-8&quot;) as f:        for line in content:            f.write(line+&quot;\n&quot;)    os.system(f&quot;cd ./source &amp;&amp; rm &#123;file_item&#125;&quot;)</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>自建doh服务器+设置Firefox使用</title>
+      <link href="/2024/12/09/%E8%87%AA%E5%BB%BAdoh%E6%9C%8D%E5%8A%A1%E5%99%A8-%E8%AE%BE%E7%BD%AEFirefox%E4%BD%BF%E7%94%A8/"/>
+      <url>/2024/12/09/%E8%87%AA%E5%BB%BAdoh%E6%9C%8D%E5%8A%A1%E5%99%A8-%E8%AE%BE%E7%BD%AEFirefox%E4%BD%BF%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[<h1 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h1><ul><li>本教程不会详细解释各名词含义, 需要了解自行搜索</li><li>本教程有些步骤需要自行搜索, 肯定都有答案, 站长不想再写一遍</li><li>本教程站长亲测可用, 但因网络环境差异不保证可用性</li><li>本教程适用于Android, 但也支持其他平台(可能会有出入)</li></ul><h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><ul><li>Cloudflare账号</li><li>Github账号</li><li>Android手机</li><li>(可选) Google Play</li><li>(可选) 一个域名</li><li>(可选) VPN</li><li>(必须) 脑子与眼睛</li></ul><h1 id="搭建doh"><a href="#搭建doh" class="headerlink" title="搭建doh"></a>搭建doh</h1><ol><li>进入Github</li><li>Fork仓库: <a href="https://github.com/tina-hello/doh-cf-workers">tina-hello&#x2F;doh-cf-workers</a></li><li>等待完成</li><li>从 README 中找到 <code>Deploy with Workers</code></li><li>跟随提示完成操作</li><li>打开 <code>Pages and Workers</code> 页面</li><li>找到名为 <code>doh</code> 的Worker并点击</li><li>点击编辑代码, 找到名为<code>path</code>的全局变量<ul><li><code>path</code>: 入口点, 默认为允许所有, 但所有人可用, 建议改为 <code>/</code>+<code>随便填, 必须为英文</code></li></ul></li><li>(如果有域名且绑定到了CF) 退出编辑, 转到 <code>设置</code> - <code>触发器</code> - <code>自定义域</code> - <code>添加自定义域</code> 绑定自定义域</li><li>将 <code>Worker地址</code> 与 <code>第8步修改的路径</code> 拼接在一起就是你的 <code>doh服务器地址</code></li><li>返回Github, 转到存储库页面, 点击 <code>Action</code>, 把里面你能找到的所有记录都删掉 (如果你不想公开你的doh服务器地址)</li></ol><h1 id="设置Firefox"><a href="#设置Firefox" class="headerlink" title="设置Firefox"></a>设置Firefox</h1><ol><li>此章节参考: <a href="https://blog.17lai.site/posts/ec2cad2">ESNI和加密DNS - 保护信息隐私的最后一块拼图</a></li><li>从 <code>Google Play</code> 上安装最新版的 <code>Firefox Nightly</code> 应用 (或你知道的其他地方) (<a href="https://www.mozilla.org/zh-CN/firefox/nightly/all/">官方网站</a>)</li><li>打开Firefox Nightly, 完成一些设置后在地址栏输入 <code>about:config</code><ol><li>点击上方搜索框</li><li>输入 <code>network.trr.mode</code> 将数值改为3或2 (<code>0</code>对应的是不开启此功能; <code>1</code>对应的是交由浏览器选择DoH与传统方式那种更快; <code>2</code>代表优先使用加密DNS查询, 如果失败则回落到普通DNS查询; <code>3</code>代表只使用加密DNS查询; <code>5</code>代表明确的关闭此功能)</li><li>输入 <code>network.trr.uri</code> 并输入之前获取的doh服务器地址</li><li>输入 <code>network.security.esni.enabled</code> (默认没有, 点击新建) 类型选 <code>布尔值</code>, 值为 <code>true</code></li><li>所有更改会自动保存, 可以通过刷新页面查看是否保存</li></ol></li><li>完全退出Firefox Nightly后重新打开, 更改生效</li><li>完成, 可前往 <a href="https://encryptedsni.com/">在线检测页面</a> 查看效果, 点击 <code>检测我的浏览器</code> 并看到四个对勾即为成功</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>浏览器启用QUIC（通用）</title>
+      <link href="/2024/12/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%90%AF%E7%94%A8QUIC-%E9%80%9A%E7%94%A8-/"/>
+      <url>/2024/12/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%90%AF%E7%94%A8QUIC-%E9%80%9A%E7%94%A8-/</url>
+      
+        <content type="html"><![CDATA[<ul><li>此文章是对 <a href="https://runoneall.github.io/%E8%87%AA%E5%BB%BAdoh%E6%9C%8D%E5%8A%A1%E5%99%A8-%E8%AE%BE%E7%BD%AEFirefox%E4%BD%BF%E7%94%A8.html">自建doh服务器+设置Firefox使用</a> 文章的补充</li><li>此教程适用于大部分基于 <code>Gecko内核</code> 和 <code>Chromium内核</code> 的浏览器</li><li>QUIC于 <code>2024.10.3</code> 还处于试验阶段，部分网站不支持QUIC</li></ul><h1 id="Chromium内核"><a href="#Chromium内核" class="headerlink" title="Chromium内核"></a>Chromium内核</h1><ol><li>在地址栏输入 <code>chrome://flags</code> ( <code>MicrosoftEdge</code> 为 <code>edge://flags</code> )</li><li>找到 <code>enable-quic</code></li><li>设置为 <code>Enabled</code></li></ol><h1 id="Gecko内核"><a href="#Gecko内核" class="headerlink" title="Gecko内核"></a>Gecko内核</h1><ol><li>在地址栏输入 <code>about:config</code></li><li>找到 <code>network.http.http3.enabled</code> (没有则新建，类型为 <code>bool</code> )</li><li>设置为 <code>true</code></li></ol><h1 id="检测"><a href="#检测" class="headerlink" title="检测"></a>检测</h1><ol><li>!!完全退出!! 浏览器 (不然部分浏览器会不生效)</li><li>重新打开浏览器，前往 <a href="https://quic.nginx.org/">quic.nginx.org</a></li><li>等待检测完成</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>重大新闻! Minecraft基岩版插件社区或将不复存在</title>
+      <link href="/2024/12/09/%E9%87%8D%E5%A4%A7%E6%96%B0%E9%97%BB-%20Minecraft%E5%9F%BA%E5%B2%A9%E7%89%88%E6%8F%92%E4%BB%B6%E7%A4%BE%E5%8C%BA%E6%88%96%E5%B0%86%E4%B8%8D%E5%A4%8D%E5%AD%98%E5%9C%A8/"/>
+      <url>/2024/12/09/%E9%87%8D%E5%A4%A7%E6%96%B0%E9%97%BB-%20Minecraft%E5%9F%BA%E5%B2%A9%E7%89%88%E6%8F%92%E4%BB%B6%E7%A4%BE%E5%8C%BA%E6%88%96%E5%B0%86%E4%B8%8D%E5%A4%8D%E5%AD%98%E5%9C%A8/</url>
+      
+        <content type="html"><![CDATA[<h4 id="注意‼️文章中的插件指的是MC基岩版服务端中的使用加载器加载的插件-Plugin-，而非在客户端即可加载的模组-Addon"><a href="#注意‼️文章中的插件指的是MC基岩版服务端中的使用加载器加载的插件-Plugin-，而非在客户端即可加载的模组-Addon" class="headerlink" title="注意‼️文章中的插件指的是MC基岩版服务端中的使用加载器加载的插件(Plugin)，而非在客户端即可加载的模组(Addon)"></a>注意‼️文章中的插件指的是MC基岩版服务端中的使用加载器加载的插件(Plugin)，而非在客户端即可加载的模组(Addon)</h4><h4 id="文章中可能有错误出现，请谅解，如果有错误请告诉我，我会及时改正"><a href="#文章中可能有错误出现，请谅解，如果有错误请告诉我，我会及时改正" class="headerlink" title="文章中可能有错误出现，请谅解，如果有错误请告诉我，我会及时改正"></a>文章中可能有错误出现，请谅解，如果有错误请告诉我，我会及时改正</h4><hr><p>近日，Mojang宣布将从Minecraft服务器删除 PDB¹ 文件[预计将在1.21(1.21.10)版本],这将严重影响MC基岩版插件开发[第三方开发工具将不能使用,只有具有特殊访问权限的开发者(Minecraft 官方合作伙伴)才能继续进行更新]。对此,社区中有两种猜测：1.Mojang(微软)为了让基岩版的内置商店发展。2.为了防止第三方外挂客户端进行作弊。但无论如何这都将对基岩版插件社区造成沉重打击。</p><p>截至文章发布,<a href="https://github.com/LiteLDev">LiteLDev</a>宣布将停止开发 <a href="https://github.com/LiteLDev/LeviLamina">LeviLamina</a> (原LiteLonder加载器)，<a href="https://github.com/bdsx/bdsx">BDSX</a>开发人员也表示如果官方删除PDB文件，项目将不会继续更新</p><p>以下为<a href="https://github.com/LiteLDev">LiteLDev</a>及<a href="https://github.com/bdsx/bdsx">BDSX</a>宣布的内容：</p><blockquote><p>这个存储库将被存档，因为Mojang计划从他们未来发布的二进制文件中删除符号文件。</p><p>尽管社区要求提供完整的 PDB¹ 文件，但 Mojang 拒绝了，现在打算从未来的版本中删除符号文件。</p><p>这将使调试服务器和开发插件变得不可能，导致 LeviLamina 和其他插件的开发结束。</p><p>因此，未来不会开发任何重要的插件，例如关键错误修复、反作弊插件和社区需要的其他功能插件。但是，那些开发作弊的人仍然可以这样做，这使得社区很难创建反作弊插件来保护服务器。</p><p>Mojang在开发服务器方面并不擅长，现在他们使社区无法开发插件。这是一个非常糟糕的决定。</p><p>Mojang对社区的立场令人深感失望。我们敦促社区采取行动，发出我们的声音。通过在社交媒体上表达我们的担忧并向Mojang施加压力，我们希望他们能够重新考虑他们的决定。社区团结和集体努力可能会鼓励Mojang改变他们的方法。</p><p>如果您对本通知有任何疑问或意见，请联系。<a href="mailto:&#x6c;&#x69;&#x74;&#x65;&#x6c;&#100;&#x65;&#x76;&#64;&#x6c;&#x69;&#x74;&#x65;&#x6c;&#100;&#x65;&#118;&#46;&#x63;&#111;&#109;">liteldev@liteldev.com</a> &gt; <a href="https://imgse.com/i/pk0wkUU"><img src="https://s21.ax1x.com/2024/06/17/pk0wkUU.jpg" alt="pk0wkUU.jpg"></a></p><p><a href="https://imgse.com/i/pk0wFET"><img src="https://s21.ax1x.com/2024/06/17/pk0wFET.jpg" alt="pk0wFET.jpg"></a></p></blockquote><blockquote><p>在BDS v.1.21预览版中，删除了非常重要且必不可少的调试信息<br>适用于 BDSX 等基于 BDS 的服务器软件。<br>所以很抱歉，维护 BDSX 几乎是不可能的。<br>如果 Mojang 在发布中撤销该决定，我将保留这个项目，但如果他们不这样做，我想让这个服务器成为 Minecraft 和编程社区。<br><a href="https://imgse.com/i/pk0wMb6"><img src="https://s21.ax1x.com/2024/06/17/pk0wMb6.jpg" alt="pk0wMb6.jpg"></a></p></blockquote><p>如果官方不再开放 PDB¹ 文件，基岩版插件社区或许不会消失，但插件支持的版本一定不会更新，除非有了新的加载方式，但这很一定非常艰难。</p><p>写文章不易，点个赞再走吧，给个金币就更好了</p><p>¹:PDB即Program Database File<em>程序数据库文件</em>是用来存储程序信息的</p><p>转载自 <code>云湖</code>星凌（9481822）</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>通过Github Pages+Hexo搭建博客教程</title>
+      <link href="/2024/12/09/%E9%80%9A%E8%BF%87Github%20Pages-Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/"/>
+      <url>/2024/12/09/%E9%80%9A%E8%BF%87Github%20Pages-Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/</url>
+      
+        <content type="html"><![CDATA[<p>此方法适用于所有系统，但会存在路径与命令区别，请自行尝试后进行修改<br>此教程使用Linux系统</p><h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><ul><li>一个域名（没有也可以）</li><li>一台电脑（手机可用Termux）</li><li>git（用于提交代码，到<a href="https://git-scm.com/">这里</a>下载git安装包或使用包管理器安装）</li><li>一个Github账号（自行搜索）</li><li>nodejs（用于安装Hexo及Hexo插件，到<a href="https://nodejs.org/en/download">这里</a>下载或使用包管理器安装。若无特殊需要请使用LTS版本）</li><li>文本编辑器（UTF-8编码）</li><li>可能需要VPN（或换源）（站长的<a href="https://github.com/runoneall/v2server">v2ray仓库</a>，8000多个节点随便用）</li><li>脑子与一定的动手能力（！！！）</li></ul><h1 id="本地搭建博客"><a href="#本地搭建博客" class="headerlink" title="本地搭建博客"></a>本地搭建博客</h1><ul><li>使用 <code>npm install hexo-cli -g</code> 安装hexo本体</li><li>初始化博客 <code>hexo init blog</code></li><li>进入 <code>cd blog</code> （在后续步骤中，这将简写为 <code>博客根目录</code> ）</li><li>补全 <code>npm install</code></li><li>启动 <code>hexo g &amp;&amp; hexo s</code> （hexo会在4000端口启动服务，请确保端口没有被占用）</li><li>打开 <code>127.0.0.1:4000</code> 查看安装是否成功</li></ul><h1 id="安装主题"><a href="#安装主题" class="headerlink" title="安装主题"></a>安装主题</h1><p>若上一步进入了博客，则安装成功，但hexo默认主题并不好看，此部分将说明主题的安装方法，若你喜欢默认主题，请略过这一步</p><ul><li>下载主题文件（一般在Github上，请自行搜索，并首选 <code>github.com</code> ）</li><li>解压主题文件（一般为 <code>.zip</code> 或 <code>.tar.gz</code> ，Windows解压工具推荐 <a href="https://7-zip.org/">7-zip</a>）</li><li>将主题文件目录放入 <code>博客根目录</code> 下的 <code>themes</code> 文件夹下</li><li>进入 <code>主题文件夹</code> （在后续步骤中，这将简写为 <code>主题根目录</code> ）</li><li>本博客使用 <code>Fluid</code> 主题，所以以 <code>Fluid</code> 主题为例</li></ul><h2 id="分支-安装并配置-Fluid-主题"><a href="#分支-安装并配置-Fluid-主题" class="headerlink" title="分支: 安装并配置 Fluid 主题"></a>分支: 安装并配置 <code>Fluid</code> 主题</h2><ul><li><p>进入<a href="https://github.com/fluid-dev/hexo-theme-fluid/releases">Github Releases</a></p></li><li><p>找到标有 <code>Latest</code> 标签的版本并点击</p></li><li><p>下滑找到 <code>Assets</code> 并点击 <code>Source code</code> （<code>zip</code> 或 <code>tar.gz</code>）</p></li><li><p>将下载的压缩包解压，将文件夹重命名为 <code>fluid</code></p></li><li><p>放入 <code>博客根目录</code> 下的 <code>themes</code> 文件夹下</p></li><li><p>编辑 <code>博客根目录</code> 下的 <code>_config.yml</code> （在后续步骤中，这将简写为 <code>博客配置</code> ）</p><ul><li>将 <code>theme</code> 改为 <code>fluid</code><ul><li>将 <code>language</code> 改为 <code>zh-CN</code> （可选）</li></ul></li></ul></li><li><p>进入 <code>博客根目录</code> 下的 <code>themes</code> 文件夹下的 <code>fluid</code> 文件夹 （在此分支中，这将简写为 <code>Fluid主题根目录</code> ）</p></li><li><p>编辑 <code>Fluid主题根目录</code> 下的 <code>_config.yml</code> （在此分支中，这将简写为 <code>Fluid主题配置</code> ）</p><ul><li><p><code>favicon</code> （浏览器标签页图标，可为Url）</p><pre><code>                                        - `apple_touch_icon` （浏览器标签页图标，但仅用于苹果设备，可为Url）                                        - `copy_btn` （代码块复制按钮，可为 `true` 或 `false` ）                                        - `typing` （打字机，可为 `true` 或 `false` ）                                        - 页头                                          - `blog_title` （博客首页标题）                                            - `menu` （导航栏选项，按需修改）                                        - `页脚`                                          - `rss` （如果你的博客有rss，在这里填入地址）                                        - `beian` （如果你有备案，在这里填写）（本站长不推荐，那样会很不自由）                                        - `首页`                                          - `banner_img` （首页大图，推荐使用图片CDN）（其它地方的 `banner_img` 也一样）                                            - `slogan` （首页副标题，这里讲述随机一言的制作方法）                                              - 找到 `api` 选项                                                - `enable` 填入 `true`                                                - `url` 填入 `&quot;https://v1.hitokoto.cn/&quot;`                                                - `method` 填入 `GET`                                                - `headers` 填入 `&#123;&#125;`                                                - `keys` 填入 `[&quot;hitokoto&quot;]`                                        - `关于页`                                          - `hexo new page about` （创建关于页）                                            - 编辑博客目录下的 `/source/about/index.md` 文件                                            ```markdown                                            ---                                            title: about                                            layout: about                                            ```                                          ***                                        这里写关于页的正文，支持 Markdown, HTML                                        ```    -`avatar`（你的头像，可为Url）</code></pre><p>  -<code>name</code>（你的互联网化名）-<code>intro</code>（你的个性介绍）-<code>icons</code> （你的社交平台链接）</p><pre><code>                                        - `友链页`                                          - `items` （照着示例写）</code></pre></li></ul></li><li><p>更多请看注释说明和<a href="https://hexo.fluid-dev.com/docs/start">主题官网</a></p></li></ul><h2 id="分支结束"><a href="#分支结束" class="headerlink" title="分支结束"></a>分支结束</h2><h1 id="自定义-博客配置"><a href="#自定义-博客配置" class="headerlink" title="自定义 博客配置"></a>自定义 <code>博客配置</code></h1><ul><li><code>title</code> （博客名）</li><li><code>author</code> （作者，填你的互联网化名）</li><li><code>url</code> （填写博客地址，将作为博客访问地址）（在后续步骤中，此将简写为 <code>博客地址</code> ）</li><li><code>new_post_name</code> （新文章地址，建议 <code>:title.md</code> 适用于SEO优化）</li><li><code>plugins:</code> （填入用到的插件）（在后续步骤中，此将简写为 <code>插件列表</code> ）</li></ul><h1 id="使用-gulp-压缩博客体积"><a href="#使用-gulp-压缩博客体积" class="headerlink" title="使用 gulp 压缩博客体积"></a>使用 <code>gulp</code> 压缩博客体积</h1><ul><li>进入 <code>博客根目录</code></li><li>安装 <code>gulp</code> 及附加功能<ul><li><code>npm install --global gulp-cli</code> （全局安装gulp）<ul><li><code>npm install gulp-htmlclean --save-dev</code><br><code>npm install gulp-html-minifier-terser --save-dev</code><br>（安装gulp的压缩html功能）</li><li><code>npm install gulp-clean-css --save-dev</code> （安装gulp的压缩css功能）</li><li><code>npm install gulp-terser --save-dev</code> （安装gulp的压缩js功能）</li></ul></li></ul></li><li>在 <code>博客根目录</code> 新建 <code>gulpfile.js</code> 文件并输入以下内容</li></ul><pre><code class="language-javascript">//用到的各个插件var gulp = require(&quot;gulp&quot;);var cleanCSS = require(&quot;gulp-clean-css&quot;);var htmlmin = require(&quot;gulp-html-minifier-terser&quot;);var htmlclean = require(&quot;gulp-htmlclean&quot;);// gulp-testervar terser = require(&quot;gulp-terser&quot;);// 压缩jsgulp.task(&quot;compress&quot;, async () =&gt; &#123;    gulp.src([&quot;./public/**/*.js&quot;, &quot;!./public/**/*.min.js&quot;])        .pipe(terser())        .pipe(gulp.dest(&quot;./public&quot;));&#125;);//压缩cssgulp.task(&quot;minify-css&quot;, () =&gt; &#123;    return gulp        .src([&quot;./public/**/*.css&quot;])        .pipe(            cleanCSS(&#123;                compatibility: &quot;ie11&quot;,            &#125;),        )        .pipe(gulp.dest(&quot;./public&quot;));&#125;);//压缩htmlgulp.task(&quot;minify-html&quot;, () =&gt; &#123;    return gulp        .src(&quot;./public/**/*.html&quot;)        .pipe(htmlclean())        .pipe(            htmlmin(&#123;                removeComments: true, //清除html注释                collapseWhitespace: true, //压缩html                collapseBooleanAttributes: true,                //省略布尔属性的值，例如：&lt;input checked=&quot;true&quot;/&gt; ==&gt; &lt;input /&gt;                removeEmptyAttributes: true,                //删除所有空格作属性值，例如：&lt;input id=&quot;&quot; /&gt; ==&gt; &lt;input /&gt;                removeScriptTypeAttributes: true,                //删除&lt;script&gt;的type=&quot;text/javascript&quot;                removeStyleLinkTypeAttributes: true,                //删除&lt;style&gt;和&lt;link&gt;的 type=&quot;text/css&quot;                minifyJS: true, //压缩页面 JS                minifyCSS: true, //压缩页面 CSS                minifyURLs: true, //压缩页面URL            &#125;),        )        .pipe(gulp.dest(&quot;./public&quot;));&#125;);// 运行gulp命令时依次执行以下任务gulp.task(&quot;default&quot;, gulp.parallel(&quot;compress&quot;, &quot;minify-css&quot;, &quot;minify-html&quot;));</code></pre><ul><li>在博客启动时运行 <code>gulp</code> 命令</li></ul><h1 id="本地启动博客"><a href="#本地启动博客" class="headerlink" title="本地启动博客"></a>本地启动博客</h1><ul><li><code>hexo clean</code> （清除上一次启动生成的静态文件）</li><li><code>hexo g</code> （生成静态文件）</li><li><code>gulp</code> （压缩）</li><li><code>hexo s</code> （启动服务）</li><li>编写 <code>debug.sh</code> 以便捷启动</li></ul><pre><code class="language-shell">hexo cleanhexo ggulphexo s# 运行时输入 `sh debug.sh`</code></pre><h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><ul><li><p>新建Github仓库，名为 <code>你注册Github时用的用户名.github.io</code></p></li><li><p>运行 <code>git config --global user.name &quot;你注册Github时用的用户名&quot;</code> 以设置用户名</p></li><li><p>运行 <code>git config --global user.email &quot;你注册Github时用的邮箱&quot;</code> 以设置邮箱</p></li><li><p>运行 <code>ssh-keygen -t rsa -C &quot;随便几个字母+数字+特殊符号(不能是引号)的组合(越长越好)&quot;</code><br>网上答案说这里要用邮箱，但实测不用邮箱也可以，用邮箱可以保证唯一性，看个人吧</p></li><li><p>连按三个回车创建密钥</p></li><li><p>进入 <code>.ssh</code> 目录（隐藏目录，自己找方法）</p></li><li><p>找到 <code>id_rsa.pub</code> 文件并复制文件内容到剪贴板（公钥）</p></li><li><p>打开<a href="https://github.com/settings/ssh/new">GitHub SSH and GPG keys</a>页面</p><ul><li><code>Title</code> 为标题，任意写<ul><li><code>Key</code> 为公钥内容，将从 <code>id_rsa.pub</code> 复制的内容粘贴进去</li><li>点击 <code>Add SSH key</code> 添加</li><li>使用 <code>ssh -T git@github.com</code> 测试链接，出现 <code>Hi 你注册Github时用的用户名! You&#39;ve successfully authenticated, but GitHub does not provide shell access.</code> 则代表认证成功</li></ul></li></ul></li><li><p>进入到 <code>博客根目录</code> 运行 <code>npm install hexo-deployer-git --save</code> 安装部署工具</p></li><li><p>编辑 <code>博客配置</code> 添加以下内容</p><pre><code class="language-yaml"># Deploymentdeploy:    type: git    repo: git@github.com:你注册Github时用的用户名/你注册Github时用的用户名.github.io.git    branch: blog #分支名称，除main或master都行    ignore_hidden: false</code></pre></li><li><p>编写 <code>deploy.sh</code> 便捷部署</p><pre><code class="language-shell">hexo cleanhexo ggulphexo d# 部署时运行 `sh deploy.sh`</code></pre></li><li><p>进入到 <code>https://github.com/你注册Github时用的用户名/你注册Github时用的用户名.github.io</code></p></li><li><p>点击 <code>Settings</code></p></li><li><p>点击 <code>Pages</code></p></li><li><p>设置 <code>Build and deployment</code></p><ul><li><code>Source</code> 选择 <code>Deploy from a branch</code><ul><li><code>Branch</code> 选择 <code>博客配置</code> 设置的分支名，路径选 <code>/(root)</code></li><li>点击 <code>Save</code></li></ul></li></ul></li><li><p>现在博客已成功部署好，进入 <code>https://你注册Github时用的用户名.github.io</code> 查看</p></li><li><p><code>Github Pages</code> 还可绑定自定义域名，不展开叙述</p></li></ul><h1 id="本教程完"><a href="#本教程完" class="headerlink" title="本教程完"></a>本教程完</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>MiWiFi 3G(R3G) 一站式刷机</title>
+      <link href="/2024/12/09/MiWiFi%203G-R3G-%20%E4%B8%80%E7%AB%99%E5%BC%8F%E5%88%B7%E6%9C%BA/"/>
+      <url>/2024/12/09/MiWiFi%203G-R3G-%20%E4%B8%80%E7%AB%99%E5%BC%8F%E5%88%B7%E6%9C%BA/</url>
+      
+        <content type="html"><![CDATA[<ul><li>本教程提供的文件有可能不是最新的, 并且有可能过时, 请注意甄别</li><li>本教程参考 <a href="https://www.cnblogs.com/milton/p/16163521.html">小米路由器3G R3G 刷入Breed和OpenWrt 20.02.2 的记录</a>, <a href="https://www.ohyee.cc/post/note_miwifi_openwrt">小米路由器 3G 使用 OpenWRT</a>, <a href="https://www.right.com.cn/FORUM/thread-836975-1-1.html">小米R3G的USB挂载问题</a></li></ul><h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><ul><li>R3G路由器</li><li>电脑, 安装 <code>python3</code> 环境</li><li>安装了 <code>requests</code> 依赖包</li><li>全程使用有线连接 (!!! 不要用无线 !!!)</li><li>VPN (也许?)</li><li>!!! 眼睛与脑子 !!!</li></ul><h1 id="解锁并获取权限"><a href="#解锁并获取权限" class="headerlink" title="解锁并获取权限"></a>解锁并获取权限</h1><ol><li>下载开发版系统 <a href="https://bigota.miwifi.com/xiaoqiang/rom/r3g/miwifi_r3g_firmware_12f97_2.25.124.bin">下载地址</a></li><li>进入到路由器管理, 选择 <code>系统升级</code> - <code>本地升级</code> - <code>上传固件</code>, 选择下载的文件, 等待路由器更新重启完成</li><li>登入到路由器后台, 查看是否为开发版系统, 如果是, 进行下一步, 否则重来或寻找其他方法</li><li>下载解锁工具 <a href="https://github.com/acecilia/OpenWRTInvasion/archive/refs/tags/0.0.8.zip">下载地址</a></li><li>解压并进入, 运行 <code>pip3 install -r requirements.txt &amp;&amp; python3 remote_command_execution_vulnerability.py</code> 并填入信息, 等待一段时间后解锁成功, 然后保存 <code>FTP</code> 和 <code>SSH 或 Telnet</code> 的访问信息 (用户名 <code>root</code> 密码 <code>root</code> )</li></ol><h1 id="刷入不死Breed"><a href="#刷入不死Breed" class="headerlink" title="刷入不死Breed"></a>刷入不死Breed</h1><ol><li>使用SSH或Telnet登入到路由器 (以下简称 <code>登入到路由器</code> )</li><li>使用 <code>cat /proc/mtd</code> 查看闪存布局</li><li>使用 <code>dd if=/dev/mtd4 of=/tmp/eeprom.bin</code> 备份 <code>eeprom</code></li><li>使用FTP登入到路由器, 进入 <code>/tmp</code> 目录, 把 <code>eeprom.bin</code> 下载到本地存储</li><li>下载Breed <a href="https://breed.hackpascal.net/breed-mt7621-xiaomi-r3g.bin">下载地址</a> 并上传到路由器 <code>/tmp</code> 目录</li><li>登入到路由器, 使用 <code>cd /tmp</code> 进入到目录, 使用 <code>mtd -r write /tmp/breed-R3G.bin Bootloader</code> 刷入Breed, 完成后路由器会自动重启, 等待重启完成</li></ol><h1 id="刷入OpenWrt"><a href="#刷入OpenWrt" class="headerlink" title="刷入OpenWrt"></a>刷入OpenWrt</h1><ol><li>断开路由器电源, 按住 <code>Reset</code> 并重新接入电源, 当网口灯闪烁3次后浏览器输入 <code>192.168.1.1</code> 进入Breed管理面板</li><li>点击 <code>Mac地址修改</code> 查看是否全为 <code>FF</code>, 如果是, 点击固件更新, 在 <code>eeprom</code> 处上传备份的 <code>eeprom</code> 文件</li><li>下载OpenWrt固件 <a href="https://firmware-selector.openwrt.org/?version=23.05.4&target=ramips/mt7621&id=xiaomi_mi-router-3g">下载地址</a>, 进入后找到版本选择, 点击 <code>非SNAPSHOT</code> 的最新版本, 下载 <code>KERNEL1</code> 和 <code>ROOTFS0</code></li><li>进入Breed, 点击环境变量, 删除 <code>normal_firmware_md5</code></li><li>进入Breed, 选择固件更新, 在下拉框中选择 <code>Openwrt</code> , 按照提示上传 <code>KERNEL1</code> 和 <code>ROOTFS0</code> 文件, 点击自动重启, 稍等片刻即可安装完成</li></ol><h1 id="汉化"><a href="#汉化" class="headerlink" title="汉化"></a>汉化</h1><ol><li>进入 <code>System</code> - <code>Software</code></li><li>点击 <code>Update lists</code> 等待完成 (可能较慢, 如有动手能力可以点击 <code>Configure opkg</code> 自行换源)</li><li>在 <code>Filter</code> 处输入 <code>luci-i18n-base-zh-cn</code> 并等待安装完成</li><li>刷新页面</li></ol><h1 id="识别USB存储设备"><a href="#识别USB存储设备" class="headerlink" title="识别USB存储设备"></a>识别USB存储设备</h1><ol><li>登入到路由器</li><li>先运行 <code>opkg install kmod-nls-cp437 kmod-nls-iso8859-1 kmod-usb-core kmod-usb-ohci kmod-usb-storage kmod-usb2 mount-utils</code><ul><li>当你的盘为fat格式时运行 <code>opkg install kmod-fs-vfat</code></li><li>当你的盘为ext3格式时运行 <code>opkg install kmod-fs-ext3</code></li><li>当你的盘为ntfs格式时运行 <code>opkg install ntfs-3g</code></li><li>当你的盘为ext4格式时运行 <code>opkg install kmod-fs-ext4</code></li></ul></li><li>挂载<ul><li>一般为 <code>/dev/sda1</code></li><li>列出所有可用设备 <code>ls /dev | grep sda</code></li><li>使用 <code>mount /dev/sda1 /mnt</code> 将设备挂载到 <code>/mnt</code> 目录</li><li>使用 <code>cd /mnt</code> 进入到设备</li><li>使用 <code>umount /mnt</code> 取消挂载 (!!! 拔出设备前一定要做 !!!)</li><li>路由器重启后需要重新挂载</li></ul></li><li>当挂载设备耗电较大 (如硬盘盒外接硬盘) 时, 建议使用外接供电, 否则路由器容易供电不足</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>shell脚本的一种混淆方式</title>
+      <link href="/2024/12/09/shell%E8%84%9A%E6%9C%AC%E7%9A%84%E4%B8%80%E7%A7%8D%E6%B7%B7%E6%B7%86%E6%96%B9%E5%BC%8F/"/>
+      <url>/2024/12/09/shell%E8%84%9A%E6%9C%AC%E7%9A%84%E4%B8%80%E7%A7%8D%E6%B7%B7%E6%B7%86%E6%96%B9%E5%BC%8F/</url>
+      
+        <content type="html"><![CDATA[<p>灵感来源于：<a href="https://gitlab.com/rwkgyg/sing-box-yg">rwkgyg&#x2F;sing-box-yg</a></p><p>目前各种 PaaS、SaaS、BaaS 等等平台，在用来托管一些常用的应用——如 Xray、Alist 等等应用时，经常会提示违规，不允许部署。在经过大量的测试后，我发现此类平台多以关键字检测作为封禁的因素，所以只要做到日志、文件名、文本文件内容不含此类关键字，就能继续部署，正常使用。</p><p>多数情况下，部署此类应用都是通过一个功能完善的 Shell 程序自动化进行，在其中把文件名和日志做好处理即可，但是最后 shell 脚本本身的内容又不可避免的会出现 Xray、Alist 等应用的下载链接，导致 Shell 脚本本身被平台查处封禁。当然通过多个变量拆分构造下载链接避开关键字也是一种处理方法，但是无疑这增加了脚本的编写复杂度，所以在通过查看 rwkgyg&#x2F;sing-box-yg 时我获取了灵感，编写了一个 Python 脚本专门用于混淆 Shell 脚本：</p><p><strong>PYTHON</strong></p><pre><code>import osimport uuidimport base64# 读取你的脚本with open(&#39;script.sh&#39;, &#39;r&#39;) as f:    script = f.read()# 使用 base64 对你的脚本进行编码encoded_script = base64.b64encode(script.encode()).decode()# 定义每个字符串段的大小chunk_size = 4# 将编码后的脚本分割成多个小段chunks = [encoded_script[i:i+chunk_size]          for i in range(0, len(encoded_script), chunk_size)]# 创建一个新的文件来存储最终的脚本with open(&#39;final_script.sh&#39;, &#39;w&#39;) as f:    # 输出每个变量赋值语句    variable_names = []    for chunk in chunks:        while True:            var_name = str(uuid.uuid4()).replace(&#39;-&#39;, &#39;&#39;)  # 生成一个 UUID 作为变量名            if not var_name.startswith(&#39;0&#39;) and not var_name.startswith(&#39;1&#39;) and not var_name.startswith(&#39;2&#39;) and not var_name.startswith(&#39;3&#39;) and not var_name.startswith(&#39;4&#39;) and not var_name.startswith(&#39;5&#39;) and not var_name.startswith(&#39;6&#39;) and not var_name.startswith(&#39;7&#39;) and not var_name.startswith(&#39;8&#39;) and not var_name.startswith(&#39;9&#39;):                break        variable_names.append(var_name)        f.write(f&#39;&#123;var_name&#125;=\&#39;&#123;chunk&#125;\&#39;\n&#39;)    # 输出连接所有变量的语句    f.write(&#39;eval &quot;$(echo -n &quot;&#39;)    for var_name in variable_names:        f.write(f&#39;$&#123;var_name&#125;&#39;)    f.write(&#39;&quot; | base64 --decode)&quot;&#39;)# 修改文件权限，使其可执行os.chmod(&#39;final_script.sh&#39;, 0o755)</code></pre><p>这个 Python 脚本的原理很简单，就是先把原 Shell 脚本使用 Base64 编码，然后分割成很多个字符串，再使用 UUID 作为变量名，把每个字符串都存储在一个变量中，最后把 UUID 变量全都连起来，使用 <code>eval</code> 命令执行。</p><p>简单粗暴，效果很好，用了的都说好。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>使用云湖开放API部署云湖邮局</title>
+      <link href="/2024/12/09/%E4%BD%BF%E7%94%A8%E4%BA%91%E6%B9%96%E5%BC%80%E6%94%BEAPI%E9%83%A8%E7%BD%B2%E4%BA%91%E6%B9%96%E9%82%AE%E5%B1%80/"/>
+      <url>/2024/12/09/%E4%BD%BF%E7%94%A8%E4%BA%91%E6%B9%96%E5%BC%80%E6%94%BEAPI%E9%83%A8%E7%BD%B2%E4%BA%91%E6%B9%96%E9%82%AE%E5%B1%80/</url>
+      
+        <content type="html"><![CDATA[<p>先上效果图</p><p><img src="https://s.rmimg.com/2024-11-21/1732152952-218009-2024-11-21-92212.png"><br><img src="https://s.rmimg.com/2024-11-21/1732152956-884414-2024-11-21-92314.png"></p><p>不局限在云湖，任何有收发消息API的即时通讯软件都可以部署</p><h1 id="收消息"><a href="#收消息" class="headerlink" title="收消息"></a>收消息</h1><ul><li>使用Cloudflare Worker部署</li><li>到电子邮件那里新建worker，再新建地址，选择转发到worker，选中刚刚创建的worker</li><li>因Cloudflare限制，必须使用wrangler开发（网页编辑器无法导入包）</li><li>使用wrangler创建项目，名字与刚创建的电子邮件worker相同</li><li>进入项目并安装postal-mime包</li><li>到云湖控制台中新建机器人</li></ul><p>在 <code>wrangler.toml</code> 里写入如下变量</p><pre><code class="language-toml">[vars]YH_BOT_TOKEN = &quot;换成你的云湖机器人Token&quot;YH_USER_ID = &quot;换成你的ID&quot;</code></pre><p>然后编写代码：</p><pre><code class="language-javascript">import PostalMime from &quot;postal-mime&quot;;async function toYunhu(msg, env) &#123;    const token = env.YH_BOT_TOKEN;    const apiUrl =        &quot;https://chat-go.jwzhd.com/open-apis/v1/bot/send?token=&quot; + token;    const response = await fetch(apiUrl, &#123;        method: &quot;POST&quot;,        headers: &#123; &quot;Content-Type&quot;: &quot;application/json; charset=utf-8&quot; &#125;,        body: JSON.stringify(&#123;            recvId: env.YH_USER_ID,            recvType: &quot;user&quot;,            contentType: &quot;html&quot;,            content: &#123; text: msg &#125;,        &#125;),    &#125;);    return response.json();&#125;export default &#123;    async email(message, env, ctx) &#123;        let email_string = ``;        const email_from = message.from;        const email_to = message.to;        email_string += `&lt;div style=&quot;background-color: white; color: black;&quot;&gt;  &lt;ul&gt;    &lt;li&gt;From: $&#123;email_from&#125;&lt;/li&gt;    &lt;li&gt;To: $&#123;email_to&#125;&lt;/li&gt;  &lt;/ul&gt;  &lt;hr&gt;`;        const email_content = await PostalMime.parse(message.raw);        const email_subject = email_content.subject;        let email_text = email_content.html;        if (email_text == null) &#123;            email_text = email_content.text;        &#125;        email_string += `  &lt;details&gt;    &lt;summary&gt;      &lt;strong style=&quot;font-size: 20px;&quot;&gt;$&#123;email_subject&#125;&lt;/strong&gt;    &lt;/summary&gt;    $&#123;email_text&#125;  &lt;/details&gt;&lt;/div&gt;`;        await toYunhu(email_string, env);    &#125;,&#125;;</code></pre><p>最后使用wrangler部署</p><h1 id="发消息（这一章节较为复杂！）"><a href="#发消息（这一章节较为复杂！）" class="headerlink" title="发消息（这一章节较为复杂！）"></a>发消息（这一章节较为复杂！）</h1><ul><li>新建一个普通worker用于发送邮件</li><li>无需wrangler</li><li>准备 Github REST API Token（用于调用markdown转html接口）</li><li>准备 Resend Email Token（用于发送邮件）</li><li>将域名解析到Resend（可选）（如果想用域名邮箱则必须）</li></ul><p>打开云湖控制台并新建自定义输入指令<br><img src="https://s.rmimg.com/2024-11-21/1732153422-509814-2024-11-21-94259.png"><br>把每个表单ID对应的输入框名记下来！</p><p>打开cloudflare网页编辑器并编写代码</p><pre><code class="language-javascript">async function sendEmail(email_to, email_title, email_content, env) &#123;    const token = env.RESEND_EMAIL_TOKEN;    const response = await fetch(&quot;https://api.resend.com/emails&quot;, &#123;        method: &quot;POST&quot;,        headers: &#123;            &quot;content-type&quot;: &quot;application/json&quot;,            Authorization: `Bearer $&#123;token&#125;`,        &#125;,        body: JSON.stringify(&#123;            from: &quot;这里填入你的resend邮箱名，如果将域名解析到resend则可以填域名邮箱&quot;,            to: email_to,            subject: email_title,            html: email_content,        &#125;),    &#125;);    return response.body;&#125;async function toYunhu(msg, env) &#123;    const token = env.YH_BOT_TOKEN;    const apiUrl =        &quot;https://chat-go.jwzhd.com/open-apis/v1/bot/send?token=&quot; + token;    const response = await fetch(apiUrl, &#123;        method: &quot;POST&quot;,        headers: &#123; &quot;Content-Type&quot;: &quot;application/json; charset=utf-8&quot; &#125;,        body: JSON.stringify(&#123;            recvId: env.YH_USER_ID,            recvType: &quot;user&quot;,            contentType: &quot;html&quot;,            content: &#123; text: msg &#125;,        &#125;),    &#125;);    return response.json();&#125;async function toHTML(markdown, env) &#123;    const token = env.GH_REST_TOKEN;    const response = await fetch(&quot;https://api.github.com/markdown&quot;, &#123;        method: &quot;POST&quot;,        headers: &#123;            Accept: &quot;application/vnd.github+json&quot;,            &quot;User-Agent&quot;: &quot;Markdown-To-Html-App&quot;,            Authorization: `Bearer $&#123;token&#125;`,            &quot;X-GitHub-Api-Version&quot;: &quot;2022-11-28&quot;,        &#125;,        body: JSON.stringify(&#123; text: markdown &#125;),    &#125;);    return response.text();&#125;async function getEmailInfo(yhJson) &#123;    let email_info = &#123;&#125;;    let formJson = yhJson[&quot;event&quot;][&quot;message&quot;][&quot;content&quot;][&quot;formJson&quot;];    if (formJson == null) &#123;        formJson = yhJson[&quot;event&quot;][&quot;message&quot;][&quot;content&quot;][&quot;formjson&quot;];    &#125;    email_info[&quot;address&quot;] = formJson[&quot;这里是 目标 输入框的表单ID&quot;][&quot;value&quot;];    email_info[&quot;title&quot;] = formJson[&quot;这里是 标题 输入框的表单ID&quot;][&quot;value&quot;];    email_info[&quot;content&quot;] = formJson[&quot;这里是 正文 输入框的表单ID&quot;][&quot;value&quot;];    return email_info;&#125;export default &#123;    async fetch(request, env, ctx) &#123;        if (request.method == &quot;POST&quot;) &#123;            const email_info = await getEmailInfo(await request.json());            const address = email_info[&quot;address&quot;];            const title = email_info[&quot;title&quot;];            const content = await toHTML(email_info[&quot;content&quot;], env);            const email_response = await sendEmail(                address,                title,                content,                env,            );            await toYunhu(&quot;已发送&quot;, env);            return new Response(email_response);        &#125;    &#125;,&#125;;</code></pre><p>在 worker设置 -&gt; 变量和机密 那里新建变量</p><ul><li>GH_REST_TOKEN：你的Github REST API Token</li><li>RESEND_EMAIL_TOKEN：你的Resend Email Token</li><li>YH_BOT_TOKEN：你的云湖机器人Token</li><li>YH_USER_ID：你的云湖ID</li></ul><p>部署完成</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>欢迎使用 Hexo</title>
+      <link href="/2024/12/09/%E6%AC%A2%E8%BF%8E%E4%BD%BF%E7%94%A8%20Typecho/"/>
+      <url>/2024/12/09/%E6%AC%A2%E8%BF%8E%E4%BD%BF%E7%94%A8%20Typecho/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="language-bash">$ hexo new &quot;My New Post&quot;</code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="language-bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="language-bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="language-bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 默认 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
