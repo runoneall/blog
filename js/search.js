@@ -1,35 +1,3 @@
-// const searchInput = document.getElementById("search-input");
-// const searchResults = document.getElementById("search-results");
-
-// fetch("/search.xml")
-//     .then((response) => response.text())
-//     .then((str) => new window.DOMParser().parseFromString(str, "text/xml"))
-//     .then((data) => {
-//         const items = data.querySelectorAll("entry");
-
-//         searchInput.addEventListener("input", function () {
-//             const query = this.value.toLowerCase();
-//             searchResults.innerHTML = "";
-
-//             if (query.length < 2) return;
-
-//             items.forEach((item) => {
-//                 const title = item.querySelector("title").textContent;
-//                 const url = item.querySelector("url").textContent;
-//                 const content = item.querySelector("content").textContent;
-
-//                 if (
-//                     title.toLowerCase().includes(query) ||
-//                     content.toLowerCase().includes(query)
-//                 ) {
-//                     const li = document.createElement("li");
-//                     li.innerHTML = `<a href="${url}">${title}</a>`;
-//                     searchResults.appendChild(li);
-//                 }
-//             });
-//         });
-//     });
-
 const searchForm = document.getElementById("search");
 const searchResults = document.getElementById("search-results");
 var searchDB = HTMLCollection;
@@ -48,9 +16,13 @@ function showUnfoundMessage(searchResults) {
     searchResults.appendChild(msg);
 }
 
-function getFirstChars(htmlString, numChars) {
-    const textOnly = htmlString.replace(/<[^>]+>/g, "");
-    return textOnly.substring(0, numChars);
+function excerpt_clean(html, count = 150, ellipsis = "...") {
+    if (!html || typeof html !== "string") return "";
+    let text = html.replace(/<[^>]+>/g, "");
+    text = text.replace(/\s+/g, " ").trim();
+    if (text.length <= count) return text;
+    let lastSpace = text.lastIndexOf(" ", count);
+    return text.substring(0, lastSpace) + (text.length > count ? ellipsis : "");
 }
 
 function buildResultItem(title, url, shortContent) {
@@ -109,7 +81,7 @@ searchForm.addEventListener("submit", function (event) {
             const resultItem = buildResultItem(
                 title,
                 url,
-                getFirstChars(content, parseInt(formData.excerpt_length)),
+                excerpt_clean(content, parseInt(formData.excerpt_length)),
             );
             searchResults.appendChild(resultItem);
         }
