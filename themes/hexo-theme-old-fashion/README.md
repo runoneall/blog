@@ -5,12 +5,10 @@ old fashion theme for hexo
 - Install
 
 ```shell
-mkdir -p themes/hexo-theme-old-fashion && cd themes/hexo-theme-old-fashion
-git init
-git config core.sparseCheckout true
-echo "themes/hexo-theme-old-fashion/*" >> .git/info/sparse-checkout
-git remote add origin https://github.com/runoneall/blog.git
-git pull origin main
+rm -rf themes/blog
+git clone https://github.com/runoneall/blog.git themes/blog
+cp -r themes/blog/themes/hexo-theme-old-fashion themes/
+rm -rf themes/blog
 ```
 
 ```yaml
