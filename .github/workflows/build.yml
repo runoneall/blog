@@ -26,14 +26,13 @@ jobs:
                   npm run clean
                   npm run build
 
-            - name: Sync theme repository
+            - name: Sync to theme branch
               uses: peaceiris/actions-gh-pages@v3
               with:
                   github_token: ${{ secrets.REPO_TOKEN }}
-                  external_repository: runoneall/hexo-theme-old-fashion
                   publish_dir: ./themes/hexo-theme-old-fashion
                   destination_dir: ./
-                  publish_branch: main
+                  publish_branch: theme
                   keep_files: false
 
 
