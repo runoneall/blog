@@ -20,14 +20,11 @@ jobs:
               with:
                   node-version: latest
 
-            - name: Install Hexo CLI
-              run: npm install hexo
-
             - name: Install dependencies and generate
               run: |
                   npm install
-                  npx hexo clean
-                  npx hexo generate
+                  npm run clean
+                  npm run build
 
             - name: Deploy to public branch
               uses: peaceiris/actions-gh-pages@v3
