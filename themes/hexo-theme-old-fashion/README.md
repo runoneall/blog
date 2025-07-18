@@ -5,22 +5,11 @@ old fashion theme for hexo
 - Install
 
 ```shell
-# 1. 创建并进入本地目录
 mkdir -p themes/hexo-theme-old-fashion && cd themes/hexo-theme-old-fashion
-
-# 2. 初始化 Git 仓库
 git init
-
-# 3. 启用稀疏检出
 git config core.sparseCheckout true
-
-# 4. 设置仅检出 `themes/hexo-theme-old-fashion` 目录
 echo "themes/hexo-theme-old-fashion/*" >> .git/info/sparse-checkout
-
-# 5. 添加远程仓库
 git remote add origin https://github.com/runoneall/blog.git
-
-# 6. 拉取指定分支（如 main 或 master）
 git pull origin main
 ```
 
