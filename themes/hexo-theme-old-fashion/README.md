@@ -5,7 +5,7 @@ old fashion theme for hexo
 - Install
 
 ```shell
-svn export https://github.com/runoneall/blog/tree/main/themes/hexo-theme-old-fashion themes/hexo-theme-old-fashion
+git clone https://github.com/runoneall/hexo-theme-old-fashion.git themes/hexo-theme-old-fashion
 ```
 
 ```yaml
