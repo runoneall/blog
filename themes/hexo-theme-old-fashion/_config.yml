@@ -109,7 +109,7 @@ links:
           title: "夜轻Blog",
           url: "https://blog.yeqing.net",
           description: "一个人",
-          rss: "https://blog.yeqing.net/rss.xml",
+          rss: "https://blog.yeqing.net/feed",
       }
 
 extra_css: "" # 额外CSS
