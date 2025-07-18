@@ -66,12 +66,6 @@ links:
           rss: "https://1ctrl-cv.github.io/atom.xml",
       }
     - {
-          avatar: "https://creeper005bili.github.io/img/avatar.png",
-          title: "Creeper005の小站",
-          url: "https://creeper005bili.github.io",
-          description: "Creeper005の坐牢日常",
-      }
-    - {
           avatar: "https://s.rmimg.com/2025-03-22/1742638401-544915-c2x7ns29av.png",
           title: "Qrasa的小站",
           url: "https://blog.qrasa.cn",
@@ -102,12 +96,6 @@ links:
           title: "leorain",
           url: "https://www.leorain.cn",
           description: "一个对技术和生活充满热爱的文艺型技术青年",
-      }
-    - {
-          avatar: "https://mcarc.spectrollay.com/minecraft_repository_test/images/logo/Starmoon_logo.png",
-          title: "星月Minecraft版本库",
-          url: "https://spectrollay.github.io/minecraft_repository",
-          description: "一个开放共享的全版本Minecraft下载站",
       }
     - {
           avatar: "https://www.puddingkc.com/api/v2/objects/avatar/2cfgqfbuk0clj9t0md.webp",
