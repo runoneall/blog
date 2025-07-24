@@ -9,7 +9,7 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Thu, 24 Jul 2025 12:32:10 GMT</pubDate>
+    <pubDate>Thu, 24 Jul 2025 12:37:32 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -48,12 +48,13 @@
         
         
       <description>&lt;p&gt;自用主题，当前博客就是&lt;/p&gt;
-&lt;p&gt;GitHub地址：&lt;a href=&quot;https://github.com/runoneall/blog/tree/main/themes/hexo-theme-old-fashion&quot;&gt;https://github.com/runone</description>
+&lt;p&gt;GitHub地址：&lt;a href=&quot;https://github.com/runoneall/blog/tree/theme&quot;&gt;https://github.com/runoneall/blog/tree/theme&lt;/a&gt;&lt;/p&gt;
+&lt;</description>
         
       
       
       
-      <content:encoded><![CDATA[<p>自用主题，当前博客就是</p><p>GitHub地址：<a href="https://github.com/runoneall/blog/tree/main/themes/hexo-theme-old-fashion">https://github.com/runoneall/blog/tree/main/themes/hexo-theme-old-fashion</a></p><p>原型：<a href="https://github.com/MrXiaoM/typecho-theme-old-fashion">https://github.com/MrXiaoM/typecho-theme-old-fashion</a><br>改版：<a href="https://github.com/runoneall/typecho-theme-old-fashion">https://github.com/runoneall/typecho-theme-old-fashion</a></p><p>后来从Typecho迁移到Hexo，于是开发了这个主题。</p>]]></content:encoded>
+      <content:encoded><![CDATA[<p>自用主题，当前博客就是</p><p>GitHub地址：<a href="https://github.com/runoneall/blog/tree/theme">https://github.com/runoneall/blog/tree/theme</a></p><p>原型：<a href="https://github.com/MrXiaoM/typecho-theme-old-fashion">https://github.com/MrXiaoM/typecho-theme-old-fashion</a><br>改版：<a href="https://github.com/runoneall/typecho-theme-old-fashion">https://github.com/runoneall/typecho-theme-old-fashion</a></p><p>后来从Typecho迁移到Hexo，于是开发了这个主题。</p>]]></content:encoded>
       
       
       <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
