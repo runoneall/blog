@@ -7,7 +7,7 @@ date: 2025-07-17 22:52:48
 
 自用主题，当前博客就是
 
-GitHub地址：https://github.com/runoneall/blog/tree/main/themes/hexo-theme-old-fashion
+GitHub地址：https://github.com/runoneall/blog/tree/theme
 
 原型：https://github.com/MrXiaoM/typecho-theme-old-fashion
 改版：https://github.com/runoneall/typecho-theme-old-fashion
