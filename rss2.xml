@@ -9,8 +9,33 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Thu, 24 Jul 2025 12:37:32 GMT</pubDate>
+    <pubDate>Sat, 26 Jul 2025 08:53:32 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Discord KubicNodes 容器机安装桌面环境和VNC</title>
+      <link>https://blog.oneall.eu.org/2025/07/26/Discord-KubicNodes-%E5%AE%B9%E5%99%A8%E6%9C%BA%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83%E5%92%8CVNC/</link>
+      <guid>https://blog.oneall.eu.org/2025/07/26/Discord-KubicNodes-%E5%AE%B9%E5%99%A8%E6%9C%BA%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83%E5%92%8CVNC/</guid>
+      <pubDate>Sat, 26 Jul 2025 08:50:06 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;本教程适用于 Ubuntu 22.04&lt;/p&gt;
+&lt;p&gt;VNC 服务器参考了这篇文章 &lt;a href=&quot;https://www.cnblogs.com/milton/p/16730512.html&quot;&gt;https://www.cnblogs.com/milton/p/16730</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>本教程适用于 Ubuntu 22.04</p><p>VNC 服务器参考了这篇文章 <a href="https://www.cnblogs.com/milton/p/16730512.html">https://www.cnblogs.com/milton/p/16730512.html</a></p><p>首先申请一台服务器，找到 <code>bot-commands</code> 频道，输入：<code>/deploy password:123123 os:Ubuntu 22.04</code></p><p><img src="https://s.rmimg.com/original/2X/e/e8fca845a7b02e4161bb0160e2aa28169ce68331.png"></p><p>开机后会私聊你登录信息</p><pre><code class="language-plaintext">your deployment passwordaddress(es): &lt;ip&gt;:&lt;port1&gt;, &lt;ip&gt;:&lt;port2&gt;, &lt;ip&gt;:&lt;port3&gt;ssh info:ssh root@&lt;ip&gt; -p &lt;port&gt;password: xxxxxx</code></pre><p>运行ssh登录命令登录，然后安装桌面和VNC服务器</p><pre><code class="language-shell">apt install xfce4 xfce4-goodies tigervnc-standalone-server fonts-noto-cjk</code></pre><p>安装过程中会提示选择时区和键盘布局，一般是 <code>English (US) / English (US)</code> 和 <code>Asia / Shanghai</code></p><p>然后先运行一次 <code>vncserver</code> 命令（直接用root运行）会让你输入两遍登陆密码</p><p>完成后运行下面的命令启动VNC服务器（直接用root运行）</p><pre><code class="language-shell">#!/bin/bashvncserver -kill -cleanvncserver -localhost no -depth 24 -rfbport &lt;分配给你的三个端口的其中一个&gt;</code></pre><p>服务器每次重启后都要运行一遍，可以将以上命令保存到shell文件，如 <code>vnc.sh</code> 并将其安装到 <code>/usr/bin</code> 目录</p><p><img src="https://s.rmimg.com/original/2X/7/7a26d3dc02ce9bd32b5a8794e9493e53e9db333b.png"></p><p>这样直接运行 <code>vnc.sh</code> 即可开启</p><p><img src="https://s.rmimg.com/original/2X/6/6149343a0c3b4968abf39f42c601778fb8a39c64.png"></p><p>不以root运行的话，打开某些应用时会出现 <code>failed to execute xxx (input/output error)</code> 在线召唤大佬解决，我没弄明白是怎么回事</p><p>附一张完整截图</p><p><img src="https://s.rmimg.com/optimized/2X/f/fc9134b519ffb01559e4af7a64b8de0301fe93e1_2_690x431.jpeg"></p><p>占用不是很高，能用</p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/07/26/Discord-KubicNodes-%E5%AE%B9%E5%99%A8%E6%9C%BA%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83%E5%92%8CVNC/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>分享我博客的优选方案</title>
@@ -491,31 +516,6 @@
       
       
       <comments>https://blog.oneall.eu.org/2025/04/21/%E8%BF%99%E6%AC%A1%E7%9A%84ba%206th%20pv%E5%90%83%E4%BA%86%E4%B8%8D%E5%B0%91Eva%E7%9A%84%E7%82%B9/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>Typecho使用Fastly CDN</title>
-      <link>https://blog.oneall.eu.org/2025/04/20/Typecho%E4%BD%BF%E7%94%A8Fastly%20CDN/</link>
-      <guid>https://blog.oneall.eu.org/2025/04/20/Typecho%E4%BD%BF%E7%94%A8Fastly%20CDN/</guid>
-      <pubDate>Sun, 20 Apr 2025 15:01:00 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;主要介绍从FNL CDN迁移到Fastly的过程，及踩过的坑&lt;/p&gt;
-&lt;p&gt;&lt;del&gt;某睿智博主花了两天搞的东西（悲&lt;/del&gt;&lt;br&gt;&lt;img src=&quot;https://s.rmimg.com/2025-04-20/1745147772-901837-2025-04-20</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>主要介绍从FNL CDN迁移到Fastly的过程，及踩过的坑</p><p><del>某睿智博主花了两天搞的东西（悲</del><br><img src="https://s.rmimg.com/2025-04-20/1745147772-901837-2025-04-20-191339.png"></p><p>首先是得有 Fastly 账号，然后到 <a href="https://manage.fastly.com/configure">https://manage.fastly.com/configure</a> 配置CDN服务</p><p>配置好后大概是这样<br><img src="https://s.rmimg.com/2025-04-20/1745147889-471716-2025-04-20-191804.png"></p><p>点击 Service configuration -&gt; Edit configuration -&gt; Clone to edit</p><ol><li>配置源站<br><img src="https://s.rmimg.com/2025-04-20/1745148062-585026-2025-04-20-192059.png"><br><img src="https://s.rmimg.com/2025-04-20/1745152648-633351-2025-04-20-203722.png"><br><img src="https://s.rmimg.com/2025-04-20/1745152742-341826-2025-04-20-203857.png"><br><img src="https://s.rmimg.com/2025-04-20/1745152760-792035-2025-04-20-203916.png"></li></ol><p>点击 Origins 并找到源站（这里是Serv00）并点击笔图标</p><ul><li>Name 随便写</li><li>Address 写源站IP</li><li>Enable TLS 若源站有则开启（Serv00 Panel域名有，这里开启）</li><li>Certificate hostname 要和源站 TLS 证书匹配</li><li>SNI hostname 若源站有证书则点开 Match the SNI hostname to the Certificate hostname</li><li>Override host 填博客域名，这里是 dev.oneall.eu.org</li><li>其他保持默认</li></ul><ol start="2"><li>配置加速选项<br>点击 Settings 并按需求开启（以下是我的配置）</li></ol><ul><li>Serve stale content on origin failure</li><li>Force TLS and enable HSTS</li><li>HTTP&#x2F;3</li><li>其余关闭</li></ul><ol start="3"><li>配置缓存<br><img src="https://s.rmimg.com/2025-04-20/1745153319-701066-2025-04-20-204833.png"><br><img src="https://s.rmimg.com/2025-04-20/1745153361-225122-2025-04-20-204917.png"><br><img src="https://s.rmimg.com/2025-04-20/1745153385-783210-2025-04-20-204942.png"></li></ol><p>Fastly默认缓存全站，当你发现后台 &#x2F;admin 进不去或有时能进去，请按照以下配置（我这19个version有10个都是栽在这了）</p><ul><li>Create cache setting</li><li>Condition -&gt; attach a condition</li><li>Name: Is Admin</li><li>Apply if: req.url ~ “^&#x2F;admin”</li><li>Save and apply to this cache setting</li><li>Name: 随便写</li><li>Action: Pass</li><li>其他留空</li></ul><ol start="4"><li>压缩<br><img src="https://s.rmimg.com/2025-04-20/1745153516-709386-2025-04-20-205152.png"></li></ol><p>点击 Content -&gt; Compression</p><ul><li>按需开启</li></ul><p>若要配置 SSL 前往 <a href="https://manage.fastly.com/network/domains">https://manage.fastly.com/network/domains</a><br><img src="https://s.rmimg.com/2025-04-20/1745153784-264081-2025-04-20-205619.png"></p><p>将域名接入Fastly</p><ol><li>前往 SSL 证书的 View subscription details</li><li>找到 TLS configuration and DNS details -&gt; View &#x2F; Edit<br><img src="https://s.rmimg.com/2025-04-20/1745153906-304170-2025-04-20-205821.png"></li><li>按需选择添加记录即可</li></ol>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/04/20/Typecho%E4%BD%BF%E7%94%A8Fastly%20CDN/#disqus_thread</comments>
       
     </item>
     
