@@ -10,31 +10,34 @@ function updateDB(searchResults, callback) {
         isUpdateDB = true;
         updateDBMsg.textContent = "正在加载数据库";
         searchResults.appendChild(updateDBMsg);
+
+        fetch("/search.xml")
+            .then((response) => {
+                const ok = response.ok;
+                const code = response.status;
+
+                if (!ok || code !== 200) {
+                    throw new Error(`HTTP Error ${code}`);
+                }
+                return response.text();
+            })
+            .then((str) => new DOMParser().parseFromString(str, "text/xml"))
+            .then((data) => {
+                searchDB = data.getElementsByTagName("entry");
+                callback();
+
+                if (isUpdateDB) {
+                    updateDBMsg.remove();
+                }
+            })
+            .catch((error) => {
+                updateDBMsg.textContent =
+                    "无法加载数据库, 从控制台中查看更多信息";
+                console.error(error);
+            });
+    } else {
+        callback();
     }
-
-    fetch("/search.xml")
-        .then((response) => {
-            const ok = response.ok;
-            const code = response.status;
-
-            if (!ok || code !== 200) {
-                throw new Error(`HTTP Error ${code}`);
-            }
-            return response.text();
-        })
-        .then((str) => new DOMParser().parseFromString(str, "text/xml"))
-        .then((data) => {
-            searchDB = data.getElementsByTagName("entry");
-            callback();
-
-            if (isUpdateDB) {
-                updateDBMsg.remove();
-            }
-        })
-        .catch((error) => {
-            updateDBMsg.textContent = "无法加载数据库, 从控制台中查看更多信息";
-            console.error(error);
-        });
 }
 
 function showUnfoundMessage(searchResults) {
