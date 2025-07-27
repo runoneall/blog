@@ -74,3 +74,18 @@ title: 搜索
 layout: search
 ---
 ```
+
+- (Optional) Robots.txt
+
+```shell
+npm install hexo-generator-robotstxt --save
+```
+
+```yaml
+# Add To _config.yml
+robotstxt:
+    useragent: "*"
+    disallow:
+    allow:
+    sitemap: /sitemap.xml
+```
