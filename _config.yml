@@ -124,6 +124,13 @@ search:
     content: true
     format: html
 
+# Robots.txt
+robotstxt:
+    useragent: "*"
+    disallow:
+    allow:
+    sitemap: /sitemap.xml
+
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
