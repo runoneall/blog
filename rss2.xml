@@ -9,8 +9,32 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Sat, 26 Jul 2025 09:06:05 GMT</pubDate>
+    <pubDate>Sun, 27 Jul 2025 08:03:28 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Debian系Firefox一键安装脚本</title>
+      <link>https://blog.oneall.eu.org/2025/07/27/Debian%E7%B3%BBFirefox%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</link>
+      <guid>https://blog.oneall.eu.org/2025/07/27/Debian%E7%B3%BBFirefox%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</guid>
+      <pubDate>Sun, 27 Jul 2025 08:02:15 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;原文链接： &lt;a href=&quot;https://support.mozilla.org/en-US/kb/install-firefox-linux&quot;&gt;https://support.mozilla.org/en-US/kb/install-firefox-linux&lt;/a&gt;</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>原文链接： <a href="https://support.mozilla.org/en-US/kb/install-firefox-linux">https://support.mozilla.org/en-US/kb/install-firefox-linux</a></p><p>安装：</p><pre><code class="language-shell">wget -O- https://runoneall.serv00.net/Files/firefox-install.sh | bash</code></pre><p>内容：</p><pre><code class="language-shell">sudo install -d -m 0755 /etc/apt/keyringswget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc &gt; /dev/nullgpg -n -q --import --import-options import-show /etc/apt/keyrings/packages.mozilla.org.asc | awk &#39;/pub/&#123;getline; gsub(/^ +| +$/,&quot;&quot;); if($0 == &quot;35BAA0B33E9EB396F59CA838C0BA5CE6DC6315A3&quot;) print &quot;\nThe key fingerprint matches (&quot;$0&quot;).\n&quot;; else print &quot;\nVerification failed: the fingerprint (&quot;$0&quot;) does not match the expected one.\n&quot;&#125;&#39;echo &quot;deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main&quot; | sudo tee -a /etc/apt/sources.list.d/mozilla.list &gt; /dev/nullecho &#39;Package: *Pin: origin packages.mozilla.orgPin-Priority: 1000&#39; | sudo tee /etc/apt/preferences.d/mozillasudo apt-get update &amp;&amp; sudo apt-get install firefox</code></pre>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/07/27/Debian%E7%B3%BBFirefox%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>KubicNodes容器机安装桌面环境和VNC</title>
@@ -488,34 +512,6 @@
       
       
       <comments>https://blog.oneall.eu.org/2025/04/22/Mini%E5%B0%8F%E9%B8%A1%E6%90%AD%E4%B8%80%E4%B8%AA%E8%BF%98%E7%AE%97%E8%83%BD%E7%94%A8%E7%9A%84%E4%BA%91%E7%94%B5%E8%84%91/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>这次的ba 6th pv吃了不少Eva的点</title>
-      <link>https://blog.oneall.eu.org/2025/04/21/%E8%BF%99%E6%AC%A1%E7%9A%84ba%206th%20pv%E5%90%83%E4%BA%86%E4%B8%8D%E5%B0%91Eva%E7%9A%84%E7%82%B9/</link>
-      <guid>https://blog.oneall.eu.org/2025/04/21/%E8%BF%99%E6%AC%A1%E7%9A%84ba%206th%20pv%E5%90%83%E4%BA%86%E4%B8%8D%E5%B0%91Eva%E7%9A%84%E7%82%B9/</guid>
-      <pubDate>Mon, 21 Apr 2025 10:35:50 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;以下仅表个人观点，欢迎勘误&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;绫波丽泡LCL&lt;br&gt;&lt;img src=&quot;https://s.rmimg.com/2025-04-21/1745221853-895725-2025-04-21-153511.png&quot;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>以下仅表个人观点，欢迎勘误</p><ol><li><p>绫波丽泡LCL<br><img src="https://s.rmimg.com/2025-04-21/1745221853-895725-2025-04-21-153511.png"></p></li><li><p>WILLE在巴黎修复反L结界<br><img src="https://s.rmimg.com/2025-04-21/1745223009-343942-2025-04-21-153637.png"></p></li><li><p>NERV的一艘战舰（推测为Erbsünde）<br><img src="https://s.rmimg.com/2025-04-21/1745223105-626384-2025-04-21-153832.png"></p></li><li><p>暴走的初号机<br><img src="https://s.rmimg.com/2025-04-21/1745223167-554678-2025-04-21-153951.png"></p></li><li><p>量产机<br><img src="https://s.rmimg.com/2025-04-21/1745223179-105679-2025-04-21-154025.png"></p></li><li><p>屋岛作战前（虽然人数不对）<br><img src="https://s.rmimg.com/2025-04-21/1745223201-309792-2025-04-21-154039.png"></p></li><li><p>大决战前明日香和真希波<br><img src="https://s.rmimg.com/2025-04-21/1745223324-691409-2025-04-21-154126.png"></p></li><li><p>初号机和13号机（碇源堂和碇真嗣）<br><img src="https://s.rmimg.com/2025-04-21/1745223444-926117-2025-04-21-154201.png"></p></li><li><p>装备阳电子炮4444C开火<br><img src="https://s.rmimg.com/2025-04-21/1745223582-250486-2025-04-21-154330.png"></p></li><li><p>初号机光翼<br><img src="https://s.rmimg.com/2025-04-21/1745223659-685648-2025-04-21-154428.png"><br><img src="https://s.rmimg.com/2025-04-21/1745223661-64023-2025-04-21-154444.png"></p></li></ol>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/04/21/%E8%BF%99%E6%AC%A1%E7%9A%84ba%206th%20pv%E5%90%83%E4%BA%86%E4%B8%8D%E5%B0%91Eva%E7%9A%84%E7%82%B9/#disqus_thread</comments>
       
     </item>
     
