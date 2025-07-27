@@ -1,14 +1,41 @@
 const searchForm = document.getElementById("search");
 const searchResults = document.getElementById("search-results");
-var searchDB = HTMLCollection;
+var searchDB = undefined;
 
-fetch("/search.xml")
-    .then((response) => response.text())
-    .then((str) => new DOMParser().parseFromString(str, "text/xml"))
-    .then((data) => {
-        searchDB = data.getElementsByTagName("entry");
-    })
-    .catch((error) => console.error(error));
+function updateDB(searchResults, callback) {
+    var isUpdateDB = false;
+    const updateDBMsg = document.createElement("p");
+
+    if (!searchDB) {
+        isUpdateDB = true;
+        updateDBMsg.textContent = "正在加载数据库";
+        searchResults.appendChild(updateDBMsg);
+    }
+
+    fetch("/search.xml")
+        .then((response) => {
+            const ok = response.ok;
+            const code = response.status;
+
+            if (!ok || code !== 200) {
+                throw new Error(`HTTP Error ${code}`);
+            }
+            return response.text();
+        })
+        .then((str) => new DOMParser().parseFromString(str, "text/xml"))
+        .then((data) => {
+            searchDB = data.getElementsByTagName("entry");
+            callback();
+
+            if (isUpdateDB) {
+                updateDBMsg.remove();
+            }
+        })
+        .catch((error) => {
+            updateDBMsg.textContent = "无法加载数据库, 从控制台中查看更多信息";
+            console.error(error);
+        });
+}
 
 function showUnfoundMessage(searchResults) {
     const msg = document.createElement("p");
@@ -65,30 +92,32 @@ searchForm.addEventListener("submit", function (event) {
         return;
     }
 
-    for (var i = 0; i < searchDB.length; i++) {
-        const item = searchDB[i];
+    updateDB(searchResults, () => {
+        for (var i = 0; i < searchDB.length; i++) {
+            const item = searchDB[i];
 
-        const title = item.getElementsByTagName("title")[0].textContent;
-        const url = item.getElementsByTagName("url")[0].textContent;
-        const content = item.getElementsByTagName("content")[0].textContent;
+            const title = item.getElementsByTagName("title")[0].textContent;
+            const url = item.getElementsByTagName("url")[0].textContent;
+            const content = item.getElementsByTagName("content")[0].textContent;
 
-        if (
-            title.toLowerCase().includes(query) ||
-            content.toLowerCase().includes(query)
-        ) {
-            isFoundFlag = true;
+            if (
+                title.toLowerCase().includes(query) ||
+                content.toLowerCase().includes(query)
+            ) {
+                isFoundFlag = true;
 
-            const resultItem = buildResultItem(
-                title,
-                url,
-                excerpt_clean(content, parseInt(formData.excerpt_length)),
-            );
-            searchResults.appendChild(resultItem);
+                const resultItem = buildResultItem(
+                    title,
+                    url,
+                    excerpt_clean(content, parseInt(formData.excerpt_length)),
+                );
+                searchResults.appendChild(resultItem);
+            }
         }
-    }
 
-    if (isFoundFlag == false) {
-        showUnfoundMessage(searchResults);
-        return;
-    }
+        if (isFoundFlag == false) {
+            showUnfoundMessage(searchResults);
+            return;
+        }
+    });
 });
