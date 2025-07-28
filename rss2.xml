@@ -9,8 +9,35 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Mon, 28 Jul 2025 04:50:54 GMT</pubDate>
+    <pubDate>Mon, 28 Jul 2025 13:45:55 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>php反向代理</title>
+      <link>https://blog.oneall.eu.org/2025/07/28/php%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/</link>
+      <guid>https://blog.oneall.eu.org/2025/07/28/php%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/</guid>
+      <pubDate>Mon, 28 Jul 2025 13:42:38 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;反代任意网站（必须得是相对路径链接）&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-php&quot;&gt;&amp;lt;?php
+// 填要反代的URL，不以 / 结尾，任何网络请求都会拼接到该地址之后
+$proxyBase = &amp;quot;https://blog.onea</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>反代任意网站（必须得是相对路径链接）</p><pre><code class="language-php">&lt;?php// 填要反代的URL，不以 / 结尾，任何网络请求都会拼接到该地址之后$proxyBase = &quot;https://blog.oneall.eu.org&quot;;// 获取客户端请求信息$method = $_SERVER[&#39;REQUEST_METHOD&#39;];$path = $_SERVER[&#39;REQUEST_URI&#39;] ?? &#39;/&#39;;$headers = getallheaders();$body = file_get_contents(&#39;php://input&#39;);// 构造目标 URL$targetUrl = &quot;&#123;$proxyBase&#125;&#123;$path&#125;&quot;;// 准备 cURL 请求$ch = curl_init();curl_setopt_array($ch, [    CURLOPT_URL =&gt; $targetUrl,    CURLOPT_CUSTOMREQUEST =&gt; $method,    CURLOPT_HTTPHEADER =&gt; formatHeaders($headers),    CURLOPT_POSTFIELDS =&gt; $body,    CURLOPT_FOLLOWLOCATION =&gt; false,    CURLOPT_HEADER =&gt; true,    CURLOPT_RETURNTRANSFER =&gt; true,    CURLOPT_SSL_VERIFYPEER =&gt; false,    CURLOPT_ENCODING =&gt; &#39;&#39;,    CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_2TLS,]);// 执行请求$response = curl_exec($ch);$error = curl_error($ch);if ($error) &#123;    http_response_code(502);    echo &quot;Proxy error: &quot; . $error;    exit;&#125;// 处理响应$statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);$headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);$responseHeaders = substr($response, 0, $headerSize);$responseBody = substr($response, $headerSize);curl_close($ch);// 转发响应头foreach (explode(&quot;\r\n&quot;, $responseHeaders) as $headerLine) &#123;    if (strpos($headerLine, &#39;HTTP/&#39;) === 0) &#123;        header($headerLine);    &#125; else if (!empty(trim($headerLine))) &#123;        $parts = explode(&#39;: &#39;, $headerLine, 2);        if (count($parts) === 2) &#123;            header($headerLine, false);        &#125;    &#125;&#125;// 输出响应体echo $responseBody;// 转换请求头function formatHeaders(array $headers): array&#123;    $result = [];    foreach ($headers as $name =&gt; $value) &#123;        // 跳过可能引起问题的头        if (strtolower($name) === &#39;host&#39;)            continue;        if (strtolower($name) === &#39;connection&#39;)            continue;        // 修复 accept-encoding        if (strtolower($name) === &#39;accept-encoding&#39;) &#123;            $value = &quot;none&quot;;        &#125;        // 不缓存数据        if (strtolower($name) === &quot;cache-control&quot;) &#123;            $value = &quot;no-cache&quot;;        &#125;        $result[] = &quot;&#123;$name&#125;: &#123;$value&#125;&quot;;    &#125;    return $result;&#125;</code></pre><p>添加伪静态规则</p><pre><code class="language-htaccess">&lt;IfModule mod_rewrite.c&gt;    RewriteEngine On    RewriteBase /    # 跳过真实存在的文件或目录    RewriteCond %&#123;REQUEST_FILENAME&#125; !-f    RewriteCond %&#123;REQUEST_FILENAME&#125; !-d    # 重写所有请求到 index.php    RewriteRule . /index.php [L]&lt;/IfModule&gt;</code></pre>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/07/28/php%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>Debian系Firefox一键安装脚本</title>
@@ -487,31 +514,6 @@
       
       
       <comments>https://blog.oneall.eu.org/2025/04/23/%E4%B8%80%E4%B8%AA%E5%8D%A0%E7%94%A8%E8%BE%83%E5%B0%8F%E7%9A%84%E7%BD%91%E7%BB%9C%E6%B5%8F%E8%A7%88%E5%99%A8/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>Mini小鸡搭一个还算能用的云电脑</title>
-      <link>https://blog.oneall.eu.org/2025/04/22/Mini%E5%B0%8F%E9%B8%A1%E6%90%AD%E4%B8%80%E4%B8%AA%E8%BF%98%E7%AE%97%E8%83%BD%E7%94%A8%E7%9A%84%E4%BA%91%E7%94%B5%E8%84%91/</link>
-      <guid>https://blog.oneall.eu.org/2025/04/22/Mini%E5%B0%8F%E9%B8%A1%E6%90%AD%E4%B8%80%E4%B8%AA%E8%BF%98%E7%AE%97%E8%83%BD%E7%94%A8%E7%9A%84%E4%BA%91%E7%94%B5%E8%84%91/</guid>
-      <pubDate>Tue, 22 Apr 2025 10:40:00 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;浏览网页一点问题没有，配置低的vps也可以看&lt;br&gt;&lt;img src=&quot;https://s.rmimg.com/2025-04-22/1745310185-392883-2025-04-22-161856.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;第一步刷轻量系统，这里用alpine 3.</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>浏览网页一点问题没有，配置低的vps也可以看<br><img src="https://s.rmimg.com/2025-04-22/1745310185-392883-2025-04-22-161856.png"></p><p>第一步刷轻量系统，这里用alpine 3.20</p><pre><code class="language-sh">wget -O vps.sh https://raw.githubusercontent.com/everett7623/vps_scripts/main/vps.sh &amp;&amp; chmod +x vps.sh &amp;&amp; clear &amp;&amp; ./vps.sh</code></pre><ol><li>安装桌面（这里用lxqt加lxdm）</li></ol><pre><code class="language-sh">setup-xorg-basesetup-user  # 桌面不能root登录apk add lxqt-desktop lxqt-core lxqt-panel lxqt-admin lxqt-config lxqt-notificationd lxqt-powermanagement lxqt-themes openbox setxkbmapaddgroup &lt;user&gt; input  # 将新创建的普通用户加入input和video组addgroup &lt;user&gt; videoapk add dbus dbus-x11 lxdmrc-update add dbusrc-update add lxdmreboot</code></pre><ol start="2"><li>字体和图标</li></ol><pre><code class="language-sh">apk add breeze-icons font-noto-cjk</code></pre><ol start="3"><li>浏览器（火狐算是比较流畅的了）</li></ol><pre><code class="language-sh">apk add firefox</code></pre><ol start="4"><li><p>开启VNC<br><img src="https://s.rmimg.com/2025-04-22/1745311117-804227-2025-04-22-163755.png"></p></li><li><p>重启系统</p></li></ol><pre><code class="language-sh">reboot</code></pre>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/04/22/Mini%E5%B0%8F%E9%B8%A1%E6%90%AD%E4%B8%80%E4%B8%AA%E8%BF%98%E7%AE%97%E8%83%BD%E7%94%A8%E7%9A%84%E4%BA%91%E7%94%B5%E8%84%91/#disqus_thread</comments>
       
     </item>
     
