@@ -6,7 +6,7 @@
   <link href="https://blog.oneall.eu.org/atom.xml" rel="self"/>
   
   <link href="https://blog.oneall.eu.org/"/>
-  <updated>2025-07-27T10:29:20.687Z</updated>
+  <updated>2025-07-28T04:50:54.937Z</updated>
   <id>https://blog.oneall.eu.org/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://blog.oneall.eu.org/2025/07/27/Debian%E7%B3%BBFirefox%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/"/>
     <id>https://blog.oneall.eu.org/2025/07/27/Debian%E7%B3%BBFirefox%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</id>
     <published>2025-07-27T08:02:15.000Z</published>
-    <updated>2025-07-27T10:29:20.687Z</updated>
+    <updated>2025-07-28T04:50:54.937Z</updated>
     
     <content type="html"><![CDATA[<p>原文链接： <a href="https://support.mozilla.org/en-US/kb/install-firefox-linux">https://support.mozilla.org/en-US/kb/install-firefox-linux</a></p><p>安装：</p><pre><code class="language-shell">wget -O- https://runoneall.serv00.net/Files/firefox-install.sh | bash</code></pre><p>内容：</p><pre><code class="language-shell">sudo install -d -m 0755 /etc/apt/keyringswget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc &gt; /dev/nullgpg -n -q --import --import-options import-show /etc/apt/keyrings/packages.mozilla.org.asc | awk &#39;/pub/&#123;getline; gsub(/^ +| +$/,&quot;&quot;); if($0 == &quot;35BAA0B33E9EB396F59CA838C0BA5CE6DC6315A3&quot;) print &quot;\nThe key fingerprint matches (&quot;$0&quot;).\n&quot;; else print &quot;\nVerification failed: the fingerprint (&quot;$0&quot;) does not match the expected one.\n&quot;&#125;&#39;echo &quot;deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main&quot; | sudo tee -a /etc/apt/sources.list.d/mozilla.list &gt; /dev/nullecho &#39;Package: *Pin: origin packages.mozilla.orgPin-Priority: 1000&#39; | sudo tee /etc/apt/preferences.d/mozillasudo apt-get update &amp;&amp; sudo apt-get install firefox</code></pre>]]></content>
     
@@ -43,7 +43,7 @@
     <link href="https://blog.oneall.eu.org/2025/07/26/KubicNodes%E5%AE%B9%E5%99%A8%E6%9C%BA%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83%E5%92%8CVNC/"/>
     <id>https://blog.oneall.eu.org/2025/07/26/KubicNodes%E5%AE%B9%E5%99%A8%E6%9C%BA%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83%E5%92%8CVNC/</id>
     <published>2025-07-26T09:04:31.000Z</published>
-    <updated>2025-07-27T10:29:20.687Z</updated>
+    <updated>2025-07-28T04:50:54.937Z</updated>
     
     <content type="html"><![CDATA[<p>本教程适用于 Ubuntu 22.04</p><p>VNC 服务器参考了这篇文章 <a href="https://www.cnblogs.com/milton/p/16730512.html">https://www.cnblogs.com/milton/p/16730512.html</a></p><p>首先申请一台服务器，找到 <code>bot-commands</code> 频道，输入：<code>/deploy password:123123 os:Ubuntu 22.04</code></p><p><img src="https://s.rmimg.com/original/2X/e/e8fca845a7b02e4161bb0160e2aa28169ce68331.png"></p><p>开机后会私聊你登录信息</p><pre><code class="language-plaintext">your deployment passwordaddress(es): &lt;ip&gt;:&lt;port1&gt;, &lt;ip&gt;:&lt;port2&gt;, &lt;ip&gt;:&lt;port3&gt;ssh info:ssh root@&lt;ip&gt; -p &lt;port&gt;password: xxxxxx</code></pre><p>运行ssh登录命令登录，然后安装桌面和VNC服务器</p><pre><code class="language-shell">apt install xfce4 xfce4-goodies tigervnc-standalone-server fonts-noto-cjk</code></pre><p>安装过程中会提示选择时区和键盘布局，一般是 <code>English (US) / English (US)</code> 和 <code>Asia / Shanghai</code></p><p>然后先运行一次 <code>vncserver</code> 命令（直接用root运行）会让你输入两遍登陆密码</p><p>完成后运行下面的命令启动VNC服务器（直接用root运行）</p><pre><code class="language-shell">#!/bin/bashvncserver -kill -cleanvncserver -localhost no -depth 24 -rfbport &lt;分配给你的三个端口的其中一个&gt;</code></pre><p>服务器每次重启后都要运行一遍，可以将以上命令保存到shell文件，如 <code>vnc.sh</code> 并将其安装到 <code>/usr/bin</code> 目录</p><p><img src="https://s.rmimg.com/original/2X/7/7a26d3dc02ce9bd32b5a8794e9493e53e9db333b.png"></p><p>这样直接运行 <code>vnc.sh</code> 即可开启</p><p><img src="https://s.rmimg.com/original/2X/6/6149343a0c3b4968abf39f42c601778fb8a39c64.png"></p><p>不以root运行的话，打开某些应用时会出现 <code>failed to execute xxx (input/output error)</code> 在线召唤大佬解决，我没弄明白是怎么回事</p><p>附一张完整截图</p><p><img src="https://s.rmimg.com/optimized/2X/f/fc9134b519ffb01559e4af7a64b8de0301fe93e1_2_690x431.jpeg"></p><p>占用不是很高，能用</p>]]></content>
     
@@ -66,7 +66,7 @@
     <link href="https://blog.oneall.eu.org/2025/07/24/%E5%88%86%E4%BA%AB%E6%88%91%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%BC%98%E9%80%89%E6%96%B9%E6%A1%88/"/>
     <id>https://blog.oneall.eu.org/2025/07/24/%E5%88%86%E4%BA%AB%E6%88%91%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%BC%98%E9%80%89%E6%96%B9%E6%A1%88/</id>
     <published>2025-07-24T12:28:33.000Z</published>
-    <updated>2025-07-27T10:29:20.689Z</updated>
+    <updated>2025-07-28T04:50:54.939Z</updated>
     
     <content type="html"><![CDATA[<p>博客地址：</p><p><a href="https://blog.oneall.eu.org/">https://blog.oneall.eu.org/</a></p><p>测速截图：</p><p><img src="https://s.rmimg.com/original/2X/b/ba461e0c45b3d79dbabb12ac52a8c70436299d1f.png"></p><p>该博客用的 Cloudflare Pages 托管，所以也是Pages优选的方法</p><ol><li>部署到pages</li></ol><p>新建一个pages，然后上传静态文件，我这里是直接从github拉取</p><p><a href="https://github.com/runoneall/blog">https://github.com/runoneall/blog</a></p><blockquote><p>tip: 如果你正在找我博客的同款主题，这是链接： <a href="https://github.com/runoneall/blog/tree/theme">https://github.com/runoneall/blog/tree/theme</a></p></blockquote><p><img src="https://s.rmimg.com/original/2X/7/75cfb7e58894aef71cde0e3baad6f913f3e27fc9.png"></p><p><img src="https://s.rmimg.com/original/2X/7/7df0d71f1069aed690ca8c3a2fa1fdddcc5c206d.png"></p><p><img src="https://s.rmimg.com/original/2X/e/e6a8d1f08206f50a4c2c392ba8fa8cc387ea216c.png"></p><p>等待部署完成后得到 <code>xxx.pages.dev</code> 链接</p><ol start="2"><li>自定义域名</li></ol><p><img src="https://s.rmimg.com/original/2X/e/e5401a403c58359d0e7e23b6efab0df7e9f81aad.png"></p><blockquote><p>注意！cloudflare会自动为该域名配置一条CNAME记录，要删除！</p></blockquote><ol start="3"><li>优选域名</li></ol><p>打开华为云dns，添加域名</p><p><img src="https://s.rmimg.com/original/2X/f/f20cacd92d09ee3627f93080e40fe38d10cc8502.png"></p><p>添加好后配置两条记录</p><p><img src="https://s.rmimg.com/original/2X/5/5a54c27ec137807591b67f467371871e6f5d99b7.png"></p><p><img src="https://s.rmimg.com/original/2X/4/48540e912c0b73c10199acce44b35388b476b006.png"></p><p>这里用的是CM大佬的优选域 <code>cf.090227.xyz.</code></p><ol start="4"><li>配置dns解析</li></ol><p><img src="https://s.rmimg.com/original/2X/5/56a9dd5307c6124818e64f810d9652b28acc6410.png"></p><p><img src="https://s.rmimg.com/original/2X/3/3a7414e38142c7e81a0b0b3683313678c75e15f8.png"></p><p>接下来就是等了，一般24小时就能行</p><p>更换优选域就修改步骤3的第二条记录的值</p>]]></content>
     
@@ -91,7 +91,7 @@
     <link href="https://blog.oneall.eu.org/2025/07/17/hexo%E6%96%B0%E4%B8%BB%E9%A2%98old-fashion/"/>
     <id>https://blog.oneall.eu.org/2025/07/17/hexo%E6%96%B0%E4%B8%BB%E9%A2%98old-fashion/</id>
     <published>2025-07-17T22:52:48.000Z</published>
-    <updated>2025-07-27T10:29:20.688Z</updated>
+    <updated>2025-07-28T04:50:54.938Z</updated>
     
     <content type="html"><![CDATA[<p>自用主题，当前博客就是</p><p>GitHub地址：<a href="https://github.com/runoneall/blog/tree/theme">https://github.com/runoneall/blog/tree/theme</a></p><p>原型：<a href="https://github.com/MrXiaoM/typecho-theme-old-fashion">https://github.com/MrXiaoM/typecho-theme-old-fashion</a><br>改版：<a href="https://github.com/runoneall/typecho-theme-old-fashion">https://github.com/runoneall/typecho-theme-old-fashion</a></p><p>后来从Typecho迁移到Hexo，于是开发了这个主题。</p>]]></content>
     
@@ -115,7 +115,7 @@
     <link href="https://blog.oneall.eu.org/2025/07/02/%E8%87%AA%E5%8A%A8%E6%BB%9A%E5%8A%A8%E6%B2%B9%E7%8C%B4%E8%84%9A%E6%9C%AC/"/>
     <id>https://blog.oneall.eu.org/2025/07/02/%E8%87%AA%E5%8A%A8%E6%BB%9A%E5%8A%A8%E6%B2%B9%E7%8C%B4%E8%84%9A%E6%9C%AC/</id>
     <published>2025-07-02T03:08:50.000Z</published>
-    <updated>2025-07-27T10:29:20.690Z</updated>
+    <updated>2025-07-28T04:50:54.940Z</updated>
     
     <content type="html"><![CDATA[<p>在日常摸鱼中，你可能会遇到频繁往下滚动的场景（比如看小说），而你又不想动鼠标，也不想动键盘，那么这个脚本适合你：</p><p>地址：<a href="https://runoneall.serv00.net/Files/%e8%87%aa%e5%8a%a8%e6%bb%9a%e5%8a%a8%e8%be%85%e5%8a%a9%e5%99%a8.js">自动滚动辅助器</a></p><p>找deepseek-r1写的，并修复了bug</p><p>演示：<br><img src="https://s.rmimg.com/optimized/2X/9/9189d7301a1c011fa4a7a977e09d748546b6e9bd_2_1380x988.jpeg"></p><p>点个赞吧球球了</p>]]></content>
     
@@ -138,7 +138,7 @@
     <link href="https://blog.oneall.eu.org/2025/06/25/python%E9%80%9A%E7%94%A8%E8%B7%A8%E8%AF%AD%E8%A8%80%E5%AF%BC%E5%85%A5%E5%99%A8/"/>
     <id>https://blog.oneall.eu.org/2025/06/25/python%E9%80%9A%E7%94%A8%E8%B7%A8%E8%AF%AD%E8%A8%80%E5%AF%BC%E5%85%A5%E5%99%A8/</id>
     <published>2025-06-25T16:47:32.000Z</published>
-    <updated>2025-07-27T10:29:20.688Z</updated>
+    <updated>2025-07-28T04:50:54.938Z</updated>
     
     <content type="html"><![CDATA[<p>本质就是打包成so，然后用CDLL加载，但是可以直接用import</p><p>文档：<a href="https://github.com/FramerOrg/CrossLanguage/wiki/Module-Document">https://github.com/FramerOrg/CrossLanguage/wiki/Module-Document</a></p><p>核心代码就是 <code>CrossLangImporter</code>，用Require返回ModuleSpec，封装了自动查找，运行编译，导入钩子</p><p>可以自定义后缀处理，当然是py文件优先</p><p>具体看如何添加处理器</p><pre><code class="language-python">class moduleMain:    def __init__(self, framer, logger):        self.framer = framer        self.logger = logger        self.extension = &quot;go&quot;        self.not_found_message = (            &quot;Go compiler not found. Install Go from https://golang.org/&quot;        )    def build_command(self, file_path, so_path):        return [            [&quot;go&quot;, &quot;mod&quot;, &quot;tidy&quot;],            [&quot;go&quot;, &quot;build&quot;, &quot;-buildmode=c-shared&quot;, &quot;-o&quot;, so_path, file_path],        ]</code></pre><p>其中moduleMain及init参数是framer固定的，不用管<br>主要实现：</p><ol><li>self.extension：声明该处理器能处理的文件</li><li>self.not_found_message：若找不到编译器，抛出的错误内容</li><li>build_command：返回一系列编译命令，其中file_path和so_path是固定的，编译时会进入file_path所在目录</li></ol><p>觉得不错就给Framer项目点个Star吧：<a href="https://github.com/FramerOrg/Framer">https://github.com/FramerOrg/Framer</a></p>]]></content>
     
@@ -161,7 +161,7 @@
     <link href="https://blog.oneall.eu.org/2025/06/24/python%E5%8E%9F%E7%94%9F%E5%AF%BC%E5%85%A5%E6%97%A0%E7%BC%9D%E8%A1%94%E6%8E%A5go%E4%B8%8Epython/"/>
     <id>https://blog.oneall.eu.org/2025/06/24/python%E5%8E%9F%E7%94%9F%E5%AF%BC%E5%85%A5%E6%97%A0%E7%BC%9D%E8%A1%94%E6%8E%A5go%E4%B8%8Epython/</id>
     <published>2025-06-24T18:46:53.000Z</published>
-    <updated>2025-07-27T10:29:20.688Z</updated>
+    <updated>2025-07-28T04:50:54.938Z</updated>
     
     <content type="html"><![CDATA[<p>地址：<a href="https://github.com/FramerOrg/FramerModules/wiki/Module-Document#gobridge">https://github.com/FramerOrg/FramerModules/wiki/Module-Document#gobridge</a></p><p>这是一个给 Framer 写的模块，但可以拆开来用：</p><pre><code class="language-python">import sysimport osimport subprocessimport ctypesfrom importlib.abc import MetaPathFinder, Loaderfrom importlib.machinery import ModuleSpecclass GoLoader(Loader):    def __init__(self, so_path, fullname):        self.so_path = so_path        self.fullname = fullname    def create_module(self, spec):        return None    def exec_module(self, module):        # load library        lib = ctypes.cdll.LoadLibrary(self.so_path)        # dynamic function getter        def get_lib_attr(name):            return getattr(lib, name)        # bind to module        module.__getattr__ = get_lib_attrclass GoFinder(MetaPathFinder):    def find_spec(self, fullname, path, target=None):        # get import module name        module_name = fullname.split(&quot;.&quot;)[-1]        # go file search path        search_paths = sys.path if path is None else path        for base_path in search_paths:            # possible file paths            py_path = os.path.join(base_path, f&quot;&#123;module_name&#125;.py&quot;)            go_path = os.path.join(base_path, f&quot;&#123;module_name&#125;.go&quot;)            so_path = os.path.join(base_path, f&quot;&#123;module_name&#125;.so&quot;)            # ignore python file            if os.path.isfile(py_path):                continue            # process go file            if os.path.isfile(go_path):                # ensure newest compiled                self._ensure_compiled(go_path, so_path)                # custom module loader                loader = GoLoader(so_path, fullname)                # create module spec                return ModuleSpec(                    name=fullname, loader=loader, origin=go_path, is_package=True                )        return None    def _ensure_compiled(self, go_path, so_path):        # build if so file old        if not os.path.exists(so_path) or (            os.path.getmtime(go_path) &gt; os.path.getmtime(so_path)        ):            # compile go file            self._compile_go(go_path, so_path)    def _compile_go(self, go_path, so_path):        # build command        cmd = [&quot;go&quot;, &quot;build&quot;, &quot;-buildmode=c-shared&quot;, &quot;-o&quot;, so_path, go_path]        # run command        try:            result = subprocess.run(cmd, capture_output=True, text=True, check=True)            self.logger(f&quot;Compiled &#123;go_path&#125; -&gt; &#123;so_path&#125;&quot;)            if result.stderr:                self.logger(&quot;Compiler warnings: &quot; + result.stderr)        # catch errors        except subprocess.CalledProcessError as e:            raise ImportError(                f&quot;Go compilation failed for &#123;go_path&#125;:\n&quot;                f&quot;Exit code: &#123;e.returncode&#125;\n&quot;                f&quot;Error: &#123;e.stderr&#125;&quot;            ) from e        # if go not installed        except FileNotFoundError:            raise ImportError(&quot;Go compiler not found. Install from https://golang.org/&quot;)sys.meta_path.insert(0, GoFinder())</code></pre><p>将其保存为一个 python 文件，然后在项目入口处导入一下就行</p><p>首先准备一个叫 <code>mymodule.go</code> 的文件，内容如下：</p><pre><code class="language-go">package mainimport &quot;C&quot; //必须引入C库import &quot;fmt&quot;//加入下面注释代码，表示导出，可以被python调用//export PrintDllfunc PrintDll() &#123;fmt.Println(&quot;我来自dll&quot;)&#125;////export Sumfunc Sum(a int, b int) int &#123;return a + b&#125;func main() &#123;//必须加一个main函数，作为CGO编译的入口，无具体实现代码&#125;</code></pre><p>然后在 python 内可以直接用 <code>import mymodule</code><br>会自动将 go 编译为 so&#x2F;dylib&#x2F;dll，智能识别更改</p><p>每当 go 代码更改后会重新编译，时间较长，编译后下一次就不会重新编译了</p><p>以及用作为 python 包也是可以的，目录结构如下：<br><img src="https://s.rmimg.com/original/2X/1/1630d32b4829c738d16538bcc226b4ba2393696e.png"></p><p>可以直接用 <code>from testModule import mymodule</code></p><p>理论上任何能编译为共享库的语言都能用这套代码</p>]]></content>
     
@@ -183,7 +183,7 @@
     <link href="https://blog.oneall.eu.org/2025/06/23/%E4%BA%91%E6%B9%96%E7%BD%91%E7%9B%98%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8/"/>
     <id>https://blog.oneall.eu.org/2025/06/23/%E4%BA%91%E6%B9%96%E7%BD%91%E7%9B%98%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8/</id>
     <published>2025-06-23T15:58:31.000Z</published>
-    <updated>2025-07-27T10:29:20.688Z</updated>
+    <updated>2025-07-28T04:50:54.939Z</updated>
     
     <content type="html"><![CDATA[<p>注意：这是第三方实现，云湖本身不对用户提供网盘服务</p><p>开源地址：<a href="https://github.com/runoneall/YunhuDriveGUI">https://github.com/runoneall/YunhuDriveGUI</a></p><p>安装命令：</p><pre><code class="language-shell">git clone https://github.com/runoneall/YunhuDriveGUI.gitcd YunhuDriveGUIgo mod tidygo run *.go</code></pre><p>特点：无限容量，无限保存时长，可分享，啥时候云湖倒闭啥时候停</p><p>注册用户：</p><ol><li>下载云湖 APP（应用商店搜）</li><li>先用手机号注册（强制的）</li><li>到设置里绑定邮箱（开启密码登录）</li><li>退出登录，在登录界面选择使用邮箱登录，点击忘记密码（设置初始密码）</li><li>打开云湖网盘客户端，点击登录，使用云湖账号登录即可</li></ol>]]></content>
     
@@ -206,7 +206,7 @@
     <link href="https://blog.oneall.eu.org/2025/06/16/%E5%B0%86webhook%E8%BD%AC%E6%8D%A2%E4%B8%BAwebsocket%E7%9A%84%E5%B7%A5%E5%85%B7/"/>
     <id>https://blog.oneall.eu.org/2025/06/16/%E5%B0%86webhook%E8%BD%AC%E6%8D%A2%E4%B8%BAwebsocket%E7%9A%84%E5%B7%A5%E5%85%B7/</id>
     <published>2025-06-16T11:11:32.000Z</published>
-    <updated>2025-07-27T10:29:20.689Z</updated>
+    <updated>2025-07-28T04:50:54.939Z</updated>
     
     <content type="html"><![CDATA[<p>地址：<br><a href="https://github.com/FramerOrg/HookToWS">https://github.com/FramerOrg/HookToWS</a></p><p>特点：</p><ol><li>支持多客户端</li><li>无需持久化</li><li>无需多端口</li></ol><p>docker安装：</p><pre><code class="language-shell">docker pull runoneall/hook-to-wsdocker run -d --name hook-to-ws -p 3000:3000 -e WS_AUTH_TOKEN=your_secure_token_here -e PORT=3000 runoneall/hook-to-ws</code></pre><p>连接：<br>首先连接ws：</p><pre><code class="language-plaintext">ws://&lt;your_domain&gt;:&lt;port&gt;/?token=&lt;your_token&gt;&amp;path=&lt;your_path&gt;</code></pre><p>然后程序会在 &#x2F;webhook&#x2F;<your_path> 处监听POST请求</p><p>对应的webhook地址为：</p><pre><code class="language-plaintext">http://&lt;your_domain&gt;:&lt;port&gt;/webhook/&lt;your_path&gt;</code></pre><p>如果有ssl那就是 wss 和 https</p>]]></content>
     
@@ -232,7 +232,7 @@
     <link href="https://blog.oneall.eu.org/2025/06/06/claw-run%E6%90%AD%E5%BB%BA2fa%E7%AE%A1%E7%90%86%E5%99%A8/"/>
     <id>https://blog.oneall.eu.org/2025/06/06/claw-run%E6%90%AD%E5%BB%BA2fa%E7%AE%A1%E7%90%86%E5%99%A8/</id>
     <published>2025-06-06T10:38:46.000Z</published>
-    <updated>2025-07-27T10:29:20.688Z</updated>
+    <updated>2025-07-28T04:50:54.938Z</updated>
     
     <content type="html"><![CDATA[<p>好处：<br>除前端外基本没有网络开销，而且还很实用（可能是最有用的方式？）</p><p><img src="https://s.rmimg.com/optimized/2X/3/32f81fbe5df763e1753c501a1fce40c6f1f68949_2_1380x174.png"></p><p>GitHub 地址：<br><a href="https://github.com/quicklyon/2FAuth-docker">https://github.com/quicklyon/2FAuth-docker</a></p><p>搭建：</p><ul><li>Image：<code>easysoft/2fauth:latest</code></li><li>Usage：<code>Fixed</code></li><li>CPU：<code>0.1</code></li><li>Memory：<code>128M</code></li><li>Port：<code>8000</code></li><li>Local Storage：<code>2G</code></li></ul><p>费用：<br><img src="https://s.rmimg.com/original/2X/3/314cb4fad6aa1887dd8e296a855707595ebba15c.png"><br><code>0.03*31=0.93</code>，完全够</p><p>后台管理：<br>因为目前这个 image 还有些 bug，所以得手动允许 CORS 和 Mixed Content（期待大佬修复）</p><p><code>chrome://flags</code> 找到 <code>Insecure origins treated as secure</code> 添加 <code>http://你的域名</code> 并 <code>Enable</code><br>浏览器添加允许跨域插件并启动</p><p>进入后台后点击底部的设置，往下滑找到 <code>禁用注册</code><br><img src="https://s.rmimg.com/original/2X/d/d585263e34f51fd729874eb9807db142dd51b8f4.png"></p>]]></content>
     
@@ -255,7 +255,7 @@
     <link href="https://blog.oneall.eu.org/2025/06/04/loc-cc%E4%BD%BF%E7%94%A8acme-sh%E8%87%AA%E5%8A%A8%E7%AD%BEssl/"/>
     <id>https://blog.oneall.eu.org/2025/06/04/loc-cc%E4%BD%BF%E7%94%A8acme-sh%E8%87%AA%E5%8A%A8%E7%AD%BEssl/</id>
     <published>2025-06-04T13:14:47.000Z</published>
-    <updated>2025-07-27T10:29:20.688Z</updated>
+    <updated>2025-07-28T04:50:54.938Z</updated>
     
     <content type="html"><![CDATA[<p>关于如何添加 ns 记录，目前除手动同步两边记录外并未有好方法，改 SOA 并未生效<br>关于 ssl 的问题，可以使用 webroot 验证，确保域名能够访问<br>此处用 serv00 演示，因为可以用 devil 自动添加证书</p><p>演示：<br><img src="https://s.rmimg.com/original/2X/5/562d06ecc9ce277082114386219d479ad64d70bc.png"></p><ol><li>安装 acme.sh</li></ol><pre><code class="language-shell">curl https://get.acme.sh | sh -s email=你的邮箱</code></pre><ol start="2"><li>设置验证路径</li></ol><pre><code class="language-shell">mkdir -p ~/ssl/update-sh/ # 用于存放更新脚本mkdir -p ~/domains/你的域名/public_html/.well-known/acme-challenge # 用于webroot验证</code></pre><ol start="3"><li>自动更新脚本（注意要用 <code>fullchain</code> 否则不完整）</li></ol><pre><code class="language-shell">#!/usr/local/bin/bashDOMAIN=&quot;你的域名&quot;IP=&quot;128.204.223.46&quot;CERT_DIR=&quot;~/ssl&quot;devil ssl www del $IP $DOMAINdevil ssl www add $IP &quot;$CERT_DIR/$DOMAIN.fullchain.crt&quot; &quot;$CERT_DIR/$DOMAIN.key&quot; $DOMAIN</code></pre><ol start="4"><li>添加证书</li></ol><pre><code class="language-shell">acme.sh --issue -d 你的域名 \    -w ~/domains/你的域名/public_html \    --cert-file ~/ssl/你的域名.crt \    --key-file ~/ssl/你的域名.key \    --fullchain-file ~/ssl/你的域名.fullchain.crt \    --reloadcmd &quot;~/ssl/update-sh/你的域名.sh&quot;</code></pre><ol start="5"><li>自动续期（如果没有）</li></ol><pre><code class="language-shell">acme.sh --install-cronjob</code></pre>]]></content>
     
@@ -278,7 +278,7 @@
     <link href="https://blog.oneall.eu.org/2025/05/19/%E5%85%8D%E8%B4%B9docker%E5%AE%B9%E5%99%A8%E9%B8%A1/"/>
     <id>https://blog.oneall.eu.org/2025/05/19/%E5%85%8D%E8%B4%B9docker%E5%AE%B9%E5%99%A8%E9%B8%A1/</id>
     <published>2025-05-19T15:28:22.000Z</published>
-    <updated>2025-07-27T10:29:20.689Z</updated>
+    <updated>2025-07-28T04:50:54.939Z</updated>
     
     <content type="html"><![CDATA[<p>免费 docker 容器鸡，可开端口，每次一小时，不限次，有 root<br>地址：<a href="https://kodekloud.com/">https://kodekloud.com/</a></p><p>注册后找到 AI Tutor 的课程</p><p><img src="https://s.rmimg.com/original/2X/d/d76f37e8e4f0c28bffc45d48ac31e21c21c31599.png"></p><p>前面的介绍不用看，直接到后面的实操阶段：xxx tutor</p><p><img src="https://s.rmimg.com/original/2X/6/672ae5bc827d40d8c2f1988684dac8b325058643.jpeg"></p><p><img src="https://s.rmimg.com/original/2X/0/00cd04eb774d2cd25d9c553e8f459c48012e49c8.png"></p><p>但注意：只有 1 小时<br><img src="https://s.rmimg.com/original/2X/1/1f223478fe57622a2432c6fc29c73453782ce8ca.png"></p>]]></content>
     
@@ -302,7 +302,7 @@
     <link href="https://blog.oneall.eu.org/2025/05/01/Github%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/"/>
     <id>https://blog.oneall.eu.org/2025/05/01/Github%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</id>
     <published>2025-05-01T10:34:55.000Z</published>
-    <updated>2025-07-27T10:29:20.687Z</updated>
+    <updated>2025-07-28T04:50:54.937Z</updated>
     
     <content type="html"><![CDATA[<p>此文章非Pages教程，我打算从typecho迁移到hexo，但是之前因为文件丢过一次，导致整个博客彻底停更，就一直用的typecho，后来得群友启发，用GitHub Action自动打包推到Netlify，颇有成效，于是写篇文章出来</p><p>具体可看：<a href="https://github.com/runoneall/blog">https://github.com/runoneall/blog</a></p><ol><li><p>创建仓库，名称随意，注意 .gitignore 选 Node<br>这里我直接用blog做仓库名</p></li><li><p>创建codespace<br><img src="https://s.rmimg.com/2025-05-01/1746087828-570689-2025-05-01-162319.png"></p></li><li><p>按照hexo官方教程搭建博客<br>这里文件夹我还是用 blog，<code>npx hexo init blog</code></p></li><li><p>搭建好后创建workflow</p></li></ol><pre><code class="language-yaml">name: Build And Deploy to Public Branchon:    workflow_dispatch:jobs:    build-and-deploy:        runs-on: ubuntu-latest        steps:            - name: Checkout repository              uses: actions/checkout@v4              with:                  fetch-depth: 0            - name: Set up Node.js LTS              uses: actions/setup-node@main              with:                  node-version: latest            - name: Install Hexo CLI              run: npm install hexo            - name: Install dependencies and generate              run: |                  cd blog                  npm install                  npx hexo clean                  npx hexo generate            - name: Deploy to public branch              uses: peaceiris/actions-gh-pages@v3              with:                  github_token: $&#123;&#123; secrets.REPO_TOKEN &#125;&#125;                  publish_dir: ./blog/public                  destination_dir: ./                  publish_branch: public                  keep_files: false</code></pre><p>意思是：拉取代码 -&gt; 安装nodejs -&gt; 安装hexo -&gt; 安装依赖并生成静态文件 -&gt; 提交到public分支<br>(这里需要在仓库设置里创建名为REPO_TOKEN的secret，令牌需要对仓库有写入权限，勾选repo即可)</p><ol start="5"><li>在netlify上创建项目，选择blog仓库，分支选public，点部署即可</li></ol><p>这样一来只要GitHub不炸文件就丢不了</p>]]></content>
     
@@ -325,7 +325,7 @@
     <link href="https://blog.oneall.eu.org/2025/04/30/alpine%E7%9A%84alist%E6%9C%8D%E5%8A%A1%E8%84%9A%E6%9C%AC/"/>
     <id>https://blog.oneall.eu.org/2025/04/30/alpine%E7%9A%84alist%E6%9C%8D%E5%8A%A1%E8%84%9A%E6%9C%AC/</id>
     <published>2025-04-30T04:32:00.000Z</published>
-    <updated>2025-07-27T10:29:20.687Z</updated>
+    <updated>2025-07-28T04:50:54.938Z</updated>
     
     <content type="html"><![CDATA[<p>此是对 <a href="https://dev.oneall.eu.org/archives/63">https://dev.oneall.eu.org/archives/63</a> 的补充<br>原帖用的 screen 来启动 alist，但缺点是开机得手动启动</p><p>于是我参考了这篇帖子 <a href="https://mailberry.com.cn/2024/12/alpine-install-alist">https://mailberry.com.cn/2024/12/alpine-install-alist</a><br>实测不可用</p><p>于是我开始对原贴脚本进行修改<br><code>/etc/init.d/alist</code></p><pre><code class="language-shell">#!/sbin/openrc-runname=&quot;alist&quot;description=&quot;Alist service&quot;pidfile=&quot;/var/run/alist.pid&quot;directory=&quot;/root/alistrun&quot;command=&quot;./alist&quot;command_args=&quot;server&quot;depend() &#123;    need net&#125;start_pre() &#123;    checkpath --directory --owner root:root --mode 0755 &quot;$directory&quot;&#125;start() &#123;    ebegin &quot;Starting $name&quot;    cd &quot;$directory&quot; || return 1    nohup $command $command_args &gt;/dev/null 2&gt;&amp;1 &amp;    echo $! &gt; &quot;$pidfile&quot;    eend $?&#125;stop() &#123;    ebegin &quot;Stopping $name&quot;    if [ -f &quot;$pidfile&quot; ]; then        kill $(cat &quot;$pidfile&quot;) 2&gt;/dev/null        rm -f &quot;$pidfile&quot;    fi    eend $?&#125;</code></pre><pre><code class="language-shell">chmod +x /etc/init.d/alistrc-update add alist</code></pre><p>启动：<code>rc-service alist start</code><br>停止：<code>rc-service alist stop</code><br>状态：<code>rc-service alist status</code></p>]]></content>
     
@@ -347,7 +347,7 @@
     <link href="https://blog.oneall.eu.org/2025/04/29/%E5%B0%86%E5%9F%9F%E5%90%8D%E6%B7%BB%E5%8A%A0%E5%88%B0fnl%E5%B0%8F%E9%B8%A1%E4%B8%8A/"/>
     <id>https://blog.oneall.eu.org/2025/04/29/%E5%B0%86%E5%9F%9F%E5%90%8D%E6%B7%BB%E5%8A%A0%E5%88%B0fnl%E5%B0%8F%E9%B8%A1%E4%B8%8A/</id>
     <published>2025-04-29T13:25:57.000Z</published>
-    <updated>2025-07-27T10:29:20.689Z</updated>
+    <updated>2025-07-28T04:50:54.939Z</updated>
     
     <content type="html"><![CDATA[<p>这里以 alist.oneall.eu.org 为例</p><ol><li><p>开放端口<br><img src="https://s.rmimg.com/2025-04-29/1745919888-694481-2025-04-29-173721.png"></p></li><li><p>将域名指向fnl小鸡ip（先不开小黄云过验证）<br><img src="https://s.rmimg.com/2025-04-29/1745919695-388859-2025-04-29-173609.png"></p></li><li><p>到管理面板添加域名<br><img src="https://s.rmimg.com/2025-04-29/1745919743-131494-2025-04-29-173734.png"></p></li><li><p>按要求添加根域验证（验证成功后打开小黄云）<br><img src="https://s.rmimg.com/2025-04-29/1745919794-600079-2025-04-29-173632.png"></p></li><li><p>创建origin rules<br><img src="https://s.rmimg.com/2025-04-29/1745919847-337763-2025-04-29-173839.png"><br><img src="https://s.rmimg.com/2025-04-29/1745919930-493146-2025-04-29-173846.png"></p></li><li><p>若小鸡没有ssl证书<br><img src="https://s.rmimg.com/2025-04-29/1745919953-923417-2025-04-29-173642.png"></p></li></ol>]]></content>
     
@@ -371,7 +371,7 @@
     <link href="https://blog.oneall.eu.org/2025/04/29/alpine%E9%83%A8%E7%BD%B2alist/"/>
     <id>https://blog.oneall.eu.org/2025/04/29/alpine%E9%83%A8%E7%BD%B2alist/</id>
     <published>2025-04-29T10:52:15.000Z</published>
-    <updated>2025-07-27T10:29:20.688Z</updated>
+    <updated>2025-07-28T04:50:54.938Z</updated>
     
     <content type="html"><![CDATA[<p>记一次从 claw cloud run 迁移到 fnl mini 的经历，之前已经重装成 alpine 系统了，所以是 alpine 部署 alist 教程</p><p>基本版本可从 app launchpad 找到<br><img src="https://s.rmimg.com/2025-04-29/1745916291-632035-2025-04-29-164259.png"></p><pre><code class="language-shell">apk add screenmkdir alistrun &amp;&amp; cd alistrunwget https://github.com/AlistGo/alist/releases/download/v3.41.0/alist-linux-musl-amd64.tar.gztar -xzf alist-linux-musl-amd64.tar.gzrm alist-linux-musl-amd64.tar.gzchmod +x alistscreen -R alist./alist server&lt;Control + A&gt; dcd ..</code></pre><p>在 .&#x2F;alist server 时，会出现一次行密码，第一次登录需要<br><img src="https://s.rmimg.com/2025-04-29/1745916389-874980-2025-04-29-163903.png"></p><p>因为 alpine 使用 musl，所以需要下载 alist 的 musl 版本，若使用默认 gcc 版本会遇到命令无任何输出的情况</p><p>替换 releases&#x2F;download&#x2F;v3.41.0 可以安装 alist 其他版本</p>]]></content>
     
@@ -394,7 +394,7 @@
     <link href="https://blog.oneall.eu.org/2025/04/28/%E8%BF%99%E5%AD%98%E5%82%A8%E7%94%A8%E4%B8%8D%E5%AE%8C%E4%BA%86/"/>
     <id>https://blog.oneall.eu.org/2025/04/28/%E8%BF%99%E5%AD%98%E5%82%A8%E7%94%A8%E4%B8%8D%E5%AE%8C%E4%BA%86/</id>
     <published>2025-04-28T15:24:43.000Z</published>
-    <updated>2025-07-27T10:29:20.690Z</updated>
+    <updated>2025-07-28T04:50:54.940Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://s.rmimg.com/2025-04-28/1745845841-390892-2025-04-28-210911.png"><br>第一个用的阿里云盘Open的驱动，貌似直接登录会卡住，用的扫码的方式获取token，存了部完整的魔禁，还剩60多G</p><p>第二个是cfr2，存储容量不明，有说总共10G的，有说每月10G的，主要是文件分享和图床，开了域名访问和页面缓存规则</p><p>第三个是看到 <a href="https://www.nodeloc.com/d/27848">https://www.nodeloc.com/d/27848</a> 领的，现在被薅没了，选的ny</p><p>第四个是看到 <a href="https://www.nodeloc.com/d/5943">https://www.nodeloc.com/d/5943</a> 领的，没用邀请码，貌似现在是超过20G要收费了</p><p>这个Alist部署在claw cloud run上，每月5刀赠金，消耗0.04每天，完全没问题</p><p>挂载时策略选302，与服务商服务器直连，不会消耗alist服务器流量</p><p>还剩 60+25+20&#x3D;105G，完全够用，我不是屯屯党</p>]]></content>
     
@@ -416,7 +416,7 @@
     <link href="https://blog.oneall.eu.org/2025/04/24/%E4%B8%BAMini%E5%B0%8F%E9%B8%A1%E6%89%A9%E5%B1%951GB%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/"/>
     <id>https://blog.oneall.eu.org/2025/04/24/%E4%B8%BAMini%E5%B0%8F%E9%B8%A1%E6%89%A9%E5%B1%951GB%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/</id>
     <published>2025-04-24T11:02:00.000Z</published>
-    <updated>2025-07-27T10:29:20.688Z</updated>
+    <updated>2025-07-28T04:50:54.939Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://s.rmimg.com/2025-04-24/1745484882-765922-2025-04-24-165309.png"><br>是从某个一键脚本抽离出来的</p><pre><code class="language-sh">new_swap=1024  # 单位MBswap_partitions=$(grep -E &#39;^/dev/&#39; /proc/swaps | awk &#39;&#123;print $1&#125;&#39;)for partition in $swap_partitions; do    swapoff &quot;$partition&quot;    wipefs -a &quot;$partition&quot;    mkswap -f &quot;$partition&quot;doneswapoff /swapfilerm -f /swapfiledd if=/dev/zero of=/swapfile bs=1M count=$new_swapchmod 600 /swapfilemkswap /swapfileswapon /swapfile</code></pre><p>需要root，开机后运行一次就可以了</p>]]></content>
     
@@ -439,7 +439,7 @@
     <link href="https://blog.oneall.eu.org/2025/04/23/%E4%B8%80%E4%B8%AA%E5%8D%A0%E7%94%A8%E8%BE%83%E5%B0%8F%E7%9A%84%E7%BD%91%E7%BB%9C%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
     <id>https://blog.oneall.eu.org/2025/04/23/%E4%B8%80%E4%B8%AA%E5%8D%A0%E7%94%A8%E8%BE%83%E5%B0%8F%E7%9A%84%E7%BD%91%E7%BB%9C%E6%B5%8F%E8%A7%88%E5%99%A8/</id>
     <published>2025-04-23T17:33:19.000Z</published>
-    <updated>2025-07-27T10:29:20.688Z</updated>
+    <updated>2025-07-28T04:50:54.938Z</updated>
     
     <content type="html"><![CDATA[<p>是对 <a href="https://dev.oneall.eu.org/archives/59">https://dev.oneall.eu.org/archives/59</a> 的补充<br><img src="https://s.rmimg.com/2025-04-23/1745422179-289992-2025-04-23-232812.png"><br>图中博客是vuepress，算是较现代了，占用还算可以<br><code>apk add falkon</code></p>]]></content>
     
@@ -461,7 +461,7 @@
     <link href="https://blog.oneall.eu.org/2025/04/22/Mini%E5%B0%8F%E9%B8%A1%E6%90%AD%E4%B8%80%E4%B8%AA%E8%BF%98%E7%AE%97%E8%83%BD%E7%94%A8%E7%9A%84%E4%BA%91%E7%94%B5%E8%84%91/"/>
     <id>https://blog.oneall.eu.org/2025/04/22/Mini%E5%B0%8F%E9%B8%A1%E6%90%AD%E4%B8%80%E4%B8%AA%E8%BF%98%E7%AE%97%E8%83%BD%E7%94%A8%E7%9A%84%E4%BA%91%E7%94%B5%E8%84%91/</id>
     <published>2025-04-22T10:40:00.000Z</published>
-    <updated>2025-07-27T10:29:20.687Z</updated>
+    <updated>2025-07-28T04:50:54.938Z</updated>
     
     <content type="html"><![CDATA[<p>浏览网页一点问题没有，配置低的vps也可以看<br><img src="https://s.rmimg.com/2025-04-22/1745310185-392883-2025-04-22-161856.png"></p><p>第一步刷轻量系统，这里用alpine 3.20</p><pre><code class="language-sh">wget -O vps.sh https://raw.githubusercontent.com/everett7623/vps_scripts/main/vps.sh &amp;&amp; chmod +x vps.sh &amp;&amp; clear &amp;&amp; ./vps.sh</code></pre><ol><li>安装桌面（这里用lxqt加lxdm）</li></ol><pre><code class="language-sh">setup-xorg-basesetup-user  # 桌面不能root登录apk add lxqt-desktop lxqt-core lxqt-panel lxqt-admin lxqt-config lxqt-notificationd lxqt-powermanagement lxqt-themes openbox setxkbmapaddgroup &lt;user&gt; input  # 将新创建的普通用户加入input和video组addgroup &lt;user&gt; videoapk add dbus dbus-x11 lxdmrc-update add dbusrc-update add lxdmreboot</code></pre><ol start="2"><li>字体和图标</li></ol><pre><code class="language-sh">apk add breeze-icons font-noto-cjk</code></pre><ol start="3"><li>浏览器（火狐算是比较流畅的了）</li></ol><pre><code class="language-sh">apk add firefox</code></pre><ol start="4"><li><p>开启VNC<br><img src="https://s.rmimg.com/2025-04-22/1745311117-804227-2025-04-22-163755.png"></p></li><li><p>重启系统</p></li></ol><pre><code class="language-sh">reboot</code></pre>]]></content>
     
