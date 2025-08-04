@@ -17,7 +17,7 @@
 
 <!-- title -->
 <title>
-    一个简易的网页音乐播放器 | Runoneall
+    论坛mini转发segfault免费机VNC | Runoneall
 </title>
 
 <!-- css dependencies -->
@@ -46,7 +46,7 @@
 
 <!-- description -->
 
-<meta name="description" content="功能：播放，暂停，快进，后退，进度条拖动 使用：  下载资源：player.css player.js 在网页任意位置加入 &lt;div class=&quot;audio-player&quot;&gt;&lt;/div&gt; 在头部引入css，在末尾引入js 编写js  audio_source.src = 音频URL; audio_play(); // 开始播放  源码：player.c" />
+<meta name="description" content="最终效果图  首先将论坛mini重装成 alpine 3.20（不然没法用） https://github.com/bin456789/reinstall segfault免费机申请+保活请看 segfault免费机全自动保活教程 需要将密钥导入mini上 首先安装依赖 apk add screen novnc  然后先开启第一个后台 screen -R segfault-vps ssh &lt;" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -159,8 +159,8 @@
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <!-- post title -->
         <h1 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="/2025/01/12/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84%E7%BD%91%E9%A1%B5%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8/"
-                >一个简易的网页音乐播放器</a
+            <a itemprop="url" href="/2025/08/04/%E8%AE%BA%E5%9D%9Bmini%E8%BD%AC%E5%8F%91segfault%E5%85%8D%E8%B4%B9%E6%9C%BAVNC/"
+                >论坛mini转发segfault免费机VNC</a
             >
         </h1>
         <!-- end post title -->
@@ -177,8 +177,8 @@
                 时间:
                 <time
                     itemprop="datePublished"
-                    datetime="2025-01-12T10:02:00.000Z"
-                    >2025-01-12</time
+                    datetime="2025-08-04T07:34:28.000Z"
+                    >2025-08-04</time
                 >
             </li>
             
@@ -195,157 +195,35 @@
 
         <!-- post content -->
         <div class="post-content" itemprop="articleBody">
-            <p>功能：播放，暂停，快进，后退，进度条拖动<br><img src="https://s.rmimg.com/2025-01-12/1736671932-466215-2025-01-12-165206.png"></p>
-<p>使用：</p>
-<ol>
-<li>下载资源：<a target="_blank" rel="noopener" href="https://runoneall.serv00.net/WebLitePlayer/player.css">player.css</a> <a target="_blank" rel="noopener" href="https://runoneall.serv00.net/WebLitePlayer/player.js">player.js</a></li>
-<li>在网页任意位置加入 <code>&lt;div class=&quot;audio-player&quot;&gt;&lt;/div&gt;</code></li>
-<li>在头部引入css，在末尾引入js</li>
-<li>编写js</li>
-</ol>
-<pre><code class="language-javascript">audio_source.src = 音频URL;
-audio_play(); // 开始播放
+            <p>最终效果图</p>
+<p><img src="https://s.rmimg.com/optimized/2X/a/aef0b0c05f1de44effe2d46fe306a407c7f95bf2_2_1306x1000.jpeg"></p>
+<p>首先将论坛mini重装成 alpine 3.20（不然没法用）</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/bin456789/reinstall">https://github.com/bin456789/reinstall</a></p>
+<p>segfault免费机申请+保活请看 <a href="https://blog.oneall.eu.org/2025/08/03/segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E5%85%A8%E8%87%AA%E5%8A%A8%E4%BF%9D%E6%B4%BB%E6%95%99%E7%A8%8B/">segfault免费机全自动保活教程</a></p>
+<p>需要将密钥导入mini上</p>
+<p>首先安装依赖</p>
+<pre><code class="language-shell">apk add screen novnc
 </code></pre>
-<p>源码：<br><code>player.css</code></p>
-<pre><code class="language-css">.audio-player &#123;
-    width: 300px;
-    height: 65px;
-    border: 1px solid black;
-    overflow: hidden;
-    white-space: nowrap;
-    background: white;
-&#125;
-#audio-avatar &#123;
-    height: auto;
-    width: auto;
-    max-height: 100%;
-    margin-right: 10px;
-    float: left;
-&#125;
-.audio-info &#123;
-    overflow: hidden;
-    position: relative;
-&#125;
-#audio-title &#123;
-    display: inline-block;
-    padding-left: 100%;
-    animation: showFullTitle 10s linear infinite;
-&#125;
-@keyframes showFullTitle &#123;
-    0% &#123;
-        transform: translateX(0%);
-    &#125;
-    100% &#123;
-        transform: translateX(-100%);
-    &#125;
-&#125;
-.audio-progress &#123;
-    display: inline-block;
-&#125;
-.audio-control &#123;
-    margin-right: 5px;
-    float: right;
-&#125;
+<p>然后先开启第一个后台</p>
+<pre><code class="language-shell">screen -R segfault-vps
+ssh &lt;segfault服务器名&gt;
 </code></pre>
-<p><code>player.js</code></p>
-<pre><code class="language-javascript">document.querySelector(&quot;.audio-player&quot;).innerHTML =
-    `&lt;svg id=&quot;audio-avatar&quot; viewBox=&quot;0 0 1024 1024&quot; version=&quot;1.1&quot;
-    xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
-    &lt;path
-        d=&quot;M391.424 938.688a48.896 48.896 0 0 1-49.92-49.728V212.928c0-24.832 18.304-44.8 41.6-49.728l497.344-77.888a49.984 49.984 0 0 1 39.936 11.648c11.648 9.92 16.64 23.168 16.64 38.08V812.8c0 28.16-21.632 49.664-49.92 49.664a48.896 48.896 0 0 1-49.92-49.728V193.024l-397.568 61.312v634.624c1.664 28.16-21.568 49.728-48.192 49.728z&quot;
-        fill=&quot;#172B4D&quot;&gt;&lt;/path&gt;
-    &lt;path
-        d=&quot;M888.768 862.464H632.576a48.896 48.896 0 0 1-49.92-49.728v-142.464c0-28.16 21.696-49.728 49.92-49.728h256.192c28.288 0 49.92 21.504 49.92 49.728v142.464a51.072 51.072 0 0 1-49.92 49.728z m-206.272-99.456h156.352v-43.072h-156.352v43.072zM391.424 938.688H135.232a48.896 48.896 0 0 1-49.92-49.728v-142.464c0-28.16 21.632-49.728 49.92-49.728h256.192c28.288 0 49.92 21.504 49.92 49.728v142.464a49.92 49.92 0 0 1-49.92 49.728z m-206.272-99.456h156.352v-43.072H185.152v43.072z&quot;
-        fill=&quot;#172B4D&quot;&gt;&lt;/path&gt;
-&lt;/svg&gt;
-&lt;div class=&quot;audio&quot;&gt;
-    &lt;div class=&quot;audio-info&quot;&gt;
-        &lt;audio id=&quot;audio-source&quot; src type=&quot;audio/mpeg&quot;&gt;&lt;/audio&gt;
-        &lt;span id=&quot;audio-title&quot;&gt;No Audio To Play&lt;/span&gt;&lt;br&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;audio-progress&quot;&gt;
-        &lt;input type=&quot;range&quot; id=&quot;audio-range&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;0&quot;
-            step=&quot;0.01&quot;&gt;
-        &lt;label id=&quot;audio-time&quot; for=&quot;audio-range&quot;&gt;0:00 / 0:00&lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;audio-control&quot;&gt;
-        &lt;button onclick=&quot;audio_back5s()&quot;&gt;-5s&lt;/button&gt;
-        &lt;button onclick=&quot;audio_play()&quot;&gt;Play&lt;/button&gt;
-        &lt;button onclick=&quot;audio_stop()&quot;&gt;Stop&lt;/button&gt;
-        &lt;button onclick=&quot;audio_forward5s()&quot;&gt;+5s&lt;/button&gt;
-    &lt;/div&gt;
-&lt;/div&gt;`;
-
-const audio_source = document.getElementById(&quot;audio-source&quot;);
-const audio_title = document.getElementById(&quot;audio-title&quot;);
-let current_audio_title = &quot;&quot;;
-const audio_range = document.getElementById(&quot;audio-range&quot;);
-const audio_time = document.getElementById(&quot;audio-time&quot;);
-let audio_end_time_length = 0;
-
-function audio_play() &#123;
-    if (audio_source.paused) &#123;
-        const new_audio_title = decodeURI(
-            audio_source.src.split(&quot;/&quot;).pop().split(&quot;.&quot;).shift(),
-        );
-        if (current_audio_title != new_audio_title) &#123;
-            audio_title.textContent = new_audio_title;
-            current_audio_title = audio_title.textContent;
-            audio_source.load();
-        &#125;
-        audio_source.play();
-    &#125;
-&#125;
-function audio_stop() &#123;
-    if (!audio_source.paused) &#123;
-        audio_source.pause();
-    &#125;
-&#125;
-function audio_back5s() &#123;
-    audio_play();
-    audio_source.currentTime -= 5;
-&#125;
-function audio_forward5s() &#123;
-    audio_play();
-    audio_source.currentTime += 5;
-&#125;
-
-function audio_current_time() &#123;
-    const audio_currentTime = audio_source.currentTime;
-    const audio_time_minutes = Math.floor(audio_currentTime / 60).toString();
-    const audio_time_seconds = Math.floor(audio_currentTime % 60)
-        .toString()
-        .padStart(2, &quot;0&quot;);
-    const audio_end_time = audio_time.textContent.slice(
-        0 - audio_end_time_length,
-    );
-    return (
-        `$&#123;audio_time_minutes&#125;:$&#123;audio_time_seconds&#125;` + &quot; / &quot; + audio_end_time
-    );
-&#125;
-audio_source.onloadedmetadata = function () &#123;
-    const audio_duration = audio_source.duration;
-    audio_range.max = audio_duration;
-    const audio_time_minutes = Math.floor(audio_duration / 60).toString();
-    const audio_time_seconds = Math.floor(audio_duration % 60)
-        .toString()
-        .padStart(2, &quot;0&quot;);
-    audio_end_time_length =
-        audio_time_minutes.length + audio_time_seconds.length + 1;
-    audio_time.textContent =
-        &quot;0:00 / &quot; + `$&#123;audio_time_minutes&#125;:$&#123;audio_time_seconds&#125;`;
-&#125;;
-audio_source.ontimeupdate = function () &#123;
-    audio_range.value = audio_source.currentTime;
-    audio_time.textContent = audio_current_time();
-&#125;;
-audio_range.oninput = function () &#123;
-    audio_play();
-    audio_source.currentTime = audio_range.value;
-    audio_time.textContent = audio_current_time();
-&#125;;
+<p>保存退出</p>
+<p>再开启一个后台</p>
+<pre><code class="language-shell">screen -R segfault-vps-vnc
+novnc_server --listen &lt;网页监听端口&gt; --vnc 127.0.0.1:&lt;ssh转发的vnc端口&gt; --file-only
 </code></pre>
-<p>demo：<a target="_blank" rel="noopener" href="https://runoneall.serv00.net/WebLitePlayer/">https://runoneall.serv00.net/WebLitePlayer/</a></p>
+<p>保存退出</p>
+<p>然后开放一个端口（值为novnc网页监听端口）</p>
+<p><img src="https://s.rmimg.com/original/2X/4/4b3ebfb8976015ee21991e1c12ca186a839d295f.png"></p>
+<p>到这一步就可以玩耍了，当然如果还想更进一步</p>
+<p>首先添加一条A记录到mini的ip</p>
+<p><img src="https://s.rmimg.com/optimized/2X/f/fdaf17369808529d7ac44a98f2a29e889051e259_2_1380x52.png"></p>
+<p>然后添加一条 Origin Rules</p>
+<p>名称随便写，比如 <code>fnl-mini segfault-vps novnc</code></p>
+<p><img src="https://s.rmimg.com/optimized/2X/7/7e7c967bdfea511bcbb43de2cd7ce73e0977dff4_2_1380x548.png"></p>
+<p><img src="https://s.rmimg.com/original/2X/b/b6b00310eb2f339fde06c93238c9a7bb9450ef44.png"></p>
+<p>保存退出，现在就可以通过 <code>https://你的自定义域名/vnc.html</code> 连接了</p>
 
         </div>
         <!-- end post content -->

@@ -9,8 +9,34 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Sun, 03 Aug 2025 00:22:18 GMT</pubDate>
+    <pubDate>Mon, 04 Aug 2025 07:38:30 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>论坛mini转发segfault免费机VNC</title>
+      <link>https://blog.oneall.eu.org/2025/08/04/%E8%AE%BA%E5%9D%9Bmini%E8%BD%AC%E5%8F%91segfault%E5%85%8D%E8%B4%B9%E6%9C%BAVNC/</link>
+      <guid>https://blog.oneall.eu.org/2025/08/04/%E8%AE%BA%E5%9D%9Bmini%E8%BD%AC%E5%8F%91segfault%E5%85%8D%E8%B4%B9%E6%9C%BAVNC/</guid>
+      <pubDate>Mon, 04 Aug 2025 07:34:28 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;最终效果图&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://s.rmimg.com/optimized/2X/a/aef0b0c05f1de44effe2d46fe306a407c7f95bf2_2_1306x1000.jpeg&quot;&gt;&lt;/p&gt;
+&lt;p&gt;首先将论坛mini重装成</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>最终效果图</p><p><img src="https://s.rmimg.com/optimized/2X/a/aef0b0c05f1de44effe2d46fe306a407c7f95bf2_2_1306x1000.jpeg"></p><p>首先将论坛mini重装成 alpine 3.20（不然没法用）</p><p><a href="https://github.com/bin456789/reinstall">https://github.com/bin456789/reinstall</a></p><p>segfault免费机申请+保活请看 <a href="https://blog.oneall.eu.org/2025/08/03/segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E5%85%A8%E8%87%AA%E5%8A%A8%E4%BF%9D%E6%B4%BB%E6%95%99%E7%A8%8B/">segfault免费机全自动保活教程</a></p><p>需要将密钥导入mini上</p><p>首先安装依赖</p><pre><code class="language-shell">apk add screen novnc</code></pre><p>然后先开启第一个后台</p><pre><code class="language-shell">screen -R segfault-vpsssh &lt;segfault服务器名&gt;</code></pre><p>保存退出</p><p>再开启一个后台</p><pre><code class="language-shell">screen -R segfault-vps-vncnovnc_server --listen &lt;网页监听端口&gt; --vnc 127.0.0.1:&lt;ssh转发的vnc端口&gt; --file-only</code></pre><p>保存退出</p><p>然后开放一个端口（值为novnc网页监听端口）</p><p><img src="https://s.rmimg.com/original/2X/4/4b3ebfb8976015ee21991e1c12ca186a839d295f.png"></p><p>到这一步就可以玩耍了，当然如果还想更进一步</p><p>首先添加一条A记录到mini的ip</p><p><img src="https://s.rmimg.com/optimized/2X/f/fdaf17369808529d7ac44a98f2a29e889051e259_2_1380x52.png"></p><p>然后添加一条 Origin Rules</p><p>名称随便写，比如 <code>fnl-mini segfault-vps novnc</code></p><p><img src="https://s.rmimg.com/optimized/2X/7/7e7c967bdfea511bcbb43de2cd7ce73e0977dff4_2_1380x548.png"></p><p><img src="https://s.rmimg.com/original/2X/b/b6b00310eb2f339fde06c93238c9a7bb9450ef44.png"></p><p>保存退出，现在就可以通过 <code>https://你的自定义域名/vnc.html</code> 连接了</p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/08/04/%E8%AE%BA%E5%9D%9Bmini%E8%BD%AC%E5%8F%91segfault%E5%85%8D%E8%B4%B9%E6%9C%BAVNC/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>segfault免费机全自动保活教程</title>
@@ -491,31 +517,6 @@ $proxyBase = &amp;quot;https://blog.onea</description>
       
       
       <comments>https://blog.oneall.eu.org/2025/04/28/%E8%BF%99%E5%AD%98%E5%82%A8%E7%94%A8%E4%B8%8D%E5%AE%8C%E4%BA%86/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>为Mini小鸡扩展1GB虚拟内存</title>
-      <link>https://blog.oneall.eu.org/2025/04/24/%E4%B8%BAMini%E5%B0%8F%E9%B8%A1%E6%89%A9%E5%B1%951GB%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/</link>
-      <guid>https://blog.oneall.eu.org/2025/04/24/%E4%B8%BAMini%E5%B0%8F%E9%B8%A1%E6%89%A9%E5%B1%951GB%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/</guid>
-      <pubDate>Thu, 24 Apr 2025 11:02:00 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;&lt;img src=&quot;https://s.rmimg.com/2025-04-24/1745484882-765922-2025-04-24-165309.png&quot;&gt;&lt;br&gt;是从某个一键脚本抽离出来的&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;ne</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p><img src="https://s.rmimg.com/2025-04-24/1745484882-765922-2025-04-24-165309.png"><br>是从某个一键脚本抽离出来的</p><pre><code class="language-sh">new_swap=1024  # 单位MBswap_partitions=$(grep -E &#39;^/dev/&#39; /proc/swaps | awk &#39;&#123;print $1&#125;&#39;)for partition in $swap_partitions; do    swapoff &quot;$partition&quot;    wipefs -a &quot;$partition&quot;    mkswap -f &quot;$partition&quot;doneswapoff /swapfilerm -f /swapfiledd if=/dev/zero of=/swapfile bs=1M count=$new_swapchmod 600 /swapfilemkswap /swapfileswapon /swapfile</code></pre><p>需要root，开机后运行一次就可以了</p>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/04/24/%E4%B8%BAMini%E5%B0%8F%E9%B8%A1%E6%89%A9%E5%B1%951GB%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/#disqus_thread</comments>
       
     </item>
     
