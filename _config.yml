@@ -110,6 +110,13 @@ links:
           description: "一个人",
           rss: "https://blog.yeqing.net/feed",
       }
+    - {
+          avatar: "https://www.eilo.uk/img/logo.png",
+          title: "Eilo's Blog",
+          url: "https://www.eilo.uk",
+          description: "等等我记一下",
+          rss: "https://www.eilo.uk/atom.xml",
+      }
 
 extra_css: "" # 额外CSS
 
