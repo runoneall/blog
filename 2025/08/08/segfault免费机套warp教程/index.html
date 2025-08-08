@@ -17,7 +17,7 @@
 
 <!-- title -->
 <title>
-    Runoneall
+    segfault免费机套warp教程 | Runoneall
 </title>
 
 <!-- css dependencies -->
@@ -46,7 +46,7 @@
 
 <!-- description -->
 
-<meta name="description" content="Runoneall's Blog" />
+<meta name="description" content="segfault 上的 wgcf wireguard 管理程序 首先先登录到机器内，然后新建目录 mkdir warp &amp;&amp; cd warp  先下载 wgcf 程序 wget https://github.com/ViRb3/wgcf/releases/download/v2.2.27/wgcf_2.2.27_linux_amd64 mv wgcf_2.2.27_linux_am" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -154,15 +154,15 @@
 
             <!-- right area -->
             <div id="right">
-                <div class="row"><div id="main" role="main">
-    
+                <div class="row"><div class="col-mb-12 col-8" id="main" role="main">
+    <!-- article body -->
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <!-- post title -->
-        <h2 class="post-title" itemprop="name headline">
+        <h1 class="post-title" itemprop="name headline">
             <a itemprop="url" href="/2025/08/08/segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E5%A5%97warp%E6%95%99%E7%A8%8B/"
                 >segfault免费机套warp教程</a
             >
-        </h2>
+        </h1>
         <!-- end post title -->
 
         <!-- post meta -->
@@ -181,11 +181,11 @@
                     >2025-08-08</time
                 >
             </li>
-
             
             <li>
                 分类: 
-                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认 </a
                 >&nbsp;
                 
             </li>
@@ -194,182 +194,43 @@
         <!-- end post meta -->
 
         <!-- post content -->
-        <div class="post-content index-post-content" itemprop="articleBody">
-            segfault 上的 wgcf wireguard 管理程序 首先先登录到机器内，然后新建目录 mkdir warp &amp;&amp; cd warp 先下载 wgcf 程序 wget...
+        <div class="post-content" itemprop="articleBody">
+            <p>segfault 上的 wgcf wireguard 管理程序</p>
+<p>首先先登录到机器内，然后新建目录</p>
+<pre><code class="language-shell">mkdir warp &amp;&amp; cd warp
+</code></pre>
+<p>先下载 wgcf 程序</p>
+<pre><code class="language-shell">wget https://github.com/ViRb3/wgcf/releases/download/v2.2.27/wgcf_2.2.27_linux_amd64
+mv wgcf_2.2.27_linux_amd64 wgcf
+chmod +x wgcf
+</code></pre>
+<p>再下载 sfwg 程序</p>
+<pre><code class="language-shell">wget https://github.com/runoneall/sfwg/releases/download/v1/sfwg
+chmod +x sfwg
+</code></pre>
+<p>生成 warp 配置</p>
+<pre><code class="language-shell">./wgcf register
+./wgcf generate
+</code></pre>
+<p>使用 sfwg 启动</p>
+<pre><code class="language-shell">./sfwg --up
+</code></pre>
+<p>看到 <code>EXIT:sfwg</code> 就算成功了</p>
+<p>如果已有配置</p>
+<pre><code class="language-shell">./sfwg --use &lt;配置文件路径&gt; --up
+</code></pre>
+<p>关闭连接</p>
+<pre><code class="language-shell">./sfwg --down
+</code></pre>
+<p>查看连接</p>
+<pre><code class="language-shell">./sfwg --status
+</code></pre>
+<p>具体可看 <code>./sfwg --help</code></p>
+
         </div>
         <!-- end post content -->
     </article>
-    
-    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-        <!-- post title -->
-        <h2 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="/2025/08/08/%E7%94%A8segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E7%9C%8Borgv-eu%E7%9A%84%E5%B9%BF%E5%91%8A/"
-                >用segfault免费机看orgv.eu的广告</a
-            >
-        </h2>
-        <!-- end post title -->
-
-        <!-- post meta -->
-        <ul class="post-meta">
-            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
-                作者:
-                <a itemprop="name" href="#" rel="author"
-                    >Tom Brown</a
-                >
-            </li>
-            <li>
-                时间:
-                <time
-                    itemprop="datePublished"
-                    datetime="2025-08-08T03:22:29.000Z"
-                    >2025-08-08</time
-                >
-            </li>
-
-            
-            <li>
-                分类: 
-                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a
-                >&nbsp;
-                
-            </li>
-            
-        </ul>
-        <!-- end post meta -->
-
-        <!-- post content -->
-        <div class="post-content index-post-content" itemprop="articleBody">
-            首先要安装telegram应用，web版不行，有bug https://gitlab.com/SrArminho/telegram-desktop-potable-for-linux 这个是便携版制作器，亲测好用...
-        </div>
-        <!-- end post content -->
-    </article>
-    
-    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-        <!-- post title -->
-        <h2 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="/2025/08/04/%E8%AE%BA%E5%9D%9Bmini%E8%BD%AC%E5%8F%91segfault%E5%85%8D%E8%B4%B9%E6%9C%BAVNC/"
-                >论坛mini转发segfault免费机VNC</a
-            >
-        </h2>
-        <!-- end post title -->
-
-        <!-- post meta -->
-        <ul class="post-meta">
-            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
-                作者:
-                <a itemprop="name" href="#" rel="author"
-                    >Tom Brown</a
-                >
-            </li>
-            <li>
-                时间:
-                <time
-                    itemprop="datePublished"
-                    datetime="2025-08-04T07:34:28.000Z"
-                    >2025-08-04</time
-                >
-            </li>
-
-            
-            <li>
-                分类: 
-                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a
-                >&nbsp;
-                
-            </li>
-            
-        </ul>
-        <!-- end post meta -->
-
-        <!-- post content -->
-        <div class="post-content index-post-content" itemprop="articleBody">
-            最终效果图 首先将论坛mini重装成 alpine 3.20（不然没法用） https://github.com/bin456789/reinstall segfault免费机申请+保活请看 segfault免费机全自动保活教程 需要将密钥导入mini上 首先安装依赖 apk add screen...
-        </div>
-        <!-- end post content -->
-    </article>
-    
-    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-        <!-- post title -->
-        <h2 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="/2025/08/03/segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E5%85%A8%E8%87%AA%E5%8A%A8%E4%BF%9D%E6%B4%BB%E6%95%99%E7%A8%8B/"
-                >segfault免费机全自动保活教程</a
-            >
-        </h2>
-        <!-- end post title -->
-
-        <!-- post meta -->
-        <ul class="post-meta">
-            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
-                作者:
-                <a itemprop="name" href="#" rel="author"
-                    >Tom Brown</a
-                >
-            </li>
-            <li>
-                时间:
-                <time
-                    itemprop="datePublished"
-                    datetime="2025-08-03T00:20:27.000Z"
-                    >2025-08-03</time
-                >
-            </li>
-
-            
-            <li>
-                分类: 
-                <a href="/categories/%E9%BB%98%E8%AE%A4/">默认</a
-                >&nbsp;
-                
-            </li>
-            
-        </ul>
-        <!-- end post meta -->
-
-        <!-- post content -->
-        <div class="post-content index-post-content" itemprop="articleBody">
-            申请地址：https://www.thc.org/segfault/ 因为他们关闭了GUI界面，所以此教程基于SSH 此教程需要另一台服务器做转发，可公网可私网，或者你自己的电脑也行（ 此教程可全自动保活：SHELL+VNC 申请服务器 ssh root@segfault.net 密码是...
-        </div>
-        <!-- end post content -->
-    </article>
-    
-
-    <!-- pagination -->
-    
-    <ol class="page-navigator">
-        <!-- previous page link -->
-        
-        <!-- end previous page link -->
-
-        <!-- first page link -->
-        
-        <li class="current">
-            <a href="/">1</a>
-        </li>
-        
-        <!-- end first page link -->
-
-        <!-- ellipsis before nearby pages -->
-        
-        <!-- end ellipsis before nearby pages -->
-
-        <!-- nearby page numbers -->
-        
-        
-        <!-- end nearby page numbers -->
-
-        <!-- ellipsis after nearby pages -->
-        
-        <!-- end ellipsis after nearby pages -->
-
-        <!-- last page link -->
-        
-        <!-- end last page link -->
-
-        <!-- next page link -->
-        
-        <!-- end next page link -->
-    </ol>
-    <!-- end pagination -->
+    <!-- end article body -->
 </div>
 </div>
             </div>

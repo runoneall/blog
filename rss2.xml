@@ -9,8 +9,60 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Wed, 06 Aug 2025 02:19:41 GMT</pubDate>
+    <pubDate>Fri, 08 Aug 2025 03:26:30 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>segfault免费机套warp教程</title>
+      <link>https://blog.oneall.eu.org/2025/08/08/segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E5%A5%97warp%E6%95%99%E7%A8%8B/</link>
+      <guid>https://blog.oneall.eu.org/2025/08/08/segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E5%A5%97warp%E6%95%99%E7%A8%8B/</guid>
+      <pubDate>Fri, 08 Aug 2025 03:22:50 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;segfault 上的 wgcf wireguard 管理程序&lt;/p&gt;
+&lt;p&gt;首先先登录到机器内，然后新建目录&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;mkdir warp &amp;amp;&amp;amp; cd warp
+&lt;/code&gt;&lt;/pre&gt;</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>segfault 上的 wgcf wireguard 管理程序</p><p>首先先登录到机器内，然后新建目录</p><pre><code class="language-shell">mkdir warp &amp;&amp; cd warp</code></pre><p>先下载 wgcf 程序</p><pre><code class="language-shell">wget https://github.com/ViRb3/wgcf/releases/download/v2.2.27/wgcf_2.2.27_linux_amd64mv wgcf_2.2.27_linux_amd64 wgcfchmod +x wgcf</code></pre><p>再下载 sfwg 程序</p><pre><code class="language-shell">wget https://github.com/runoneall/sfwg/releases/download/v1/sfwgchmod +x sfwg</code></pre><p>生成 warp 配置</p><pre><code class="language-shell">./wgcf register./wgcf generate</code></pre><p>使用 sfwg 启动</p><pre><code class="language-shell">./sfwg --up</code></pre><p>看到 <code>EXIT:sfwg</code> 就算成功了</p><p>如果已有配置</p><pre><code class="language-shell">./sfwg --use &lt;配置文件路径&gt; --up</code></pre><p>关闭连接</p><pre><code class="language-shell">./sfwg --down</code></pre><p>查看连接</p><pre><code class="language-shell">./sfwg --status</code></pre><p>具体可看 <code>./sfwg --help</code></p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/08/08/segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E5%A5%97warp%E6%95%99%E7%A8%8B/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>用segfault免费机看orgv.eu的广告</title>
+      <link>https://blog.oneall.eu.org/2025/08/08/%E7%94%A8segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E7%9C%8Borgv-eu%E7%9A%84%E5%B9%BF%E5%91%8A/</link>
+      <guid>https://blog.oneall.eu.org/2025/08/08/%E7%94%A8segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E7%9C%8Borgv-eu%E7%9A%84%E5%B9%BF%E5%91%8A/</guid>
+      <pubDate>Fri, 08 Aug 2025 03:22:29 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;首先要安装telegram应用，web版不行，有bug&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://gitlab.com/SrArminho/telegram-desktop-potable-for-linux&quot;&gt;https://gitlab.com/SrArminho</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>首先要安装telegram应用，web版不行，有bug</p><p><a href="https://gitlab.com/SrArminho/telegram-desktop-potable-for-linux">https://gitlab.com/SrArminho/telegram-desktop-potable-for-linux</a></p><p>这个是便携版制作器，亲测好用</p><p>然后就可以按照套路看广告了，但这样有个问题，那就是看完的广告浏览器标签页不会自动关闭，所以得来个增强脚本</p><p><a href="https://runoneall.serv00.net/Files/orgv.eu%e7%9c%8b%e5%ae%8c%e5%b9%bf%e5%91%8a%e8%87%aa%e5%8a%a8%e5%85%b3%e9%97%ad%e8%be%85%e5%8a%a9%e5%99%a8.js">https://runoneall.serv00.net/Files/orgv.eu%e7%9c%8b%e5%ae%8c%e5%b9%bf%e5%91%8a%e8%87%aa%e5%8a%a8%e5%85%b3%e9%97%ad%e8%be%85%e5%8a%a9%e5%99%a8.js</a></p><p>安装这个油猴脚本，打开标签页后，等待7秒自动关闭标签页</p><p><video controls src="https://cfr2.oneall.eu.org/%E5%B1%8F%E5%B9%95%E5%BD%95%E5%88%B62025-08-07%2012.05.38.mp4" title="视频演示"></video></p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/08/08/%E7%94%A8segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E7%9C%8Borgv-eu%E7%9A%84%E5%B9%BF%E5%91%8A/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>论坛mini转发segfault免费机VNC</title>
@@ -468,55 +520,6 @@ $proxyBase = &amp;quot;https://blog.onea</description>
       
       
       <comments>https://blog.oneall.eu.org/2025/04/29/%E5%B0%86%E5%9F%9F%E5%90%8D%E6%B7%BB%E5%8A%A0%E5%88%B0fnl%E5%B0%8F%E9%B8%A1%E4%B8%8A/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>alpine部署alist</title>
-      <link>https://blog.oneall.eu.org/2025/04/29/alpine%E9%83%A8%E7%BD%B2alist/</link>
-      <guid>https://blog.oneall.eu.org/2025/04/29/alpine%E9%83%A8%E7%BD%B2alist/</guid>
-      <pubDate>Tue, 29 Apr 2025 10:52:15 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;记一次从 claw cloud run 迁移到 fnl mini 的经历，之前已经重装成 alpine 系统了，所以是 alpine 部署 alist 教程&lt;/p&gt;
-&lt;p&gt;基本版本可从 app launchpad 找到&lt;br&gt;&lt;img src=&quot;https://s.rmim</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>记一次从 claw cloud run 迁移到 fnl mini 的经历，之前已经重装成 alpine 系统了，所以是 alpine 部署 alist 教程</p><p>基本版本可从 app launchpad 找到<br><img src="https://s.rmimg.com/2025-04-29/1745916291-632035-2025-04-29-164259.png"></p><pre><code class="language-shell">apk add screenmkdir alistrun &amp;&amp; cd alistrunwget https://github.com/AlistGo/alist/releases/download/v3.41.0/alist-linux-musl-amd64.tar.gztar -xzf alist-linux-musl-amd64.tar.gzrm alist-linux-musl-amd64.tar.gzchmod +x alistscreen -R alist./alist server&lt;Control + A&gt; dcd ..</code></pre><p>在 .&#x2F;alist server 时，会出现一次行密码，第一次登录需要<br><img src="https://s.rmimg.com/2025-04-29/1745916389-874980-2025-04-29-163903.png"></p><p>因为 alpine 使用 musl，所以需要下载 alist 的 musl 版本，若使用默认 gcc 版本会遇到命令无任何输出的情况</p><p>替换 releases&#x2F;download&#x2F;v3.41.0 可以安装 alist 其他版本</p>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/04/29/alpine%E9%83%A8%E7%BD%B2alist/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>这存储用不完了</title>
-      <link>https://blog.oneall.eu.org/2025/04/28/%E8%BF%99%E5%AD%98%E5%82%A8%E7%94%A8%E4%B8%8D%E5%AE%8C%E4%BA%86/</link>
-      <guid>https://blog.oneall.eu.org/2025/04/28/%E8%BF%99%E5%AD%98%E5%82%A8%E7%94%A8%E4%B8%8D%E5%AE%8C%E4%BA%86/</guid>
-      <pubDate>Mon, 28 Apr 2025 15:24:43 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;&lt;img src=&quot;https://s.rmimg.com/2025-04-28/1745845841-390892-2025-04-28-210911.png&quot;&gt;&lt;br&gt;第一个用的阿里云盘Open的驱动，貌似直接登录会卡住，用的扫码的方式获取token，存了部完整的魔禁，</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p><img src="https://s.rmimg.com/2025-04-28/1745845841-390892-2025-04-28-210911.png"><br>第一个用的阿里云盘Open的驱动，貌似直接登录会卡住，用的扫码的方式获取token，存了部完整的魔禁，还剩60多G</p><p>第二个是cfr2，存储容量不明，有说总共10G的，有说每月10G的，主要是文件分享和图床，开了域名访问和页面缓存规则</p><p>第三个是看到 <a href="https://www.nodeloc.com/d/27848">https://www.nodeloc.com/d/27848</a> 领的，现在被薅没了，选的ny</p><p>第四个是看到 <a href="https://www.nodeloc.com/d/5943">https://www.nodeloc.com/d/5943</a> 领的，没用邀请码，貌似现在是超过20G要收费了</p><p>这个Alist部署在claw cloud run上，每月5刀赠金，消耗0.04每天，完全没问题</p><p>挂载时策略选302，与服务商服务器直连，不会消耗alist服务器流量</p><p>还剩 60+25+20&#x3D;105G，完全够用，我不是屯屯党</p>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/04/28/%E8%BF%99%E5%AD%98%E5%82%A8%E7%94%A8%E4%B8%8D%E5%AE%8C%E4%BA%86/#disqus_thread</comments>
       
     </item>
     
