@@ -9,8 +9,33 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Sat, 09 Aug 2025 10:17:42 GMT</pubDate>
+    <pubDate>Mon, 11 Aug 2025 16:36:21 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>为segfault内网编写的文本聊天程序</title>
+      <link>https://blog.oneall.eu.org/2025/08/11/%E4%B8%BAsegfault%E5%86%85%E7%BD%91%E7%BC%96%E5%86%99%E7%9A%84%E6%96%87%E6%9C%AC%E8%81%8A%E5%A4%A9%E7%A8%8B%E5%BA%8F/</link>
+      <guid>https://blog.oneall.eu.org/2025/08/11/%E4%B8%BAsegfault%E5%86%85%E7%BD%91%E7%BC%96%E5%86%99%E7%9A%84%E6%96%87%E6%9C%AC%E8%81%8A%E5%A4%A9%E7%A8%8B%E5%BA%8F/</guid>
+      <pubDate>Mon, 11 Aug 2025 16:35:22 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;注意：此程序只能同一节点内使用！比如在 adm 上安装就只能 adm 用，lsd 上安装只能 lsd 用！&lt;/p&gt;
+&lt;p&gt;项目地址：&lt;a href=&quot;https://github.com/runoneall/sfchat&quot;&gt;https://github.com/runone</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>注意：此程序只能同一节点内使用！比如在 adm 上安装就只能 adm 用，lsd 上安装只能 lsd 用！</p><p>项目地址：<a href="https://github.com/runoneall/sfchat">https://github.com/runoneall/sfchat</a></p><p>包含两个主要文件</p><ol><li>服务器文件 <code>server.py</code></li></ol><p>如果想要自建服务器，运行 <code>python3 server.py</code></p><ol start="2"><li>客户端文件 <code>client.py</code></li></ol><p>配套的连接到服务器的工具，运行 <code>python3 client.py</code></p><p>然后输入服务器端的 <code>$SF_HOSTNAME</code> （可以自己连接自己）即可连接</p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/08/11/%E4%B8%BAsegfault%E5%86%85%E7%BD%91%E7%BC%96%E5%86%99%E7%9A%84%E6%96%87%E6%9C%AC%E8%81%8A%E5%A4%A9%E7%A8%8B%E5%BA%8F/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>sfwg第2版本更新</title>
@@ -499,30 +524,6 @@ $proxyBase = &amp;quot;https://blog.onea</description>
       
       
       <comments>https://blog.oneall.eu.org/2025/05/01/Github%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>alpine的alist服务脚本</title>
-      <link>https://blog.oneall.eu.org/2025/04/30/alpine%E7%9A%84alist%E6%9C%8D%E5%8A%A1%E8%84%9A%E6%9C%AC/</link>
-      <guid>https://blog.oneall.eu.org/2025/04/30/alpine%E7%9A%84alist%E6%9C%8D%E5%8A%A1%E8%84%9A%E6%9C%AC/</guid>
-      <pubDate>Wed, 30 Apr 2025 04:32:00 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;此是对 &lt;a href=&quot;https://dev.oneall.eu.org/archives/63&quot;&gt;https://dev.oneall.eu.org/archives/63&lt;/a&gt; 的补充&lt;br&gt;原帖用的 screen 来启动 alist，但缺点是开机得手动启动&lt;/p</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>此是对 <a href="https://dev.oneall.eu.org/archives/63">https://dev.oneall.eu.org/archives/63</a> 的补充<br>原帖用的 screen 来启动 alist，但缺点是开机得手动启动</p><p>于是我参考了这篇帖子 <a href="https://mailberry.com.cn/2024/12/alpine-install-alist">https://mailberry.com.cn/2024/12/alpine-install-alist</a><br>实测不可用</p><p>于是我开始对原贴脚本进行修改<br><code>/etc/init.d/alist</code></p><pre><code class="language-shell">#!/sbin/openrc-runname=&quot;alist&quot;description=&quot;Alist service&quot;pidfile=&quot;/var/run/alist.pid&quot;directory=&quot;/root/alistrun&quot;command=&quot;./alist&quot;command_args=&quot;server&quot;depend() &#123;    need net&#125;start_pre() &#123;    checkpath --directory --owner root:root --mode 0755 &quot;$directory&quot;&#125;start() &#123;    ebegin &quot;Starting $name&quot;    cd &quot;$directory&quot; || return 1    nohup $command $command_args &gt;/dev/null 2&gt;&amp;1 &amp;    echo $! &gt; &quot;$pidfile&quot;    eend $?&#125;stop() &#123;    ebegin &quot;Stopping $name&quot;    if [ -f &quot;$pidfile&quot; ]; then        kill $(cat &quot;$pidfile&quot;) 2&gt;/dev/null        rm -f &quot;$pidfile&quot;    fi    eend $?&#125;</code></pre><pre><code class="language-shell">chmod +x /etc/init.d/alistrc-update add alist</code></pre><p>启动：<code>rc-service alist start</code><br>停止：<code>rc-service alist stop</code><br>状态：<code>rc-service alist status</code></p>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/04/30/alpine%E7%9A%84alist%E6%9C%8D%E5%8A%A1%E8%84%9A%E6%9C%AC/#disqus_thread</comments>
       
     </item>
     
