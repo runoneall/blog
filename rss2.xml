@@ -9,8 +9,33 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Mon, 11 Aug 2025 16:36:21 GMT</pubDate>
+    <pubDate>Sat, 16 Aug 2025 12:35:52 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>segfault上的openvpn管理程序</title>
+      <link>https://blog.oneall.eu.org/2025/08/16/segfault%E4%B8%8A%E7%9A%84openvpn%E7%AE%A1%E7%90%86%E7%A8%8B%E5%BA%8F/</link>
+      <guid>https://blog.oneall.eu.org/2025/08/16/segfault%E4%B8%8A%E7%9A%84openvpn%E7%AE%A1%E7%90%86%E7%A8%8B%E5%BA%8F/</guid>
+      <pubDate>Sat, 16 Aug 2025 12:34:48 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;地址：&lt;a href=&quot;https://github.com/runoneall/sfovpn&quot;&gt;https://github.com/runoneall/sfovpn&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;wget https</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>地址：<a href="https://github.com/runoneall/sfovpn">https://github.com/runoneall/sfovpn</a></p><pre><code class="language-shell">wget https://github.com/runoneall/sfovpn/releases/download/v1/sfovpnchmod +x sfovpn</code></pre><p>基本用法</p><p><code>--use</code> 选定openvpn配置文件，默认 <code>openvpn.conf</code><br><code>--up</code> 启动vpn<br><code>-d / --down</code> 关闭vpn<br><code>-s / --status</code> vpn状态</p><p>额外参数</p><p><code>-u / --user</code> 选定用户名（若有）<br><code>-p / --password</code> 选定密码（若有）</p><p>具体可看 <code>./sfovpn -h</code></p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/08/16/segfault%E4%B8%8A%E7%9A%84openvpn%E7%AE%A1%E7%90%86%E7%A8%8B%E5%BA%8F/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>为segfault内网编写的文本聊天程序</title>
@@ -499,31 +524,6 @@ $proxyBase = &amp;quot;https://blog.onea</description>
       
       
       <comments>https://blog.oneall.eu.org/2025/05/19/%E5%85%8D%E8%B4%B9docker%E5%AE%B9%E5%99%A8%E9%B8%A1/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>Github部署静态博客</title>
-      <link>https://blog.oneall.eu.org/2025/05/01/Github%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</link>
-      <guid>https://blog.oneall.eu.org/2025/05/01/Github%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</guid>
-      <pubDate>Thu, 01 May 2025 10:34:55 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;此文章非Pages教程，我打算从typecho迁移到hexo，但是之前因为文件丢过一次，导致整个博客彻底停更，就一直用的typecho，后来得群友启发，用GitHub Action自动打包推到Netlify，颇有成效，于是写篇文章出来&lt;/p&gt;
-&lt;p&gt;具体可看：&lt;a href</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>此文章非Pages教程，我打算从typecho迁移到hexo，但是之前因为文件丢过一次，导致整个博客彻底停更，就一直用的typecho，后来得群友启发，用GitHub Action自动打包推到Netlify，颇有成效，于是写篇文章出来</p><p>具体可看：<a href="https://github.com/runoneall/blog">https://github.com/runoneall/blog</a></p><ol><li><p>创建仓库，名称随意，注意 .gitignore 选 Node<br>这里我直接用blog做仓库名</p></li><li><p>创建codespace<br><img src="https://s.rmimg.com/2025-05-01/1746087828-570689-2025-05-01-162319.png"></p></li><li><p>按照hexo官方教程搭建博客<br>这里文件夹我还是用 blog，<code>npx hexo init blog</code></p></li><li><p>搭建好后创建workflow</p></li></ol><pre><code class="language-yaml">name: Build And Deploy to Public Branchon:    workflow_dispatch:jobs:    build-and-deploy:        runs-on: ubuntu-latest        steps:            - name: Checkout repository              uses: actions/checkout@v4              with:                  fetch-depth: 0            - name: Set up Node.js LTS              uses: actions/setup-node@main              with:                  node-version: latest            - name: Install Hexo CLI              run: npm install hexo            - name: Install dependencies and generate              run: |                  cd blog                  npm install                  npx hexo clean                  npx hexo generate            - name: Deploy to public branch              uses: peaceiris/actions-gh-pages@v3              with:                  github_token: $&#123;&#123; secrets.REPO_TOKEN &#125;&#125;                  publish_dir: ./blog/public                  destination_dir: ./                  publish_branch: public                  keep_files: false</code></pre><p>意思是：拉取代码 -&gt; 安装nodejs -&gt; 安装hexo -&gt; 安装依赖并生成静态文件 -&gt; 提交到public分支<br>(这里需要在仓库设置里创建名为REPO_TOKEN的secret，令牌需要对仓库有写入权限，勾选repo即可)</p><ol start="5"><li>在netlify上创建项目，选择blog仓库，分支选public，点部署即可</li></ol><p>这样一来只要GitHub不炸文件就丢不了</p>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/05/01/Github%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/#disqus_thread</comments>
       
     </item>
     
