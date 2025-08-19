@@ -9,8 +9,34 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Sun, 17 Aug 2025 07:24:16 GMT</pubDate>
+    <pubDate>Tue, 19 Aug 2025 06:12:44 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>在segfault上自由安装软件！</title>
+      <link>https://blog.oneall.eu.org/2025/08/19/%E5%9C%A8segfault%E4%B8%8A%E8%87%AA%E7%94%B1%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%EF%BC%81/</link>
+      <guid>https://blog.oneall.eu.org/2025/08/19/%E5%9C%A8segfault%E4%B8%8A%E8%87%AA%E7%94%B1%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%EF%BC%81/</guid>
+      <pubDate>Tue, 19 Aug 2025 06:11:14 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;GitHub地址：&lt;a href=&quot;https://github.com/runoneall/sfpkg&quot;&gt;https://github.com/runoneall/sfpkg&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;基于udocker实现，虽是容器，但与宿主机高度衔接&lt;/p&gt;
+&lt;p&gt;可互通</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>GitHub地址：<a href="https://github.com/runoneall/sfpkg">https://github.com/runoneall/sfpkg</a></p><p>基于udocker实现，虽是容器，但与宿主机高度衔接</p><p>可互通：网络端口，当前目录（及子目录），桌面环境</p><p>注意！九分有十分的不建议在非主目录 <code>/sec/root</code> 下执行 <code>sfpkg</code> ！</p><ol><li>安装</li></ol><pre><code class="language-shell">wget https://github.com/runoneall/sfpkg/releases/download/v2/sfpkgchmod +x sfpkgmv sfpkg /sec/usr/bin</code></pre><p>键入 <code>sfpkg -h</code> 查看是否安装成功</p><ol start="2"><li>初始化容器</li></ol><p>输入 <code>sfpkg init</code> 初始化容器，中途也许会爆几个 <code>Error</code> 先不用管<br>等待完成后，输入 <code>udocker ps |grep sfpkg-container</code> 若有输出则代表成功<br>若要重新安装也是 <code>sfpkg init</code></p><ol start="3"><li>安装软件</li></ol><p>因为容器使用的是alpine系统，所以使用apk包管理器<br>输入 <code>sfpkg apk add &lt;软件名&gt;</code> 即可进行安装（可携带参数）<br>输入 <code>sfpkg apk</code> 可获取帮助信息<br>示例：<code>sfpkg apk add fastfetch --no-cache</code></p><ol start="4"><li>运行软件</li></ol><p>使用 <code>sfpkg run &lt;软件名&gt;</code> 即可运行（可携带参数）<br>示例：<code>sfpkg run sh</code></p><ol start="5"><li>创建快捷方式</li></ol><p>若要将已安装的软件链接到宿主机，可以使用 <code>sfpkg link &lt;软件名&gt;</code><br>若宿主机已安装了同名软件，新软件将被安装为 <code>sf&lt;软件名&gt;</code><br>软件将被链接到 <code>/sec/usr/bin</code> 可以使用 <code>ls /sec/usr/bin</code> 查看已连接的软件列表<br>可以使用 <code>rm /sec/usr/bin/&lt;软件名&gt;</code> 删除链接</p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/08/19/%E5%9C%A8segfault%E4%B8%8A%E8%87%AA%E7%94%B1%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%EF%BC%81/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>mini套warp教程</title>
@@ -497,31 +523,6 @@ $proxyBase = &amp;quot;https://blog.onea</description>
       
       
       <comments>https://blog.oneall.eu.org/2025/06/06/claw-run%E6%90%AD%E5%BB%BA2fa%E7%AE%A1%E7%90%86%E5%99%A8/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>loc.cc使用acme.sh自动签ssl</title>
-      <link>https://blog.oneall.eu.org/2025/06/04/loc-cc%E4%BD%BF%E7%94%A8acme-sh%E8%87%AA%E5%8A%A8%E7%AD%BEssl/</link>
-      <guid>https://blog.oneall.eu.org/2025/06/04/loc-cc%E4%BD%BF%E7%94%A8acme-sh%E8%87%AA%E5%8A%A8%E7%AD%BEssl/</guid>
-      <pubDate>Wed, 04 Jun 2025 13:14:47 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;关于如何添加 ns 记录，目前除手动同步两边记录外并未有好方法，改 SOA 并未生效&lt;br&gt;关于 ssl 的问题，可以使用 webroot 验证，确保域名能够访问&lt;br&gt;此处用 serv00 演示，因为可以用 devil 自动添加证书&lt;/p&gt;
-&lt;p&gt;演示：&lt;br&gt;&lt;img </description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>关于如何添加 ns 记录，目前除手动同步两边记录外并未有好方法，改 SOA 并未生效<br>关于 ssl 的问题，可以使用 webroot 验证，确保域名能够访问<br>此处用 serv00 演示，因为可以用 devil 自动添加证书</p><p>演示：<br><img src="https://s.rmimg.com/original/2X/5/562d06ecc9ce277082114386219d479ad64d70bc.png"></p><ol><li>安装 acme.sh</li></ol><pre><code class="language-shell">curl https://get.acme.sh | sh -s email=你的邮箱</code></pre><ol start="2"><li>设置验证路径</li></ol><pre><code class="language-shell">mkdir -p ~/ssl/update-sh/ # 用于存放更新脚本mkdir -p ~/domains/你的域名/public_html/.well-known/acme-challenge # 用于webroot验证</code></pre><ol start="3"><li>自动更新脚本（注意要用 <code>fullchain</code> 否则不完整）</li></ol><pre><code class="language-shell">#!/usr/local/bin/bashDOMAIN=&quot;你的域名&quot;IP=&quot;128.204.223.46&quot;CERT_DIR=&quot;~/ssl&quot;devil ssl www del $IP $DOMAINdevil ssl www add $IP &quot;$CERT_DIR/$DOMAIN.fullchain.crt&quot; &quot;$CERT_DIR/$DOMAIN.key&quot; $DOMAIN</code></pre><ol start="4"><li>添加证书</li></ol><pre><code class="language-shell">acme.sh --issue -d 你的域名 \    -w ~/domains/你的域名/public_html \    --cert-file ~/ssl/你的域名.crt \    --key-file ~/ssl/你的域名.key \    --fullchain-file ~/ssl/你的域名.fullchain.crt \    --reloadcmd &quot;~/ssl/update-sh/你的域名.sh&quot;</code></pre><ol start="5"><li>自动续期（如果没有）</li></ol><pre><code class="language-shell">acme.sh --install-cronjob</code></pre>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/06/04/loc-cc%E4%BD%BF%E7%94%A8acme-sh%E8%87%AA%E5%8A%A8%E7%AD%BEssl/#disqus_thread</comments>
       
     </item>
     
