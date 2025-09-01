@@ -9,8 +9,35 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Mon, 01 Sep 2025 05:23:56 GMT</pubDate>
+    <pubDate>Mon, 01 Sep 2025 08:44:04 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>alpine3.20 安装 code-server</title>
+      <link>https://blog.oneall.eu.org/2025/09/01/alpine3-20%E5%AE%89%E8%A3%85code-server/</link>
+      <guid>https://blog.oneall.eu.org/2025/09/01/alpine3-20%E5%AE%89%E8%A3%85code-server/</guid>
+      <pubDate>Mon, 01 Sep 2025 08:42:07 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;占用预览&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://s.rmimg.com/original/2X/4/4063e63e5b7827a658f76040363a69de91c554a8.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;提前加 2gb swap&lt;/p&gt;
+&lt;pre&gt;&lt;code</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>占用预览</p><p><img src="https://s.rmimg.com/original/2X/4/4063e63e5b7827a658f76040363a69de91c554a8.png"></p><p>提前加 2gb swap</p><pre><code class="language-shell">#!/bin/shnew_swap=2048swap_partitions=$(grep -E &#39;^/dev/&#39; /proc/swaps | awk &#39;&#123;print $1&#125;&#39;)for partition in $swap_partitions; do    swapoff &quot;$partition&quot;    wipefs -a &quot;$partition&quot;    mkswap -f &quot;$partition&quot;doneswapoff /swapfilerm -f /swapfiledd if=/dev/zero of=/swapfile bs=1M count=$new_swapchmod 600 /swapfilemkswap /swapfileswapon /swapfile</code></pre><p>然后安装依赖包</p><pre><code class="language-shell">apk add libstdc++ libc6-compat python3 make g++ pkgconfig fontconfig git krb5-devapk add nodejs npm yarnapk cache clean</code></pre><p>使用 yarn 安装 4.96.2 版本的 code-server（最后一个支持node v20的）</p><pre><code class="language-shell">yarn global add code-server@4.96.2</code></pre><p>最后启动服务即可</p><pre><code class="language-shell">code-server</code></pre>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/09/01/alpine3-20%E5%AE%89%E8%A3%85code-server/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>使用nodebus批量管理多个服务器</title>
@@ -496,34 +523,6 @@ $proxyBase = &amp;quot;https://blog.onea</description>
       
       
       <comments>https://blog.oneall.eu.org/2025/06/23/%E4%BA%91%E6%B9%96%E7%BD%91%E7%9B%98%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>将webhook转换为websocket的工具</title>
-      <link>https://blog.oneall.eu.org/2025/06/16/%E5%B0%86webhook%E8%BD%AC%E6%8D%A2%E4%B8%BAwebsocket%E7%9A%84%E5%B7%A5%E5%85%B7/</link>
-      <guid>https://blog.oneall.eu.org/2025/06/16/%E5%B0%86webhook%E8%BD%AC%E6%8D%A2%E4%B8%BAwebsocket%E7%9A%84%E5%B7%A5%E5%85%B7/</guid>
-      <pubDate>Mon, 16 Jun 2025 11:11:32 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;地址：&lt;br&gt;&lt;a href=&quot;https://github.com/FramerOrg/HookToWS&quot;&gt;https://github.com/FramerOrg/HookToWS&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;特点：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;支持多客户端&lt;/li&gt;
-&lt;li&gt;</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>地址：<br><a href="https://github.com/FramerOrg/HookToWS">https://github.com/FramerOrg/HookToWS</a></p><p>特点：</p><ol><li>支持多客户端</li><li>无需持久化</li><li>无需多端口</li></ol><p>docker安装：</p><pre><code class="language-shell">docker pull runoneall/hook-to-wsdocker run -d --name hook-to-ws -p 3000:3000 -e WS_AUTH_TOKEN=your_secure_token_here -e PORT=3000 runoneall/hook-to-ws</code></pre><p>连接：<br>首先连接ws：</p><pre><code class="language-plaintext">ws://&lt;your_domain&gt;:&lt;port&gt;/?token=&lt;your_token&gt;&amp;path=&lt;your_path&gt;</code></pre><p>然后程序会在 &#x2F;webhook&#x2F;<your_path> 处监听POST请求</p><p>对应的webhook地址为：</p><pre><code class="language-plaintext">http://&lt;your_domain&gt;:&lt;port&gt;/webhook/&lt;your_path&gt;</code></pre><p>如果有ssl那就是 wss 和 https</p>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/06/16/%E5%B0%86webhook%E8%BD%AC%E6%8D%A2%E4%B8%BAwebsocket%E7%9A%84%E5%B7%A5%E5%85%B7/#disqus_thread</comments>
       
     </item>
     
