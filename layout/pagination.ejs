@@ -1,0 +1,78 @@
+<ol class="page-navigator">
+    <!-- previous page link -->
+    <% if (page.prev) { %>
+    <li class="prev">
+        <a
+            href="<%- page.current - 1 === 1 ? prefix_url_path : prefix_url_path + 'page/' + (page.current - 1) %>"
+            >&laquo; 前一页</a
+        >
+    </li>
+    <% } %>
+    <!-- end previous page link -->
+
+    <!-- first page link -->
+    <% if (page.current !== 1) { %>
+    <li><a href="<%- prefix_url_path %>">1</a></li>
+    <% } else { %>
+    <li class="current">
+        <a href="<%- prefix_url_path %>">1</a>
+    </li>
+    <% } %>
+    <!-- end first page link -->
+
+    <!-- ellipsis before nearby pages -->
+    <% if (page.current - 2 > 2) { %>
+    <li>...</li>
+    <% } %>
+    <!-- end ellipsis before nearby pages -->
+
+    <!-- nearby page numbers -->
+    <%
+    const start = Math.max(2, page.current - 2);
+    const end = Math.min(page.total - 1, page.current + 2);
+    %>
+    <% for (let i = start; i <= end; i++) { %>
+    <% if (i === page.current) { %>
+    <li class="current">
+        <a href="<%- prefix_url_path %>page/<%- i %>"><%- i %></a>
+    </li>
+    <% } else if (i !== 1) { %>
+    <li><a href="<%- prefix_url_path %>page/<%- i %>"><%- i %></a></li>
+    <% } %>
+    <% } %>
+    <!-- end nearby page numbers -->
+
+    <!-- ellipsis after nearby pages -->
+    <% if (page.current + 2 < page.total - 1) { %>
+    <li>...</li>
+    <% } %>
+    <!-- end ellipsis after nearby pages -->
+
+    <!-- last page link -->
+    <% if (page.total > 1) { %>
+    <% if (page.current !== page.total) { %>
+    <li>
+        <a href="<%- prefix_url_path %>page/<%- page.total %>"
+            ><%- page.total %></a
+        >
+    </li>
+    <% } else { %>
+    <li class="current">
+        <a href="<%- prefix_url_path %>page/<%- page.total %>"
+            ><%- page.total %></a
+        >
+    </li>
+    <% } %>
+    <% } %>
+    <!-- end last page link -->
+
+    <!-- next page link -->
+    <% if (page.next) { %>
+    <li class="next">
+        <a href="<%- prefix_url_path %>page/<%- page.current + 1 %>"
+            >后一页 &raquo;</a
+        >
+    </li>
+    <% } %>
+    <!-- end next page link -->
+</ol>
