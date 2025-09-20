@@ -115,13 +115,6 @@
                     <br />
                     <a
                         class=""
-                        href="/about/index.html"
-                        >关于</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -131,6 +124,13 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/about/index.html"
+                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -167,8 +167,43 @@
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <!-- post title -->
         <h2 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2025/09/20/nodebus-v3%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%EF%BC%81/"
+                >nodebus v3版本发布！</a
+            >
+        </h2>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者:
+                <a itemprop="name" href="#" rel="author"
+                    >Tom Brown</a
+                >
+            </li>
+            <li>
+                时间:
+                <time
+                    itemprop="datePublished"
+                    datetime="2025-09-20T08:32:28.000Z"
+                    >2025-09-20</time
+                >
+            </li>
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content index-post-content" itemprop="articleBody">
+            地址：https://github.com/runoneall/nodebus 此次更新有一个 break changes：在 configm 中，将 ssh 的 port 类型从 int 改到 string 了，方便 net.JoinHostPort，至于为什么，net.JoinHostPort...
+        </div>
+        <!-- end post content -->
+    </article>
+    
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <!-- post title -->
+        <h2 class="post-title" itemprop="name headline">
             <a itemprop="url" href="/2025/09/01/alpine3-20%E5%AE%89%E8%A3%85code-server/"
-                >alpine3.20 安装 code-server</a
+                >alpine3.20安装code-server</a
             >
         </h2>
         <!-- end post title -->
@@ -475,41 +510,6 @@
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
             首先要安装telegram应用，web版不行，有bug https://gitlab.com/SrArminho/telegram-desktop-potable-for-linux 这个是便携版制作器，亲测好用...
-        </div>
-        <!-- end post content -->
-    </article>
-    
-    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-        <!-- post title -->
-        <h2 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="/2025/08/04/%E8%AE%BA%E5%9D%9Bmini%E8%BD%AC%E5%8F%91segfault%E5%85%8D%E8%B4%B9%E6%9C%BAVNC/"
-                >论坛mini转发segfault免费机VNC</a
-            >
-        </h2>
-        <!-- end post title -->
-
-        <!-- post meta -->
-        <ul class="post-meta">
-            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
-                作者:
-                <a itemprop="name" href="#" rel="author"
-                    >Tom Brown</a
-                >
-            </li>
-            <li>
-                时间:
-                <time
-                    itemprop="datePublished"
-                    datetime="2025-08-04T07:34:28.000Z"
-                    >2025-08-04</time
-                >
-            </li>
-        </ul>
-        <!-- end post meta -->
-
-        <!-- post content -->
-        <div class="post-content index-post-content" itemprop="articleBody">
-            最终效果图 首先将论坛mini重装成 alpine 3.20（不然没法用） https://github.com/bin456789/reinstall segfault免费机申请+保活请看 segfault免费机全自动保活教程 需要将密钥导入mini上 首先安装依赖 apk add screen...
         </div>
         <!-- end post content -->
     </article>
