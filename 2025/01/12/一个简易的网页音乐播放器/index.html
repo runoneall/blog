@@ -52,7 +52,7 @@
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
 
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
@@ -115,6 +115,13 @@
                     <br />
                     <a
                         class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -124,13 +131,6 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
-                        href="/about/index.html"
-                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -207,45 +207,45 @@
 audio_play(); // 开始播放
 </code></pre>
 <p>源码：<br><code>player.css</code></p>
-<pre><code class="language-css">.audio-player &#123;
+<pre><code class="language-css">.audio-player {
     width: 300px;
     height: 65px;
     border: 1px solid black;
     overflow: hidden;
     white-space: nowrap;
     background: white;
-&#125;
-#audio-avatar &#123;
+}
+#audio-avatar {
     height: auto;
     width: auto;
     max-height: 100%;
     margin-right: 10px;
     float: left;
-&#125;
-.audio-info &#123;
+}
+.audio-info {
     overflow: hidden;
     position: relative;
-&#125;
-#audio-title &#123;
+}
+#audio-title {
     display: inline-block;
     padding-left: 100%;
     animation: showFullTitle 10s linear infinite;
-&#125;
-@keyframes showFullTitle &#123;
-    0% &#123;
+}
+@keyframes showFullTitle {
+    0% {
         transform: translateX(0%);
-    &#125;
-    100% &#123;
+    }
+    100% {
         transform: translateX(-100%);
-    &#125;
-&#125;
-.audio-progress &#123;
+    }
+}
+.audio-progress {
     display: inline-block;
-&#125;
-.audio-control &#123;
+}
+.audio-control {
     margin-right: 5px;
     float: right;
-&#125;
+}
 </code></pre>
 <p><code>player.js</code></p>
 <pre><code class="language-javascript">document.querySelector(&quot;.audio-player&quot;).innerHTML =
@@ -283,34 +283,34 @@ const audio_range = document.getElementById(&quot;audio-range&quot;);
 const audio_time = document.getElementById(&quot;audio-time&quot;);
 let audio_end_time_length = 0;
 
-function audio_play() &#123;
-    if (audio_source.paused) &#123;
+function audio_play() {
+    if (audio_source.paused) {
         const new_audio_title = decodeURI(
             audio_source.src.split(&quot;/&quot;).pop().split(&quot;.&quot;).shift(),
         );
-        if (current_audio_title != new_audio_title) &#123;
+        if (current_audio_title != new_audio_title) {
             audio_title.textContent = new_audio_title;
             current_audio_title = audio_title.textContent;
             audio_source.load();
-        &#125;
+        }
         audio_source.play();
-    &#125;
-&#125;
-function audio_stop() &#123;
-    if (!audio_source.paused) &#123;
+    }
+}
+function audio_stop() {
+    if (!audio_source.paused) {
         audio_source.pause();
-    &#125;
-&#125;
-function audio_back5s() &#123;
+    }
+}
+function audio_back5s() {
     audio_play();
     audio_source.currentTime -= 5;
-&#125;
-function audio_forward5s() &#123;
+}
+function audio_forward5s() {
     audio_play();
     audio_source.currentTime += 5;
-&#125;
+}
 
-function audio_current_time() &#123;
+function audio_current_time() {
     const audio_currentTime = audio_source.currentTime;
     const audio_time_minutes = Math.floor(audio_currentTime / 60).toString();
     const audio_time_seconds = Math.floor(audio_currentTime % 60)
@@ -320,10 +320,10 @@ function audio_current_time() &#123;
         0 - audio_end_time_length,
     );
     return (
-        `$&#123;audio_time_minutes&#125;:$&#123;audio_time_seconds&#125;` + &quot; / &quot; + audio_end_time
+        `${audio_time_minutes}:${audio_time_seconds}` + &quot; / &quot; + audio_end_time
     );
-&#125;
-audio_source.onloadedmetadata = function () &#123;
+}
+audio_source.onloadedmetadata = function () {
     const audio_duration = audio_source.duration;
     audio_range.max = audio_duration;
     const audio_time_minutes = Math.floor(audio_duration / 60).toString();
@@ -333,17 +333,17 @@ audio_source.onloadedmetadata = function () &#123;
     audio_end_time_length =
         audio_time_minutes.length + audio_time_seconds.length + 1;
     audio_time.textContent =
-        &quot;0:00 / &quot; + `$&#123;audio_time_minutes&#125;:$&#123;audio_time_seconds&#125;`;
-&#125;;
-audio_source.ontimeupdate = function () &#123;
+        &quot;0:00 / &quot; + `${audio_time_minutes}:${audio_time_seconds}`;
+};
+audio_source.ontimeupdate = function () {
     audio_range.value = audio_source.currentTime;
     audio_time.textContent = audio_current_time();
-&#125;;
-audio_range.oninput = function () &#123;
+};
+audio_range.oninput = function () {
     audio_play();
     audio_source.currentTime = audio_range.value;
     audio_time.textContent = audio_current_time();
-&#125;;
+};
 </code></pre>
 <p>demo：<a target="_blank" rel="noopener" href="https://runoneall.serv00.net/WebLitePlayer/">https://runoneall.serv00.net/WebLitePlayer/</a></p>
 

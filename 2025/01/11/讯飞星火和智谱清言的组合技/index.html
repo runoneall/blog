@@ -52,7 +52,7 @@
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
 
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
@@ -115,6 +115,13 @@
                     <br />
                     <a
                         class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -124,13 +131,6 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
-                        href="/about/index.html"
-                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -215,7 +215,7 @@ class ChatClient:
         )
 
     def zhipu_chat(self, query: str, history: list[dict[str, str]] = [], **kwargs):
-        history.append(&#123;&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: query&#125;)
+        history.append({&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: query})
         response = self.zhipu.chat.completions.create(
             model=&quot;glm-4-flash&quot;, messages=history, stream=True, **kwargs
         )
@@ -223,7 +223,7 @@ class ChatClient:
             yield chunk
 
     def xinghuo_chat(self, query: str, history: list[dict[str, str]] = [], **kwargs):
-        history.append(&#123;&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: query&#125;)
+        history.append({&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: query})
         response = self.xinghuo.chat.completions.create(
             model=&quot;lite&quot;, messages=history, stream=True, **kwargs
         )
@@ -240,13 +240,13 @@ class ChatClient:
         response = self.zhipu.chat.completions.create(
             model=&quot;glm-4v-flash&quot;,
             messages=[
-                &#123;
+                {
                     &quot;role&quot;: &quot;user&quot;,
                     &quot;content&quot;: [
-                        &#123;&quot;type&quot;: &quot;image_url&quot;, &quot;image_url&quot;: &#123;&quot;url&quot;: image_url&#125;&#125;,
-                        &#123;&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: query&#125;,
+                        {&quot;type&quot;: &quot;image_url&quot;, &quot;image_url&quot;: {&quot;url&quot;: image_url}},
+                        {&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: query},
                     ],
-                &#125;
+                }
             ],
             stream=True,
             max_tokens=1024,
@@ -260,7 +260,7 @@ class ChatClient:
         response = self.zhipu.images.generate(
             model=&quot;cogview-3-flash&quot;,
             prompt=query,
-            size=f&quot;&#123;width&#125;x&#123;height&#125;&quot;,
+            size=f&quot;{width}x{height}&quot;,
         )
         return response.data[0].url
 </code></pre>
@@ -272,14 +272,14 @@ ai.xinghuo_api_password = &quot;星火 api password&quot;
 ChatClient = ai.ChatClient()
 
 history = [      # 上下文
-    &#123;
+    {
         &quot;role&quot;: &quot;user&quot;,
         &quot;content&quot;: &quot;在下面的对话中，你要记住我的名字是r1a！&quot;
-    &#125;,
-    &#123;
+    },
+    {
         &quot;role&quot;: &quot;assistant&quot;,
         &quot;content&quot;: &quot;好的，r1a。&quot;
-    &#125;
+    }
 ]
 
 print(&quot;\n 智谱清言文字生成 (带上下文)&quot;)

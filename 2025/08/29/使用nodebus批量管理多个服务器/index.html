@@ -52,7 +52,7 @@
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
 
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
@@ -115,6 +115,13 @@
                     <br />
                     <a
                         class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -124,13 +131,6 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
-                        href="/about/index.html"
-                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -209,7 +209,7 @@ sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyring
 sudo chmod a+r /etc/apt/keyrings/docker.asc
 echo \
   &quot;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release &amp;&amp; echo &quot;$&#123;UBUNTU_CODENAME:-$VERSION_CODENAME&#125;&quot;) stable&quot; | \
+  $(. /etc/os-release &amp;&amp; echo &quot;${UBUNTU_CODENAME:-$VERSION_CODENAME}&quot;) stable&quot; | \
   sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
 sudo apt-get update&#39;
 

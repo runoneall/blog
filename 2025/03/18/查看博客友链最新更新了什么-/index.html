@@ -46,13 +46,13 @@
 
 <!-- description -->
 
-<meta name="description" content="这是对 https://dev.oneall.eu.org/archives/32/ 的补充在原有友链基础上增加可选的 rss 选项支持自动分析 rss 和 atom // 本人js不好大体是这么个意思 // 使用 https://dev.oneall.eu.org/archives/49/ 跨域请求 function xhrGet(url) &#123;     return new Promi" />
+<meta name="description" content="这是对 https://dev.oneall.eu.org/archives/32/ 的补充在原有友链基础上增加可选的 rss 选项支持自动分析 rss 和 atom // 本人js不好大体是这么个意思 // 使用 https://dev.oneall.eu.org/archives/49/ 跨域请求 function xhrGet(url) {     return new Promise((r" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
 
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
@@ -115,6 +115,13 @@
                     <br />
                     <a
                         class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -124,13 +131,6 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
-                        href="/about/index.html"
-                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -198,33 +198,33 @@
             <p>这是对 <a target="_blank" rel="noopener" href="https://dev.oneall.eu.org/archives/32/">https://dev.oneall.eu.org/archives/32/</a> 的补充<br>在原有友链基础上增加可选的 rss 选项<br><img src="https://s.rmimg.com/2025-03-18/1742262324-200112-2025-03-18-094451.png"><br>支持自动分析 rss 和 atom</p>
 <pre><code class="language-javascript">// 本人js不好大体是这么个意思
 // 使用 https://dev.oneall.eu.org/archives/49/ 跨域请求
-function xhrGet(url) &#123;
-    return new Promise((resolve, reject) =&gt; &#123;
+function xhrGet(url) {
+    return new Promise((resolve, reject) =&gt; {
         const xhr = new XMLHttpRequest();
         xhr.open(&quot;GET&quot;, &quot;https://dev.oneall.eu.org/netdrive.php/&quot; + url, true);
-        xhr.onload = function () &#123;
-            if (xhr.status &gt;= 200 &amp;&amp; xhr.status &lt; 300) &#123;
+        xhr.onload = function () {
+            if (xhr.status &gt;= 200 &amp;&amp; xhr.status &lt; 300) {
                 resolve(xhr.responseText);
-            &#125; else &#123;
-                reject(new Error(`HTTP Error: $&#123;xhr.status&#125;`));
-            &#125;
-        &#125;;
-        xhr.onerror = function () &#123;
+            } else {
+                reject(new Error(`HTTP Error: ${xhr.status}`));
+            }
+        };
+        xhr.onerror = function () {
             reject(new Error(&quot;Network Error&quot;));
-        &#125;;
+        };
         xhr.send();
-    &#125;);
-&#125;
+    });
+}
 
-async function putRss(linkItemsArea, rssLinkItems) &#123;
-    if (rssLinkItems.length === 0) &#123;
+async function putRss(linkItemsArea, rssLinkItems) {
+    if (rssLinkItems.length === 0) {
         return;
-    &#125;
+    }
     linkItemsArea.innerHTML += `&lt;div id=&quot;links-rss&quot;&gt;&lt;h2&gt;近期更新&lt;/h2&gt;&lt;ul&gt;&lt;/ul&gt;&lt;/div&gt;`;
     const rssItemsArea = linkItemsArea.querySelector(&quot;#links-rss ul&quot;);
-    for (const rssLinkItem of rssLinkItems) &#123;
+    for (const rssLinkItem of rssLinkItems) {
         xhrGet(rssLinkItem)
-            .then((xmlString) =&gt; &#123;
+            .then((xmlString) =&gt; {
                 const xmlStringParser = new DOMParser();
                 const xmlDoc = xmlStringParser.parseFromString(
                     xmlString,
@@ -232,98 +232,98 @@ async function putRss(linkItemsArea, rssLinkItems) &#123;
                 );
                 atomFeed = xmlDoc.getElementsByTagName(&quot;feed&quot;);
                 rssFeed = xmlDoc.getElementsByTagName(&quot;rss&quot;);
-                if (atomFeed.length &gt; 0) &#123;
+                if (atomFeed.length &gt; 0) {
                     const blogName =
                         atomFeed[0].getElementsByTagName(&quot;title&quot;)[0]
                             .textContent;
-                    rssItemsArea.innerHTML += `&lt;h3&gt;$&#123;blogName&#125;:&lt;/h3&gt;`;
+                    rssItemsArea.innerHTML += `&lt;h3&gt;${blogName}:&lt;/h3&gt;`;
                     const first10Items = [
                         ...atomFeed[0].getElementsByTagName(&quot;entry&quot;),
                     ].slice(0, 10);
-                    first10Items.forEach((item) =&gt; &#123;
+                    first10Items.forEach((item) =&gt; {
                         const blog_title =
                             item.getElementsByTagName(&quot;title&quot;)[0].textContent;
                         const blog_link = item
                             .getElementsByTagName(&quot;link&quot;)[0]
                             .getAttribute(&quot;href&quot;);
-                        rssItemsArea.innerHTML += `&lt;li&gt;&lt;a href=&quot;$&#123;blog_link&#125;&quot; target=&quot;_blank&quot;&gt;$&#123;blog_title&#125;&lt;/a&gt;&lt;/li&gt;`;
-                    &#125;);
-                &#125; else if (rssFeed.length &gt; 0) &#123;
+                        rssItemsArea.innerHTML += `&lt;li&gt;&lt;a href=&quot;${blog_link}&quot; target=&quot;_blank&quot;&gt;${blog_title}&lt;/a&gt;&lt;/li&gt;`;
+                    });
+                } else if (rssFeed.length &gt; 0) {
                     const blogName =
                         rssFeed[0].getElementsByTagName(&quot;title&quot;)[0].textContent;
-                    rssItemsArea.innerHTML += `&lt;h3&gt;$&#123;blogName&#125;:&lt;/h3&gt;`;
+                    rssItemsArea.innerHTML += `&lt;h3&gt;${blogName}:&lt;/h3&gt;`;
                     const first10Items = [
                         ...rssFeed[0].getElementsByTagName(&quot;item&quot;),
                     ].slice(0, 10);
-                    first10Items.forEach((item) =&gt; &#123;
+                    first10Items.forEach((item) =&gt; {
                         const blog_title =
                             item.getElementsByTagName(&quot;title&quot;)[0].textContent;
                         const blog_link =
                             item.getElementsByTagName(&quot;link&quot;)[0].textContent;
-                        rssItemsArea.innerHTML += `&lt;li&gt;&lt;a href=&quot;$&#123;blog_link&#125;&quot; target=&quot;_blank&quot;&gt;$&#123;blog_title&#125;&lt;/a&gt;&lt;/li&gt;`;
-                    &#125;);
-                &#125; else &#123;
+                        rssItemsArea.innerHTML += `&lt;li&gt;&lt;a href=&quot;${blog_link}&quot; target=&quot;_blank&quot;&gt;${blog_title}&lt;/a&gt;&lt;/li&gt;`;
+                    });
+                } else {
                     console.log(&quot;Unknown feed type &quot; + rssLinkItem);
-                &#125;
-            &#125;)
-            .catch(() =&gt; &#123;&#125;);
-    &#125;
-&#125;
+                }
+            })
+            .catch(() =&gt; {});
+    }
+}
 
-function putLinks(link_json) &#123;
+function putLinks(link_json) {
     const linkJson = JSON.parse(link_json);
     const linkItemsArea = document.getElementById(&quot;linkItemsArea&quot;);
     let linkItemsHTML = &quot;&quot;;
     let rssLinkItems = [];
-    for (const linkItem of linkJson) &#123;
-        linkItemsHTML += `&lt;div class=&quot;link-item&quot;&gt;&lt;img class=&quot;link-item-avatar&quot; src=&quot;$&#123;linkItem.avatar&#125;&quot;&gt;&lt;div class=&quot;link-item-content&quot;&gt;&lt;a href=&quot;$&#123;linkItem.url&#125;&quot; target=&quot;_blank&quot;&gt;&lt;h2&gt;$&#123;linkItem.title&#125;&lt;/h2&gt;&lt;/a&gt;&lt;p&gt;$&#123;linkItem.description&#125;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;`;
-        if (linkItem.rss) &#123;
+    for (const linkItem of linkJson) {
+        linkItemsHTML += `&lt;div class=&quot;link-item&quot;&gt;&lt;img class=&quot;link-item-avatar&quot; src=&quot;${linkItem.avatar}&quot;&gt;&lt;div class=&quot;link-item-content&quot;&gt;&lt;a href=&quot;${linkItem.url}&quot; target=&quot;_blank&quot;&gt;&lt;h2&gt;${linkItem.title}&lt;/h2&gt;&lt;/a&gt;&lt;p&gt;${linkItem.description}&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;`;
+        if (linkItem.rss) {
             rssLinkItems.push(linkItem.rss);
-        &#125;
-    &#125;
+        }
+    }
     linkItemsArea.innerHTML = linkItemsHTML;
     setTimeout(() =&gt; putRss(linkItemsArea, rssLinkItems), 0);
-&#125;
+}
 </code></pre>
-<pre><code class="language-css">#linkItemsArea &#123;
+<pre><code class="language-css">#linkItemsArea {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
-&#125;
+}
 
-@media screen and (max-width: 700px) &#123;
-    #linkItemsArea &#123;
+@media screen and (max-width: 700px) {
+    #linkItemsArea {
         grid-template-columns: repeat(1, 1fr);
-    &#125;
-&#125;
+    }
+}
 
-.link-item &#123;
+.link-item {
     height: 100px;
     overflow: hidden;
     border: 1px solid gray;
-&#125;
+}
 
-.link-item a &#123;
+.link-item a {
     color: inherit !important;
-&#125;
+}
 
-.link-item-avatar &#123;
+.link-item-avatar {
     float: left;
     width: auto;
     height: auto;
     max-height: 100%;
     margin-right: 10px;
     border-right: 1px solid gray;
-&#125;
+}
 
-.link-item-content &#123;
+.link-item-content {
     height: 100%;
-&#125;
+}
 
-#linkItemsArea #links-rss &#123;
+#linkItemsArea #links-rss {
     grid-column: 1 / -1;
-&#125;
+}
 </code></pre>
 <p>效果：异步加载最新 10 篇文章<br><img src="https://s.rmimg.com/2025-03-18/1742262484-796693-2025-03-18-094759.png"><br>具体可看：<a target="_blank" rel="noopener" href="https://dev.oneall.eu.org/links.html%EF%BC%88%E8%8B%A5%E5%8F%91%E7%8E%B0%E9%94%99%E4%BD%8D%E5%B0%B1%E6%98%AF%E7%BC%93%E5%AD%98%E6%9C%AA%E5%A4%B1%E6%95%88%EF%BC%89">https://dev.oneall.eu.org/links.html（若发现错位就是缓存未失效）</a></p>
 

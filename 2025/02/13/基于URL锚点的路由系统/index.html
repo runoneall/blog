@@ -46,13 +46,13 @@
 
 <!-- description -->
 
-<meta name="description" content="好处：不会显式刷新，语法简单，使用原生JS router.js class HashRouter &#123;     constructor(container) &#123;         this.container = container;         this.routes = &#123;&#125;;          this.defaultHandler = () =&gt" />
+<meta name="description" content="好处：不会显式刷新，语法简单，使用原生JS router.js class HashRouter {     constructor(container) {         this.container = container;         this.routes = {};          this.defaultHandler = () =&gt; this.show404(this." />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
 
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
@@ -115,6 +115,13 @@
                     <br />
                     <a
                         class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -124,13 +131,6 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
-                        href="/about/index.html"
-                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -197,44 +197,44 @@
         <div class="post-content" itemprop="articleBody">
             <p>好处：不会显式刷新，语法简单，使用原生JS</p>
 <p><code>router.js</code></p>
-<pre><code class="language-javascript">class HashRouter &#123;
-    constructor(container) &#123;
+<pre><code class="language-javascript">class HashRouter {
+    constructor(container) {
         this.container = container;
-        this.routes = &#123;&#125;;
+        this.routes = {};
 
         this.defaultHandler = () =&gt; this.show404(this.container);
 
-        this.normalizePath = (path) =&gt; &#123;
+        this.normalizePath = (path) =&gt; {
             if (!path) return &quot;/&quot;;
-            return path.startsWith(&quot;/&quot;) ? path : `/$&#123;path&#125;`;
-        &#125;;
+            return path.startsWith(&quot;/&quot;) ? path : `/${path}`;
+        };
 
         window.addEventListener(&quot;hashchange&quot;, () =&gt; this.handleRoute());
         window.addEventListener(&quot;load&quot;, () =&gt; this.handleRoute());
-    &#125;
+    }
 
-    addRoute(path, handler) &#123;
+    addRoute(path, handler) {
         const normalizedPath = this.normalizePath(path);
         this.routes[normalizedPath] = handler;
-    &#125;
+    }
 
-    setDefaultHandler(handler) &#123;
+    setDefaultHandler(handler) {
         this.defaultHandler = handler;
-    &#125;
+    }
 
-    handleRoute() &#123;
+    handleRoute() {
         const rawHash = window.location.hash.slice(1);
         const currentPath = this.normalizePath(rawHash);
 
         const handler = this.routes[currentPath] || this.defaultHandler;
         this.container.innerHTML = &quot;&quot;;
         handler(this.container);
-    &#125;
+    }
 
-    show404(container) &#123;
+    show404(container) {
         container.innerHTML = &quot;&lt;h1&gt;404 Not Found&lt;/h1&gt;&quot;;
-    &#125;
-&#125;
+    }
+}
 </code></pre>
 <p><code>index.html</code></p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
@@ -267,20 +267,20 @@
             );
 
             // 定义路由规则
-            router.addRoute(&quot;/&quot;, (containter) =&gt; &#123;
+            router.addRoute(&quot;/&quot;, (containter) =&gt; {
                 containter.innerHTML = &quot;Welcome to the homepage&quot;;
-            &#125;);
-            router.addRoute(&quot;/about&quot;, (containter) =&gt; &#123;
+            });
+            router.addRoute(&quot;/about&quot;, (containter) =&gt; {
                 containter.innerHTML = &quot;About us&quot;;
-            &#125;);
-            router.addRoute(&quot;/contact&quot;, (containter) =&gt; &#123;
+            });
+            router.addRoute(&quot;/contact&quot;, (containter) =&gt; {
                 containter.innerHTML = &quot;Contact us&quot;;
-            &#125;);
+            });
 
             // 设置默认路由 (若不指定则默认插入 404 Not Found)
-            router.setDefaultHandler((containter) =&gt; &#123;
+            router.setDefaultHandler((containter) =&gt; {
                 containter.innerHTML = &quot;Page not found&quot;;
-            &#125;);
+            });
 
             // 监听hashchange事件
             router.handleRoute();

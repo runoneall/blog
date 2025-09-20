@@ -52,7 +52,7 @@
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
 
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
@@ -115,6 +115,13 @@
                     <br />
                     <a
                         class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -124,13 +131,6 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
-                        href="/about/index.html"
-                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -207,7 +207,7 @@ $headers = getallheaders();
 $body = file_get_contents(&#39;php://input&#39;);
 
 // 构造目标 URL
-$targetUrl = &quot;&#123;$proxyBase&#125;&#123;$path&#125;&quot;;
+$targetUrl = &quot;{$proxyBase}{$path}&quot;;
 
 // 准备 cURL 请求
 $ch = curl_init();
@@ -228,11 +228,11 @@ curl_setopt_array($ch, [
 $response = curl_exec($ch);
 $error = curl_error($ch);
 
-if ($error) &#123;
+if ($error) {
     http_response_code(502);
     echo &quot;Proxy error: &quot; . $error;
     exit;
-&#125;
+}
 
 // 处理响应
 $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -243,25 +243,25 @@ $responseBody = substr($response, $headerSize);
 curl_close($ch);
 
 // 转发响应头
-foreach (explode(&quot;\r\n&quot;, $responseHeaders) as $headerLine) &#123;
-    if (strpos($headerLine, &#39;HTTP/&#39;) === 0) &#123;
+foreach (explode(&quot;\r\n&quot;, $responseHeaders) as $headerLine) {
+    if (strpos($headerLine, &#39;HTTP/&#39;) === 0) {
         header($headerLine);
-    &#125; else if (!empty(trim($headerLine))) &#123;
+    } else if (!empty(trim($headerLine))) {
         $parts = explode(&#39;: &#39;, $headerLine, 2);
-        if (count($parts) === 2) &#123;
+        if (count($parts) === 2) {
             header($headerLine, false);
-        &#125;
-    &#125;
-&#125;
+        }
+    }
+}
 
 // 输出响应体
 echo $responseBody;
 
 // 转换请求头
 function formatHeaders(array $headers): array
-&#123;
+{
     $result = [];
-    foreach ($headers as $name =&gt; $value) &#123;
+    foreach ($headers as $name =&gt; $value) {
 
         // 跳过可能引起问题的头
         if (strtolower($name) === &#39;host&#39;)
@@ -270,19 +270,19 @@ function formatHeaders(array $headers): array
             continue;
 
         // 修复 accept-encoding
-        if (strtolower($name) === &#39;accept-encoding&#39;) &#123;
+        if (strtolower($name) === &#39;accept-encoding&#39;) {
             $value = &quot;none&quot;;
-        &#125;
+        }
 
         // 不缓存数据
-        if (strtolower($name) === &quot;cache-control&quot;) &#123;
+        if (strtolower($name) === &quot;cache-control&quot;) {
             $value = &quot;no-cache&quot;;
-        &#125;
+        }
 
-        $result[] = &quot;&#123;$name&#125;: &#123;$value&#125;&quot;;
-    &#125;
+        $result[] = &quot;{$name}: {$value}&quot;;
+    }
     return $result;
-&#125;
+}
 </code></pre>
 <p>添加伪静态规则</p>
 <pre><code class="language-htaccess">&lt;IfModule mod_rewrite.c&gt;
@@ -290,8 +290,8 @@ function formatHeaders(array $headers): array
     RewriteBase /
 
     # 跳过真实存在的文件或目录
-    RewriteCond %&#123;REQUEST_FILENAME&#125; !-f
-    RewriteCond %&#123;REQUEST_FILENAME&#125; !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
 
     # 重写所有请求到 index.php
     RewriteRule . /index.php [L]

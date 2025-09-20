@@ -46,13 +46,13 @@
 
 <!-- description -->
 
-<meta name="description" content="AliceAPI.py import requests   class EphemeraAPI:     def __init__(self, api_token):         self.EVO_API_BASE = &quot;https://app.alice.ws/cli/v1/Evo/&quot;         self.api_header = &#123;&quot;KP-AP" />
+<meta name="description" content="AliceAPI.py import requests   class EphemeraAPI:     def __init__(self, api_token):         self.EVO_API_BASE = &quot;https://app.alice.ws/cli/v1/Evo/&quot;         self.api_header = {&quot;KP-APIToke" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
 
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
@@ -115,6 +115,13 @@
                     <br />
                     <a
                         class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -124,13 +131,6 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
-                        href="/about/index.html"
-                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -202,7 +202,7 @@
 class EphemeraAPI:
     def __init__(self, api_token):
         self.EVO_API_BASE = &quot;https://app.alice.ws/cli/v1/Evo/&quot;
-        self.api_header = &#123;&quot;KP-APIToken&quot;: api_token&#125;
+        self.api_header = {&quot;KP-APIToken&quot;: api_token}
 
     def EvoJob(self, job_name):
         return self.EVO_API_BASE + job_name
@@ -217,7 +217,7 @@ class EphemeraAPI:
         resp = requests.get(self.EvoJob(&quot;Plan&quot;), headers=self.api_header).json()
         if resp[&quot;status&quot;] != 200:
             return None
-        PlanMap = &#123;&#125;
+        PlanMap = {}
         for plan in resp[&quot;data&quot;]:
             PlanMap[plan[&quot;name&quot;]] = plan[&quot;id&quot;]
         return PlanMap
@@ -226,11 +226,11 @@ class EphemeraAPI:
         resp = requests.post(
             self.EvoJob(&quot;PlanToOS&quot;),
             headers=self.api_header,
-            data=&#123;&quot;plan_id&quot;: str(plan_id)&#125;,
+            data={&quot;plan_id&quot;: str(plan_id)},
         ).json()
         if resp[&quot;status&quot;] != 200:
             return None
-        OSMap = &#123;&#125;
+        OSMap = {}
         for _, osGroup in resp[&quot;data&quot;].items():
             for osItem in osGroup[&quot;os&quot;]:
                 OSMap[osItem[&quot;name&quot;]] = osItem[&quot;id&quot;]
@@ -240,7 +240,7 @@ class EphemeraAPI:
         resp = requests.post(
             self.EvoJob(&quot;Deploy&quot;),
             headers=self.api_header,
-            data=&#123;&quot;product_id&quot;: str(plan_id), &quot;os_id&quot;: str(os_id), &quot;time&quot;: str(hours)&#125;,
+            data={&quot;product_id&quot;: str(plan_id), &quot;os_id&quot;: str(os_id), &quot;time&quot;: str(hours)},
         ).json()
         if resp[&quot;status&quot;] != 200:
             return None
@@ -250,7 +250,7 @@ class EphemeraAPI:
         resp = requests.post(
             self.EvoJob(&quot;Destroy&quot;),
             headers=self.api_header,
-            data=&#123;&quot;id&quot;: str(instance_id)&#125;,
+            data={&quot;id&quot;: str(instance_id)},
         ).json()
         if resp[&quot;status&quot;] != 200:
             return False
@@ -260,7 +260,7 @@ class EphemeraAPI:
         resp = requests.post(
             self.EvoJob(&quot;Power&quot;),
             headers=self.api_header,
-            data=&#123;&quot;id&quot;: str(instance_id), &quot;action&quot;: str(action)&#125;,
+            data={&quot;id&quot;: str(instance_id), &quot;action&quot;: str(action)},
         ).json()
         if resp[&quot;status&quot;] != 200:
             return False
@@ -270,7 +270,7 @@ class EphemeraAPI:
         resp = requests.post(
             self.EvoJob(&quot;Rebuild&quot;),
             headers=self.api_header,
-            data=&#123;&quot;id&quot;: str(instance_id), &quot;os&quot;: str(os_id)&#125;,
+            data={&quot;id&quot;: str(instance_id), &quot;os&quot;: str(os_id)},
         ).json()
         if resp[&quot;status&quot;] != 200:
             return False
@@ -280,7 +280,7 @@ class EphemeraAPI:
         resp = requests.post(
             self.EvoJob(&quot;Renewal&quot;),
             headers=self.api_header,
-            data=&#123;&quot;id&quot;: str(instance_id), &quot;time&quot;: str(hours)&#125;,
+            data={&quot;id&quot;: str(instance_id), &quot;time&quot;: str(hours)},
         ).json()
         if resp[&quot;status&quot;] != 200:
             return False

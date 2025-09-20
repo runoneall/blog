@@ -52,7 +52,7 @@
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
 
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
@@ -115,6 +115,13 @@
                     <br />
                     <a
                         class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -124,13 +131,6 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
-                        href="/about/index.html"
-                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -212,30 +212,30 @@
 <p>请求示例:</p>
 <pre><code class="language-python">import requests
 
-data = &#123;
+data = {
     &quot;host&quot;: &quot;&lt;地址&gt;&quot;,
     &quot;port&quot;: &lt;端口&gt;,
     &quot;username&quot;: &quot;&lt;用户名&gt;&quot;,
     &quot;password&quot;: &quot;&lt;密码&gt;&quot;,
     &quot;database&quot;: &quot;&lt;数据库名&gt;&quot;,
     &quot;querys&quot;: &quot;&lt;查询语句&gt;&quot;
-&#125;
+}
 
 print(requests.post(&quot;https://runoneall.serv00.net/Files/mysql-driver.php&quot;, data=data).text)
 </code></pre>
 <p>在Cloudflare Worker中使用: (<code>await sqlQuery(&quot;SQL&quot;)</code>)</p>
-<pre><code class="language-js">async function sqlQuery(sqls) &#123;
+<pre><code class="language-js">async function sqlQuery(sqls) {
     const apiUrl = &#39;https://runoneall.serv00.net/Files/mysql-driver.php&#39;
-    const info = &#123;
+    const info = {
         host: &quot;&lt;地址&gt;&quot;,port: &lt;端口&gt;,username: &quot;&lt;用户名&gt;&quot;,
-        password: &quot;&lt;密码&gt;&quot;,database: &quot;&lt;数据库名&gt;&quot;,querys: sqls&#125;;
+        password: &quot;&lt;密码&gt;&quot;,database: &quot;&lt;数据库名&gt;&quot;,querys: sqls};
     const formData = new URLSearchParams()
-    for (const key in info) &#123;if (info.hasOwnProperty(key)) &#123;formData.append(key, info[key])&#125;&#125;
-    const response = await fetch(apiUrl, &#123;method: &quot;POST&quot;,
-        headers: &#123;&#39;Content-Type&#39;: &#39;application/x-www-form-urlencoded&#39;&#125;,
-        body: formData.toString()&#125;)
+    for (const key in info) {if (info.hasOwnProperty(key)) {formData.append(key, info[key])}}
+    const response = await fetch(apiUrl, {method: &quot;POST&quot;,
+        headers: {&#39;Content-Type&#39;: &#39;application/x-www-form-urlencoded&#39;},
+        body: formData.toString()})
     return response.body
-&#125;
+}
 </code></pre>
 
         </div>

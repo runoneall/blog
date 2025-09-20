@@ -52,7 +52,7 @@
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
 
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
@@ -115,6 +115,13 @@
                     <br />
                     <a
                         class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -124,13 +131,6 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
-                        href="/about/index.html"
-                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -200,9 +200,9 @@
 <p>前端页面处理<br><img src="https://s.rmimg.com/2025-01-04/1735995491-925942-2025-01-04-205142.png"><br>这样一个自定义友链就写好了，可以增加一点代码，使其更好看</p>
 <p>我的js代码</p>
 <pre><code class="language-javascript">let linkItemsHTML = &quot;&quot;;
-for (const JsonItem of JSON.parse(`&lt;?php $this-&gt;options-&gt;siteOutLinks() ?&gt;`)) &#123;
-    linkItemsHTML += `&lt;hr class=&quot;link-separator&quot;&gt;&lt;div class=&quot;link-item&quot;&gt;&lt;img class=&quot;link-item-avatar&quot; src=&quot;$&#123;JsonItem.avatar&#125;&quot;&gt;&lt;div class=&quot;link-item-content&quot;&gt;&lt;a href=&quot;$&#123;JsonItem.url&#125;&quot; target=&quot;_blank&quot;&gt;&lt;h2&gt;$&#123;JsonItem.title&#125;&lt;/h2&gt;&lt;/a&gt;&lt;p&gt;$&#123;JsonItem.description&#125;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;`;
-&#125;
+for (const JsonItem of JSON.parse(`&lt;?php $this-&gt;options-&gt;siteOutLinks() ?&gt;`)) {
+    linkItemsHTML += `&lt;hr class=&quot;link-separator&quot;&gt;&lt;div class=&quot;link-item&quot;&gt;&lt;img class=&quot;link-item-avatar&quot; src=&quot;${JsonItem.avatar}&quot;&gt;&lt;div class=&quot;link-item-content&quot;&gt;&lt;a href=&quot;${JsonItem.url}&quot; target=&quot;_blank&quot;&gt;&lt;h2&gt;${JsonItem.title}&lt;/h2&gt;&lt;/a&gt;&lt;p&gt;${JsonItem.description}&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;`;
+}
 document.getElementById(&quot;linkItemsArea&quot;).innerHTML = linkItemsHTML;
 </code></pre>
 

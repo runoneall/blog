@@ -52,7 +52,7 @@
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
 
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
@@ -115,6 +115,13 @@
                     <br />
                     <a
                         class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -124,13 +131,6 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
-                        href="/about/index.html"
-                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -227,12 +227,12 @@ with open(&#39;final_script.sh&#39;, &#39;w&#39;) as f:
             if not var_name.startswith(&#39;0&#39;) and not var_name.startswith(&#39;1&#39;) and not var_name.startswith(&#39;2&#39;) and not var_name.startswith(&#39;3&#39;) and not var_name.startswith(&#39;4&#39;) and not var_name.startswith(&#39;5&#39;) and not var_name.startswith(&#39;6&#39;) and not var_name.startswith(&#39;7&#39;) and not var_name.startswith(&#39;8&#39;) and not var_name.startswith(&#39;9&#39;):
                 break
         variable_names.append(var_name)
-        f.write(f&#39;&#123;var_name&#125;=\&#39;&#123;chunk&#125;\&#39;\n&#39;)
+        f.write(f&#39;{var_name}=\&#39;{chunk}\&#39;\n&#39;)
 
     # 输出连接所有变量的语句
     f.write(&#39;eval &quot;$(echo -n &quot;&#39;)
     for var_name in variable_names:
-        f.write(f&#39;$&#123;var_name&#125;&#39;)
+        f.write(f&#39;${var_name}&#39;)
     f.write(&#39;&quot; | base64 --decode)&quot;&#39;)
 
 # 修改文件权限，使其可执行

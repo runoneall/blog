@@ -52,7 +52,7 @@
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
 
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
@@ -115,6 +115,13 @@
                     <br />
                     <a
                         class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -124,13 +131,6 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
-                        href="/about/index.html"
-                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -214,14 +214,14 @@ import httplib2
 import requests
 
 driver_url = &quot; mysql-driver地址 &quot;
-query_info = &#123;
+query_info = {
     &quot;host&quot;: &quot;typecho博客安装数据库地址&quot;,
     &quot;port&quot;: &quot;typecho博客安装数据库端口&quot;,
     &quot;username&quot;: &quot;typecho博客安装数据库用户名&quot;,
     &quot;password&quot;: &quot;typecho博客安装数据库密码&quot;,
     &quot;database&quot;: &quot;typecho博客安装数据库名&quot;,
     &quot;querys&quot;: &quot;SELECT * FROM typecho_contents&quot;
-&#125;
+}
 response = requests.post(driver_url, query_info)
 
 article = response.json()[0][&quot;results&quot;]
@@ -232,14 +232,14 @@ for item in article:
     article_type = item[&quot;type&quot;]
     article_slug = item[&quot;slug&quot;]
     if article_type == &quot;post&quot;:
-        links.append(f&quot;&#123;blog_link_base&#125;/archives/&#123;article_cid&#125;/&quot;)
+        links.append(f&quot;{blog_link_base}/archives/{article_cid}/&quot;)
         continue
     if article_type == &quot;page&quot;:
-        links.append(f&quot;&#123;blog_link_base&#125;/&#123;article_slug&#125;.html&quot;)
+        links.append(f&quot;{blog_link_base}/{article_slug}.html&quot;)
         continue
 
-bing_index_api_url = &quot;https://www.bing.com/indexnow?url=&#123;&#125;&amp;key=必应API Key&quot;
-baidu_index_api_url = f&quot;http://data.zz.baidu.com/urls?site=&#123;blog_link_base&#125;&amp;token=百度API Token&quot;
+bing_index_api_url = &quot;https://www.bing.com/indexnow?url={}&amp;key=必应API Key&quot;
+baidu_index_api_url = f&quot;http://data.zz.baidu.com/urls?site={blog_link_base}&amp;token=百度API Token&quot;
 google_index_scopes = [&quot;https://www.googleapis.com/auth/indexing&quot;, ]
 google_index_endpoint = &quot;https://indexing.googleapis.com/v3/urlNotifications:publish&quot;
 google_index_key = &quot;GoogleIndexApiKey.json&quot;
@@ -254,10 +254,10 @@ for link in links:
     response = requests.post(baidu_index_api_url, quote(link))
     print(response.status_code)
     print(&quot;  Google:&quot;, end=&quot; &quot;)
-    google_index_content = json.dumps(&#123;
+    google_index_content = json.dumps({
         &quot;url&quot;: link,
         &quot;type&quot;: &quot;URL_UPDATED&quot;
-    &#125;)
+    })
     response, content = google_index_http.request(google_index_endpoint, method=&quot;POST&quot;, body=google_index_content)
     print(response[&quot;status&quot;])
 </code></pre>

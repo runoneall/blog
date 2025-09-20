@@ -52,7 +52,7 @@
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
 
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
@@ -115,6 +115,13 @@
                     <br />
                     <a
                         class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -124,13 +131,6 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
-                        href="/about/index.html"
-                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -225,9 +225,9 @@ os.system(&quot;cd ./source &amp;&amp; rm -rf ./Sensitive-word-master&quot;)
 # 转换屏蔽词文件编码
 file_list = os.listdir(&quot;./source&quot;)
 for file_item in file_list:
-    with open(f&quot;./source/&#123;file_item&#125;&quot;, &#39;r&#39;, encoding=&quot;gb18030&quot;) as f_in:
+    with open(f&quot;./source/{file_item}&quot;, &#39;r&#39;, encoding=&quot;gb18030&quot;) as f_in:
         content = f_in.read()
-    with open(f&quot;./source/&#123;file_item&#125;&quot;, &#39;w&#39;, encoding=&quot;utf-8&quot;) as f_out:
+    with open(f&quot;./source/{file_item}&quot;, &#39;w&#39;, encoding=&quot;utf-8&quot;) as f_out:
         f_out.write(content)
 
 # 下载GFW文件
@@ -266,14 +266,14 @@ os.system(&quot;cd ./source &amp;&amp; rm gfwlist_decode.txt&quot;)
 # 整合文件
 file_list = os.listdir(&quot;./source&quot;)
 for file_item in file_list:
-    with open(f&quot;./source/&#123;file_item&#125;&quot;, &#39;r&#39;, encoding=&quot;utf-8&quot;) as f:
+    with open(f&quot;./source/{file_item}&quot;, &#39;r&#39;, encoding=&quot;utf-8&quot;) as f:
         content = f.read()
     content = content.split(&quot;\n&quot;)
     content = [i for i in content if i != &quot;&quot;]
     with open(&quot;./source/block-words.txt&quot;, &#39;a&#39;, encoding=&quot;utf-8&quot;) as f:
         for line in content:
             f.write(line+&quot;\n&quot;)
-    os.system(f&quot;cd ./source &amp;&amp; rm &#123;file_item&#125;&quot;)
+    os.system(f&quot;cd ./source &amp;&amp; rm {file_item}&quot;)
 </code></pre>
 
         </div>

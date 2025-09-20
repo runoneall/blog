@@ -46,13 +46,13 @@
 
 <!-- description -->
 
-<meta name="description" content="一个用php写的简易订阅整合支持：合并订阅，零散节点，去重，以普通或base64格式返回 &lt;?php  function response($code, $message, $header = &quot;&quot;) &#123;     http_response_code($code);     if ($header != &quot;&quot;) &#123;" />
+<meta name="description" content="一个用php写的简易订阅整合支持：合并订阅，零散节点，去重，以普通或base64格式返回 &lt;?php  function response($code, $message, $header = &quot;&quot;) {     http_response_code($code);     if ($header != &quot;&quot;) {         header($he" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
 
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
@@ -115,6 +115,13 @@
                     <br />
                     <a
                         class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -124,13 +131,6 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
-                        href="/about/index.html"
-                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -199,53 +199,53 @@
 <pre><code class="language-php">&lt;?php
 
 function response($code, $message, $header = &quot;&quot;)
-&#123;
+{
     http_response_code($code);
-    if ($header != &quot;&quot;) &#123;
+    if ($header != &quot;&quot;) {
         header($header);
-    &#125;
+    }
     echo $message;
     exit;
-&#125;
+}
 
 function download_file($url, $retry = 0)
-&#123;
+{
     $attempt = 0;
-    while ($attempt &lt;= $retry) &#123;
+    while ($attempt &lt;= $retry) {
         $attempt++;
         $content = @file_get_contents($url);
-        if ($content !== false) &#123;
+        if ($content !== false) {
             return $content;
-        &#125;
-    &#125;
+        }
+    }
     response(500, &quot;Failed to download file: $url&quot;, &quot;Content-Type: text/plain; charset=UTF-8&quot;);
-&#125;
+}
 
 function load_file_to_array($file_path)
-&#123;
+{
     $file_content = file_get_contents($file_path);
     $file_content = str_replace(&quot;\r\n&quot;, &quot;\n&quot;, $file_content);
     $lines = explode(&quot;\n&quot;, $file_content);
     $lines = array_filter($lines);
     return $lines;
-&#125;
+}
 
 function load_string_to_array($string)
-&#123;
+{
     $string = str_replace(&quot;\r\n&quot;, &quot;\n&quot;, $string);
     $lines = explode(&quot;\n&quot;, $string);
     $lines = array_filter($lines);
     return $lines;
-&#125;
+}
 
 function response_nodes($node_array)
-&#123;
+{
     $content = implode(&quot;\n&quot;, $node_array);
     $query_string = isset($_SERVER[&#39;QUERY_STRING&#39;]) ? $_SERVER[&#39;QUERY_STRING&#39;] : &quot;&quot;;
-    if ($query_string == &quot;base64&quot;) &#123;
+    if ($query_string == &quot;base64&quot;) {
         $content = base64_encode($content);
-    &#125;
-    if ($query_string == &quot;clash&quot;) &#123;
+    }
+    if ($query_string == &quot;clash&quot;) {
         $options = [
             &#39;http&#39; =&gt; [
                 &#39;method&#39; =&gt; &#39;POST&#39;,
@@ -259,9 +259,9 @@ function response_nodes($node_array)
             false,
             $context
         );
-    &#125;
+    }
     response(200, $content, &quot;Content-Type: text/plain; charset=UTF-8&quot;);
-&#125;
+}
 
 // load sub and scatter node list
 $sub_list = load_file_to_array(&quot;sub.txt&quot;);
@@ -269,13 +269,13 @@ $scatter_nodes = load_file_to_array(&quot;scatter.txt&quot;);
 
 // get sub node list
 $sub_nodes = array();
-foreach ($sub_list as $sub) &#123;
+foreach ($sub_list as $sub) {
     $sub_content = download_file($sub, 3);
-    if (strpos($sub_content, &quot;://&quot;) === false) &#123;
+    if (strpos($sub_content, &quot;://&quot;) === false) {
         $sub_content = base64_decode($sub_content);
-    &#125;
+    }
     $sub_nodes = array_merge($sub_nodes, load_string_to_array($sub_content));
-&#125;
+}
 
 // merge sub nodes and scatter nodes
 $nodes = array_merge($sub_nodes, $scatter_nodes);

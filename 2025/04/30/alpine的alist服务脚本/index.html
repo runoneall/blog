@@ -52,7 +52,7 @@
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
 
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
@@ -115,6 +115,13 @@
                     <br />
                     <a
                         class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -124,13 +131,6 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
-                        href="/about/index.html"
-                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -207,30 +207,30 @@ directory=&quot;/root/alistrun&quot;
 command=&quot;./alist&quot;
 command_args=&quot;server&quot;
 
-depend() &#123;
+depend() {
     need net
-&#125;
+}
 
-start_pre() &#123;
+start_pre() {
     checkpath --directory --owner root:root --mode 0755 &quot;$directory&quot;
-&#125;
+}
 
-start() &#123;
+start() {
     ebegin &quot;Starting $name&quot;
     cd &quot;$directory&quot; || return 1
     nohup $command $command_args &gt;/dev/null 2&gt;&amp;1 &amp;
     echo $! &gt; &quot;$pidfile&quot;
     eend $?
-&#125;
+}
 
-stop() &#123;
+stop() {
     ebegin &quot;Stopping $name&quot;
     if [ -f &quot;$pidfile&quot; ]; then
         kill $(cat &quot;$pidfile&quot;) 2&gt;/dev/null
         rm -f &quot;$pidfile&quot;
     fi
     eend $?
-&#125;
+}
 </code></pre>
 <pre><code class="language-shell">chmod +x /etc/init.d/alist
 rc-update add alist

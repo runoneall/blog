@@ -52,7 +52,7 @@
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
 
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
@@ -115,6 +115,13 @@
                     <br />
                     <a
                         class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -124,13 +131,6 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
-                        href="/about/index.html"
-                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -203,35 +203,35 @@
 <li>增加js代码用于切换</li>
 </ol>
 <pre><code class="language-javascript">const darkBtn = document.getElementById(&quot;切换按钮ID&quot;);
-darkBtn.addEventListener(&quot;click&quot;, () =&gt; &#123;
+darkBtn.addEventListener(&quot;click&quot;, () =&gt; {
     const head = document.getElementsByTagName(&quot;head&quot;)[0];
     const darkStyle = document.getElementById(&quot;dark-style&quot;);
-    if (darkStyle) &#123;
+    if (darkStyle) {
         head.removeChild(darkStyle);
         document.cookie = &quot;colorScheme=light; path=/; expires=0&quot;;
-    &#125; else &#123;
+    } else {
         const link = document.createElement(&quot;link&quot;);
         link.id = &quot;dark-style&quot;;
         link.rel = &quot;stylesheet&quot;;
         link.href = &quot;深色主题css文件路径(dark.css文件路径)&quot;;
         head.appendChild(link);
         document.cookie = &quot;colorScheme=dark; path=/; expires=0&quot;;
-    &#125;
-&#125;);
-function isDarkMode() &#123;
+    }
+});
+function isDarkMode() {
     const cookies = document.cookie.split(&quot;;&quot;);
-    for (let i = 0; i &lt; cookies.length; i++) &#123;
+    for (let i = 0; i &lt; cookies.length; i++) {
         let cookie = cookies[i].trim();
-        if (cookie.startsWith(&quot;colorScheme=&quot;)) &#123;
+        if (cookie.startsWith(&quot;colorScheme=&quot;)) {
             const value = cookie.substring(&quot;colorScheme=&quot;.length);
             return value === &quot;dark&quot;;
-        &#125;
-    &#125;
+        }
+    }
     return false;
-&#125;
-if (isDarkMode()) &#123;
+}
+if (isDarkMode()) {
     darkBtn.click();
-&#125;
+}
 </code></pre>
 <p>注意: 该方法需要启用缓存, 不然效果很差</p>
 <p>提示: 快速获取网站暗色CSS的方法</p>

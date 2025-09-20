@@ -52,7 +52,7 @@
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
 <link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
 
-    <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
 </head>
 
@@ -115,6 +115,13 @@
                     <br />
                     <a
                         class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -124,13 +131,6 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
-                        href="/about/index.html"
-                        >关于</a
                     >
                     
                     <!-- end page links -->
@@ -226,34 +226,34 @@ def send_dns_query(dns_query: bytes) -&gt; bytes:
 @app.route(&quot;/dns-query&quot;, methods=[&quot;GET&quot;, &quot;POST&quot;])
 def dns_query():
     if &quot;Content-Type&quot; not in flask_request.headers or flask_request.headers[&quot;Content-Type&quot;] != &quot;application/dns-message&quot;:
-        return make_response(&quot;Invalid Content-Type&quot;, 400, &#123;&quot;Content-Type&quot;: &quot;text/plain; charset=utf-8&quot;&#125;)
+        return make_response(&quot;Invalid Content-Type&quot;, 400, {&quot;Content-Type&quot;: &quot;text/plain; charset=utf-8&quot;})
     if flask_request.method == &quot;GET&quot;:
         dns_query = base64.urlsafe_b64decode(flask_request.args.get(&quot;dns&quot;) + &quot;===&quot;)
         dns_response = send_dns_query(dns_query)
-        return make_response(dns_response, 200, &#123;&quot;Content-Type&quot;: &quot;application/dns-message&quot;&#125;)
+        return make_response(dns_response, 200, {&quot;Content-Type&quot;: &quot;application/dns-message&quot;})
     if flask_request.method == &quot;POST&quot;:
         dns_query = flask_request.stream.read()
         dns_response = send_dns_query(dns_query)
-        return make_response(dns_response, 200, &#123;&quot;Content-Type&quot;: &quot;application/dns-message&quot;&#125;)
-    return make_response(&quot;Invalid Method&quot;, 405, &#123;&quot;Content-Type&quot;: &quot;text/plain; charset=utf-8&quot;&#125;)
+        return make_response(dns_response, 200, {&quot;Content-Type&quot;: &quot;application/dns-message&quot;})
+    return make_response(&quot;Invalid Method&quot;, 405, {&quot;Content-Type&quot;: &quot;text/plain; charset=utf-8&quot;})
 
 @app.route(&quot;/resolve&quot;, methods=[&quot;GET&quot;])
 def dns_json():
     if &quot;Accept&quot; not in flask_request.headers or flask_request.headers[&quot;Accept&quot;] != &quot;application/dns-json&quot;:
-        return make_response(&quot;Invalid Accept&quot;, 400, &#123;&quot;Content-Type&quot;: &quot;text/plain; charset=utf-8&quot;&#125;)
+        return make_response(&quot;Invalid Accept&quot;, 400, {&quot;Content-Type&quot;: &quot;text/plain; charset=utf-8&quot;})
     target_domain = flask_request.args.get(&quot;name&quot;)
     target_type = flask_request.args.get(&quot;type&quot;)
     if not target_domain or not target_type:
-        return make_response(&quot;Invalid Request&quot;, 400, &#123;&quot;Content-Type&quot;: &quot;text/plain; charset=utf-8&quot;&#125;)
+        return make_response(&quot;Invalid Request&quot;, 400, {&quot;Content-Type&quot;: &quot;text/plain; charset=utf-8&quot;})
     query_url = random.choice(jsonapis) + &quot;?name=&quot; + urllib_parse.quote(target_domain) + &quot;&amp;type=&quot; + urllib_parse.quote(target_type)
-    req_headers = &#123;&quot;Accept&quot;: &quot;application/dns-json&quot;&#125;
+    req_headers = {&quot;Accept&quot;: &quot;application/dns-json&quot;}
     req = urllib_request.Request(query_url, headers=req_headers)
     rep = urllib_request.urlopen(req)
     rep_status = rep.getcode()
     rep_content_type = rep.headers.get(&#39;Content-Type&#39;)
     rep_body = rep.read()
     rep.close()
-    return make_response(rep_body, rep_status, &#123;&quot;Content-Type&quot;: rep_content_type&#125;)
+    return make_response(rep_body, rep_status, {&quot;Content-Type&quot;: rep_content_type})
 
 if __name__ == &quot;__main__&quot;:
     app.run()
