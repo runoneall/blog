@@ -117,6 +117,12 @@ links:
           description: "等等我记一下",
           rss: "https://www.eilo.uk/atom.xml",
       }
+    - {
+          avatar: "https://blog.kaifangzhe.com/favicon.ico",
+          title: "开放者独立博客大全",
+          url: "https://blog.kaifangzhe.com",
+          description: "开放者独立博客大全|博客导航大全",
+      }
 
 extra_css: "" # 额外CSS
 
