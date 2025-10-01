@@ -9,8 +9,38 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Wed, 01 Oct 2025 01:20:13 GMT</pubDate>
+    <pubDate>Wed, 01 Oct 2025 01:23:46 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>nodebus新功能: cfgcenter</title>
+      <link>https://blog.oneall.eu.org/2025/10/01/nodebus%E6%96%B0%E5%8A%9F%E8%83%BD-cfgcenter/</link>
+      <guid>https://blog.oneall.eu.org/2025/10/01/nodebus%E6%96%B0%E5%8A%9F%E8%83%BD-cfgcenter/</guid>
+      <pubDate>Wed, 01 Oct 2025 01:22:34 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;花了一上午的时间，实现了这个设想 &lt;code&gt;cfgcenter --help&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-plaintext&quot;&gt;集中式的管理节点配置
+
+Usage:
+  nodebus cfgcenter [flags]
+
+</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>花了一上午的时间，实现了这个设想 <code>cfgcenter --help</code></p><pre><code class="language-plaintext">集中式的管理节点配置Usage:  nodebus cfgcenter [flags]Flags:  -h, --help          help for cfgcenter      --host string   指定 cfgcenter 的监听地址 (default &quot;::&quot;)      --port string   指定 cfgcenter 的监听端口 (default &quot;32768&quot;)Global Flags:      --auth string        连接到 cfgcenter 的认证字符串 (default &quot;none&quot;)      --cfgcenter string   指定 cfgcenter 服务器  -n, --node strings       指定要管理的节点      --node-all           指定管理全部节点</code></pre><p>这样一来，处理并发任务时，只需要在最开始读取一遍文件就可以了，其余的 nodebus 从该服务器拉取配置</p><p>服务端用的是 gin http，服务器启动：</p><pre><code class="language-plaintext">cfgcenter --auth 123456</code></pre><p>host 默认监听全部地址，port 默认为 32768，auth 默认为 none（这里指定为 123456）</p><p>配套客户端连接：</p><pre><code class="language-plaintext">--cfgcenter [::]:32768 --auth 123456 list</code></pre><p>指定 cfgcenter 服务器为 [::]:32768，指定认证为 123456（none 时可以省略）拉取配置并执行 list 操作</p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/10/01/nodebus%E6%96%B0%E5%8A%9F%E8%83%BD-cfgcenter/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>nodebus v3版本发布！</title>
@@ -499,30 +529,6 @@ $proxyBase = &amp;quot;https://blog.onea</description>
       
       
       <comments>https://blog.oneall.eu.org/2025/06/25/python%E9%80%9A%E7%94%A8%E8%B7%A8%E8%AF%AD%E8%A8%80%E5%AF%BC%E5%85%A5%E5%99%A8/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>python原生导入无缝衔接go与python</title>
-      <link>https://blog.oneall.eu.org/2025/06/24/python%E5%8E%9F%E7%94%9F%E5%AF%BC%E5%85%A5%E6%97%A0%E7%BC%9D%E8%A1%94%E6%8E%A5go%E4%B8%8Epython/</link>
-      <guid>https://blog.oneall.eu.org/2025/06/24/python%E5%8E%9F%E7%94%9F%E5%AF%BC%E5%85%A5%E6%97%A0%E7%BC%9D%E8%A1%94%E6%8E%A5go%E4%B8%8Epython/</guid>
-      <pubDate>Tue, 24 Jun 2025 18:46:53 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;地址：&lt;a href=&quot;https://github.com/FramerOrg/FramerModules/wiki/Module-Document#gobridge&quot;&gt;https://github.com/FramerOrg/FramerModules/wiki/Mod</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>地址：<a href="https://github.com/FramerOrg/FramerModules/wiki/Module-Document#gobridge">https://github.com/FramerOrg/FramerModules/wiki/Module-Document#gobridge</a></p><p>这是一个给 Framer 写的模块，但可以拆开来用：</p><pre><code class="language-python">import sysimport osimport subprocessimport ctypesfrom importlib.abc import MetaPathFinder, Loaderfrom importlib.machinery import ModuleSpecclass GoLoader(Loader):    def __init__(self, so_path, fullname):        self.so_path = so_path        self.fullname = fullname    def create_module(self, spec):        return None    def exec_module(self, module):        # load library        lib = ctypes.cdll.LoadLibrary(self.so_path)        # dynamic function getter        def get_lib_attr(name):            return getattr(lib, name)        # bind to module        module.__getattr__ = get_lib_attrclass GoFinder(MetaPathFinder):    def find_spec(self, fullname, path, target=None):        # get import module name        module_name = fullname.split(&quot;.&quot;)[-1]        # go file search path        search_paths = sys.path if path is None else path        for base_path in search_paths:            # possible file paths            py_path = os.path.join(base_path, f&quot;{module_name}.py&quot;)            go_path = os.path.join(base_path, f&quot;{module_name}.go&quot;)            so_path = os.path.join(base_path, f&quot;{module_name}.so&quot;)            # ignore python file            if os.path.isfile(py_path):                continue            # process go file            if os.path.isfile(go_path):                # ensure newest compiled                self._ensure_compiled(go_path, so_path)                # custom module loader                loader = GoLoader(so_path, fullname)                # create module spec                return ModuleSpec(                    name=fullname, loader=loader, origin=go_path, is_package=True                )        return None    def _ensure_compiled(self, go_path, so_path):        # build if so file old        if not os.path.exists(so_path) or (            os.path.getmtime(go_path) &gt; os.path.getmtime(so_path)        ):            # compile go file            self._compile_go(go_path, so_path)    def _compile_go(self, go_path, so_path):        # build command        cmd = [&quot;go&quot;, &quot;build&quot;, &quot;-buildmode=c-shared&quot;, &quot;-o&quot;, so_path, go_path]        # run command        try:            result = subprocess.run(cmd, capture_output=True, text=True, check=True)            self.logger(f&quot;Compiled {go_path} -&gt; {so_path}&quot;)            if result.stderr:                self.logger(&quot;Compiler warnings: &quot; + result.stderr)        # catch errors        except subprocess.CalledProcessError as e:            raise ImportError(                f&quot;Go compilation failed for {go_path}:\n&quot;                f&quot;Exit code: {e.returncode}\n&quot;                f&quot;Error: {e.stderr}&quot;            ) from e        # if go not installed        except FileNotFoundError:            raise ImportError(&quot;Go compiler not found. Install from https://golang.org/&quot;)sys.meta_path.insert(0, GoFinder())</code></pre><p>将其保存为一个 python 文件，然后在项目入口处导入一下就行</p><p>首先准备一个叫 <code>mymodule.go</code> 的文件，内容如下：</p><pre><code class="language-go">package mainimport &quot;C&quot; //必须引入C库import &quot;fmt&quot;//加入下面注释代码，表示导出，可以被python调用//export PrintDllfunc PrintDll() {fmt.Println(&quot;我来自dll&quot;)}////export Sumfunc Sum(a int, b int) int {return a + b}func main() {//必须加一个main函数，作为CGO编译的入口，无具体实现代码}</code></pre><p>然后在 python 内可以直接用 <code>import mymodule</code><br>会自动将 go 编译为 so&#x2F;dylib&#x2F;dll，智能识别更改</p><p>每当 go 代码更改后会重新编译，时间较长，编译后下一次就不会重新编译了</p><p>以及用作为 python 包也是可以的，目录结构如下：<br><img src="https://s.rmimg.com/original/2X/1/1630d32b4829c738d16538bcc226b4ba2393696e.png"></p><p>可以直接用 <code>from testModule import mymodule</code></p><p>理论上任何能编译为共享库的语言都能用这套代码</p>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/06/24/python%E5%8E%9F%E7%94%9F%E5%AF%BC%E5%85%A5%E6%97%A0%E7%BC%9D%E8%A1%94%E6%8E%A5go%E4%B8%8Epython/#disqus_thread</comments>
       
     </item>
     

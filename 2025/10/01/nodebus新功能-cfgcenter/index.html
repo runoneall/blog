@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <!-- base -->
+<meta charset="UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="template" content="Old-Fasion-Theme" />
+
+<!-- sitemap -->
+<link
+    rel="sitemap"
+    type="application/xml"
+    title="sitemap"
+    href="/sitemap.xml"
+/>
+
+<!-- title -->
+<title>
+    nodebus新功能: cfgcenter | Runoneall
+</title>
+
+<!-- css dependencies -->
+
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/grid.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/sidebar.css">
+<link rel="stylesheet" href="/css/post.css">
+<link rel="stylesheet" href="/css/misc.css">
+<link rel="stylesheet" href="/css/page.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/dark.css" id="dark-style" disabled>
+
+
+<!-- favicon -->
+<link rel="shortcut icon" href="https://dev.oneall.eu.org/favicon.webp">
+
+<!-- extra css -->
+
+
+<!-- keywords -->
+
+<meta name="keywords" content="Hexo,Blog,Runoneall" />
+
+<!-- description -->
+
+<meta name="description" content="花了一上午的时间，实现了这个设想 cfgcenter --help 集中式的管理节点配置  Usage:   nodebus cfgcenter [flags]  Flags:   -h, --help          help for cfgcenter       --host string   指定 cfgcenter 的监听地址 (default &quot;::&quot;)" />
+
+<!-- rss -->
+<link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
+<link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
+
+    <meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="outbox">
+            <!-- header -->
+            <div id="header" class="clearfix">
+                <div class="container">
+                    <div class="row">
+                        <div class="site-name">
+                            <a id="logo" href="/"
+                                >Runoneall</a
+                            >
+                            <p
+                                id="description_random_intro"
+                                class="description"
+                            >
+                                Runoneall's Blog
+                            </p>
+                            <script>
+                                var description_random_intro =
+                                    document.getElementById(
+                                        "description_random_intro",
+                                    );
+                                var descriptions = JSON.parse(
+                                    `["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`,
+                                );
+                                var random_intro =
+                                    descriptions[
+                                        Math.floor(
+                                            Math.random() * descriptions.length,
+                                        )
+                                    ];
+                                description_random_intro.innerHTML =
+                                    random_intro;
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end header -->
+
+            <!-- sidebar button -->
+            <button id="side-btn" onclick="changeSideStatus()">
+                <input id="side-flag" type="checkbox" />
+                <label id="side-control" for="side-flag">≡</label>
+            </button>
+
+            <!-- left area -->
+            <div id="left">
+                <!-- left links -->
+                <div id="left-links">
+                    <!-- page links -->
+                    <a
+                        class=""
+                        href="/"
+                        >首页</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/search/index.html"
+                        >搜索</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/links/index.html"
+                        >链接</a
+                    >
+                    
+                    <!-- end page links -->
+
+                    <!-- sidebar extra html -->
+                    
+                    <br />
+                    <a href="/rss2.xml">RSS</a><br>
+<a href="/sitemap.xml">Sitemap</a><br>
+<a href="mailto:dev@oneall.eu.org">Email</a><br>
+                    
+                    <!-- end sidebar extra html -->
+
+                    <br /><button id="dark-btn" onclick="changeDarkMode()">
+                        更换主题
+                    </button>
+                </div>
+                <!-- end left links -->
+            </div>
+            <!-- end left area -->
+
+            <!-- right area -->
+            <div id="right">
+                <div class="row"><div class="col-mb-12 col-8" id="main" role="main">
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2025/10/01/nodebus%E6%96%B0%E5%8A%9F%E8%83%BD-cfgcenter/"
+                >nodebus新功能: cfgcenter</a
+            >
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者:
+                <a itemprop="name" href="#" rel="author"
+                    >Tom Brown</a
+                >
+            </li>
+            <li>
+                时间:
+                <time
+                    itemprop="datePublished"
+                    datetime="2025-10-01T01:22:34.000Z"
+                    >2025-10-01</time
+                >
+            </li>
+            
+            <li>
+                分类: 
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认 </a
+                >&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <p>花了一上午的时间，实现了这个设想 <code>cfgcenter --help</code></p>
+<pre><code class="language-plaintext">集中式的管理节点配置
+
+Usage:
+  nodebus cfgcenter [flags]
+
+Flags:
+  -h, --help          help for cfgcenter
+      --host string   指定 cfgcenter 的监听地址 (default &quot;::&quot;)
+      --port string   指定 cfgcenter 的监听端口 (default &quot;32768&quot;)
+
+Global Flags:
+      --auth string        连接到 cfgcenter 的认证字符串 (default &quot;none&quot;)
+      --cfgcenter string   指定 cfgcenter 服务器
+  -n, --node strings       指定要管理的节点
+      --node-all           指定管理全部节点
+</code></pre>
+<p>这样一来，处理并发任务时，只需要在最开始读取一遍文件就可以了，其余的 nodebus 从该服务器拉取配置</p>
+<p>服务端用的是 gin http，服务器启动：</p>
+<pre><code class="language-plaintext">cfgcenter --auth 123456
+</code></pre>
+<p>host 默认监听全部地址，port 默认为 32768，auth 默认为 none（这里指定为 123456）</p>
+<p>配套客户端连接：</p>
+<pre><code class="language-plaintext">--cfgcenter [::]:32768 --auth 123456 list
+</code></pre>
+<p>指定 cfgcenter 服务器为 [::]:32768，指定认证为 123456（none 时可以省略）拉取配置并执行 list 操作</p>
+
+        </div>
+        <!-- end post content -->
+    </article>
+    <!-- end article body -->
+</div>
+</div>
+            </div>
+            <!-- end right area -->
+
+            <!-- footer -->
+            <div id="footer" role="contentinfo">
+                &copy; 2025
+                <a href="/">Runoneall</a>.
+                <a target="_blank" rel="noopener" href="https://github.com/runoneall/blog/tree/theme"
+                    >Old Fasion</a
+                >
+                Theme. Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>.
+            </div>
+            <!-- end footer -->
+        </div>
+        <!-- end outbox -->
+
+        <!-- extra html -->
+
+
+<!-- extra js -->
+
+<script>
+    console.log(String.raw`
+            ___              __
+      _____<  /____ _   ____/ /___  _   __
+     / ___// // __ `+ "`" + String.raw`/  / __  // _ \| | / /
+    / /   / // /_/ /  / /_/ //  __/| |/ /
+   /_/   /_/ \__,_/   \__,_/ \___/ |___/
+
+LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
+`)
+</script>
+
+
+<!-- js dependencies -->
+
+<script src="/js/dark.js"></script>
+<script src="/js/highlight.js"></script>
+<script src="/js/sidebar.js"></script>
+
+
+<!-- code highlight -->
+<script>
+    hljs.highlightAll();
+</script>
+
+    </body>
+</html>
