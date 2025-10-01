@@ -10,7 +10,7 @@
         "format": "npx prettier --plugin=prettier-plugin-ejs --tab-width 4 --use-tabs=false --write ."
     },
     "hexo": {
-        "version": "7.3.0"
+        "version": "8.0.0"
     },
     "dependencies": {
         "hexo": "^8.0.0",
