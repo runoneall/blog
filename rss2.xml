@@ -9,8 +9,32 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Wed, 01 Oct 2025 01:23:46 GMT</pubDate>
+    <pubDate>Wed, 01 Oct 2025 07:48:01 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>nodebus cfgcenter从http迁移到ipc通信</title>
+      <link>https://blog.oneall.eu.org/2025/10/01/nodebus-cfgcenter%E4%BB%8Ehttp%E8%BF%81%E7%A7%BB%E5%88%B0ipc%E9%80%9A%E4%BF%A1/</link>
+      <guid>https://blog.oneall.eu.org/2025/10/01/nodebus-cfgcenter%E4%BB%8Ehttp%E8%BF%81%E7%A7%BB%E5%88%B0ipc%E9%80%9A%E4%BF%A1/</guid>
+      <pubDate>Wed, 01 Oct 2025 07:46:30 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;&lt;a href=&quot;https://github.com/runoneall/nodebus/commit/3888a60f9972ac16b85ef494962b1526bab34ccc&quot;&gt;cfgcenter migrated from http to ipc · runo</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p><a href="https://github.com/runoneall/nodebus/commit/3888a60f9972ac16b85ef494962b1526bab34ccc">cfgcenter migrated from http to ipc · runoneall&#x2F;nodebus@3888a60</a></p><p>代码量可以说是大幅减小了，我封装了一个适用于 nodebus 的 ipc 服务端和客户端（稍微改改就可以集成到你自己的项目中）</p><p><a href="https://github.com/runoneall/nodebus/tree/main/ipc">nodebus&#x2F;ipc at main · runoneall&#x2F;nodebus</a></p><p>使用示例：</p><ol><li><p>服务端： <a href="https://github.com/runoneall/nodebus/blob/main/fns/CfgCenterServer.go">nodebus&#x2F;fns&#x2F;CfgCenterServer.go at main · runoneall&#x2F;nodebus</a></p></li><li><p>客户端： <a href="https://github.com/runoneall/nodebus/blob/main/fns/PersistentPreRun.go">nodebus&#x2F;fns&#x2F;PersistentPreRun.go at main · runoneall&#x2F;nodebus</a></p></li></ol><p>以及一些代码结构调整</p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/10/01/nodebus-cfgcenter%E4%BB%8Ehttp%E8%BF%81%E7%A7%BB%E5%88%B0ipc%E9%80%9A%E4%BF%A1/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>nodebus新功能: cfgcenter</title>
@@ -504,31 +528,6 @@ $proxyBase = &amp;quot;https://blog.onea</description>
       
       
       <comments>https://blog.oneall.eu.org/2025/07/02/%E8%87%AA%E5%8A%A8%E6%BB%9A%E5%8A%A8%E6%B2%B9%E7%8C%B4%E8%84%9A%E6%9C%AC/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>python通用跨语言导入器</title>
-      <link>https://blog.oneall.eu.org/2025/06/25/python%E9%80%9A%E7%94%A8%E8%B7%A8%E8%AF%AD%E8%A8%80%E5%AF%BC%E5%85%A5%E5%99%A8/</link>
-      <guid>https://blog.oneall.eu.org/2025/06/25/python%E9%80%9A%E7%94%A8%E8%B7%A8%E8%AF%AD%E8%A8%80%E5%AF%BC%E5%85%A5%E5%99%A8/</guid>
-      <pubDate>Wed, 25 Jun 2025 16:47:32 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;本质就是打包成so，然后用CDLL加载，但是可以直接用import&lt;/p&gt;
-&lt;p&gt;文档：&lt;a href=&quot;https://github.com/FramerOrg/CrossLanguage/wiki/Module-Document&quot;&gt;https://github.com/</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>本质就是打包成so，然后用CDLL加载，但是可以直接用import</p><p>文档：<a href="https://github.com/FramerOrg/CrossLanguage/wiki/Module-Document">https://github.com/FramerOrg/CrossLanguage/wiki/Module-Document</a></p><p>核心代码就是 <code>CrossLangImporter</code>，用Require返回ModuleSpec，封装了自动查找，运行编译，导入钩子</p><p>可以自定义后缀处理，当然是py文件优先</p><p>具体看如何添加处理器</p><pre><code class="language-python">class moduleMain:    def __init__(self, framer, logger):        self.framer = framer        self.logger = logger        self.extension = &quot;go&quot;        self.not_found_message = (            &quot;Go compiler not found. Install Go from https://golang.org/&quot;        )    def build_command(self, file_path, so_path):        return [            [&quot;go&quot;, &quot;mod&quot;, &quot;tidy&quot;],            [&quot;go&quot;, &quot;build&quot;, &quot;-buildmode=c-shared&quot;, &quot;-o&quot;, so_path, file_path],        ]</code></pre><p>其中moduleMain及init参数是framer固定的，不用管<br>主要实现：</p><ol><li>self.extension：声明该处理器能处理的文件</li><li>self.not_found_message：若找不到编译器，抛出的错误内容</li><li>build_command：返回一系列编译命令，其中file_path和so_path是固定的，编译时会进入file_path所在目录</li></ol><p>觉得不错就给Framer项目点个Star吧：<a href="https://github.com/FramerOrg/Framer">https://github.com/FramerOrg/Framer</a></p>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/06/25/python%E9%80%9A%E7%94%A8%E8%B7%A8%E8%AF%AD%E8%A8%80%E5%AF%BC%E5%85%A5%E5%99%A8/#disqus_thread</comments>
       
     </item>
     
