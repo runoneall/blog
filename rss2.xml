@@ -9,8 +9,33 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Wed, 01 Oct 2025 08:24:14 GMT</pubDate>
+    <pubDate>Sun, 05 Oct 2025 08:29:09 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>nodebus新功能：x11转发</title>
+      <link>https://blog.oneall.eu.org/2025/10/05/nodebus%E6%96%B0%E5%8A%9F%E8%83%BD%EF%BC%9Ax11%E8%BD%AC%E5%8F%91/</link>
+      <guid>https://blog.oneall.eu.org/2025/10/05/nodebus%E6%96%B0%E5%8A%9F%E8%83%BD%EF%BC%9Ax11%E8%BD%AC%E5%8F%91/</guid>
+      <pubDate>Sun, 05 Oct 2025 08:26:35 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;跟 ssh 的 x11 转发一个功能，所以，nodebus 也实现了一个&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://s.rmimg.com/original/3X/8/2/8228ab4034f4577650798b11a5dd84f11de2f4d8.png&quot;&gt;&lt;</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>跟 ssh 的 x11 转发一个功能，所以，nodebus 也实现了一个</p><p><img src="https://s.rmimg.com/original/3X/8/2/8228ab4034f4577650798b11a5dd84f11de2f4d8.png"></p><p>如图，只需指定 <code>--x11</code> 便可，无需服务器有桌面环境即可像本地应用一样运行 GUI 程序</p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/10/05/nodebus%E6%96%B0%E5%8A%9F%E8%83%BD%EF%BC%9Ax11%E8%BD%AC%E5%8F%91/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>nodebus cfgcenter从http迁移到ipc通信</title>
@@ -503,31 +528,6 @@ $proxyBase = &amp;quot;https://blog.onea</description>
       
       
       <comments>https://blog.oneall.eu.org/2025/07/17/hexo%E6%96%B0%E4%B8%BB%E9%A2%98old-fashion/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>自动滚动油猴脚本</title>
-      <link>https://blog.oneall.eu.org/2025/07/02/%E8%87%AA%E5%8A%A8%E6%BB%9A%E5%8A%A8%E6%B2%B9%E7%8C%B4%E8%84%9A%E6%9C%AC/</link>
-      <guid>https://blog.oneall.eu.org/2025/07/02/%E8%87%AA%E5%8A%A8%E6%BB%9A%E5%8A%A8%E6%B2%B9%E7%8C%B4%E8%84%9A%E6%9C%AC/</guid>
-      <pubDate>Wed, 02 Jul 2025 03:08:50 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;在日常摸鱼中，你可能会遇到频繁往下滚动的场景（比如看小说），而你又不想动鼠标，也不想动键盘，那么这个脚本适合你：&lt;/p&gt;
-&lt;p&gt;地址：&lt;a href=&quot;https://runoneall.serv00.net/Files/%e8%87%aa%e5%8a%a8%e6%bb%9</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>在日常摸鱼中，你可能会遇到频繁往下滚动的场景（比如看小说），而你又不想动鼠标，也不想动键盘，那么这个脚本适合你：</p><p>地址：<a href="https://runoneall.serv00.net/Files/%e8%87%aa%e5%8a%a8%e6%bb%9a%e5%8a%a8%e8%be%85%e5%8a%a9%e5%99%a8.js">自动滚动辅助器</a></p><p>找deepseek-r1写的，并修复了bug</p><p>演示：<br><img src="https://s.rmimg.com/optimized/2X/9/9189d7301a1c011fa4a7a977e09d748546b6e9bd_2_1380x988.jpeg"></p><p>点个赞吧球球了</p>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/07/02/%E8%87%AA%E5%8A%A8%E6%BB%9A%E5%8A%A8%E6%B2%B9%E7%8C%B4%E8%84%9A%E6%9C%AC/#disqus_thread</comments>
       
     </item>
     
