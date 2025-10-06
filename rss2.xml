@@ -9,8 +9,32 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Sun, 05 Oct 2025 08:29:09 GMT</pubDate>
+    <pubDate>Mon, 06 Oct 2025 13:20:55 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>如何在Windows上实现X11 Forwarding？</title>
+      <link>https://blog.oneall.eu.org/2025/10/06/%E5%A6%82%E4%BD%95%E5%9C%A8Windows%E4%B8%8A%E5%AE%9E%E7%8E%B0X11-Forwarding%EF%BC%9F/</link>
+      <guid>https://blog.oneall.eu.org/2025/10/06/%E5%A6%82%E4%BD%95%E5%9C%A8Windows%E4%B8%8A%E5%AE%9E%E7%8E%B0X11-Forwarding%EF%BC%9F/</guid>
+      <pubDate>Mon, 06 Oct 2025 13:19:11 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;commit: &lt;a href=&quot;https://github.com/runoneall/nodebus/commit/a1d05052d642d6a220b432877e25c97eb7017efe&quot;&gt;windows support · runoneall&amp;#x2F;n</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>commit: <a href="https://github.com/runoneall/nodebus/commit/a1d05052d642d6a220b432877e25c97eb7017efe">windows support · runoneall&#x2F;nodebus@a1d0505</a></p><p>最终效果如图：</p><p><img src="https://s.rmimg.com/original/3X/6/0/60f04d146c5025f2d82cfe7a48496b4988e76959.png"></p><p>需要配合 VcXsrv 才行，<img src="https://s.rmimg.com/original/3X/a/f/afd64a476c23bb3420455fdb26295967b24010d8.png"></p><p>环境变量 DISPLAY，<img src="https://s.rmimg.com/original/3X/d/a/da74f4d650f361ae929b13b8c9a41e119e48d009.png"></p><p>在 X11 启动时指定 <code>--trust-x11</code> 绕过 xauth 验证（Windows上没有）</p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/10/06/%E5%A6%82%E4%BD%95%E5%9C%A8Windows%E4%B8%8A%E5%AE%9E%E7%8E%B0X11-Forwarding%EF%BC%9F/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>nodebus新功能：x11转发</title>
@@ -502,32 +526,6 @@ $proxyBase = &amp;quot;https://blog.onea</description>
       
       
       <comments>https://blog.oneall.eu.org/2025/07/24/%E5%88%86%E4%BA%AB%E6%88%91%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%BC%98%E9%80%89%E6%96%B9%E6%A1%88/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>hexo新主题old fashion</title>
-      <link>https://blog.oneall.eu.org/2025/07/17/hexo%E6%96%B0%E4%B8%BB%E9%A2%98old-fashion/</link>
-      <guid>https://blog.oneall.eu.org/2025/07/17/hexo%E6%96%B0%E4%B8%BB%E9%A2%98old-fashion/</guid>
-      <pubDate>Thu, 17 Jul 2025 22:52:48 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;自用主题，当前博客就是&lt;/p&gt;
-&lt;p&gt;GitHub地址：&lt;a href=&quot;https://github.com/runoneall/blog/tree/theme&quot;&gt;https://github.com/runoneall/blog/tree/theme&lt;/a&gt;&lt;/p&gt;
-&lt;</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>自用主题，当前博客就是</p><p>GitHub地址：<a href="https://github.com/runoneall/blog/tree/theme">https://github.com/runoneall/blog/tree/theme</a></p><p>原型：<a href="https://github.com/MrXiaoM/typecho-theme-old-fashion">https://github.com/MrXiaoM/typecho-theme-old-fashion</a><br>改版：<a href="https://github.com/runoneall/typecho-theme-old-fashion">https://github.com/runoneall/typecho-theme-old-fashion</a></p><p>后来从Typecho迁移到Hexo，于是开发了这个主题。</p>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/07/17/hexo%E6%96%B0%E4%B8%BB%E9%A2%98old-fashion/#disqus_thread</comments>
       
     </item>
     

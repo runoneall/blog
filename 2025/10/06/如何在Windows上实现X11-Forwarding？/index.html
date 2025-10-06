@@ -17,7 +17,7 @@
 
 <!-- title -->
 <title>
-    python通用跨语言导入器 | Runoneall
+    如何在Windows上实现X11 Forwarding？ | Runoneall
 </title>
 
 <!-- css dependencies -->
@@ -46,7 +46,7 @@
 
 <!-- description -->
 
-<meta name="description" content="本质就是打包成so，然后用CDLL加载，但是可以直接用import 文档：https://github.com/FramerOrg/CrossLanguage/wiki/Module-Document 核心代码就是 CrossLangImporter，用Require返回ModuleSpec，封装了自动查找，运行编译，导入钩子 可以自定义后缀处理，当然是py文件优先 具体看如何添加处理器 clas" />
+<meta name="description" content="commit: windows support · runoneall&#x2F;nodebus@a1d0505 最终效果如图：  需要配合 VcXsrv 才行， 环境变量 DISPLAY， 在 X11 启动时指定 --trust-x11 绕过 xauth 验证（Windows上没有）" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -159,8 +159,8 @@
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <!-- post title -->
         <h1 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="/2025/06/25/python%E9%80%9A%E7%94%A8%E8%B7%A8%E8%AF%AD%E8%A8%80%E5%AF%BC%E5%85%A5%E5%99%A8/"
-                >python通用跨语言导入器</a
+            <a itemprop="url" href="/2025/10/06/%E5%A6%82%E4%BD%95%E5%9C%A8Windows%E4%B8%8A%E5%AE%9E%E7%8E%B0X11-Forwarding%EF%BC%9F/"
+                >如何在Windows上实现X11 Forwarding？</a
             >
         </h1>
         <!-- end post title -->
@@ -177,8 +177,8 @@
                 时间:
                 <time
                     itemprop="datePublished"
-                    datetime="2025-06-25T16:47:32.000Z"
-                    >2025-06-25</time
+                    datetime="2025-10-06T13:19:11.000Z"
+                    >2025-10-06</time
                 >
             </li>
             
@@ -195,34 +195,12 @@
 
         <!-- post content -->
         <div class="post-content" itemprop="articleBody">
-            <p>本质就是打包成so，然后用CDLL加载，但是可以直接用import</p>
-<p>文档：<a target="_blank" rel="noopener" href="https://github.com/FramerOrg/CrossLanguage/wiki/Module-Document">https://github.com/FramerOrg/CrossLanguage/wiki/Module-Document</a></p>
-<p>核心代码就是 <code>CrossLangImporter</code>，用Require返回ModuleSpec，封装了自动查找，运行编译，导入钩子</p>
-<p>可以自定义后缀处理，当然是py文件优先</p>
-<p>具体看如何添加处理器</p>
-<pre><code class="language-python">class moduleMain:
-    def __init__(self, framer, logger):
-        self.framer = framer
-        self.logger = logger
-
-        self.extension = &quot;go&quot;
-        self.not_found_message = (
-            &quot;Go compiler not found. Install Go from https://golang.org/&quot;
-        )
-
-    def build_command(self, file_path, so_path):
-        return [
-            [&quot;go&quot;, &quot;mod&quot;, &quot;tidy&quot;],
-            [&quot;go&quot;, &quot;build&quot;, &quot;-buildmode=c-shared&quot;, &quot;-o&quot;, so_path, file_path],
-        ]
-</code></pre>
-<p>其中moduleMain及init参数是framer固定的，不用管<br>主要实现：</p>
-<ol>
-<li>self.extension：声明该处理器能处理的文件</li>
-<li>self.not_found_message：若找不到编译器，抛出的错误内容</li>
-<li>build_command：返回一系列编译命令，其中file_path和so_path是固定的，编译时会进入file_path所在目录</li>
-</ol>
-<p>觉得不错就给Framer项目点个Star吧：<a target="_blank" rel="noopener" href="https://github.com/FramerOrg/Framer">https://github.com/FramerOrg/Framer</a></p>
+            <p>commit: <a target="_blank" rel="noopener" href="https://github.com/runoneall/nodebus/commit/a1d05052d642d6a220b432877e25c97eb7017efe">windows support · runoneall&#x2F;nodebus@a1d0505</a></p>
+<p>最终效果如图：</p>
+<p><img src="https://s.rmimg.com/original/3X/6/0/60f04d146c5025f2d82cfe7a48496b4988e76959.png"></p>
+<p>需要配合 VcXsrv 才行，<img src="https://s.rmimg.com/original/3X/a/f/afd64a476c23bb3420455fdb26295967b24010d8.png"></p>
+<p>环境变量 DISPLAY，<img src="https://s.rmimg.com/original/3X/d/a/da74f4d650f361ae929b13b8c9a41e119e48d009.png"></p>
+<p>在 X11 启动时指定 <code>--trust-x11</code> 绕过 xauth 验证（Windows上没有）</p>
 
         </div>
         <!-- end post content -->
