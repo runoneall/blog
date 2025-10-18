@@ -9,8 +9,33 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Sat, 18 Oct 2025 14:21:28 GMT</pubDate>
+    <pubDate>Sat, 18 Oct 2025 14:32:08 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>我用纯Go实现的跨平台IPC操作库</title>
+      <link>https://blog.oneall.eu.org/2025/10/18/%E6%88%91%E7%94%A8%E7%BA%AFGo%E5%AE%9E%E7%8E%B0%E7%9A%84%E8%B7%A8%E5%B9%B3%E5%8F%B0IPC%E6%93%8D%E4%BD%9C%E5%BA%93/</link>
+      <guid>https://blog.oneall.eu.org/2025/10/18/%E6%88%91%E7%94%A8%E7%BA%AFGo%E5%AE%9E%E7%8E%B0%E7%9A%84%E8%B7%A8%E5%B9%B3%E5%8F%B0IPC%E6%93%8D%E4%BD%9C%E5%BA%93/</guid>
+      <pubDate>Sat, 18 Oct 2025 14:26:50 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;项目地址 &lt;a href=&quot;https://github.com/runoneall/pgoipc&quot;&gt;runoneall&amp;#x2F;pgoipc: 用纯 Go 实现的跨平台 IPC 操作库，包含服务端和客户端&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;该包支持 &lt;code&gt;Unix (Doma</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>项目地址 <a href="https://github.com/runoneall/pgoipc">runoneall&#x2F;pgoipc: 用纯 Go 实现的跨平台 IPC 操作库，包含服务端和客户端</a></p><p>该包支持 <code>Unix (Domain Socket)</code> 和 <code>Windows (Named Pipe)</code></p><p>该包对 <code>net</code> 和 <code>github.com/Microsoft/go-winio</code> 进行再封装，使其不用考虑服务器启动和客户端连接方面的逻辑，通过暴露 <code>conn net.Conn</code> 对连接进行操作，使其在不同的平台上拥有相同的api</p><p>除 README 外，我还写了一个小 demo，通过 ipc 传输 <code>Stdin</code> <code>Stdout</code> <code>Stderr</code></p><pre><code class="language-golang">package mainimport (&quot;fmt&quot;&quot;io&quot;&quot;net&quot;&quot;os&quot;&quot;os/exec&quot;&quot;time&quot;&quot;github.com/runoneall/pgoipc/client&quot;&quot;github.com/runoneall/pgoipc/server&quot;)func startShell(conn net.Conn) {proc := exec.Command(&quot;sh&quot;)proc.Stdin = connproc.Stdout = connproc.Stderr = connfmt.Println(proc.Run())}func connectShell(conn net.Conn) {defer conn.Close()go io.Copy(conn, os.Stdin)go io.Copy(os.Stdout, conn)io.Copy(os.Stderr, conn)}func main() {go server.Serv(&quot;ipcshell&quot;, startShell)time.Sleep(time.Second)connectShell(client.Connect(&quot;ipcshell&quot;))}</code></pre><p><img src="https://s.rmimg.com/original/3X/9/a/9a3390fa90fd1b5d3f839c7f989e2568d146133f.png"></p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/10/18/%E6%88%91%E7%94%A8%E7%BA%AFGo%E5%AE%9E%E7%8E%B0%E7%9A%84%E8%B7%A8%E5%B9%B3%E5%8F%B0IPC%E6%93%8D%E4%BD%9C%E5%BA%93/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>如何在Windows上实现X11 Forwarding？</title>
@@ -499,33 +524,6 @@ $proxyBase = &amp;quot;https://blog.onea</description>
       
       
       <comments>https://blog.oneall.eu.org/2025/07/26/KubicNodes%E5%AE%B9%E5%99%A8%E6%9C%BA%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83%E5%92%8CVNC/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>分享我博客的优选方案</title>
-      <link>https://blog.oneall.eu.org/2025/07/24/%E5%88%86%E4%BA%AB%E6%88%91%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%BC%98%E9%80%89%E6%96%B9%E6%A1%88/</link>
-      <guid>https://blog.oneall.eu.org/2025/07/24/%E5%88%86%E4%BA%AB%E6%88%91%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%BC%98%E9%80%89%E6%96%B9%E6%A1%88/</guid>
-      <pubDate>Thu, 24 Jul 2025 12:28:33 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;博客地址：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://blog.oneall.eu.org/&quot;&gt;https://blog.oneall.eu.org/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;测速截图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://s.rmimg.com/orig</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>博客地址：</p><p><a href="https://blog.oneall.eu.org/">https://blog.oneall.eu.org/</a></p><p>测速截图：</p><p><img src="https://s.rmimg.com/original/2X/b/ba461e0c45b3d79dbabb12ac52a8c70436299d1f.png"></p><p>该博客用的 Cloudflare Pages 托管，所以也是Pages优选的方法</p><ol><li>部署到pages</li></ol><p>新建一个pages，然后上传静态文件，我这里是直接从github拉取</p><p><a href="https://github.com/runoneall/blog">https://github.com/runoneall/blog</a></p><blockquote><p>tip: 如果你正在找我博客的同款主题，这是链接： <a href="https://github.com/runoneall/blog/tree/theme">https://github.com/runoneall/blog/tree/theme</a></p></blockquote><p><img src="https://s.rmimg.com/original/2X/7/75cfb7e58894aef71cde0e3baad6f913f3e27fc9.png"></p><p><img src="https://s.rmimg.com/original/2X/7/7df0d71f1069aed690ca8c3a2fa1fdddcc5c206d.png"></p><p><img src="https://s.rmimg.com/original/2X/e/e6a8d1f08206f50a4c2c392ba8fa8cc387ea216c.png"></p><p>等待部署完成后得到 <code>xxx.pages.dev</code> 链接</p><ol start="2"><li>自定义域名</li></ol><p><img src="https://s.rmimg.com/original/2X/e/e5401a403c58359d0e7e23b6efab0df7e9f81aad.png"></p><blockquote><p>注意！cloudflare会自动为该域名配置一条CNAME记录，要删除！</p></blockquote><ol start="3"><li>优选域名</li></ol><p>打开华为云dns，添加域名</p><p><img src="https://s.rmimg.com/original/2X/f/f20cacd92d09ee3627f93080e40fe38d10cc8502.png"></p><p>添加好后配置两条记录</p><p><img src="https://s.rmimg.com/original/2X/5/5a54c27ec137807591b67f467371871e6f5d99b7.png"></p><p><img src="https://s.rmimg.com/original/2X/4/48540e912c0b73c10199acce44b35388b476b006.png"></p><p>这里用的是CM大佬的优选域 <code>cf.090227.xyz.</code></p><ol start="4"><li>配置dns解析</li></ol><p><img src="https://s.rmimg.com/original/2X/5/56a9dd5307c6124818e64f810d9652b28acc6410.png"></p><p><img src="https://s.rmimg.com/original/2X/3/3a7414e38142c7e81a0b0b3683313678c75e15f8.png"></p><p>接下来就是等了，一般24小时就能行</p><p>更换优选域就修改步骤3的第二条记录的值</p>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/07/24/%E5%88%86%E4%BA%AB%E6%88%91%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%BC%98%E9%80%89%E6%96%B9%E6%A1%88/#disqus_thread</comments>
       
     </item>
     
