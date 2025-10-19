@@ -9,7 +9,7 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Sat, 18 Oct 2025 14:32:08 GMT</pubDate>
+    <pubDate>Sun, 19 Oct 2025 01:40:19 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -26,7 +26,7 @@
       
       
       
-      <content:encoded><![CDATA[<p>项目地址 <a href="https://github.com/runoneall/pgoipc">runoneall&#x2F;pgoipc: 用纯 Go 实现的跨平台 IPC 操作库，包含服务端和客户端</a></p><p>该包支持 <code>Unix (Domain Socket)</code> 和 <code>Windows (Named Pipe)</code></p><p>该包对 <code>net</code> 和 <code>github.com/Microsoft/go-winio</code> 进行再封装，使其不用考虑服务器启动和客户端连接方面的逻辑，通过暴露 <code>conn net.Conn</code> 对连接进行操作，使其在不同的平台上拥有相同的api</p><p>除 README 外，我还写了一个小 demo，通过 ipc 传输 <code>Stdin</code> <code>Stdout</code> <code>Stderr</code></p><pre><code class="language-golang">package mainimport (&quot;fmt&quot;&quot;io&quot;&quot;net&quot;&quot;os&quot;&quot;os/exec&quot;&quot;time&quot;&quot;github.com/runoneall/pgoipc/client&quot;&quot;github.com/runoneall/pgoipc/server&quot;)func startShell(conn net.Conn) {proc := exec.Command(&quot;sh&quot;)proc.Stdin = connproc.Stdout = connproc.Stderr = connfmt.Println(proc.Run())}func connectShell(conn net.Conn) {defer conn.Close()go io.Copy(conn, os.Stdin)go io.Copy(os.Stdout, conn)io.Copy(os.Stderr, conn)}func main() {go server.Serv(&quot;ipcshell&quot;, startShell)time.Sleep(time.Second)connectShell(client.Connect(&quot;ipcshell&quot;))}</code></pre><p><img src="https://s.rmimg.com/original/3X/9/a/9a3390fa90fd1b5d3f839c7f989e2568d146133f.png"></p>]]></content:encoded>
+      <content:encoded><![CDATA[<p>项目地址 <a href="https://github.com/runoneall/pgoipc">runoneall&#x2F;pgoipc: 用纯 Go 实现的跨平台 IPC 操作库，包含服务端和客户端</a></p><p>该包支持 <code>Unix (Domain Socket)</code> 和 <code>Windows (Named Pipe)</code></p><p>该包对 <code>net</code> 和 <code>github.com/Microsoft/go-winio</code> 进行再封装，使其不用考虑服务器启动和客户端连接方面的逻辑，通过暴露 <code>conn net.Conn</code> 对连接进行操作，使其在不同的平台上拥有相同的api</p><p>除 README 外，我还写了一个小 demo，通过 ipc 传输 <code>Stdin</code> <code>Stdout</code> <code>Stderr</code></p><pre><code class="language-golang">package mainimport (&quot;fmt&quot;&quot;io&quot;&quot;net&quot;&quot;os&quot;&quot;os/exec&quot;&quot;time&quot;&quot;github.com/runoneall/pgoipc/client&quot;&quot;github.com/runoneall/pgoipc/server&quot;)func startShell(conn net.Conn) {proc := exec.Command(&quot;sh&quot;)proc.Stdin = connproc.Stdout = connproc.Stderr = connfmt.Println(proc.Run())}func connectShell(conn net.Conn) {go io.Copy(conn, os.Stdin)io.Copy(os.Stdout, conn)}func main() {go server.Serv(&quot;ipcshell&quot;, startShell)time.Sleep(time.Second)client.Connect(&quot;ipcshell&quot;, connectShell)}</code></pre><p><img src="https://s.rmimg.com/original/3X/9/a/9a3390fa90fd1b5d3f839c7f989e2568d146133f.png"></p>]]></content:encoded>
       
       
       <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
