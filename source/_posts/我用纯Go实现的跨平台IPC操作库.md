@@ -39,11 +39,8 @@ func startShell(conn net.Conn) {
 }
 
 func connectShell(conn net.Conn) {
-	defer conn.Close()
-
 	go io.Copy(conn, os.Stdin)
-	go io.Copy(os.Stdout, conn)
-	io.Copy(os.Stderr, conn)
+	io.Copy(os.Stdout, conn)
 }
 
 func main() {
@@ -51,7 +48,7 @@ func main() {
 
 	time.Sleep(time.Second)
 
-	connectShell(client.Connect("ipcshell"))
+	client.Connect("ipcshell", connectShell)
 }
 ```
 
