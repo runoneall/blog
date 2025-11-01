@@ -6,11 +6,11 @@
         "build": "npx hexo generate",
         "clean": "npx hexo clean",
         "deploy": "npx hexo deploy",
-        "server": "npx hexo server",
+        "server": "npx hexo server --port 8000",
         "format": "npx prettier --plugin=prettier-plugin-ejs --tab-width 4 --use-tabs=false --write ."
     },
     "hexo": {
-        "version": "8.0.0"
+        "version": "8.1.1"
     },
     "dependencies": {
         "hexo": "^8.1.1",

@@ -1,0 +1,52 @@
+---
+title: 短链
+date: 2025-11-01 14:02:48
+---
+
+<div class="sl-container">
+    <input type="text" id="sl-targeturl" placeholder="输入要缩短的完整 URL" />
+    <button id="sl-submit" onclick="getShortLink()">提交</button><br />
+    <pre id="sl-output"></pre>
+</div>
+
+<style>
+    .sl-container #sl-targeturl {
+        width: calc(100% - 50px);
+        height: 30px;
+    }
+
+    .sl-container #sl-submit {
+        width: 45px;
+        height: 30px;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    function getShortLink() {
+        const inputEl = document.getElementById("sl-targeturl");
+        const outputEl = document.getElementById("sl-output");
+        const apiUrl = "https://sl.oneall.eu.org";
+
+        outputEl.innerText = "正在获取...";
+
+        fetch(`${apiUrl}/create`, {
+            method: "POST",
+            body: inputEl.value,
+        })
+            .then((resp) => {
+                if (!resp.ok) {
+                    return resp.text().then((text) => {
+                        throw new Error(text);
+                    });
+                }
+                return resp.json();
+            })
+            .then((data) => {
+                outputEl.innerText = `${apiUrl}/go/${data.short}`;
+            })
+            .catch((error) => {
+                outputEl.innerText = error.message || error;
+            });
+    }
+</script>
