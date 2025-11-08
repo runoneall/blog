@@ -1,0 +1,32 @@
+---
+title: 加入会议
+date: 2025-11-08 15:18:25
+---
+
+<div class="wl-container">
+    <input type="text" id="wl-targeturl" placeholder="名称" />
+    <button id="wl-submit" onclick="joinWebLive()">加入</button><br />
+</div>
+
+<style>
+    .wl-container #wl-targeturl {
+        width: calc(100% - 50px);
+        height: 30px;
+    }
+
+    .wl-container #wl-submit {
+        width: 45px;
+        height: 30px;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    function joinWebLive() {
+        const inputEl = document.getElementById("wl-targeturl");
+        window.open(
+            `https://bloglive.oneall.eu.org?name=${inputEl.value}`,
+            "_blank",
+        );
+    }
+</script>
