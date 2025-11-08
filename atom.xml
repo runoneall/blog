@@ -6,7 +6,7 @@
   <link href="https://blog.oneall.eu.org/atom.xml" rel="self"/>
   
   <link href="https://blog.oneall.eu.org/"/>
-  <updated>2025-11-08T15:25:18.807Z</updated>
+  <updated>2025-11-08T15:42:43.026Z</updated>
   <id>https://blog.oneall.eu.org/</id>
   
   <author>
@@ -17,11 +17,35 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>使用Worker搭建多人实时会议</title>
+    <link href="https://blog.oneall.eu.org/2025/11/08/%E4%BD%BF%E7%94%A8Worker%E6%90%AD%E5%BB%BA%E5%A4%9A%E4%BA%BA%E5%AE%9E%E6%97%B6%E4%BC%9A%E8%AE%AE/"/>
+    <id>https://blog.oneall.eu.org/2025/11/08/%E4%BD%BF%E7%94%A8Worker%E6%90%AD%E5%BB%BA%E5%A4%9A%E4%BA%BA%E5%AE%9E%E6%97%B6%E4%BC%9A%E8%AE%AE/</id>
+    <published>2025-11-08T15:40:10.000Z</published>
+    <updated>2025-11-08T15:42:43.026Z</updated>
+    
+    <content type="html"><![CDATA[<p>代码非常简单，极容易集成，可以玩玩我的 demo</p><p><a href="https://oneall.eu.org/weblive">https://oneall.eu.org/weblive</a></p><pre><code class="language-javascript">async function textresp(text, status = 200) {    return new Response(text, {        status,        headers: {            &quot;Content-Type&quot;: &quot;text/plain;charset=UTF-8&quot;,            &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,        },    });}async function getAuthToken(env, name, preset_name = &quot;group_call_participant&quot;) {    const api = `https://api.realtime.cloudflare.com/v2/meetings/${env.meetingId}/participants`;    const tokenResp = await fetch(api, {        method: &quot;POST&quot;,        headers: {            Authorization: env.api_authorization_token,            &quot;Content-Type&quot;: &quot;application/json;charset=UTF-8&quot;,        },        body: JSON.stringify({            name: name,            picture: &quot;https://i.imgur.com/test.jpg&quot;,            preset_name: preset_name,            client_specific_id: crypto.randomUUID(),        }),    });    const body = await tokenResp.json();    if (body.success !== true) {        return await textresp(            &quot;500 Internal Server Error (Invalid Token Response)&quot;,            500,        );    }    const token = body.data.token;    return Response.redirect(        `https://oneall.eu.org/realtimelive?authToken=${token}`,        302,    );}export default {    async fetch(request, env, ctx) {        if (request.method !== &quot;GET&quot;) {            return await textresp(&quot;405 Method Not Allowed&quot;, 405);        }        const url = new URL(request.url);        const name = url.searchParams.get(&quot;name&quot;);        if (!name) {            return await textresp(                &quot;400 Bad Request (Invalid URL param: name)&quot;,                400,            );        }        return await getAuthToken(env, name);    },};</code></pre><p>代码需要设置两个环境变量 <code>meetingId</code> 和 <code>api_authorization_token</code> ，这是教程</p><p><a href="https://docs.realtime.cloudflare.com/guides/rest-apis/quickstart">https://docs.realtime.cloudflare.com/guides/rest-apis/quickstart</a></p><p>前端搭建代码</p><p><a href="https://github.com/cloudflare/realtimekit-web-examples/blob/main/html-examples/examples/default-meeting-ui/index.html">realtimekit-web-examples&#x2F;html-examples&#x2F;examples&#x2F;default-meeting-ui&#x2F;index.html at main · cloudflare&#x2F;realtimekit-web-examples</a></p><p>如果不想自己搭也可以用我的 <code>https://oneall.eu.org/realtimelive</code></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;代码非常简单，极容易集成，可以玩玩我的 demo&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://oneall.eu.org/weblive&quot;&gt;https://oneall.eu.org/weblive&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-</summary>
+      
+    
+    
+    
+    <category term="默认" scheme="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>一个不多不少刚刚好的短链api实现</title>
     <link href="https://blog.oneall.eu.org/2025/11/01/%E4%B8%80%E4%B8%AA%E4%B8%8D%E5%A4%9A%E4%B8%8D%E5%B0%91%E5%88%9A%E5%88%9A%E5%A5%BD%E7%9A%84%E7%9F%AD%E9%93%BEapi%E5%AE%9E%E7%8E%B0/"/>
     <id>https://blog.oneall.eu.org/2025/11/01/%E4%B8%80%E4%B8%AA%E4%B8%8D%E5%A4%9A%E4%B8%8D%E5%B0%91%E5%88%9A%E5%88%9A%E5%A5%BD%E7%9A%84%E7%9F%AD%E9%93%BEapi%E5%AE%9E%E7%8E%B0/</id>
     <published>2025-11-01T13:58:47.000Z</published>
-    <updated>2025-11-08T15:25:18.807Z</updated>
+    <updated>2025-11-08T15:42:43.026Z</updated>
     
     <content type="html"><![CDATA[<p>这是我用来集成进我博客里的一个api，把不必要的功能全都省略了</p><pre><code class="language-javascript">var whitelist = [];async function textresp(text, status = 200) {    return new Response(text, {        status,        headers: {            &quot;Content-Type&quot;: &quot;text/plain;charset=UTF-8&quot;,            &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,        },    });}async function gethash(text, length = 8) {    const encoder = new TextEncoder();    const data = encoder.encode(text);    const hashBuffer = await crypto.subtle.digest(&quot;SHA-256&quot;, data);    const hashArray = Array.from(new Uint8Array(hashBuffer));    const hashHex = hashArray        .map((b) =&gt; b.toString(16).padStart(2, &quot;0&quot;))        .join(&quot;&quot;);    return hashHex.substring(0, length);}async function savelink(request, env) {    if (request.method !== &quot;POST&quot;) {        return await textresp(&quot;405 Method Not Allowed&quot;, 405);    }    var body;    try {        const rawbody = await request.arrayBuffer();        body = new TextDecoder(&quot;UTF-8&quot;, { fatal: true }).decode(rawbody);    } catch {        return await textresp(&quot;415 Unsupported Media Type&quot;, 415);    }    var targeturl;    try {        targeturl = new URL(body);    } catch {        return await textresp(&quot;400 Bad Request (Invalid URL string)&quot;, 400);    }    if (!whitelist.includes(targeturl.hostname)) {        return await textresp(&quot;403 Forbidden&quot;, 403);    }    const urlstring = targeturl.toString();    const hash = await gethash(urlstring);    await env.shortlink.put(hash, urlstring);    return new Response(        JSON.stringify({            origin: urlstring,            short: hash,        }),        {            headers: {                &quot;Content-Type&quot;: &quot;application/json;charset=UTF-8&quot;,                &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,            },        },    );}async function redirect(request, env) {    if (request.method !== &quot;GET&quot;) {        return await textresp(&quot;405 Method Not Allowed&quot;, 405);    }    const hash = request.pathname.substring(4);    const value = (await env.shortlink.get(hash)) ?? &quot;&quot;;    if (value === &quot;&quot;) {        return await textresp(&quot;404 Not Found&quot;, 404);    }    return Response.redirect(value, 302);}export default {    async fetch(request, env, ctx) {        const url = new URL(request.url);        if (url.pathname === &quot;/create&quot;) {            return await savelink(request, env);        }        if (url.pathname.startsWith(&quot;/go/&quot;)) {            request.pathname = url.pathname;            return await redirect(request, env);        }        return await textresp(&quot;404 Not Found&quot;, 404);    },};</code></pre><p>创建一个kv数据库，名称随意，然后绑定到worker里，注意变量名是 <code>shortlink</code></p><p>在 <code>whitelist</code> 添加允许短链的 hostname</p><ol><li>添加短链</li></ol><p>向 <code>/create</code> 路由发送 POST 请求，body 为要缩短的完整 URL，返回值为 json，其中 short 字段为原 URL 的哈希值前 8 位</p><ol start="2"><li>访问短链</li></ol><p>访问 <code>/go/</code> 后面接上原 URL 的哈希值前 8 位</p>]]></content>
     
@@ -46,7 +70,7 @@ async function textresp(text, status = 20</summary>
     <link href="https://blog.oneall.eu.org/2025/10/18/%E6%88%91%E7%94%A8%E7%BA%AFGo%E5%AE%9E%E7%8E%B0%E7%9A%84%E8%B7%A8%E5%B9%B3%E5%8F%B0IPC%E6%93%8D%E4%BD%9C%E5%BA%93/"/>
     <id>https://blog.oneall.eu.org/2025/10/18/%E6%88%91%E7%94%A8%E7%BA%AFGo%E5%AE%9E%E7%8E%B0%E7%9A%84%E8%B7%A8%E5%B9%B3%E5%8F%B0IPC%E6%93%8D%E4%BD%9C%E5%BA%93/</id>
     <published>2025-10-18T14:26:50.000Z</published>
-    <updated>2025-11-08T15:25:18.808Z</updated>
+    <updated>2025-11-08T15:42:43.027Z</updated>
     
     <content type="html"><![CDATA[<p>项目地址 <a href="https://github.com/runoneall/pgoipc">runoneall&#x2F;pgoipc: 用纯 Go 实现的跨平台 IPC 操作库，包含服务端和客户端</a></p><p>该包支持 <code>Unix (Domain Socket)</code> 和 <code>Windows (Named Pipe)</code></p><p>该包对 <code>net</code> 和 <code>github.com/Microsoft/go-winio</code> 进行再封装，使其不用考虑服务器启动和客户端连接方面的逻辑，通过暴露 <code>conn net.Conn</code> 对连接进行操作，使其在不同的平台上拥有相同的api</p><p>除 README 外，我还写了一个小 demo，通过 ipc 传输 <code>Stdin</code> <code>Stdout</code> <code>Stderr</code></p><pre><code class="language-golang">package mainimport (&quot;fmt&quot;&quot;io&quot;&quot;net&quot;&quot;os&quot;&quot;os/exec&quot;&quot;time&quot;&quot;github.com/runoneall/pgoipc/client&quot;&quot;github.com/runoneall/pgoipc/server&quot;)func startShell(conn net.Conn) {proc := exec.Command(&quot;sh&quot;)proc.Stdin = connproc.Stdout = connproc.Stderr = connfmt.Println(proc.Run())}func connectShell(conn net.Conn) {go io.Copy(conn, os.Stdin)io.Copy(os.Stdout, conn)}func main() {go server.Serv(&quot;ipcshell&quot;, startShell)time.Sleep(time.Second)client.Connect(&quot;ipcshell&quot;, connectShell)}</code></pre><p><img src="https://s.rmimg.com/original/3X/9/a/9a3390fa90fd1b5d3f839c7f989e2568d146133f.png"></p>]]></content>
     
@@ -69,7 +93,7 @@ async function textresp(text, status = 20</summary>
     <link href="https://blog.oneall.eu.org/2025/10/06/%E5%A6%82%E4%BD%95%E5%9C%A8Windows%E4%B8%8A%E5%AE%9E%E7%8E%B0X11-Forwarding%EF%BC%9F/"/>
     <id>https://blog.oneall.eu.org/2025/10/06/%E5%A6%82%E4%BD%95%E5%9C%A8Windows%E4%B8%8A%E5%AE%9E%E7%8E%B0X11-Forwarding%EF%BC%9F/</id>
     <published>2025-10-06T13:19:11.000Z</published>
-    <updated>2025-11-08T15:25:18.808Z</updated>
+    <updated>2025-11-08T15:42:43.027Z</updated>
     
     <content type="html"><![CDATA[<p>commit: <a href="https://github.com/runoneall/nodebus/commit/a1d05052d642d6a220b432877e25c97eb7017efe">windows support · runoneall&#x2F;nodebus@a1d0505</a></p><p>最终效果如图：</p><p><img src="https://s.rmimg.com/original/3X/6/0/60f04d146c5025f2d82cfe7a48496b4988e76959.png"></p><p>需要配合 VcXsrv 才行，<img src="https://s.rmimg.com/original/3X/a/f/afd64a476c23bb3420455fdb26295967b24010d8.png"></p><p>环境变量 DISPLAY，<img src="https://s.rmimg.com/original/3X/d/a/da74f4d650f361ae929b13b8c9a41e119e48d009.png"></p><p>在 X11 启动时指定 <code>--trust-x11</code> 绕过 xauth 验证（Windows上没有）</p>]]></content>
     
@@ -91,7 +115,7 @@ async function textresp(text, status = 20</summary>
     <link href="https://blog.oneall.eu.org/2025/10/05/nodebus%E6%96%B0%E5%8A%9F%E8%83%BD%EF%BC%9Ax11%E8%BD%AC%E5%8F%91/"/>
     <id>https://blog.oneall.eu.org/2025/10/05/nodebus%E6%96%B0%E5%8A%9F%E8%83%BD%EF%BC%9Ax11%E8%BD%AC%E5%8F%91/</id>
     <published>2025-10-05T08:26:35.000Z</published>
-    <updated>2025-11-08T15:25:18.806Z</updated>
+    <updated>2025-11-08T15:42:43.025Z</updated>
     
     <content type="html"><![CDATA[<p>跟 ssh 的 x11 转发一个功能，所以，nodebus 也实现了一个</p><p><img src="https://s.rmimg.com/original/3X/8/2/8228ab4034f4577650798b11a5dd84f11de2f4d8.png"></p><p>如图，只需指定 <code>--x11</code> 便可，无需服务器有桌面环境即可像本地应用一样运行 GUI 程序</p>]]></content>
     
@@ -114,7 +138,7 @@ async function textresp(text, status = 20</summary>
     <link href="https://blog.oneall.eu.org/2025/10/01/nodebus-cfgcenter%E4%BB%8Ehttp%E8%BF%81%E7%A7%BB%E5%88%B0ipc%E9%80%9A%E4%BF%A1/"/>
     <id>https://blog.oneall.eu.org/2025/10/01/nodebus-cfgcenter%E4%BB%8Ehttp%E8%BF%81%E7%A7%BB%E5%88%B0ipc%E9%80%9A%E4%BF%A1/</id>
     <published>2025-10-01T07:46:30.000Z</published>
-    <updated>2025-11-08T15:25:18.806Z</updated>
+    <updated>2025-11-08T15:42:43.025Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://github.com/runoneall/nodebus/commit/3888a60f9972ac16b85ef494962b1526bab34ccc">cfgcenter migrated from http to ipc · runoneall&#x2F;nodebus@3888a60</a></p><p>代码量可以说是大幅减小了，我封装了一个适用于 nodebus 的 ipc 服务端和客户端（稍微改改就可以集成到你自己的项目中）</p><p><a href="https://github.com/runoneall/nodebus/tree/main/ipc">nodebus&#x2F;ipc at main · runoneall&#x2F;nodebus</a></p><p>使用示例：</p><ol><li><p>服务端： <a href="https://github.com/runoneall/nodebus/blob/main/fns/CfgCenterServer.go">nodebus&#x2F;fns&#x2F;CfgCenterServer.go at main · runoneall&#x2F;nodebus</a></p></li><li><p>客户端： <a href="https://github.com/runoneall/nodebus/blob/main/fns/PersistentPreRun.go">nodebus&#x2F;fns&#x2F;PersistentPreRun.go at main · runoneall&#x2F;nodebus</a></p></li></ol><p>以及一些代码结构调整</p>]]></content>
     
@@ -136,7 +160,7 @@ async function textresp(text, status = 20</summary>
     <link href="https://blog.oneall.eu.org/2025/10/01/nodebus%E6%96%B0%E5%8A%9F%E8%83%BD-cfgcenter/"/>
     <id>https://blog.oneall.eu.org/2025/10/01/nodebus%E6%96%B0%E5%8A%9F%E8%83%BD-cfgcenter/</id>
     <published>2025-10-01T01:22:34.000Z</published>
-    <updated>2025-11-08T15:25:18.806Z</updated>
+    <updated>2025-11-08T15:42:43.025Z</updated>
     
     <content type="html"><![CDATA[<p>花了一上午的时间，实现了这个设想 <code>cfgcenter --help</code></p><pre><code class="language-plaintext">集中式的管理节点配置Usage:  nodebus cfgcenter [flags]Flags:  -h, --help          help for cfgcenter      --host string   指定 cfgcenter 的监听地址 (default &quot;::&quot;)      --port string   指定 cfgcenter 的监听端口 (default &quot;32768&quot;)Global Flags:      --auth string        连接到 cfgcenter 的认证字符串 (default &quot;none&quot;)      --cfgcenter string   指定 cfgcenter 服务器  -n, --node strings       指定要管理的节点      --node-all           指定管理全部节点</code></pre><p>这样一来，处理并发任务时，只需要在最开始读取一遍文件就可以了，其余的 nodebus 从该服务器拉取配置</p><p>服务端用的是 gin http，服务器启动：</p><pre><code class="language-plaintext">cfgcenter --auth 123456</code></pre><p>host 默认监听全部地址，port 默认为 32768，auth 默认为 none（这里指定为 123456）</p><p>配套客户端连接：</p><pre><code class="language-plaintext">--cfgcenter [::]:32768 --auth 123456 list</code></pre><p>指定 cfgcenter 服务器为 [::]:32768，指定认证为 123456（none 时可以省略）拉取配置并执行 list 操作</p>]]></content>
     
@@ -164,7 +188,7 @@ Usage:
     <link href="https://blog.oneall.eu.org/2025/09/20/nodebus-v3%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%EF%BC%81/"/>
     <id>https://blog.oneall.eu.org/2025/09/20/nodebus-v3%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%EF%BC%81/</id>
     <published>2025-09-20T08:32:28.000Z</published>
-    <updated>2025-11-08T15:25:18.806Z</updated>
+    <updated>2025-11-08T15:42:43.025Z</updated>
     
     <content type="html"><![CDATA[<p>地址：<a href="https://github.com/runoneall/nodebus">https://github.com/runoneall/nodebus</a></p><p>此次更新有一个 break changes：在 configm 中，将 ssh 的 port 类型从 int 改到 string 了，方便 net.JoinHostPort，至于为什么，net.JoinHostPort 要求 port 是 string 类型</p><p>此次改动最大的是 cli 部分，添加了一个新的 command：shell 用于和 run 做区分，因为这两个在 ssh 服务器里事件名不一样：shell 是 shell，run 是 exec，若仅需远程登录 shell 而不执行命令，应该从 v2 的 <code>run bash</code> 更改为 <code>shell</code></p><p>在 add 部分，添加了从 cli 中指定值（非交互式添加节点）</p><pre><code class="language-plaintext">添加节点Usage:  nodebus add [flags]Flags:  -h, --help          help for add      --host string   指定连接地址      --name string   指定节点名称      --pass string   指定登录密码      --port string   指定连接端口      --user string   指定登录用户Global Flags:  -n, --node strings   指定要管理的节点      --node-all       指定管理全部节点</code></pre><p>支持组合式添加，比如从 cli 中指定 port 为 22，user 为 root，则将启动交互式输入请求剩余的字段：name，host，pass</p><p>在 list 部分也做了小更改，添加了以 json 字符串输出的功能</p><pre><code class="language-plaintext">列出所有节点Usage:  nodebus list [flags]Flags:  -h, --help         help for list  -i, --indent int   设置 json 模式下的缩进  -j, --json         以 json 模式列出所有节点Global Flags:  -n, --node strings   指定要管理的节点      --node-all       指定管理全部节点</code></pre><p>不指定 –json 参数则会以 v2 的模式输出</p><p>悬而未决的问题：</p><pre><code class="language-plaintext">ssh: handshake failed: ssh: unable to authenticate, attempted methods [none], no supported methods remain</code></pre><p>当登录部分服务器时，如 serv00，会出现以上错误，我怀疑是 <code>golang.org/x/crypto/ssh</code> 本身的问题，有没有大佬对这方便有研究的，欢迎赐教！</p>]]></content>
     
@@ -187,7 +211,7 @@ Usage:
     <link href="https://blog.oneall.eu.org/2025/09/01/alpine3-20%E5%AE%89%E8%A3%85code-server/"/>
     <id>https://blog.oneall.eu.org/2025/09/01/alpine3-20%E5%AE%89%E8%A3%85code-server/</id>
     <published>2025-09-01T08:42:07.000Z</published>
-    <updated>2025-11-08T15:25:18.806Z</updated>
+    <updated>2025-11-08T15:42:43.025Z</updated>
     
     <content type="html"><![CDATA[<p>占用预览</p><p><img src="https://s.rmimg.com/original/2X/4/4063e63e5b7827a658f76040363a69de91c554a8.png"></p><p>提前加 2gb swap</p><pre><code class="language-shell">#!/bin/shnew_swap=2048swap_partitions=$(grep -E &#39;^/dev/&#39; /proc/swaps | awk &#39;{print $1}&#39;)for partition in $swap_partitions; do    swapoff &quot;$partition&quot;    wipefs -a &quot;$partition&quot;    mkswap -f &quot;$partition&quot;doneswapoff /swapfilerm -f /swapfiledd if=/dev/zero of=/swapfile bs=1M count=$new_swapchmod 600 /swapfilemkswap /swapfileswapon /swapfile</code></pre><p>然后安装依赖包</p><pre><code class="language-shell">apk add libstdc++ libc6-compat python3 make g++ pkgconfig fontconfig git krb5-devapk add nodejs npm yarnapk cache clean</code></pre><p>使用 yarn 安装 4.96.2 版本的 code-server（最后一个支持node v20的）</p><pre><code class="language-shell">yarn global add code-server@4.96.2</code></pre><p>最后启动服务即可</p><pre><code class="language-shell">code-server</code></pre>]]></content>
     
@@ -212,7 +236,7 @@ Usage:
     <link href="https://blog.oneall.eu.org/2025/08/29/%E4%BD%BF%E7%94%A8nodebus%E6%89%B9%E9%87%8F%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     <id>https://blog.oneall.eu.org/2025/08/29/%E4%BD%BF%E7%94%A8nodebus%E6%89%B9%E9%87%8F%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%99%A8/</id>
     <published>2025-08-29T15:09:12.000Z</published>
-    <updated>2025-11-08T15:25:18.808Z</updated>
+    <updated>2025-11-08T15:42:43.026Z</updated>
     
     <content type="html"><![CDATA[<p>nodebus 是我写的一个工具，可以自动ssh登录并执行命令</p><p>地址：<a href="https://github.com/runoneall/nodebus">https://github.com/runoneall/nodebus</a></p><p>起因是在 orgv.eu 中遇到的，团队有三台服务器，两台 2c2g 是同版本 ubuntu，一台 4c8g 是 debian，现在要给这三台安装docker，并对三台服务器的docker进行管理，一个一个ssh确实很麻烦，于是就写了这个工具</p><p>我将两台 2c2g 命名为 node0 和 node2，一台 4c8g 是 node1</p><p>因为我 node1 已经安装了，这里给 node0 和 node2 安装 docker</p><pre><code class="language-shell">./nodebus --node node0,node2 run &#39;for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done&#39;./nodebus --node node0,node2 run &#39;sudo apt-get updatesudo apt-get install ca-certificates curlsudo install -m 0755 -d /etc/apt/keyringssudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.ascsudo chmod a+r /etc/apt/keyrings/docker.ascecho \  &quot;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \  $(. /etc/os-release &amp;&amp; echo &quot;${UBUNTU_CODENAME:-$VERSION_CODENAME}&quot;) stable&quot; | \  sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/nullsudo apt-get update&#39;./nodebus --node node0,node2 run &#39;sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin&#39;</code></pre><p>验证安装</p><pre><code class="language-shell">./nodebus --node node0,node1,node2 run docker ps</code></pre><p>完全没问题</p><p>另外，这个工具另一个用处就是批量管理多个docker，所以我加了一个快捷方式</p><pre><code class="language-shell">./nodebus --node node0,node1,node2 docker ps</code></pre><p>也是可以的，用法和官方docker完全一样</p><p>还有一点，所有的命令运行都支持pty，所以可以进行交互，例如</p><pre><code class="language-shell">./nodebus --node node0,node1,node2 run bash</code></pre><p>即可进入bash shell</p>]]></content>
     
@@ -236,7 +260,7 @@ Usage:
     <link href="https://blog.oneall.eu.org/2025/08/19/%E5%9C%A8segfault%E4%B8%8A%E8%87%AA%E7%94%B1%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%EF%BC%81/"/>
     <id>https://blog.oneall.eu.org/2025/08/19/%E5%9C%A8segfault%E4%B8%8A%E8%87%AA%E7%94%B1%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%EF%BC%81/</id>
     <published>2025-08-19T06:11:14.000Z</published>
-    <updated>2025-11-08T15:25:18.808Z</updated>
+    <updated>2025-11-08T15:42:43.027Z</updated>
     
     <content type="html"><![CDATA[<p>GitHub地址：<a href="https://github.com/runoneall/sfpkg">https://github.com/runoneall/sfpkg</a></p><p>基于udocker实现，虽是容器，但与宿主机高度衔接</p><p>可互通：网络端口，当前目录（及子目录），桌面环境</p><p>注意！九分有十分的不建议在非主目录 <code>/sec/root</code> 下执行 <code>sfpkg</code> ！</p><ol><li>安装</li></ol><pre><code class="language-shell">wget https://github.com/runoneall/sfpkg/releases/download/v2/sfpkgchmod +x sfpkgmv sfpkg /sec/usr/bin</code></pre><p>键入 <code>sfpkg -h</code> 查看是否安装成功</p><ol start="2"><li>初始化容器</li></ol><p>输入 <code>sfpkg init</code> 初始化容器，中途也许会爆几个 <code>Error</code> 先不用管<br>等待完成后，输入 <code>udocker ps |grep sfpkg-container</code> 若有输出则代表成功<br>若要重新安装也是 <code>sfpkg init</code></p><ol start="3"><li>安装软件</li></ol><p>因为容器使用的是alpine系统，所以使用apk包管理器<br>输入 <code>sfpkg apk add &lt;软件名&gt;</code> 即可进行安装（可携带参数）<br>输入 <code>sfpkg apk</code> 可获取帮助信息<br>示例：<code>sfpkg apk add fastfetch --no-cache</code></p><ol start="4"><li>运行软件</li></ol><p>使用 <code>sfpkg run &lt;软件名&gt;</code> 即可运行（可携带参数）<br>示例：<code>sfpkg run sh</code></p><ol start="5"><li>创建快捷方式</li></ol><p>若要将已安装的软件链接到宿主机，可以使用 <code>sfpkg link &lt;软件名&gt;</code><br>若宿主机已安装了同名软件，新软件将被安装为 <code>sf&lt;软件名&gt;</code><br>软件将被链接到 <code>/sec/usr/bin</code> 可以使用 <code>ls /sec/usr/bin</code> 查看已连接的软件列表<br>可以使用 <code>rm /sec/usr/bin/&lt;软件名&gt;</code> 删除链接</p>]]></content>
     
@@ -260,7 +284,7 @@ Usage:
     <link href="https://blog.oneall.eu.org/2025/08/17/mini%E5%A5%97warp%E6%95%99%E7%A8%8B/"/>
     <id>https://blog.oneall.eu.org/2025/08/17/mini%E5%A5%97warp%E6%95%99%E7%A8%8B/</id>
     <published>2025-08-17T07:22:47.000Z</published>
-    <updated>2025-11-08T15:25:18.806Z</updated>
+    <updated>2025-11-08T15:42:43.025Z</updated>
     
     <content type="html"><![CDATA[<p>该教程参考了这篇文章：<a href="https://p3terx.com/archives/use-cloudflare-warp-to-add-extra-ipv4-or-ipv6-network-support-to-vps-servers-for-free.html">https://p3terx.com/archives/use-cloudflare-warp-to-add-extra-ipv4-or-ipv6-network-support-to-vps-servers-for-free.html</a></p><p>通过 <code>ip a</code> 查看 eth0 网卡，应该大体如下所示</p><pre><code class="language-plaintext">eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000    link/ether 00:72:0f:c1:ba:a4 brd ff:ff:ff:ff:ff:ff    inet 192.168.200.80/24 scope global eth0       valid_lft forever preferred_lft forever    inet6 fe80::272:fff:fec1:baa4/64 scope link proto kernel_ll       valid_lft forever preferred_lft forever</code></pre><p>其中 <code>inet</code> 代表ipv4地址 <code>inet6</code> 代表ipv6地址，由此可以得到，mini采用 vpc内网方案 v4v6双栈网络（v6用不了，但内网有v6）</p><p>首先安装wgcf</p><pre><code class="language-shell">mkdir ~/warp &amp;&amp; cd ~/warpwget https://github.com/ViRb3/wgcf/releases/download/v2.2.28/wgcf_2.2.28_linux_amd64mv wgcf_2.2.28_linux_amd64 wgcfchmod +x wgcf./wgcf register./wgcf generate</code></pre><p>编辑 <code>wgcf-profile.conf</code></p><ol><li>解析ip</li></ol><p>使用 <code>nslookup engage.cloudflareclient.com</code> 将得到一个v4地址和一个v6地址，这里用v4</p><p>将 <code>engage.cloudflareclient.com</code> 替换为v4的地址</p><ol start="2"><li>在 <code>[Interface]</code> 和 <code>[Peer]</code> 之间加入</li></ol><pre><code class="language-plaintext">PostUp = ip -4 rule add from &lt;替换IPv4地址&gt; lookup mainPostDown = ip -4 rule delete from &lt;替换IPv4地址&gt; lookup mainPostUp = ip -6 rule add from &lt;替换IPv6地址&gt; lookup mainPostDown = ip -6 rule delete from &lt;替换IPv6地址&gt; lookup main</code></pre><p>其中ipv4和ipv6指的是内网地址，分别是 inet(去掉&#x2F;24) 和 inet6(去掉&#x2F;64)</p><ol start="3"><li>安装wireguard（alpine3.20）</li></ol><p>该章节参考了这篇文章：<a href="https://wiki.alpinelinux.org/wiki/Configure_a_Wireguard_interface_(wg)">https://wiki.alpinelinux.org/wiki/Configure_a_Wireguard_interface_(wg)</a></p><pre><code class="language-shell">apk add wireguard-tools-wg-quick iptablesmkdir -p /etc/wireguardcp ~/warp/wgcf-profile.conf /etc/wireguard/wgcf.confwg-quick up wgcf</code></pre><ol start="4"><li>验证</li></ol><pre><code class="language-shell">curl -6 ip.p3terx.comcurl -4 ip.p3terx.com</code></pre><p>出现 <code>CLOUDFLARENET</code> 就算成功</p>]]></content>
     
@@ -282,7 +306,7 @@ Usage:
     <link href="https://blog.oneall.eu.org/2025/08/16/segfault%E4%B8%8A%E7%9A%84openvpn%E7%AE%A1%E7%90%86%E7%A8%8B%E5%BA%8F/"/>
     <id>https://blog.oneall.eu.org/2025/08/16/segfault%E4%B8%8A%E7%9A%84openvpn%E7%AE%A1%E7%90%86%E7%A8%8B%E5%BA%8F/</id>
     <published>2025-08-16T12:34:48.000Z</published>
-    <updated>2025-11-08T15:25:18.807Z</updated>
+    <updated>2025-11-08T15:42:43.025Z</updated>
     
     <content type="html"><![CDATA[<p>地址：<a href="https://github.com/runoneall/sfovpn">https://github.com/runoneall/sfovpn</a></p><pre><code class="language-shell">wget https://github.com/runoneall/sfovpn/releases/download/v1/sfovpnchmod +x sfovpn</code></pre><p>基本用法</p><p><code>--use</code> 选定openvpn配置文件，默认 <code>openvpn.conf</code><br><code>--up</code> 启动vpn<br><code>-d / --down</code> 关闭vpn<br><code>-s / --status</code> vpn状态</p><p>额外参数</p><p><code>-u / --user</code> 选定用户名（若有）<br><code>-p / --password</code> 选定密码（若有）</p><p>具体可看 <code>./sfovpn -h</code></p>]]></content>
     
@@ -305,7 +329,7 @@ Usage:
     <link href="https://blog.oneall.eu.org/2025/08/11/%E4%B8%BAsegfault%E5%86%85%E7%BD%91%E7%BC%96%E5%86%99%E7%9A%84%E6%96%87%E6%9C%AC%E8%81%8A%E5%A4%A9%E7%A8%8B%E5%BA%8F/"/>
     <id>https://blog.oneall.eu.org/2025/08/11/%E4%B8%BAsegfault%E5%86%85%E7%BD%91%E7%BC%96%E5%86%99%E7%9A%84%E6%96%87%E6%9C%AC%E8%81%8A%E5%A4%A9%E7%A8%8B%E5%BA%8F/</id>
     <published>2025-08-11T16:35:22.000Z</published>
-    <updated>2025-11-08T15:25:18.807Z</updated>
+    <updated>2025-11-08T15:42:43.026Z</updated>
     
     <content type="html"><![CDATA[<p>注意：此程序只能同一节点内使用！比如在 adm 上安装就只能 adm 用，lsd 上安装只能 lsd 用！</p><p>项目地址：<a href="https://github.com/runoneall/sfchat">https://github.com/runoneall/sfchat</a></p><p>包含两个主要文件</p><ol><li>服务器文件 <code>server.py</code></li></ol><p>如果想要自建服务器，运行 <code>python3 server.py</code></p><ol start="2"><li>客户端文件 <code>client.py</code></li></ol><p>配套的连接到服务器的工具，运行 <code>python3 client.py</code></p><p>然后输入服务器端的 <code>$SF_HOSTNAME</code> （可以自己连接自己）即可连接</p>]]></content>
     
@@ -328,7 +352,7 @@ Usage:
     <link href="https://blog.oneall.eu.org/2025/08/09/sfwg%E7%AC%AC2%E7%89%88%E6%9C%AC%E6%9B%B4%E6%96%B0/"/>
     <id>https://blog.oneall.eu.org/2025/08/09/sfwg%E7%AC%AC2%E7%89%88%E6%9C%AC%E6%9B%B4%E6%96%B0/</id>
     <published>2025-08-09T10:16:20.000Z</published>
-    <updated>2025-11-08T15:25:18.807Z</updated>
+    <updated>2025-11-08T15:42:43.025Z</updated>
     
     <content type="html"><![CDATA[<p>此次更新带来了一些无关紧要的功能（</p><ol><li>默认显示 wg 帮助信息，取消 <code>--wg-help</code></li></ol><pre><code class="language-shell">./sfwg -h</code></pre><ol start="2"><li>自动下载最新wgcf</li></ol><pre><code class="language-shell">./sfwg --wgcf-d</code></pre><ol start="3"><li>自动生成配置</li></ol><pre><code class="language-shell">./sfwg -g</code></pre><p>下载地址 <a href="https://github.com/runoneall/sfwg/releases/download/v2/sfwg">https://github.com/runoneall/sfwg/releases/download/v2/sfwg</a></p>]]></content>
     
@@ -355,7 +379,7 @@ Usage:
     <link href="https://blog.oneall.eu.org/2025/08/08/segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E5%A5%97warp%E6%95%99%E7%A8%8B/"/>
     <id>https://blog.oneall.eu.org/2025/08/08/segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E5%A5%97warp%E6%95%99%E7%A8%8B/</id>
     <published>2025-08-08T03:22:50.000Z</published>
-    <updated>2025-11-08T15:25:18.807Z</updated>
+    <updated>2025-11-08T15:42:43.025Z</updated>
     
     <content type="html"><![CDATA[<p>segfault 上的 wgcf wireguard 管理程序</p><p>首先先登录到机器内，然后新建目录</p><pre><code class="language-shell">mkdir warp &amp;&amp; cd warp</code></pre><p>先下载 wgcf 程序</p><pre><code class="language-shell">wget https://github.com/ViRb3/wgcf/releases/download/v2.2.27/wgcf_2.2.27_linux_amd64mv wgcf_2.2.27_linux_amd64 wgcfchmod +x wgcf</code></pre><p>再下载 sfwg 程序</p><pre><code class="language-shell">wget https://github.com/runoneall/sfwg/releases/download/v1/sfwgchmod +x sfwg</code></pre><p>生成 warp 配置</p><pre><code class="language-shell">./wgcf register./wgcf generate</code></pre><p>使用 sfwg 启动</p><pre><code class="language-shell">./sfwg --up</code></pre><p>看到 <code>EXIT:sfwg</code> 就算成功了</p><p>如果已有配置</p><pre><code class="language-shell">./sfwg --use &lt;配置文件路径&gt; --up</code></pre><p>关闭连接</p><pre><code class="language-shell">./sfwg --down</code></pre><p>查看连接</p><pre><code class="language-shell">./sfwg --status</code></pre><p>具体可看 <code>./sfwg --help</code></p>]]></content>
     
@@ -380,7 +404,7 @@ Usage:
     <link href="https://blog.oneall.eu.org/2025/08/08/%E7%94%A8segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E7%9C%8Borgv-eu%E7%9A%84%E5%B9%BF%E5%91%8A/"/>
     <id>https://blog.oneall.eu.org/2025/08/08/%E7%94%A8segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E7%9C%8Borgv-eu%E7%9A%84%E5%B9%BF%E5%91%8A/</id>
     <published>2025-08-08T03:22:29.000Z</published>
-    <updated>2025-11-08T15:25:18.809Z</updated>
+    <updated>2025-11-08T15:42:43.027Z</updated>
     
     <content type="html"><![CDATA[<p>首先要安装telegram应用，web版不行，有bug</p><p><a href="https://gitlab.com/SrArminho/telegram-desktop-potable-for-linux">https://gitlab.com/SrArminho/telegram-desktop-potable-for-linux</a></p><p>这个是便携版制作器，亲测好用</p><p>然后就可以按照套路看广告了，但这样有个问题，那就是看完的广告浏览器标签页不会自动关闭，所以得来个增强脚本</p><p><a href="https://runoneall.serv00.net/Files/orgv.eu%e7%9c%8b%e5%ae%8c%e5%b9%bf%e5%91%8a%e8%87%aa%e5%8a%a8%e5%85%b3%e9%97%ad%e8%be%85%e5%8a%a9%e5%99%a8.js">https://runoneall.serv00.net/Files/orgv.eu%e7%9c%8b%e5%ae%8c%e5%b9%bf%e5%91%8a%e8%87%aa%e5%8a%a8%e5%85%b3%e9%97%ad%e8%be%85%e5%8a%a9%e5%99%a8.js</a></p><p>安装这个油猴脚本，打开标签页后，等待7秒自动关闭标签页</p><p><video controls src="https://cfr2.oneall.eu.org/%E5%B1%8F%E5%B9%95%E5%BD%95%E5%88%B62025-08-07%2012.05.38.mp4" title="视频演示"></video></p>]]></content>
     
@@ -403,7 +427,7 @@ Usage:
     <link href="https://blog.oneall.eu.org/2025/08/04/%E8%AE%BA%E5%9D%9Bmini%E8%BD%AC%E5%8F%91segfault%E5%85%8D%E8%B4%B9%E6%9C%BAVNC/"/>
     <id>https://blog.oneall.eu.org/2025/08/04/%E8%AE%BA%E5%9D%9Bmini%E8%BD%AC%E5%8F%91segfault%E5%85%8D%E8%B4%B9%E6%9C%BAVNC/</id>
     <published>2025-08-04T07:34:28.000Z</published>
-    <updated>2025-11-08T15:25:18.809Z</updated>
+    <updated>2025-11-08T15:42:43.028Z</updated>
     
     <content type="html"><![CDATA[<p>最终效果图</p><p><img src="https://s.rmimg.com/optimized/2X/a/aef0b0c05f1de44effe2d46fe306a407c7f95bf2_2_1306x1000.jpeg"></p><p>首先将论坛mini重装成 alpine 3.20（不然没法用）</p><p><a href="https://github.com/bin456789/reinstall">https://github.com/bin456789/reinstall</a></p><p>segfault免费机申请+保活请看 <a href="https://blog.oneall.eu.org/2025/08/03/segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E5%85%A8%E8%87%AA%E5%8A%A8%E4%BF%9D%E6%B4%BB%E6%95%99%E7%A8%8B/">segfault免费机全自动保活教程</a></p><p>需要将密钥导入mini上</p><p>首先安装依赖</p><pre><code class="language-shell">apk add screen novnc</code></pre><p>然后先开启第一个后台</p><pre><code class="language-shell">screen -R segfault-vpsssh &lt;segfault服务器名&gt;</code></pre><p>保存退出</p><p>再开启一个后台</p><pre><code class="language-shell">screen -R segfault-vps-vncnovnc_server --listen &lt;网页监听端口&gt; --vnc 127.0.0.1:&lt;ssh转发的vnc端口&gt; --file-only</code></pre><p>保存退出</p><p>然后开放一个端口（值为novnc网页监听端口）</p><p><img src="https://s.rmimg.com/original/2X/4/4b3ebfb8976015ee21991e1c12ca186a839d295f.png"></p><p>到这一步就可以玩耍了，当然如果还想更进一步</p><p>首先添加一条A记录到mini的ip</p><p><img src="https://s.rmimg.com/optimized/2X/f/fdaf17369808529d7ac44a98f2a29e889051e259_2_1380x52.png"></p><p>然后添加一条 Origin Rules</p><p>名称随便写，比如 <code>fnl-mini segfault-vps novnc</code></p><p><img src="https://s.rmimg.com/optimized/2X/7/7e7c967bdfea511bcbb43de2cd7ce73e0977dff4_2_1380x548.png"></p><p><img src="https://s.rmimg.com/original/2X/b/b6b00310eb2f339fde06c93238c9a7bb9450ef44.png"></p><p>保存退出，现在就可以通过 <code>https://你的自定义域名/vnc.html</code> 连接了</p>]]></content>
     
@@ -427,7 +451,7 @@ Usage:
     <link href="https://blog.oneall.eu.org/2025/08/03/segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E5%85%A8%E8%87%AA%E5%8A%A8%E4%BF%9D%E6%B4%BB%E6%95%99%E7%A8%8B/"/>
     <id>https://blog.oneall.eu.org/2025/08/03/segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E5%85%A8%E8%87%AA%E5%8A%A8%E4%BF%9D%E6%B4%BB%E6%95%99%E7%A8%8B/</id>
     <published>2025-08-03T00:20:27.000Z</published>
-    <updated>2025-11-08T15:25:18.807Z</updated>
+    <updated>2025-11-08T15:42:43.025Z</updated>
     
     <content type="html"><![CDATA[<p>申请地址：<a href="https://www.thc.org/segfault/">https://www.thc.org/segfault/</a></p><p>因为他们关闭了GUI界面，所以此教程基于SSH</p><p>此教程需要另一台服务器做转发，可公网可私网，或者你自己的电脑也行（</p><p>此教程可全自动保活：SHELL+VNC</p><ol><li>申请服务器</li></ol><pre><code class="language-shell">ssh root@segfault.net</code></pre><p>密码是 <code>segfault</code></p><p>然后等待60秒后按下任意键，即可申请成功</p><ol start="2"><li>保存服务器</li></ol><p><img src="https://s.rmimg.com/original/2X/6/691f6633562b4e1155c2ad95ddee1e2687ae7b2a.png"></p><p>SSH会输出下次连接的密钥，首先安装密钥</p><pre><code class="language-shell">mkdir ~/.ssh</code></pre><pre><code class="language-shell">cat &gt;~/.ssh/id_sf-lsd-segfault-net &lt;&lt;&#39;__EOF__&#39;&lt;密钥内容&gt;__EOF__</code></pre><p>再安装SSH配置</p><pre><code>cat &gt;&gt;~/.ssh/config &lt;&lt;&#39;__EOF__&#39;host &lt;服务器名&gt;    User root    HostName lsd.segfault.net    IdentityFile ~/.ssh/id_sf-lsd-segfault-net    SetEnv SECRET=&lt;你的访问码&gt;    LocalForward *:&lt;VNC连接端口&gt; 0:5900__EOF__</code></pre><p>最后修正权限</p><pre><code class="language-shell">chmod 600 ~/.ssh/config ~/.ssh/id_sf-lsd-segfault-net</code></pre><p>尝试使用 <code>ssh &lt;服务器名&gt;</code> 测试连接是否正常</p><ol start="3"><li>保活服务器</li></ol><p>在刚申请的segfault的服务器上也执行一遍上述步骤，然后终端输入</p><pre><code class="language-shell">screen -R vncserver</code></pre><p>在新shell中使用 <code>ssh &lt;服务器名&gt;</code> 连接（这一步可以保活服务器）</p><p>先设置VNC密码</p><pre><code class="language-shell">vncpasswd</code></pre><p>会让你输两遍VNC密码，遇到 <code>Would you like to enter a view-only password (y/n)?</code> 选 <code>n</code></p><p>然后开启VNC服务器</p><pre><code class="language-shell">vncserver -kill -cleanvncserver :0</code></pre><p>使用 <code>Control + A</code> <code>D</code> 将SSH挂到后台，保活就算全部完成了</p><ol start="4"><li>完结</li></ol><p>现在可以使用 <code>&lt;服务器IP&gt;:&lt;VNC连接端口&gt;</code> 连接到桌面环境了，也可以随意退出或重连，因为VNC服务挂载到screen里的SSH连接上，也正因为如此，永远有一个活跃的连接，所以你的服务器不会关机或删除</p>]]></content>
     
@@ -451,7 +475,7 @@ Usage:
     <link href="https://blog.oneall.eu.org/2025/07/28/php%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/"/>
     <id>https://blog.oneall.eu.org/2025/07/28/php%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/</id>
     <published>2025-07-28T13:42:38.000Z</published>
-    <updated>2025-11-08T15:25:18.807Z</updated>
+    <updated>2025-11-08T15:42:43.025Z</updated>
     
     <content type="html"><![CDATA[<p>反代任意网站（必须得是相对路径链接）</p><pre><code class="language-php">&lt;?php// 填要反代的URL，不以 / 结尾，任何网络请求都会拼接到该地址之后$proxyBase = &quot;https://blog.oneall.eu.org&quot;;// 获取客户端请求信息$method = $_SERVER[&#39;REQUEST_METHOD&#39;];$path = $_SERVER[&#39;REQUEST_URI&#39;] ?? &#39;/&#39;;$headers = getallheaders();$body = file_get_contents(&#39;php://input&#39;);// 构造目标 URL$targetUrl = &quot;{$proxyBase}{$path}&quot;;// 准备 cURL 请求$ch = curl_init();curl_setopt_array($ch, [    CURLOPT_URL =&gt; $targetUrl,    CURLOPT_CUSTOMREQUEST =&gt; $method,    CURLOPT_HTTPHEADER =&gt; formatHeaders($headers),    CURLOPT_POSTFIELDS =&gt; $body,    CURLOPT_FOLLOWLOCATION =&gt; false,    CURLOPT_HEADER =&gt; true,    CURLOPT_RETURNTRANSFER =&gt; true,    CURLOPT_SSL_VERIFYPEER =&gt; false,    CURLOPT_ENCODING =&gt; &#39;&#39;,    CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_2TLS,]);// 执行请求$response = curl_exec($ch);$error = curl_error($ch);if ($error) {    http_response_code(502);    echo &quot;Proxy error: &quot; . $error;    exit;}// 处理响应$statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);$headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);$responseHeaders = substr($response, 0, $headerSize);$responseBody = substr($response, $headerSize);curl_close($ch);// 转发响应头foreach (explode(&quot;\r\n&quot;, $responseHeaders) as $headerLine) {    if (strpos($headerLine, &#39;HTTP/&#39;) === 0) {        header($headerLine);    } else if (!empty(trim($headerLine))) {        $parts = explode(&#39;: &#39;, $headerLine, 2);        if (count($parts) === 2) {            header($headerLine, false);        }    }}// 输出响应体echo $responseBody;// 转换请求头function formatHeaders(array $headers): array{    $result = [];    foreach ($headers as $name =&gt; $value) {        // 跳过可能引起问题的头        if (strtolower($name) === &#39;host&#39;)            continue;        if (strtolower($name) === &#39;connection&#39;)            continue;        // 修复 accept-encoding        if (strtolower($name) === &#39;accept-encoding&#39;) {            $value = &quot;none&quot;;        }        // 不缓存数据        if (strtolower($name) === &quot;cache-control&quot;) {            $value = &quot;no-cache&quot;;        }        $result[] = &quot;{$name}: {$value}&quot;;    }    return $result;}</code></pre><p>添加伪静态规则</p><pre><code class="language-htaccess">&lt;IfModule mod_rewrite.c&gt;    RewriteEngine On    RewriteBase /    # 跳过真实存在的文件或目录    RewriteCond %{REQUEST_FILENAME} !-f    RewriteCond %{REQUEST_FILENAME} !-d    # 重写所有请求到 index.php    RewriteRule . /index.php [L]&lt;/IfModule&gt;</code></pre>]]></content>
     
@@ -462,28 +486,6 @@ Usage:
 &lt;pre&gt;&lt;code class=&quot;language-php&quot;&gt;&amp;lt;?php
 // 填要反代的URL，不以 / 结尾，任何网络请求都会拼接到该地址之后
 $proxyBase = &amp;quot;https://blog.onea</summary>
-      
-    
-    
-    
-    <category term="默认" scheme="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Debian系Firefox一键安装脚本</title>
-    <link href="https://blog.oneall.eu.org/2025/07/27/Debian%E7%B3%BBFirefox%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/"/>
-    <id>https://blog.oneall.eu.org/2025/07/27/Debian%E7%B3%BBFirefox%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</id>
-    <published>2025-07-27T08:02:15.000Z</published>
-    <updated>2025-11-08T15:25:18.805Z</updated>
-    
-    <content type="html"><![CDATA[<p>原文链接： <a href="https://support.mozilla.org/en-US/kb/install-firefox-linux">https://support.mozilla.org/en-US/kb/install-firefox-linux</a></p><p>安装：</p><pre><code class="language-shell">wget -O- https://runoneall.serv00.net/Files/firefox-install.sh | bash</code></pre><p>内容：</p><pre><code class="language-shell">sudo install -d -m 0755 /etc/apt/keyringswget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc &gt; /dev/nullgpg -n -q --import --import-options import-show /etc/apt/keyrings/packages.mozilla.org.asc | awk &#39;/pub/{getline; gsub(/^ +| +$/,&quot;&quot;); if($0 == &quot;35BAA0B33E9EB396F59CA838C0BA5CE6DC6315A3&quot;) print &quot;\nThe key fingerprint matches (&quot;$0&quot;).\n&quot;; else print &quot;\nVerification failed: the fingerprint (&quot;$0&quot;) does not match the expected one.\n&quot;}&#39;echo &quot;deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main&quot; | sudo tee -a /etc/apt/sources.list.d/mozilla.list &gt; /dev/nullecho &#39;Package: *Pin: origin packages.mozilla.orgPin-Priority: 1000&#39; | sudo tee /etc/apt/preferences.d/mozillasudo apt-get update &amp;&amp; sudo apt-get install firefox</code></pre>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;原文链接： &lt;a href=&quot;https://support.mozilla.org/en-US/kb/install-firefox-linux&quot;&gt;https://support.mozilla.org/en-US/kb/install-firefox-linux&lt;/a&gt;</summary>
       
     
     

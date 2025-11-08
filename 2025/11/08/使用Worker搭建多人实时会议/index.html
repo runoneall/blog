@@ -17,7 +17,7 @@
 
 <!-- title -->
 <title>
-    KubicNodes容器机安装桌面环境和VNC | Runoneall
+    使用Worker搭建多人实时会议 | Runoneall
 </title>
 
 <!-- css dependencies -->
@@ -46,7 +46,7 @@
 
 <!-- description -->
 
-<meta name="description" content="本教程适用于 Ubuntu 22.04 VNC 服务器参考了这篇文章 https://www.cnblogs.com/milton/p/16730512.html 首先申请一台服务器，找到 bot-commands 频道，输入：/deploy password:123123 os:Ubuntu 22.04  开机后会私聊你登录信息 your deployment password address(" />
+<meta name="description" content="代码非常简单，极容易集成，可以玩玩我的 demo https://oneall.eu.org/weblive async function textresp(text, status = 200) {     return new Response(text, {         status,         headers: {             &quot;Content-Type&q" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -173,8 +173,8 @@
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <!-- post title -->
         <h1 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="/2025/07/26/KubicNodes%E5%AE%B9%E5%99%A8%E6%9C%BA%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83%E5%92%8CVNC/"
-                >KubicNodes容器机安装桌面环境和VNC</a
+            <a itemprop="url" href="/2025/11/08/%E4%BD%BF%E7%94%A8Worker%E6%90%AD%E5%BB%BA%E5%A4%9A%E4%BA%BA%E5%AE%9E%E6%97%B6%E4%BC%9A%E8%AE%AE/"
+                >使用Worker搭建多人实时会议</a
             >
         </h1>
         <!-- end post title -->
@@ -191,8 +191,8 @@
                 时间:
                 <time
                     itemprop="datePublished"
-                    datetime="2025-07-26T09:04:31.000Z"
-                    >2025-07-26</time
+                    datetime="2025-11-08T15:40:10.000Z"
+                    >2025-11-08</time
                 >
             </li>
             
@@ -209,38 +209,77 @@
 
         <!-- post content -->
         <div class="post-content" itemprop="articleBody">
-            <p>本教程适用于 Ubuntu 22.04</p>
-<p>VNC 服务器参考了这篇文章 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/milton/p/16730512.html">https://www.cnblogs.com/milton/p/16730512.html</a></p>
-<p>首先申请一台服务器，找到 <code>bot-commands</code> 频道，输入：<code>/deploy password:123123 os:Ubuntu 22.04</code></p>
-<p><img src="https://s.rmimg.com/original/2X/e/e8fca845a7b02e4161bb0160e2aa28169ce68331.png"></p>
-<p>开机后会私聊你登录信息</p>
-<pre><code class="language-plaintext">your deployment password
-address(es): &lt;ip&gt;:&lt;port1&gt;, &lt;ip&gt;:&lt;port2&gt;, &lt;ip&gt;:&lt;port3&gt;
+            <p>代码非常简单，极容易集成，可以玩玩我的 demo</p>
+<p><a target="_blank" rel="noopener" href="https://oneall.eu.org/weblive">https://oneall.eu.org/weblive</a></p>
+<pre><code class="language-javascript">async function textresp(text, status = 200) {
+    return new Response(text, {
+        status,
+        headers: {
+            &quot;Content-Type&quot;: &quot;text/plain;charset=UTF-8&quot;,
+            &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        },
+    });
+}
 
-ssh info:
-ssh root@&lt;ip&gt; -p &lt;port&gt;
+async function getAuthToken(env, name, preset_name = &quot;group_call_participant&quot;) {
+    const api = `https://api.realtime.cloudflare.com/v2/meetings/${env.meetingId}/participants`;
 
+    const tokenResp = await fetch(api, {
+        method: &quot;POST&quot;,
+        headers: {
+            Authorization: env.api_authorization_token,
+            &quot;Content-Type&quot;: &quot;application/json;charset=UTF-8&quot;,
+        },
+        body: JSON.stringify({
+            name: name,
+            picture: &quot;https://i.imgur.com/test.jpg&quot;,
+            preset_name: preset_name,
+            client_specific_id: crypto.randomUUID(),
+        }),
+    });
 
-password: xxxxxx
+    const body = await tokenResp.json();
+
+    if (body.success !== true) {
+        return await textresp(
+            &quot;500 Internal Server Error (Invalid Token Response)&quot;,
+            500,
+        );
+    }
+
+    const token = body.data.token;
+
+    return Response.redirect(
+        `https://oneall.eu.org/realtimelive?authToken=${token}`,
+        302,
+    );
+}
+
+export default {
+    async fetch(request, env, ctx) {
+        if (request.method !== &quot;GET&quot;) {
+            return await textresp(&quot;405 Method Not Allowed&quot;, 405);
+        }
+
+        const url = new URL(request.url);
+        const name = url.searchParams.get(&quot;name&quot;);
+
+        if (!name) {
+            return await textresp(
+                &quot;400 Bad Request (Invalid URL param: name)&quot;,
+                400,
+            );
+        }
+
+        return await getAuthToken(env, name);
+    },
+};
 </code></pre>
-<p>运行ssh登录命令登录，然后安装桌面和VNC服务器</p>
-<pre><code class="language-shell">apt install xfce4 xfce4-goodies tigervnc-standalone-server fonts-noto-cjk
-</code></pre>
-<p>安装过程中会提示选择时区和键盘布局，一般是 <code>English (US) / English (US)</code> 和 <code>Asia / Shanghai</code></p>
-<p>然后先运行一次 <code>vncserver</code> 命令（直接用root运行）会让你输入两遍登陆密码</p>
-<p>完成后运行下面的命令启动VNC服务器（直接用root运行）</p>
-<pre><code class="language-shell">#!/bin/bash
-vncserver -kill -clean
-vncserver -localhost no -depth 24 -rfbport &lt;分配给你的三个端口的其中一个&gt;
-</code></pre>
-<p>服务器每次重启后都要运行一遍，可以将以上命令保存到shell文件，如 <code>vnc.sh</code> 并将其安装到 <code>/usr/bin</code> 目录</p>
-<p><img src="https://s.rmimg.com/original/2X/7/7a26d3dc02ce9bd32b5a8794e9493e53e9db333b.png"></p>
-<p>这样直接运行 <code>vnc.sh</code> 即可开启</p>
-<p><img src="https://s.rmimg.com/original/2X/6/6149343a0c3b4968abf39f42c601778fb8a39c64.png"></p>
-<p>不以root运行的话，打开某些应用时会出现 <code>failed to execute xxx (input/output error)</code> 在线召唤大佬解决，我没弄明白是怎么回事</p>
-<p>附一张完整截图</p>
-<p><img src="https://s.rmimg.com/optimized/2X/f/fc9134b519ffb01559e4af7a64b8de0301fe93e1_2_690x431.jpeg"></p>
-<p>占用不是很高，能用</p>
+<p>代码需要设置两个环境变量 <code>meetingId</code> 和 <code>api_authorization_token</code> ，这是教程</p>
+<p><a target="_blank" rel="noopener" href="https://docs.realtime.cloudflare.com/guides/rest-apis/quickstart">https://docs.realtime.cloudflare.com/guides/rest-apis/quickstart</a></p>
+<p>前端搭建代码</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/cloudflare/realtimekit-web-examples/blob/main/html-examples/examples/default-meeting-ui/index.html">realtimekit-web-examples&#x2F;html-examples&#x2F;examples&#x2F;default-meeting-ui&#x2F;index.html at main · cloudflare&#x2F;realtimekit-web-examples</a></p>
+<p>如果不想自己搭也可以用我的 <code>https://oneall.eu.org/realtimelive</code></p>
 
         </div>
         <!-- end post content -->

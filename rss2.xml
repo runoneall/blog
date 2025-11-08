@@ -9,8 +9,34 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Sat, 08 Nov 2025 15:25:18 GMT</pubDate>
+    <pubDate>Sat, 08 Nov 2025 15:42:43 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>使用Worker搭建多人实时会议</title>
+      <link>https://blog.oneall.eu.org/2025/11/08/%E4%BD%BF%E7%94%A8Worker%E6%90%AD%E5%BB%BA%E5%A4%9A%E4%BA%BA%E5%AE%9E%E6%97%B6%E4%BC%9A%E8%AE%AE/</link>
+      <guid>https://blog.oneall.eu.org/2025/11/08/%E4%BD%BF%E7%94%A8Worker%E6%90%AD%E5%BB%BA%E5%A4%9A%E4%BA%BA%E5%AE%9E%E6%97%B6%E4%BC%9A%E8%AE%AE/</guid>
+      <pubDate>Sat, 08 Nov 2025 15:40:10 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;代码非常简单，极容易集成，可以玩玩我的 demo&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://oneall.eu.org/weblive&quot;&gt;https://oneall.eu.org/weblive&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>代码非常简单，极容易集成，可以玩玩我的 demo</p><p><a href="https://oneall.eu.org/weblive">https://oneall.eu.org/weblive</a></p><pre><code class="language-javascript">async function textresp(text, status = 200) {    return new Response(text, {        status,        headers: {            &quot;Content-Type&quot;: &quot;text/plain;charset=UTF-8&quot;,            &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,        },    });}async function getAuthToken(env, name, preset_name = &quot;group_call_participant&quot;) {    const api = `https://api.realtime.cloudflare.com/v2/meetings/${env.meetingId}/participants`;    const tokenResp = await fetch(api, {        method: &quot;POST&quot;,        headers: {            Authorization: env.api_authorization_token,            &quot;Content-Type&quot;: &quot;application/json;charset=UTF-8&quot;,        },        body: JSON.stringify({            name: name,            picture: &quot;https://i.imgur.com/test.jpg&quot;,            preset_name: preset_name,            client_specific_id: crypto.randomUUID(),        }),    });    const body = await tokenResp.json();    if (body.success !== true) {        return await textresp(            &quot;500 Internal Server Error (Invalid Token Response)&quot;,            500,        );    }    const token = body.data.token;    return Response.redirect(        `https://oneall.eu.org/realtimelive?authToken=${token}`,        302,    );}export default {    async fetch(request, env, ctx) {        if (request.method !== &quot;GET&quot;) {            return await textresp(&quot;405 Method Not Allowed&quot;, 405);        }        const url = new URL(request.url);        const name = url.searchParams.get(&quot;name&quot;);        if (!name) {            return await textresp(                &quot;400 Bad Request (Invalid URL param: name)&quot;,                400,            );        }        return await getAuthToken(env, name);    },};</code></pre><p>代码需要设置两个环境变量 <code>meetingId</code> 和 <code>api_authorization_token</code> ，这是教程</p><p><a href="https://docs.realtime.cloudflare.com/guides/rest-apis/quickstart">https://docs.realtime.cloudflare.com/guides/rest-apis/quickstart</a></p><p>前端搭建代码</p><p><a href="https://github.com/cloudflare/realtimekit-web-examples/blob/main/html-examples/examples/default-meeting-ui/index.html">realtimekit-web-examples&#x2F;html-examples&#x2F;examples&#x2F;default-meeting-ui&#x2F;index.html at main · cloudflare&#x2F;realtimekit-web-examples</a></p><p>如果不想自己搭也可以用我的 <code>https://oneall.eu.org/realtimelive</code></p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2025/11/08/%E4%BD%BF%E7%94%A8Worker%E6%90%AD%E5%BB%BA%E5%A4%9A%E4%BA%BA%E5%AE%9E%E6%97%B6%E4%BC%9A%E8%AE%AE/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>一个不多不少刚刚好的短链api实现</title>
@@ -502,30 +528,6 @@ $proxyBase = &amp;quot;https://blog.onea</description>
       
       
       <comments>https://blog.oneall.eu.org/2025/07/28/php%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>Debian系Firefox一键安装脚本</title>
-      <link>https://blog.oneall.eu.org/2025/07/27/Debian%E7%B3%BBFirefox%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</link>
-      <guid>https://blog.oneall.eu.org/2025/07/27/Debian%E7%B3%BBFirefox%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</guid>
-      <pubDate>Sun, 27 Jul 2025 08:02:15 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;原文链接： &lt;a href=&quot;https://support.mozilla.org/en-US/kb/install-firefox-linux&quot;&gt;https://support.mozilla.org/en-US/kb/install-firefox-linux&lt;/a&gt;</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>原文链接： <a href="https://support.mozilla.org/en-US/kb/install-firefox-linux">https://support.mozilla.org/en-US/kb/install-firefox-linux</a></p><p>安装：</p><pre><code class="language-shell">wget -O- https://runoneall.serv00.net/Files/firefox-install.sh | bash</code></pre><p>内容：</p><pre><code class="language-shell">sudo install -d -m 0755 /etc/apt/keyringswget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc &gt; /dev/nullgpg -n -q --import --import-options import-show /etc/apt/keyrings/packages.mozilla.org.asc | awk &#39;/pub/{getline; gsub(/^ +| +$/,&quot;&quot;); if($0 == &quot;35BAA0B33E9EB396F59CA838C0BA5CE6DC6315A3&quot;) print &quot;\nThe key fingerprint matches (&quot;$0&quot;).\n&quot;; else print &quot;\nVerification failed: the fingerprint (&quot;$0&quot;) does not match the expected one.\n&quot;}&#39;echo &quot;deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main&quot; | sudo tee -a /etc/apt/sources.list.d/mozilla.list &gt; /dev/nullecho &#39;Package: *Pin: origin packages.mozilla.orgPin-Priority: 1000&#39; | sudo tee /etc/apt/preferences.d/mozillasudo apt-get update &amp;&amp; sudo apt-get install firefox</code></pre>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/07/27/Debian%E7%B3%BBFirefox%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/#disqus_thread</comments>
       
     </item>
     
