@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <!-- base -->
+<meta charset="UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="template" content="Old-Fasion-Theme" />
+
+<!-- sitemap -->
+<link
+    rel="sitemap"
+    type="application/xml"
+    title="sitemap"
+    href="/sitemap.xml"
+/>
+
+<!-- title -->
+<title>
+    一个为OpenWrt写的简易HTTP服务器 | Runoneall
+</title>
+
+<!-- css dependencies -->
+
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/grid.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/sidebar.css">
+<link rel="stylesheet" href="/css/post.css">
+<link rel="stylesheet" href="/css/misc.css">
+<link rel="stylesheet" href="/css/page.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/dark.css" id="dark-style" disabled>
+
+
+<!-- favicon -->
+<link rel="shortcut icon" href="https://dev.oneall.eu.org/favicon.webp">
+
+<!-- extra css -->
+
+
+<!-- keywords -->
+
+<meta name="keywords" content="Hexo,Blog,Runoneall" />
+
+<!-- description -->
+
+<meta name="description" content="用 go 编写，完美跨平台 // main.go  package main  import ( 	&quot;embed&quot; 	&quot;net&quot; 	&quot;net/http&quot; 	&quot;os&quot; 	&quot;path/filepath&quot; 	&quot;slices&quot; 	&quot;strings&quot;  	&quot;g" />
+
+<!-- rss -->
+<link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
+<link rel="alternate" href="/atom.xml" title="ATOM 1.0" type="application/application/atom+xml+xml">
+
+    <meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="Runoneall" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Runoneall" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="outbox">
+            <!-- header -->
+            <div id="header" class="clearfix">
+                <div class="container">
+                    <div class="row">
+                        <div class="site-name">
+                            <a id="logo" href="/"
+                                >Runoneall</a
+                            >
+                            <p
+                                id="description_random_intro"
+                                class="description"
+                            >
+                                Runoneall's Blog
+                            </p>
+                            <script>
+                                var description_random_intro =
+                                    document.getElementById(
+                                        "description_random_intro",
+                                    );
+                                var descriptions = JSON.parse(
+                                    `["路漫漫其修远兮，吾将上下而求索","天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为","惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。俱往矣，数风流人物，还看今朝。"]`,
+                                );
+                                var random_intro =
+                                    descriptions[
+                                        Math.floor(
+                                            Math.random() * descriptions.length,
+                                        )
+                                    ];
+                                description_random_intro.innerHTML =
+                                    random_intro;
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end header -->
+
+            <!-- sidebar button -->
+            <button id="side-btn" onclick="changeSideStatus()">
+                <input id="side-flag" type="checkbox" />
+                <label id="side-control" for="side-flag">≡</label>
+            </button>
+
+            <!-- left area -->
+            <div id="left">
+                <!-- left links -->
+                <div id="left-links">
+                    <!-- page links -->
+                    <a
+                        class=""
+                        href="/"
+                        >首页</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/search/index.html"
+                        >搜索</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/links/index.html"
+                        >链接</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/weblive/index.html"
+                        >加入会议</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/shortlink/index.html"
+                        >短链</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <!-- end page links -->
+
+                    <!-- sidebar extra html -->
+                    
+                    <br />
+                    <a href="/rss2.xml">RSS</a><br>
+<a href="/sitemap.xml">Sitemap</a><br>
+<a href="mailto:dev@oneall.eu.org">Email</a><br>
+                    
+                    <!-- end sidebar extra html -->
+
+                    <br /><button id="dark-btn" onclick="changeDarkMode()">
+                        更换主题
+                    </button>
+                </div>
+                <!-- end left links -->
+            </div>
+            <!-- end left area -->
+
+            <!-- right area -->
+            <div id="right">
+                <div class="row"><div class="col-mb-12 col-8" id="main" role="main">
+    <!-- article body -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <!-- post title -->
+        <h1 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2026/01/04/%E4%B8%80%E4%B8%AA%E4%B8%BAOpenWrt%E5%86%99%E7%9A%84%E7%AE%80%E6%98%93HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8/"
+                >一个为OpenWrt写的简易HTTP服务器</a
+            >
+        </h1>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者:
+                <a itemprop="name" href="#" rel="author"
+                    >Tom Brown</a
+                >
+            </li>
+            <li>
+                时间:
+                <time
+                    itemprop="datePublished"
+                    datetime="2026-01-04T09:19:41.000Z"
+                    >2026-01-04</time
+                >
+            </li>
+            
+            <li>
+                分类: 
+                <a href="/categories/%E9%BB%98%E8%AE%A4/">
+                    默认 </a
+                >&nbsp;
+                
+            </li>
+            
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content" itemprop="articleBody">
+            <p>用 go 编写，完美跨平台</p>
+<pre><code class="language-go">// main.go
+
+package main
+
+import (
+	&quot;embed&quot;
+	&quot;net&quot;
+	&quot;net/http&quot;
+	&quot;os&quot;
+	&quot;path/filepath&quot;
+	&quot;slices&quot;
+	&quot;strings&quot;
+
+	&quot;github.com/gin-gonic/gin&quot;
+)
+
+//go:embed embed/*
+var embedFS embed.FS
+
+func globalHandler(ctx *gin.Context) &#123;
+	host := ctx.Request.Host
+	path := ctx.Request.URL.Path
+
+	if len(strings.Split(host, &quot;.&quot;)) == 2 &amp;&amp; path == &quot;/&quot; &#123;
+		getAllSiteHandler(ctx, host)
+		return
+	&#125;
+
+	dirbase := strings.SplitN(host, &quot;.&quot;, 2)[0]
+	staticDir := dirbase + &quot;.static&quot;
+
+	if info, err := os.Stat(staticDir); err == nil &amp;&amp; info.IsDir() &#123;
+		fullPath, err := filepath.Abs(filepath.Join(&quot;.&quot;, staticDir, path))
+		if err != nil &#123;
+			ctx.String(500, &quot;%v&quot;, err)
+			return
+		&#125;
+
+		staticHandler(ctx, fullPath)
+		return
+	&#125;
+
+	ctx.String(404, &quot;404 not found&quot;)
+&#125;
+
+func getAllSiteHandler(ctx *gin.Context, host string) &#123;
+	entries, err := os.ReadDir(&quot;.&quot;)
+	if err != nil &#123;
+		ctx.String(500, &quot;%v&quot;, err)
+	&#125;
+
+	allSite := []string&#123;&#125;
+
+	for _, entry := range entries &#123;
+		if entry.IsDir() &#123;
+			entryInfo := strings.SplitN(entry.Name(), &quot;.&quot;, 2)
+			allowSuffix := []string&#123;&quot;static&quot;&#125;
+
+			if len(entryInfo) != 2 &#123;
+				continue
+			&#125;
+
+			if slices.Contains(allowSuffix, entryInfo[1]) &#123;
+				allSite = append(allSite, entryInfo[0])
+			&#125;
+		&#125;
+	&#125;
+
+	if len(allSite) == 0 &#123;
+		ctx.String(404, &quot;404 not found&quot;)
+		return
+	&#125;
+
+	ctx.HTML(200, &quot;allSite.html&quot;, gin.H&#123;
+		&quot;host&quot;:    host,
+		&quot;allSite&quot;: allSite,
+	&#125;)
+&#125;
+
+func staticHandler(ctx *gin.Context, fullPath string) &#123;
+	if info, err := os.Stat(fullPath); err == nil &amp;&amp; info.IsDir() &#123;
+		fullPath = filepath.Join(fullPath, &quot;index.html&quot;)
+	&#125;
+
+	ctx.File(fullPath)
+&#125;
+
+func main() &#123;
+	r := gin.Default()
+	r.LoadHTMLFS(http.FS(embedFS), &quot;embed/*.html&quot;)
+	r.GET(&quot;/*path&quot;, globalHandler)
+	r.Run(net.JoinHostPort(&quot;192.168.5.2&quot;, &quot;80&quot;))
+&#125;
+</code></pre>
+<pre><code class="language-html"><!-- embed/allSite.html -->
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot; /&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+        &lt;title&gt;All Site&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &#123;&#123;$globalHost := .host&#125;&#125;
+        &lt;ul&gt;
+            &#123;&#123;range $site := .allSite&#125;&#125;
+            &lt;li&gt;
+                &lt;a href=&quot;//&#123;&#123;$site&#125;&#125;.&#123;&#123;$globalHost&#125;&#125;&quot;
+                    &gt;&#123;&#123;$site&#125;&#125;.&#123;&#123;$globalHost&#125;&#125;&lt;/a
+                &gt;
+            &lt;/li&gt;
+            &#123;&#123;end&#125;&#125;
+        &lt;/ul&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>注意：路由器必须支持泛解析，如 <code>*.www.local</code></p>
+<p>使用方法：</p>
+<ol>
+<li>将打包后的文件放入服务目录，如 <code>/www/gowebwrt</code></li>
+<li>赋予可执行权限</li>
+<li>新建文件夹，遵循 <code>&lt;subdomain&gt;.static</code> 明明规则</li>
+<li>入口点文件 <code>index.html</code></li>
+<li>访问 <code>&lt;subdomain&gt;.www.local</code> 即可看到站点</li>
+</ol>
+<p>更改实时生效，无需重启服务端</p>
+<p>目前只支持静态文件，后续考虑上 php</p>
+
+        </div>
+        <!-- end post content -->
+    </article>
+    <!-- end article body -->
+</div>
+</div>
+            </div>
+            <!-- end right area -->
+
+            <!-- footer -->
+            <div id="footer" role="contentinfo">
+                &copy; 2026
+                <a href="/">Runoneall</a>.
+                <a target="_blank" rel="noopener" href="https://github.com/runoneall/blog/tree/theme"
+                    >Old Fasion</a
+                >
+                Theme. Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>.
+            </div>
+            <!-- end footer -->
+        </div>
+        <!-- end outbox -->
+
+        <!-- extra html -->
+
+
+<!-- extra js -->
+
+<script>
+    console.log(String.raw`
+            ___              __
+      _____<  /____ _   ____/ /___  _   __
+     / ___// // __ `+ "`" + String.raw`/  / __  // _ \| | / /
+    / /   / // /_/ /  / /_/ //  __/| |/ /
+   /_/   /_/ \__,_/   \__,_/ \___/ |___/
+
+LET THE UNFAIRNESS OF THE WORLD BOW BEFORE ME
+`)
+</script>
+
+
+<!-- js dependencies -->
+
+<script src="/js/dark.js"></script>
+<script src="/js/highlight.js"></script>
+<script src="/js/sidebar.js"></script>
+
+
+<!-- code highlight -->
+<script defer>
+    hljs.highlightAll();
+</script>
+
+    </body>
+</html>

@@ -9,8 +9,40 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Sun, 04 Jan 2026 09:14:30 GMT</pubDate>
+    <pubDate>Sun, 04 Jan 2026 09:21:04 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>一个为OpenWrt写的简易HTTP服务器</title>
+      <link>https://blog.oneall.eu.org/2026/01/04/%E4%B8%80%E4%B8%AA%E4%B8%BAOpenWrt%E5%86%99%E7%9A%84%E7%AE%80%E6%98%93HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
+      <guid>https://blog.oneall.eu.org/2026/01/04/%E4%B8%80%E4%B8%AA%E4%B8%BAOpenWrt%E5%86%99%E7%9A%84%E7%AE%80%E6%98%93HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
+      <pubDate>Sun, 04 Jan 2026 09:19:41 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;用 go 编写，完美跨平台&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-go&quot;&gt;// main.go
+
+package main
+
+import (
+	&amp;quot;embed&amp;quot;
+	&amp;quot;net&amp;quot;
+	&amp;quot;net/http&amp;q</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>用 go 编写，完美跨平台</p><pre><code class="language-go">// main.gopackage mainimport (&quot;embed&quot;&quot;net&quot;&quot;net/http&quot;&quot;os&quot;&quot;path/filepath&quot;&quot;slices&quot;&quot;strings&quot;&quot;github.com/gin-gonic/gin&quot;)//go:embed embed/*var embedFS embed.FSfunc globalHandler(ctx *gin.Context) &#123;host := ctx.Request.Hostpath := ctx.Request.URL.Pathif len(strings.Split(host, &quot;.&quot;)) == 2 &amp;&amp; path == &quot;/&quot; &#123;getAllSiteHandler(ctx, host)return&#125;dirbase := strings.SplitN(host, &quot;.&quot;, 2)[0]staticDir := dirbase + &quot;.static&quot;if info, err := os.Stat(staticDir); err == nil &amp;&amp; info.IsDir() &#123;fullPath, err := filepath.Abs(filepath.Join(&quot;.&quot;, staticDir, path))if err != nil &#123;ctx.String(500, &quot;%v&quot;, err)return&#125;staticHandler(ctx, fullPath)return&#125;ctx.String(404, &quot;404 not found&quot;)&#125;func getAllSiteHandler(ctx *gin.Context, host string) &#123;entries, err := os.ReadDir(&quot;.&quot;)if err != nil &#123;ctx.String(500, &quot;%v&quot;, err)&#125;allSite := []string&#123;&#125;for _, entry := range entries &#123;if entry.IsDir() &#123;entryInfo := strings.SplitN(entry.Name(), &quot;.&quot;, 2)allowSuffix := []string&#123;&quot;static&quot;&#125;if len(entryInfo) != 2 &#123;continue&#125;if slices.Contains(allowSuffix, entryInfo[1]) &#123;allSite = append(allSite, entryInfo[0])&#125;&#125;&#125;if len(allSite) == 0 &#123;ctx.String(404, &quot;404 not found&quot;)return&#125;ctx.HTML(200, &quot;allSite.html&quot;, gin.H&#123;&quot;host&quot;:    host,&quot;allSite&quot;: allSite,&#125;)&#125;func staticHandler(ctx *gin.Context, fullPath string) &#123;if info, err := os.Stat(fullPath); err == nil &amp;&amp; info.IsDir() &#123;fullPath = filepath.Join(fullPath, &quot;index.html&quot;)&#125;ctx.File(fullPath)&#125;func main() &#123;r := gin.Default()r.LoadHTMLFS(http.FS(embedFS), &quot;embed/*.html&quot;)r.GET(&quot;/*path&quot;, globalHandler)r.Run(net.JoinHostPort(&quot;192.168.5.2&quot;, &quot;80&quot;))&#125;</code></pre><pre><code class="language-html"><!-- embed/allSite.html -->&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot;&gt;    &lt;head&gt;        &lt;meta charset=&quot;UTF-8&quot; /&gt;        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;        &lt;title&gt;All Site&lt;/title&gt;    &lt;/head&gt;    &lt;body&gt;        &#123;&#123;$globalHost := .host&#125;&#125;        &lt;ul&gt;            &#123;&#123;range $site := .allSite&#125;&#125;            &lt;li&gt;                &lt;a href=&quot;//&#123;&#123;$site&#125;&#125;.&#123;&#123;$globalHost&#125;&#125;&quot;                    &gt;&#123;&#123;$site&#125;&#125;.&#123;&#123;$globalHost&#125;&#125;&lt;/a                &gt;            &lt;/li&gt;            &#123;&#123;end&#125;&#125;        &lt;/ul&gt;    &lt;/body&gt;&lt;/html&gt;</code></pre><p>注意：路由器必须支持泛解析，如 <code>*.www.local</code></p><p>使用方法：</p><ol><li>将打包后的文件放入服务目录，如 <code>/www/gowebwrt</code></li><li>赋予可执行权限</li><li>新建文件夹，遵循 <code>&lt;subdomain&gt;.static</code> 明明规则</li><li>入口点文件 <code>index.html</code></li><li>访问 <code>&lt;subdomain&gt;.www.local</code> 即可看到站点</li></ol><p>更改实时生效，无需重启服务端</p><p>目前只支持静态文件，后续考虑上 php</p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2026/01/04/%E4%B8%80%E4%B8%AA%E4%B8%BAOpenWrt%E5%86%99%E7%9A%84%E7%AE%80%E6%98%93HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>使用Worker搭建多人实时会议</title>
@@ -501,33 +533,6 @@ Usage:
       
       
       <comments>https://blog.oneall.eu.org/2025/08/03/segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E5%85%A8%E8%87%AA%E5%8A%A8%E4%BF%9D%E6%B4%BB%E6%95%99%E7%A8%8B/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>php反向代理</title>
-      <link>https://blog.oneall.eu.org/2025/07/28/php%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/</link>
-      <guid>https://blog.oneall.eu.org/2025/07/28/php%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/</guid>
-      <pubDate>Mon, 28 Jul 2025 13:42:38 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;反代任意网站（必须得是相对路径链接）&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-php&quot;&gt;&amp;lt;?php
-// 填要反代的URL，不以 / 结尾，任何网络请求都会拼接到该地址之后
-$proxyBase = &amp;quot;https://blog.onea</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>反代任意网站（必须得是相对路径链接）</p><pre><code class="language-php">&lt;?php// 填要反代的URL，不以 / 结尾，任何网络请求都会拼接到该地址之后$proxyBase = &quot;https://blog.oneall.eu.org&quot;;// 获取客户端请求信息$method = $_SERVER[&#39;REQUEST_METHOD&#39;];$path = $_SERVER[&#39;REQUEST_URI&#39;] ?? &#39;/&#39;;$headers = getallheaders();$body = file_get_contents(&#39;php://input&#39;);// 构造目标 URL$targetUrl = &quot;{$proxyBase}{$path}&quot;;// 准备 cURL 请求$ch = curl_init();curl_setopt_array($ch, [    CURLOPT_URL =&gt; $targetUrl,    CURLOPT_CUSTOMREQUEST =&gt; $method,    CURLOPT_HTTPHEADER =&gt; formatHeaders($headers),    CURLOPT_POSTFIELDS =&gt; $body,    CURLOPT_FOLLOWLOCATION =&gt; false,    CURLOPT_HEADER =&gt; true,    CURLOPT_RETURNTRANSFER =&gt; true,    CURLOPT_SSL_VERIFYPEER =&gt; false,    CURLOPT_ENCODING =&gt; &#39;&#39;,    CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_2TLS,]);// 执行请求$response = curl_exec($ch);$error = curl_error($ch);if ($error) {    http_response_code(502);    echo &quot;Proxy error: &quot; . $error;    exit;}// 处理响应$statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);$headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);$responseHeaders = substr($response, 0, $headerSize);$responseBody = substr($response, $headerSize);curl_close($ch);// 转发响应头foreach (explode(&quot;\r\n&quot;, $responseHeaders) as $headerLine) {    if (strpos($headerLine, &#39;HTTP/&#39;) === 0) {        header($headerLine);    } else if (!empty(trim($headerLine))) {        $parts = explode(&#39;: &#39;, $headerLine, 2);        if (count($parts) === 2) {            header($headerLine, false);        }    }}// 输出响应体echo $responseBody;// 转换请求头function formatHeaders(array $headers): array{    $result = [];    foreach ($headers as $name =&gt; $value) {        // 跳过可能引起问题的头        if (strtolower($name) === &#39;host&#39;)            continue;        if (strtolower($name) === &#39;connection&#39;)            continue;        // 修复 accept-encoding        if (strtolower($name) === &#39;accept-encoding&#39;) {            $value = &quot;none&quot;;        }        // 不缓存数据        if (strtolower($name) === &quot;cache-control&quot;) {            $value = &quot;no-cache&quot;;        }        $result[] = &quot;{$name}: {$value}&quot;;    }    return $result;}</code></pre><p>添加伪静态规则</p><pre><code class="language-htaccess">&lt;IfModule mod_rewrite.c&gt;    RewriteEngine On    RewriteBase /    # 跳过真实存在的文件或目录    RewriteCond %{REQUEST_FILENAME} !-f    RewriteCond %{REQUEST_FILENAME} !-d    # 重写所有请求到 index.php    RewriteRule . /index.php [L]&lt;/IfModule&gt;</code></pre>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/07/28/php%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/#disqus_thread</comments>
       
     </item>
     
