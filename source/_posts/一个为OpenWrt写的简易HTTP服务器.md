@@ -7,13 +7,14 @@ date: 2026-01-04 09:19:41
 
 用 go 编写，完美跨平台
 
-```go
-// main.go
+- `main.go`
 
+```go
 package main
 
 import (
 	"embed"
+	"fmt"
 	"net"
 	"net/http"
 	"os"
@@ -96,16 +97,22 @@ func staticHandler(ctx *gin.Context, fullPath string) {
 }
 
 func main() {
+	args := os.Args
+	if len(args) == 1 {
+		fmt.Println("Usage: gowebwrt <ip>")
+		return
+	}
+
 	r := gin.Default()
 	r.LoadHTMLFS(http.FS(embedFS), "embed/*.html")
 	r.GET("/*path", globalHandler)
-	r.Run(net.JoinHostPort("192.168.5.2", "80"))
+	r.Run(net.JoinHostPort(args[1], "80"))
 }
 ```
 
-```html
-<!-- embed/allSite.html -->
+- `embed/allSite.html`
 
+```html
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -134,7 +141,7 @@ func main() {
 
 1. 将打包后的文件放入服务目录，如 `/www/gowebwrt`
 2. 赋予可执行权限
-3. 新建文件夹，遵循 `<subdomain>.static` 明明规则
+3. 新建文件夹，遵循 `<subdomain>.static` 命名规则
 4. 入口点文件 `index.html`
 5. 访问 `<subdomain>.www.local` 即可看到站点
 
