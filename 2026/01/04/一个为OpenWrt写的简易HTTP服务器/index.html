@@ -46,7 +46,7 @@
 
 <!-- description -->
 
-<meta name="description" content="用 go 编写，完美跨平台 // main.go  package main  import ( 	&quot;embed&quot; 	&quot;net&quot; 	&quot;net/http&quot; 	&quot;os&quot; 	&quot;path/filepath&quot; 	&quot;slices&quot; 	&quot;strings&quot;  	&quot;g" />
+<meta name="description" content="用 go 编写，完美跨平台  main.go  package main  import ( 	&quot;embed&quot; 	&quot;fmt&quot; 	&quot;net&quot; 	&quot;net/http&quot; 	&quot;os&quot; 	&quot;path/filepath&quot; 	&quot;slices&quot; 	&quot;strings&" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -115,13 +115,6 @@
                     <br />
                     <a
                         class=""
-                        href="/search/index.html"
-                        >搜索</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
                         href="/links/index.html"
                         >链接</a
                     >
@@ -129,8 +122,15 @@
                     <br />
                     <a
                         class=""
-                        href="/weblive/index.html"
-                        >加入会议</a
+                        href="/about/index.html"
+                        >关于</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/search/index.html"
+                        >搜索</a
                     >
                     
                     <br />
@@ -143,8 +143,8 @@
                     <br />
                     <a
                         class=""
-                        href="/about/index.html"
-                        >关于</a
+                        href="/weblive/index.html"
+                        >加入会议</a
                     >
                     
                     <!-- end page links -->
@@ -210,12 +210,14 @@
         <!-- post content -->
         <div class="post-content" itemprop="articleBody">
             <p>用 go 编写，完美跨平台</p>
-<pre><code class="language-go">// main.go
-
-package main
+<ul>
+<li><code>main.go</code></li>
+</ul>
+<pre><code class="language-go">package main
 
 import (
 	&quot;embed&quot;
+	&quot;fmt&quot;
 	&quot;net&quot;
 	&quot;net/http&quot;
 	&quot;os&quot;
@@ -298,15 +300,22 @@ func staticHandler(ctx *gin.Context, fullPath string) &#123;
 &#125;
 
 func main() &#123;
+	args := os.Args
+	if len(args) == 1 &#123;
+		fmt.Println(&quot;Usage: gowebwrt &lt;ip&gt;&quot;)
+		return
+	&#125;
+
 	r := gin.Default()
 	r.LoadHTMLFS(http.FS(embedFS), &quot;embed/*.html&quot;)
 	r.GET(&quot;/*path&quot;, globalHandler)
-	r.Run(net.JoinHostPort(&quot;192.168.5.2&quot;, &quot;80&quot;))
+	r.Run(net.JoinHostPort(args[1], &quot;80&quot;))
 &#125;
 </code></pre>
-<pre><code class="language-html"><!-- embed/allSite.html -->
-
-&lt;!DOCTYPE html&gt;
+<ul>
+<li><code>embed/allSite.html</code></li>
+</ul>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
     &lt;head&gt;
         &lt;meta charset=&quot;UTF-8&quot; /&gt;
@@ -332,7 +341,7 @@ func main() &#123;
 <ol>
 <li>将打包后的文件放入服务目录，如 <code>/www/gowebwrt</code></li>
 <li>赋予可执行权限</li>
-<li>新建文件夹，遵循 <code>&lt;subdomain&gt;.static</code> 明明规则</li>
+<li>新建文件夹，遵循 <code>&lt;subdomain&gt;.static</code> 命名规则</li>
 <li>入口点文件 <code>index.html</code></li>
 <li>访问 <code>&lt;subdomain&gt;.www.local</code> 即可看到站点</li>
 </ol>
