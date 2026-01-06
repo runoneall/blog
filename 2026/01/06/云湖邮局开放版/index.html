@@ -17,7 +17,7 @@
 
 <!-- title -->
 <title>
-    低版本mac装docker | Runoneall
+    云湖邮局开放版 | Runoneall
 </title>
 
 <!-- css dependencies -->
@@ -46,7 +46,7 @@
 
 <!-- description -->
 
-<meta name="description" content="翻到台mac mini，运行macOS 10.15，已经不支持安装docker GUI了 首先安装brew /bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;  安装docker cli brew install docker docker" />
+<meta name="description" content="这是一个众乐乐的版本，私人使用请看 使用云湖开放API部署云湖邮局 | Runoneall import PostalMime from &quot;postal-mime&quot;;  async function parse(message) {     const message_from = message.from;     const message_to = message.to;" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -173,8 +173,8 @@
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <!-- post title -->
         <h1 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="/2025/04/09/%E4%BD%8E%E7%89%88%E6%9C%ACmac%E8%A3%85docker/"
-                >低版本mac装docker</a
+            <a itemprop="url" href="/2026/01/06/%E4%BA%91%E6%B9%96%E9%82%AE%E5%B1%80%E5%BC%80%E6%94%BE%E7%89%88/"
+                >云湖邮局开放版</a
             >
         </h1>
         <!-- end post title -->
@@ -191,8 +191,8 @@
                 时间:
                 <time
                     itemprop="datePublished"
-                    datetime="2025-04-09T08:35:35.000Z"
-                    >2025-04-09</time
+                    datetime="2026-01-06T06:55:48.000Z"
+                    >2026-01-06</time
                 >
             </li>
             
@@ -209,31 +209,50 @@
 
         <!-- post content -->
         <div class="post-content" itemprop="articleBody">
-            <p>翻到台mac mini，运行macOS 10.15，已经不支持安装docker GUI了</p>
-<p>首先安装brew</p>
-<pre><code class="language-zsh">/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;
+            <p>这是一个众乐乐的版本，私人使用请看 <a target="_blank" rel="noopener" href="https://oneall.eu.org/2024/12/09/%E4%BD%BF%E7%94%A8%E4%BA%91%E6%B9%96%E5%BC%80%E6%94%BEAPI%E9%83%A8%E7%BD%B2%E4%BA%91%E6%B9%96%E9%82%AE%E5%B1%80/">使用云湖开放API部署云湖邮局 | Runoneall</a></p>
+<pre><code class="language-javascript">import PostalMime from &quot;postal-mime&quot;;
+
+async function parse(message) {
+    const message_from = message.from;
+    const message_to = message.to;
+    const infoHTML = `&lt;div style=&quot;background-color: white; color: black;&quot;&gt;&lt;ul&gt;&lt;li&gt;From: ${message_from}&lt;/li&gt;&lt;li&gt;To: ${message_to}&lt;/li&gt;&lt;/ul&gt;`;
+
+    const email = await PostalMime.parse(message.raw);
+    const email_subject = email.subject;
+    const email_content = email.html ?? email.text;
+    const contentHTML = `&lt;details&gt;&lt;summary&gt;&lt;strong style=&quot;font-size: 20px;&quot;&gt;${email_subject}&lt;/strong&gt;&lt;/summary&gt;${email_content}&lt;/details&gt;&lt;/div&gt;`;
+
+    return {
+        senderId: message_to.split(&quot;@&quot;)[0],
+        respHTML: infoHTML + `&lt;hr&gt;` + contentHTML,
+    };
+}
+
+async function response(YH_BOT_TOKEN, senderId, respHTML) {
+    await fetch(
+        `https://chat-go.jwzhd.com/open-apis/v1/bot/send?token=${YH_BOT_TOKEN}`,
+        {
+            method: &quot;POST&quot;,
+            headers: { &quot;Content-Type&quot;: &quot;application/json; charset=utf-8&quot; },
+            body: JSON.stringify({
+                recvId: senderId,
+                recvType: &quot;user&quot;,
+                contentType: &quot;html&quot;,
+                content: { text: respHTML },
+            }),
+        },
+    );
+}
+
+export default {
+    async email(message, env, ctx) {
+        const parsed = await parse(message);
+        await response(env.YH_BOT_TOKEN, parsed.senderId, parsed.respHTML);
+    },
+};
 </code></pre>
-<p>安装docker cli</p>
-<pre><code class="language-zsh">brew install docker docker-compose
-</code></pre>
-<p>安装colima做docker后端</p>
-<pre><code class="language-zsh">brew install colima
-</code></pre>
-<p>编译安装qemu（我用的7.2.0）</p>
-<pre><code class="language-zsh">brew install pkg-config glib pixman ninja cmake wget sdl2 lzo
-wget https://download.qemu.org/qemu-7.2.0.tar.xz
-tar -xf qemu-7.2.0.tar.xz
-rm qemu-7.2.0.tar.xz &amp;&amp; cd qemu-7.2.0
-./configure --target-list=x86_64-softmmu,aarch64-softmmu --enable-debug --enable-sdl --enable-vnc
-make -j$(sysctl -n hw.logicalcpu)
-sudo make install
-cd .. &amp;&amp; rm -rf qemu-7.2.0
-qemu-system-x86_64 --version
-</code></pre>
-<p>启动colima</p>
-<pre><code class="language-zsh">colima start  # 后面看着给 --cpu 核心数 --memory 内存(GB)
-</code></pre>
-<p>运行 <code>docker ps</code> 查看是否安装成功（列表可能为空，无报错就是成功了）</p>
+<p>完全公开需开启 Catch-All 功能，或者一个一个加记录使用白名单</p>
+<p>支持多域名（能托管到 Cloudflare）</p>
 
         </div>
         <!-- end post content -->
