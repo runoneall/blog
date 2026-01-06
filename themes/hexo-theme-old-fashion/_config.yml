@@ -123,6 +123,12 @@ links:
           url: "https://blog.kaifangzhe.com",
           description: "开放者独立博客大全|博客导航大全",
       }
+    - {
+          avatar: "https://s2.loli.net/2024/02/01/gaE47y5fKM6kosV.png",
+          title: "Wcowin's Web",
+          url: "https://wcowin.work",
+          description: "彼此苦旅，以达星辰",
+      }
 
 extra_css: "" # 额外CSS
 
