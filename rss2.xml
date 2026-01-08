@@ -9,8 +9,33 @@
     <atom:link href="https://blog.oneall.eu.org/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Runoneall&#39;s Blog</description>
-    <pubDate>Tue, 06 Jan 2026 06:56:45 GMT</pubDate>
+    <pubDate>Thu, 08 Jan 2026 09:21:03 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>一个Go写的端口转发工具，非常适合NAT服务器使用</title>
+      <link>https://blog.oneall.eu.org/2026/01/08/%E4%B8%80%E4%B8%AAGo%E5%86%99%E7%9A%84%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E5%B7%A5%E5%85%B7%EF%BC%8C%E9%9D%9E%E5%B8%B8%E9%80%82%E5%90%88NAT%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/</link>
+      <guid>https://blog.oneall.eu.org/2026/01/08/%E4%B8%80%E4%B8%AAGo%E5%86%99%E7%9A%84%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E5%B7%A5%E5%85%B7%EF%BC%8C%E9%9D%9E%E5%B8%B8%E9%80%82%E5%90%88NAT%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/</guid>
+      <pubDate>Thu, 08 Jan 2026 09:20:13 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;起因是 shareNL 上的 incus 机不能跑docker，在 @RodickYu 的提醒下发现不能使用端口绑定，必须使用 –network host 来启动，但这样以来对于 nat 服务器就特别的不友好，所以有了这个工具&lt;/p&gt;
+&lt;p&gt;port link 通过一个后台</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>起因是 shareNL 上的 incus 机不能跑docker，在 @RodickYu 的提醒下发现不能使用端口绑定，必须使用 –network host 来启动，但这样以来对于 nat 服务器就特别的不友好，所以有了这个工具</p><p>port link 通过一个后台服务端，维护多条端口转发，同时绑定 tcp 和 udp，可以将远程转发到本地，或将本地转发到另一个本地</p><p>项目地址： <a href="https://github.com/runoneall/portlink">runoneall&#x2F;portlink: 纯 Golang 编写端口转发工具，用于将远程端口转发到本地</a></p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
+      
+      
+      
+      <comments>https://blog.oneall.eu.org/2026/01/08/%E4%B8%80%E4%B8%AAGo%E5%86%99%E7%9A%84%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E5%B7%A5%E5%85%B7%EF%BC%8C%E9%9D%9E%E5%B8%B8%E9%80%82%E5%90%88NAT%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>云湖邮局开放版</title>
@@ -505,32 +530,6 @@ Usage:
       
       
       <comments>https://blog.oneall.eu.org/2025/08/08/%E7%94%A8segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E7%9C%8Borgv-eu%E7%9A%84%E5%B9%BF%E5%91%8A/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>论坛mini转发segfault免费机VNC</title>
-      <link>https://blog.oneall.eu.org/2025/08/04/%E8%AE%BA%E5%9D%9Bmini%E8%BD%AC%E5%8F%91segfault%E5%85%8D%E8%B4%B9%E6%9C%BAVNC/</link>
-      <guid>https://blog.oneall.eu.org/2025/08/04/%E8%AE%BA%E5%9D%9Bmini%E8%BD%AC%E5%8F%91segfault%E5%85%8D%E8%B4%B9%E6%9C%BAVNC/</guid>
-      <pubDate>Mon, 04 Aug 2025 07:34:28 GMT</pubDate>
-      
-        
-        
-      <description>&lt;p&gt;最终效果图&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://s.rmimg.com/optimized/2X/a/aef0b0c05f1de44effe2d46fe306a407c7f95bf2_2_1306x1000.jpeg&quot;&gt;&lt;/p&gt;
-&lt;p&gt;首先将论坛mini重装成</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<p>最终效果图</p><p><img src="https://s.rmimg.com/optimized/2X/a/aef0b0c05f1de44effe2d46fe306a407c7f95bf2_2_1306x1000.jpeg"></p><p>首先将论坛mini重装成 alpine 3.20（不然没法用）</p><p><a href="https://github.com/bin456789/reinstall">https://github.com/bin456789/reinstall</a></p><p>segfault免费机申请+保活请看 <a href="https://blog.oneall.eu.org/2025/08/03/segfault%E5%85%8D%E8%B4%B9%E6%9C%BA%E5%85%A8%E8%87%AA%E5%8A%A8%E4%BF%9D%E6%B4%BB%E6%95%99%E7%A8%8B/">segfault免费机全自动保活教程</a></p><p>需要将密钥导入mini上</p><p>首先安装依赖</p><pre><code class="language-shell">apk add screen novnc</code></pre><p>然后先开启第一个后台</p><pre><code class="language-shell">screen -R segfault-vpsssh &lt;segfault服务器名&gt;</code></pre><p>保存退出</p><p>再开启一个后台</p><pre><code class="language-shell">screen -R segfault-vps-vncnovnc_server --listen &lt;网页监听端口&gt; --vnc 127.0.0.1:&lt;ssh转发的vnc端口&gt; --file-only</code></pre><p>保存退出</p><p>然后开放一个端口（值为novnc网页监听端口）</p><p><img src="https://s.rmimg.com/original/2X/4/4b3ebfb8976015ee21991e1c12ca186a839d295f.png"></p><p>到这一步就可以玩耍了，当然如果还想更进一步</p><p>首先添加一条A记录到mini的ip</p><p><img src="https://s.rmimg.com/optimized/2X/f/fdaf17369808529d7ac44a98f2a29e889051e259_2_1380x52.png"></p><p>然后添加一条 Origin Rules</p><p>名称随便写，比如 <code>fnl-mini segfault-vps novnc</code></p><p><img src="https://s.rmimg.com/optimized/2X/7/7e7c967bdfea511bcbb43de2cd7ce73e0977dff4_2_1380x548.png"></p><p><img src="https://s.rmimg.com/original/2X/b/b6b00310eb2f339fde06c93238c9a7bb9450ef44.png"></p><p>保存退出，现在就可以通过 <code>https://你的自定义域名/vnc.html</code> 连接了</p>]]></content:encoded>
-      
-      
-      <category domain="https://blog.oneall.eu.org/categories/%E9%BB%98%E8%AE%A4/">默认</category>
-      
-      
-      
-      <comments>https://blog.oneall.eu.org/2025/08/04/%E8%AE%BA%E5%9D%9Bmini%E8%BD%AC%E5%8F%91segfault%E5%85%8D%E8%B4%B9%E6%9C%BAVNC/#disqus_thread</comments>
       
     </item>
     

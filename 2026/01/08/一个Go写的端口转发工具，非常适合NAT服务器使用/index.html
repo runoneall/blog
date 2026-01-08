@@ -17,7 +17,7 @@
 
 <!-- title -->
 <title>
-    将webhook转换为websocket的工具 | Runoneall
+    一个Go写的端口转发工具，非常适合NAT服务器使用 | Runoneall
 </title>
 
 <!-- css dependencies -->
@@ -46,7 +46,7 @@
 
 <!-- description -->
 
-<meta name="description" content="地址：https://github.com/FramerOrg/HookToWS 特点：  支持多客户端 无需持久化 无需多端口  docker安装： docker pull runoneall/hook-to-ws docker run -d --name hook-to-ws -p 3000:3000 -e WS_AUTH_TOKEN=your_secure_token_here -e POR" />
+<meta name="description" content="起因是 shareNL 上的 incus 机不能跑docker，在 @RodickYu 的提醒下发现不能使用端口绑定，必须使用 –network host 来启动，但这样以来对于 nat 服务器就特别的不友好，所以有了这个工具 port link 通过一个后台服务端，维护多条端口转发，同时绑定 tcp 和 udp，可以将远程转发到本地，或将本地转发到另一个本地 项目地址： runoneall&#x" />
 
 <!-- rss -->
 <link rel="alternate" href="/rss2.xml" title="RSS 2.0" type="application/application/rss+xml+xml">
@@ -173,8 +173,8 @@
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <!-- post title -->
         <h1 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="/2025/06/16/%E5%B0%86webhook%E8%BD%AC%E6%8D%A2%E4%B8%BAwebsocket%E7%9A%84%E5%B7%A5%E5%85%B7/"
-                >将webhook转换为websocket的工具</a
+            <a itemprop="url" href="/2026/01/08/%E4%B8%80%E4%B8%AAGo%E5%86%99%E7%9A%84%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E5%B7%A5%E5%85%B7%EF%BC%8C%E9%9D%9E%E5%B8%B8%E9%80%82%E5%90%88NAT%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/"
+                >一个Go写的端口转发工具，非常适合NAT服务器使用</a
             >
         </h1>
         <!-- end post title -->
@@ -191,8 +191,8 @@
                 时间:
                 <time
                     itemprop="datePublished"
-                    datetime="2025-06-16T11:11:32.000Z"
-                    >2025-06-16</time
+                    datetime="2026-01-08T09:20:13.000Z"
+                    >2026-01-08</time
                 >
             </li>
             
@@ -209,25 +209,9 @@
 
         <!-- post content -->
         <div class="post-content" itemprop="articleBody">
-            <p>地址：<br><a target="_blank" rel="noopener" href="https://github.com/FramerOrg/HookToWS">https://github.com/FramerOrg/HookToWS</a></p>
-<p>特点：</p>
-<ol>
-<li>支持多客户端</li>
-<li>无需持久化</li>
-<li>无需多端口</li>
-</ol>
-<p>docker安装：</p>
-<pre><code class="language-shell">docker pull runoneall/hook-to-ws
-docker run -d --name hook-to-ws -p 3000:3000 -e WS_AUTH_TOKEN=your_secure_token_here -e PORT=3000 runoneall/hook-to-ws
-</code></pre>
-<p>连接：<br>首先连接ws：</p>
-<pre><code class="language-plaintext">ws://&lt;your_domain&gt;:&lt;port&gt;/?token=&lt;your_token&gt;&amp;path=&lt;your_path&gt;
-</code></pre>
-<p>然后程序会在 &#x2F;webhook&#x2F;<your_path> 处监听POST请求</p>
-<p>对应的webhook地址为：</p>
-<pre><code class="language-plaintext">http://&lt;your_domain&gt;:&lt;port&gt;/webhook/&lt;your_path&gt;
-</code></pre>
-<p>如果有ssl那就是 wss 和 https</p>
+            <p>起因是 shareNL 上的 incus 机不能跑docker，在 @RodickYu 的提醒下发现不能使用端口绑定，必须使用 –network host 来启动，但这样以来对于 nat 服务器就特别的不友好，所以有了这个工具</p>
+<p>port link 通过一个后台服务端，维护多条端口转发，同时绑定 tcp 和 udp，可以将远程转发到本地，或将本地转发到另一个本地</p>
+<p>项目地址： <a target="_blank" rel="noopener" href="https://github.com/runoneall/portlink">runoneall&#x2F;portlink: 纯 Golang 编写端口转发工具，用于将远程端口转发到本地</a></p>
 
         </div>
         <!-- end post content -->

@@ -115,13 +115,6 @@
                     <br />
                     <a
                         class=""
-                        href="/links/index.html"
-                        >链接</a
-                    >
-                    
-                    <br />
-                    <a
-                        class=""
                         href="/about/index.html"
                         >关于</a
                     >
@@ -131,6 +124,13 @@
                         class=""
                         href="/search/index.html"
                         >搜索</a
+                    >
+                    
+                    <br />
+                    <a
+                        class=""
+                        href="/links/index.html"
+                        >链接</a
                     >
                     
                     <br />
@@ -177,6 +177,41 @@
     <!-- end archive title -->
 
     <!-- post list -->
+    
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <!-- post title -->
+        <h2 class="post-title" itemprop="name headline">
+            <a itemprop="url" href="/2024/12/27/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%AF%B9%E5%8D%9A%E5%AE%A2%E7%9A%84%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"
+                >记一次对博客的性能优化</a
+            >
+        </h2>
+        <!-- end post title -->
+
+        <!-- post meta -->
+        <ul class="post-meta">
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                作者:
+                <a itemprop="name" href="#" rel="author"
+                    >Tom Brown</a
+                >
+            </li>
+            <li>
+                时间:
+                <time
+                    itemprop="datePublished"
+                    datetime="2024-12-27T14:19:00.000Z"
+                    >2024-12-27</time
+                >
+            </li>
+        </ul>
+        <!-- end post meta -->
+
+        <!-- post content -->
+        <div class="post-content index-post-content" itemprop="articleBody">
+            主要有这几个方面: 缓存&#x2F;压缩, 这个简单, 去托管那里打开即可 关于jquery, 这个主题用到了jquery, 但是用处却是作为侧边栏的展开与折叠, 这完全是大材小用, 我用纯js实现了同样的功能, 并移除了jquery. (缺点是手机端侧边栏展开与折叠的动画没了,...
+        </div>
+        <!-- end post content -->
+    </article>
     
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <!-- post title -->
@@ -489,41 +524,6 @@
         <!-- post content -->
         <div class="post-content index-post-content" itemprop="articleBody">
             将得到的xui账号文件保存为 source.txt 下载脚本https://dev.oneall.eu.org/usr/uploads/2024/12/2068079931.zip 首先运行 tourl.py 生成登录url地址 再运行 scan.py 并指定密码开始检测
-        </div>
-        <!-- end post content -->
-    </article>
-    
-    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-        <!-- post title -->
-        <h2 class="post-title" itemprop="name headline">
-            <a itemprop="url" href="/2024/12/09/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84Go%E8%AF%AD%E8%A8%80%E8%BD%AE%E5%AD%90/"
-                >一个简单的Go语言轮子</a
-            >
-        </h2>
-        <!-- end post title -->
-
-        <!-- post meta -->
-        <ul class="post-meta">
-            <li itemprop="author" itemscope itemtype="http://schema.org/Person">
-                作者:
-                <a itemprop="name" href="#" rel="author"
-                    >Tom Brown</a
-                >
-            </li>
-            <li>
-                时间:
-                <time
-                    itemprop="datePublished"
-                    datetime="2024-12-09T12:43:00.000Z"
-                    >2024-12-09</time
-                >
-            </li>
-        </ul>
-        <!-- end post meta -->
-
-        <!-- post content -->
-        <div class="post-content index-post-content" itemprop="articleBody">
-            此为我自己在写项目时用到的轮子，整理了一下地址：https://github.com/runoneall/goutil实现：命令行参数，配置文件，日期，数据库，网络请求等相关功能，简化开发 command.go Command_Args() 返回类型 map[string]string 参数字典...
         </div>
         <!-- end post content -->
     </article>
